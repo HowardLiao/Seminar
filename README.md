@@ -1,46 +1,39 @@
-# AI Agent 新賽局：全球掀五大變革 ｜ 50 頁高管戰略研究白皮書
+# Howard Liao Ph.D. ｜ 前沿技術論壇與研討會專案矩陣 (Seminar Hub)
 
-> **主講嘉賓**：簡立峰 博士（前 Google 台灣董事總經理 ｜ 中華電信獨立董事）  
-> **報告人**：Howard Liao Ph.D. (廖倫豪 博士)  
-> **發布日期**：2024–2025 全球前沿技術觀察  
-> **線上即時展示網址**：[https://howardliao.github.io/Seminar/](https://howardliao.github.io/Seminar/)  
+> **專案總覽網址**：[https://howardliao.github.io/Seminar/](https://howardliao.github.io/Seminar/)  
+> **GitHub 儲存庫**：[https://github.com/HowardLiao/Seminar](https://github.com/HowardLiao/Seminar)  
 > **設計體系**：Executive Two-Track Design System (米蘭編排 / 暖琥珀白皮書風格 16:9 出版級)
 
 ---
 
-## 核心執行摘要 (Executive Summary)
+## 目錄架構 (Seminar Series Taxonomy)
 
-本專案深入消化前 Google 台灣董事總經理 **簡立峰 博士** 於經濟日報與中華電信高峰論壇之重磅演講《AI Agent 新賽局：全球掀五大變革》，以麥肯錫金字塔原理 (Minto Pyramid Principle) 與高管雙軌設計體系，完整產出 **50 頁高規格簡報與白皮書**。
-
-### 報告八大戰略篇章
-1. **單元一：報告概覽與核心執行摘要 (P.1 - P.5)**：Apex Thesis 頂層結論、SCQA 戰略架構與高管 Bento 儀表板。
-2. **單元二：前哨震撼與全球範式轉移 (P.6 - P.10)**：Karpathy 5,000人洞察、5萬 GPU 暴力破解 722 道極限數學難題、程式化接管世界。
-3. **單元三：變革一：自主創新與遞歸自我改進 (P.11 - P.18)**：80/20 人類極限與最後 20% 黑盒子、Q* 事件與奧本海默時刻、Long-Horizon 20天任務、主權 AI。
-4. **單元四：變革二：動態記憶與長時域推理 (P.19 - P.25)**：百萬視窗糧草哲學、Dynamic Note-Taking 筆記機制、Anthropic 8x 研發實測、監管缺位真空。
-5. **單元五：變革三：勞動力市場與組織重構 (P.26 - P.33)**：軟體 1:1 革命、中國 700萬 Solopreneurs、橫店 40萬降至 2萬人、招聘年齡倒掛 (新人 -25% vs 資深成長)。
-6. **單元六：變革四：Token 經濟與核心研發模式升級 (P.34 - P.40)**：訓練轉推理大遷移、萬倍需求預測、Moderna 6天癌症疫苗、聯發科晶片驗證機器化、B-Coding 研發重構。
-7. **單元七：變革五：數位員工、服務即軟體與治理新局 (P.41 - P.46)**：人走 Skills 留資產化、SaaS 2.0 (Service as a Software)、美律所營收跌 20%、面向 Agent 投放廣告、部門壁壘消融。
-8. **單元八：台灣戰略十字路口與實施手冊 (P.47 - P.50)**：小島進入太平洋之庫存博弈風險、印度軟體外包衰退 vs 台灣硬體代工崛起、4階段成熟度路線圖、董事會決議備忘錄。
-
----
-
-## 檔案交付架構
+本專案庫（`Seminar/`）採獨立子目錄分冊管理各期高階技術論壇、科技峰會與戰略白皮書：
 
 ```
 Seminar/
-├── index.html                                                      # 響應式 RWD 雙模態高管互動展示門戶
-├── manifest.json                                                   # PWA 行動端離線設定
-├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_米蘭風格_50頁報告.pptx  # 16:9 出版級 PowerPoint (米蘭風格)
-├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_米蘭風格_50頁報告.pdf   # 100% 向量銳利度 PDF (米蘭風格)
-├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_50頁報告.pptx          # 16:9 出版級 PowerPoint (曜石黑風格)
-├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_50頁報告.pdf           # 100% 向量銳利度 PDF (曜石黑風格)
-└── assets/
-    ├── howard-liao-portrait-square.jpg                             # 報告人照片
-    └── howard-liao-avatar-256.png                                  # 官方徽章
+├── index.html                                                      # 研討會系列總目錄門戶 (Seminar Series Hub)
+├── README.md                                                       # 專案總說明
+│
+├── 001/                                                            # 【001 專題】AI Agent 新賽局：全球掀五大變革
+│   ├── index.html                                                  # 50 頁米蘭風格全靜態響應式簡報播放器
+│   ├── manifest.json                                               # PWA 離線設定
+│   ├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_米蘭風格_50頁報告.pdf   # 100% 向量銳利度 PDF（米蘭風格）
+│   ├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_50頁報告.pdf           # 100% 向量銳利度 PDF（曜石黑風格）
+│   ├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_米蘭風格_50頁報告.pptx  # 16:9 出版級 PowerPoint（米蘭風格）
+│   ├── AI_Agent_全球五大變革_簡立峰博士演講深度解析_50頁報告.pptx          # 16:9 出版級 PowerPoint（曜石黑風格）
+│   └── assets/                                                     # 報告人肖像與圖騰資產
+│
+├── 002/ (規劃中)                                                   # 全球算力基礎設施與推論架構大遷徙
+└── 003/ (規劃中)                                                   # 企業主權 AI (Sovereign AI) 與數位員工防禦體系
 ```
 
 ---
 
-## 授權與宣告 (License & Citation)
-- **演講內容著作權**：經濟日報 EDN ｜ 演講嘉賓：簡立峰 博士
-- **架構轉譯與報告編撰**：Howard Liao Ph.D.
+## 001 專案摘要：AI Agent 新賽局（全球掀五大變革）
+
+- **主講嘉賓**：簡立峰 博士（前 Google 台灣董事總經理 ｜ 中華電信獨立董事）
+- **報告人**：Howard Liao Ph.D. (廖倫豪 博士)
+- **展示入口**：[https://howardliao.github.io/Seminar/001/](https://howardliao.github.io/Seminar/001/)
+- **下載 PDF 報告**：[米蘭風格 50 頁高管報告 PDF](001/AI_Agent_全球五大變革_簡立峰博士演講深度解析_米蘭風格_50頁報告.pdf)
+- **核心內容**：涵蓋 5,000 人分水嶺、5 萬 GPU 破解 722 數學難題、80/20 人類極限與 RSI、Long-Horizon 20 天自主任務、軟體 1:1 革命、Moderna 6 天癌症疫苗、B-Coding 研發重構、SaaS 2.0 服務軟體化與台灣小島進太平洋之資本博弈。
