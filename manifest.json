@@ -1,0 +1,16 @@
+{
+  "name": "AI Agent 新賽局：全球掀五大變革 50頁高管白皮書",
+  "short_name": "AI Agent 50頁報告",
+  "description": "簡立峰博士演講深度解析與落地架構指南",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FDFBF7",
+  "theme_color": "#A83212",
+  "icons": [
+    {
+      "src": "assets/howard-liao-avatar-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}
