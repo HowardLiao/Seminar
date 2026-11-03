@@ -25,7 +25,7 @@ Seminar/
 │   └── assets/                                                     # 報告人肖像與圖騰資產
 │
 ├── 004/                                                            # 【004 專題】AI 判斷力 × AI Agent 五大架構性缺陷
-│   ├── index.html                                                  # 25 頁線上簡報播放器（僅供線上觀看，不提供下載）
+│   ├── index.html                                                  # 27 頁線上簡報播放器（僅供線上觀看，不提供下載）
 │   ├── slides/                                                     # 投影片影像
 │   └── assets/                                                     # 報告人肖像
 │
@@ -50,5 +50,5 @@ Seminar/
 
 - **報告人**：Howard Liao Ph.D.
 - **展示入口**：[https://howardliao.github.io/Seminar/004/](https://howardliao.github.io/Seminar/004/)
-- **形式**：25 頁線上簡報，僅供線上觀看（不提供 PDF／PPTX 下載）
-- **核心內容**：金字塔結構——AI Agent 五大架構性缺陷（長上下文退化、記憶污染、自我修正失效、目標不對齊、交接失真）、Approve／Correct／Escalate 三種決定、4E Framework、知識／資料／流程／權責與情境演練。
+- **形式**：27 頁線上簡報，僅供線上觀看（不提供 PDF／PPTX 下載）
+- **核心內容**：金字塔結構——AI Agent 五大架構性缺陷（長上下文退化、記憶污染、自我修正失效、目標不對齊、交接失真）、Approve／Correct／Escalate 三種決定、4E Framework、十大 AI 風險與風險分級、知識／資料／流程／權責與情境演練。
