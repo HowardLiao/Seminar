@@ -72,13 +72,13 @@
 <div class="grid" id="grid"><button class="btn close" id="gridClose">關閉</button><div class="wrap" id="gridWrap"></div></div>
 <script>
 (() => {
-  const N = 24, pad = (n) => String(n).padStart(2, "0");
+  const N = 24, V = "20261103b", pad = (n) => String(n).padStart(2, "0");
   const frame = document.getElementById("frame"), bar = document.getElementById("bar"), count = document.getElementById("count");
   const slides = [];
   for (let i = 1; i <= N; i++) {
     const d = document.createElement("div");
     d.className = "slide";
-    d.dataset.src = "slides/" + pad(i) + ".webp";
+    d.dataset.src = "slides/" + pad(i) + ".webp?v=" + V;
     frame.insertBefore(d, frame.lastElementChild);
     slides.push(d);
   }
@@ -118,7 +118,7 @@
     wrap.appendChild(t);
   }
   document.getElementById("gridBtn").onclick = () => {
-    wrap.querySelectorAll(".th").forEach((t, k) => { if (!t.style.backgroundImage) t.style.backgroundImage = "url(slides/t" + pad(k + 1) + ".webp)"; });
+    wrap.querySelectorAll(".th").forEach((t, k) => { if (!t.style.backgroundImage) t.style.backgroundImage = "url(slides/t" + pad(k + 1) + ".webp?v=" + V + ")"; });
     grid.classList.add("open");
   };
   document.getElementById("gridClose").onclick = () => grid.classList.remove("open");
