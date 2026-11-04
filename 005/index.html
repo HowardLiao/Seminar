@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MIT 6.S184 課程筆記 ｜ Flow Matching and Diffusion Models ｜ Howard Liao Ph.D. Seminar 005</title>
+<meta name="description" content="MIT 6.S184 Flow Matching and Diffusion Models (生成式 AI 與隨機微分方程) 完整深度學習筆記、前導片小節導航、繁中字幕逐句對照與 121 條核心術語手冊。">
+<meta name="theme-color" content="#1d2b27">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="MIT 6.S184 課程筆記 ｜ Flow Matching and Diffusion Models">
+<meta property="og:description" content="生成式 AI 與隨機微分方程 完整深度學習筆記 ｜ Howard Liao Ph.D. Seminar 005">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/005/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+
+<style>
+/* 版面：頂部固定導覽列＋單欄內容；單元頁左側影片與小節時間軸、右側學習單；「黑板講堂」風格：MIT 教室綠黑板、粉筆字與楷體標題，刻意只做深色 */
+:root {
+  --bg: #1d2b27; --panel: #22332e; --raise: #2a3d37; --line: rgba(236, 233, 223, .22);
+  --fg: #ece9df; --muted: #a9b3ab; --accent: #f3e27a; --accent-ink: #1d2b27;
+  --gold: #f6b8a8; --data: #a6dcae; --noise: #d6d2c6; --warn: #f6b8a8;
+  --font-display: "LXGW WenKai TC", "Kaiti TC", "STKaiti", var(--font-body);
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --radius: 4px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 16px/1.7 var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px;
+}
+h1, h2, h3 { text-wrap: balance; line-height: 1.3; margin: 0; font-family: var(--font-display); }
+code, .mono, time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+code { font-size: .88em; color: var(--gold); }
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* 導覽列 */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; padding-block: 10px; }
+.brand { color: var(--fg); text-decoration: none; font-weight: 700; display: flex; align-items: baseline; gap: 8px; }
+.brand .mono { color: var(--accent); font-weight: 600; letter-spacing: .02em; }
+.topnav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.topnav a {
+  color: var(--muted); text-decoration: none; padding: 4px 10px; border-radius: 6px; font-size: 15px;
+}
+.topnav a:hover { color: var(--fg); background: var(--raise); }
+.topnav a[aria-current="page"] { color: var(--fg); background: var(--raise); }
+
+main { padding-block: 28px 64px; }
+.kicker {
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 15px;
+  padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--fg); text-decoration: none; cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 500; }
+.btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 500; }
+.btn.small { font-size: 14px; padding: 4px 10px; }
+.btn .ext { font-size: .85em; opacity: .75; }
+.row-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.pill {
+  display: inline-block; font-size: 12.5px; line-height: 1; padding: 5px 8px; border-radius: 999px;
+  border: 1px solid currentColor; white-space: nowrap; font-weight: 500;
+}
+.pill.live { color: var(--data); }
+.pill.soon { color: var(--gold); }
+.pill.making { color: var(--accent); }
+.pill.planned { color: var(--muted); }
+
+/* 首頁 */
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.hero h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -.01em; margin-top: 10px; }
+.hero h1 .mono { color: var(--accent); }
+.hero .lede { color: var(--muted); font-size: 17px; max-width: 34em; margin: 14px 0 22px; }
+.flow { position: relative; aspect-ratio: 4 / 3; max-width: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+.flow canvas { width: 100%; height: 100%; display: block; }
+.flow .label { position: absolute; left: 12px; top: 10px; font: 13px var(--font-mono); color: var(--muted); }
+.flow .label b { color: var(--fg); font-weight: 600; }
+.flow .eq { position: absolute; right: 12px; bottom: 10px; font: 13px var(--font-mono); color: var(--gold); }
+
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin: 48px 0 16px; }
+.section-head h2 { font-size: 22px; }
+.section-head .note { color: var(--muted); font-size: 14.5px; }
+
+.units { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.card {
+  display: flex; flex-direction: column; text-decoration: none; color: var(--fg);
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  transition: border-color .15s, transform .15s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card .thumb { aspect-ratio: 16 / 9; background: var(--raise); position: relative; }
+.card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.card .thumb.empty {
+  display: grid; place-items: center; color: var(--muted); font-size: 14px;
+  background: repeating-linear-gradient(135deg, var(--raise) 0 10px, var(--panel) 10px 20px);
+  border-bottom: 1px dashed var(--line);
+}
+.card .thumb .dur {
+  position: absolute; right: 8px; bottom: 8px; font: 12.5px var(--font-mono);
+  background: rgba(0,0,0,.72); color: #fff; padding: 2px 6px; border-radius: 4px;
+}
+.card .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.card .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card .no { font: 600 13px var(--font-mono); color: var(--accent); letter-spacing: .04em; }
+.card h3 { font-size: 19px; }
+.card .topic { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.card .lec { margin-top: auto; padding-top: 6px; font: 12.5px var(--font-mono); color: var(--muted); }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; padding: 0; margin: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 2px solid var(--line); padding-top: 12px; }
+.steps li::before { content: "步驟 " counter(s); display: block; font: 600 13px var(--font-mono); color: var(--accent); margin-bottom: 4px; }
+.steps b { display: block; font-size: 17px; }
+.steps span { color: var(--muted); font-size: 15px; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer .wrap { padding-block: 20px 32px; }
+
+/* 單元頁 */
+.crumb { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.crumb a { color: var(--muted); }
+.unit-head h1 { font-size: clamp(28px, 4.4vw, 40px); margin: 6px 0 8px; }
+.unit-head .q { font-size: 18px; max-width: 40em; margin: 0; }
+.unit-head .q::before { content: "核心問題　"; color: var(--gold); font-weight: 700; }
+.unit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-top: 26px; align-items: start; }
+.watch { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); display: flex; flex-direction: column; gap: 14px; }
+.video { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: var(--radius); overflow: hidden; background: #000; }
+.video iframe, .video > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video.poster img { width: 100%; height: 100%; object-fit: cover; }
+.video.poster .play {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: rgba(0,0,0,.75); color: #fff; padding: 10px 18px; border-radius: 999px; font-weight: 500;
+  border: 1px solid rgba(255,255,255,.3); white-space: nowrap;
+}
+.video.poster:hover .play { background: var(--accent); color: var(--accent-ink); }
+.video.placeholder {
+  display: grid; place-items: center; text-align: center; color: var(--muted); background:
+    repeating-linear-gradient(135deg, var(--raise) 0 12px, var(--panel) 12px 24px);
+  border: 1px dashed var(--line);
+}
+.video.placeholder b { display: block; color: var(--fg); font-size: 18px; }
+.video.placeholder img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .28; }
+.video.placeholder > div { position: relative; padding: 12px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: 14.5px; align-items: center; }
+
+.timeline { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+.timeline li + li { border-top: 1px solid var(--line); }
+.timeline .item {
+  display: grid; grid-template-columns: 4.2em 4.6em minmax(0, 1fr); gap: 8px; align-items: baseline;
+  width: 100%; padding: 9px 14px; text-align: left; font: inherit; font-size: 15px; color: var(--fg);
+  background: none; border: 0; text-decoration: none;
+}
+.timeline a.item, .timeline button.item { cursor: pointer; }
+.timeline a.item:hover, .timeline button.item:hover { background: var(--raise); }
+.timeline .item.active { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+.timeline time { color: var(--accent); font-size: 14px; }
+.timeline .tag { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+.timeline .empty { padding: 14px; color: var(--muted); font-size: 15px; }
+.tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.tl-head h2 { font-size: 17px; }
+.tl-head span { color: var(--muted); font-size: 13.5px; }
+
+.sheet { min-width: 0; }
+.sheet > h2 { font-size: 22px; margin-bottom: 4px; }
+.sheet h3 { font-size: 18px; margin: 30px 0 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+.sheet p, .sheet li { max-width: 40em; }
+.sheet p { margin: 10px 0; }
+.sheet ol, .sheet ul { padding-left: 1.4em; margin: 10px 0; }
+.sheet li { margin: 4px 0; }
+.sheet blockquote { margin: 12px 0; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--muted); }
+.sheet strong { color: var(--fg); }
+.sheet a.ts { font-family: var(--font-mono); font-size: .92em; white-space: nowrap; }
+.sheet ul.checks { list-style: none; padding-left: 0; }
+.sheet li.check { display: flex; gap: 10px; align-items: baseline; }
+.sheet li.check input { width: 17px; height: 17px; accent-color: var(--accent); flex: none; transform: translateY(2px); }
+.sheet li.check input:checked + label { color: var(--muted); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; margin: 10px 0; }
+.table-wrap table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.table-wrap th, .table-wrap td { text-align: left; padding: 8px 12px; vertical-align: top; border-bottom: 1px solid var(--line); }
+.table-wrap tr:last-child td { border-bottom: 0; }
+.table-wrap th { background: var(--raise); font-weight: 500; white-space: nowrap; }
+.table-wrap td:nth-child(3) { font-family: var(--font-mono); font-size: 14px; color: var(--gold); }
+.sheet .nav-table td:nth-child(3) { font-family: inherit; color: inherit; }
+details.answers { margin-top: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 0 16px; }
+details.answers summary { cursor: pointer; padding: 12px 0; font-weight: 700; color: var(--gold); }
+details.answers[open] { padding-bottom: 12px; }
+.sheet .pending { padding: 28px 20px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.pager a { text-decoration: none; display: flex; flex-direction: column; color: var(--fg); max-width: 48%; }
+.pager a span { font: 12.5px var(--font-mono); color: var(--muted); }
+.pager a.next { text-align: right; margin-left: auto; }
+
+/* 原片字幕頁 */
+.lec-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 18px; }
+.lec-head { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; margin-bottom: 18px; }
+.lec-head h1 { font-size: clamp(24px, 3.6vw, 32px); }
+.lec-head .meta { flex: 1; }
+.lec-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(300px, 2fr); gap: 20px; align-items: start; }
+.lec-grid.noembed { grid-template-columns: minmax(0, 1fr); max-width: 860px; }
+.stage { display: flex; flex-direction: column; gap: 12px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px); }
+.now { min-height: 4.6em; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.now .zh { font-size: 19px; }
+.now .en { color: var(--muted); font-size: 15px; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.controls label { color: var(--muted); font-size: 14px; display: flex; gap: 6px; align-items: center; }
+select, input[type="search"] {
+  font: inherit; font-size: 15px; color: var(--fg); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
+}
+input[type="search"] { width: 100%; }
+.panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); min-width: 0; display: flex; flex-direction: column; }
+.panel .bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-bottom: 1px solid var(--line); }
+.panel .bar .seg { display: flex; gap: 4px; }
+.panel .bar input { flex: 1 1 180px; width: auto; }
+.list { max-height: 68vh; overflow-y: auto; }
+.lec-grid.noembed .list { max-height: none; }
+.list .row {
+  display: block; width: 100%; text-align: left; font: inherit; font-size: 15.5px; color: var(--fg);
+  padding: 8px 12px; border: 0; border-bottom: 1px solid var(--line); background: none; text-decoration: none; cursor: pointer;
+}
+.list .row:hover { background: var(--raise); }
+.list .row.active { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+.list .row time { color: var(--accent); font-size: 13px; margin-right: 10px; }
+.list .row .e { display: block; color: var(--muted); font-size: 14px; }
+.list .msg { padding: 18px 14px; color: var(--muted); }
+.hint { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+
+/* 術語表 */
+.g-head h1 { font-size: clamp(26px, 4vw, 36px); margin: 6px 0 6px; }
+.g-tools { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chips .lbl { color: var(--muted); font-size: 14px; margin-right: 4px; }
+.glossary td:first-child { font-family: var(--font-mono); font-size: 14.5px; color: var(--accent); white-space: nowrap; }
+.glossary td:nth-child(2) { white-space: nowrap; font-weight: 500; }
+.glossary td:nth-child(3) { font-family: inherit; color: var(--muted); font-size: 14.5px; min-width: 16em; }
+.glossary td:nth-child(4) a { font-family: var(--font-mono); }
+.layer { font-size: 13px; white-space: nowrap; }
+.layer.anchor { color: var(--gold); }
+.layer.listen { color: var(--accent); }
+.layer.heard { color: var(--muted); }
+.count { color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero, .unit-grid, .lec-grid { grid-template-columns: minmax(0, 1fr); }
+  .watch, .stage { position: static; }
+  .list { max-height: 60vh; }
+  .hero .flow { max-width: 440px; }
+}
+@media (max-width: 620px) {
+  .glossary { overflow: visible; }
+  .glossary thead { display: none; }
+  .glossary table, .glossary tbody { display: block; }
+  .glossary tr {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px;
+    grid-template-areas: "en unit" "zh layer" "note note";
+    padding: 10px 12px; border-bottom: 1px solid var(--line);
+  }
+  .glossary tr:last-child { border-bottom: 0; }
+  .glossary td { display: block; padding: 0; border: 0 !important; min-width: 0 !important; white-space: normal !important; }
+  .glossary td:nth-child(1) { grid-area: en; }
+  .glossary td:nth-child(2) { grid-area: zh; }
+  .glossary td:nth-child(3) { grid-area: note; }
+  .glossary td:nth-child(4) { grid-area: unit; text-align: right; }
+  .glossary td:nth-child(5) { grid-area: layer; text-align: right; }
+}
+@media (max-width: 480px) {
+  .timeline .item { grid-template-columns: 3.6em minmax(0, 1fr); }
+  .timeline .tag { grid-column: 2; grid-row: 1; }
+  .timeline .ttl { grid-column: 2; }
+  .topnav { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover { transform: none; }
+}
+
+/* 黑板講堂：板書色帶、粉筆線框、楷體標題 */
+:root body {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.05), transparent 60%),
+    radial-gradient(ellipse at 90% 100%, rgba(255,255,255,.04), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+:root .topbar { background: color-mix(in srgb, #16221f 92%, transparent); border-bottom: 6px solid #6b4a2f; }
+:root .brand span:last-child { font-family: var(--font-display); font-size: 19px; }
+:root .hero h1 { font-size: clamp(36px, 6vw, 58px); font-weight: 700; }
+:root .hero h1 .mono { font-family: var(--font-display); color: var(--accent); }
+:root h1, :root h2, :root h3 { font-weight: 700; letter-spacing: .01em; }
+:root .section-head h2,
+:root .sheet h3 {
+  text-decoration: underline; text-decoration-color: rgba(243, 226, 122, .55);
+  text-decoration-thickness: 3px; text-underline-offset: 7px; border-top: 0;
+}
+:root .card,
+:root .timeline,
+:root .panel,
+:root .table-wrap,
+:root details.answers { background: rgba(255,255,255,.025); border: 1.5px solid var(--line); }
+:root .card:hover { border-color: var(--accent); transform: rotate(-.4deg) translateY(-2px); }
+:root .card h3 { font-size: 22px; }
+:root .card .thumb { border-bottom: 1.5px solid var(--line); }
+:root .flow { background: transparent; border: 1.5px dashed var(--line); }
+:root .flow .eq { font-family: var(--font-display); font-size: 17px; }
+:root .btn { background: transparent; border: 1.5px solid var(--line); }
+:root .btn.primary { background: var(--accent); color: var(--accent-ink); }
+:root .unit-head .q { font-family: var(--font-display); font-size: 21px; }
+:root .steps li { border-top: 1.5px dashed var(--line); }
+:root .steps b { font-family: var(--font-display); font-size: 20px; }
+:root .table-wrap th { background: rgba(255,255,255,.05); }
+:root footer { border-top: 6px solid #6b4a2f; }
+@media (prefers-reduced-motion: reduce) { :root .card:hover { transform: none; } }
+
+.btn-back-hub {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.btn-back-hub:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--raise);
+  transform: translateY(-1px);
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a href="../" class="btn-back-hub" title="返回研討會系列總目錄">‹ 總目錄</a>
+    <a class="brand" href="#home"><span class="mono">6.S184</span><span>課程筆記</span></a>
+    <nav class="topnav" aria-label="主要導覽">
+      <a href="#home" data-nav="home">單元</a>
+      <a href="#L01" data-nav="lecture">原片字幕</a>
+      <a href="#glossary" data-nav="glossary">術語表</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<footer>
+  <div class="wrap">
+    課程原作：MIT 6.S184 Flow Matching and Diffusion Models（Peter Holderrieth 等，IAP 2026）。本站是學習筆記，前導片、繁中字幕與學習單為自製，不代表原課程。
+    <a href="https://www.youtube.com/playlist?list=PL57nT7tSGAAXwjhDYcxEycx5W7YoSrZyt" target="_blank" rel="noopener">原始課程播放清單</a>
+  </div>
+</footer>
+<script>
+const EMBED = false;
+const D = {"playlist":"https://www.youtube.com/playlist?list=PL57nT7tSGAAXwjhDYcxEycx5W7YoSrZyt","units":[{"no":"01","title":"流與擴散","lecture":"L01","youtube":"lZuCnmQcpa8","topic":"生成即抽樣、ODE、SDE、模擬","range":null,"question":"「生成一張圖」在數學上到底是什麼？怎麼把一團雜訊變成它？","timeline":[[0,"片頭"],[16,"小節 1｜一張圖在電腦裡是什麼"],[50,"小節 2｜「生成得好」怎麼用數學說"],[107,"小節 3｜我們只抽得到雜訊，怎麼到資料那邊"],[140,"小節 4｜粒子怎麼知道每一刻往哪走"],[200,"小節 5｜電腦怎麼沿著箭頭走"],[254,"小節 6｜神經網路負責哪一件事"],[324,"小節 7｜隨機抖動為什麼要乘 √h"],[405,"小節 8｜抖動加進走路後會怎樣"],[516,"小節 9｜打開原片看哪裡，下一堂解決什麼"]],"sheet":"<p><a href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\">打開原片<\/a>。建議用<a href=\"#L01\" data-lec=\"L01\">原片字幕頁<\/a>，可逐句重聽、調慢速度；公式以投影片畫面為準。<\/p>\n<h3>看前導片之前：先答一次<\/h3>\n<p>先寫下答案，不查資料。看完原片後再答同樣三題，比較自己的差異。<\/p>\n<ol><li>「生成一張圖」用機率怎麼說？t=0、t=1 各是什麼？<\/li><li>流模型的網路輸出什麼？同一個起點跑兩次，結果一樣嗎？<\/li><li>為什麼抖動要乘 √h？改乘 h 會怎樣？<\/li><\/ol>\n<h3>今天的八個詞<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>中文<\/th><th>英文<\/th><th>符號<\/th><th>白話<\/th><\/tr><\/thead><tbody><tr><td>資料分布<\/td><td>data distribution<\/td><td>p_data<\/td><td>好圖常出現、爛圖幾乎不出現的那團分布<\/td><\/tr><tr><td>抽樣<\/td><td>sampling<\/td><td>z ~ p_data<\/td><td>從分布裡隨機拿一個<\/td><\/tr><tr><td>向量場<\/td><td>vector field<\/td><td>u_t(x)<\/td><td>給時間和位置，回答一根箭頭<\/td><\/tr><tr><td>常微分方程<\/td><td>ODE<\/td><td>dX_t/dt = u_t(X_t)<\/td><td>移動速度等於腳下的箭頭<\/td><\/tr><tr><td>流模型<\/td><td>flow model<\/td><td>u_t^θ<\/td><td>用網路當向量場，照 ODE 從隨機起點走<\/td><\/tr><tr><td>布朗運動<\/td><td>Brownian motion<\/td><td>W_t<\/td><td>沒有箭頭、只有亂走的路線<\/td><\/tr><tr><td>隨機微分方程<\/td><td>SDE<\/td><td>dX_t = u_t dt + σ_t dW_t<\/td><td>照箭頭走，同時隨機抖<\/td><\/tr><tr><td>擴散係數<\/td><td>diffusion coefficient<\/td><td>σ_t<\/td><td>控制抖多大的數，人設定，不是網路學的<\/td><\/tr><\/tbody><\/table><\/div>\n<h3>聽得出這三個詞<\/h3>\n<ul class=\"checks\"><li class=\"check\"><input type=\"checkbox\" id=\"chk-01-1\"><label for=\"chk-01-1\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=810s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"810\">13:30<\/a>：trajectory，軌跡，走過的路線<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-01-2\"><label for=\"chk-01-2\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=1014s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"1014\">16:54<\/a>：is given by，由……決定<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-01-3\"><label for=\"chk-01-3\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=3604s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"3604\">60:04<\/a>：scaled by，乘上某個數調整大小<\/label><\/li><\/ul>\n<h3>原片導航<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>時間<\/th><th>看什麼<\/th><\/tr><\/thead><tbody><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=391s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"391\">06:31<\/a><\/td><td>時間有限，從這裡開始<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=1614s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"1614\">26:54<\/a><\/td><td>這裡的 θ 是回拉強度，不是網路參數<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=1849s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"1849\">30:49<\/a><\/td><td>流模型的定義，本堂核心<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=1941s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"1941\">32:21<\/a><\/td><td>從這裡起 θ 是網路參數<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=2370s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"2370\">39:30<\/a><\/td><td>原片說覺得難可先專注流模型<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=3129s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"3129\">52:09<\/a><\/td><td>有人問為什麼是 √h，先自己答再聽<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=3333s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"3333\">55:33<\/a><\/td><td>dX_t 的寫法，第一次可跳到 <a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=3945s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"3945\">65:45<\/a><\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=9eJQQVrUUoI&amp;t=4381s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L01\" data-t=\"4381\">73:01<\/a><\/td><td>「沒有真正差別」指的是抽樣步驟<\/td><\/tr><\/tbody><\/table><\/div>\n<p><strong>與講義不同的地方<\/strong>：投影片的迴圈寫到 n−1，講義寫到 n。要走到 t=1 需要 n 步，以講義為準。<\/p>\n<h3>練習：動手走兩步<\/h3>\n<p>向量場 u = −θx，θ=0.25，起點 x=10，步長 h=1。用 Euler 法走兩步，寫出每一步的位置。接著算：n=100 時，抖動乘 1、乘 h、乘 √h，走到 t=1 的總變異數各是多少？<\/p>\n<details class=\"answers\"><summary>參考答案（先自己答，再打開）<\/summary>\n<ol><li>生成一張圖，就是從資料分布抽一個樣本。t=0 是抽得到的雜訊，t=1 是資料。這個方向和 DDPM 常見的寫法相反。<\/li><li>輸出向量場，也就是往哪走的箭頭，不是圖；圖是一步一步走出來的。ODE 沒有隨機項，隨機只發生在起點，所以同一起點兩次路線一樣。<\/li><li>獨立的隨機量相加，變異數也相加；乘上一個數，變異數乘它的平方。乘 √h 時每步變異數是 h，加 n 次剛好是 1，切成幾步結果都一樣。乘 h 時總變異數是 h，步數越多越接近 0，隨機性消失；乘 1 時總變異數是 n，會爆炸。<\/li><\/ol>\n<p><strong>練習答案<\/strong>：10 → 7.5 → 5.625。總變異數：乘 1 是 100，乘 h 是 0.01，乘 √h 是 1。<\/p>\n<p>片中粒子與 8 張圖都是簡化模型，只用來看機制，不代表真實影像模型的表現。<\/p>\n<\/details>","duration":"9:57","thumb":"data/thumb_01.jpg","status":"live"},{"no":"02","title":"流匹配","lecture":"L02","youtube":"OQiaBzs-Eyg","topic":"機率路徑、向量場、flow matching","range":null,"question":"沒有人知道那個把雜訊推成資料的向量場，要怎麼訓練網路學會它？","timeline":[[0,"片頭"],[14,"小節 1｜向量場到底從哪裡來？"],[43,"小節 2｜如果目的地只有一筆資料，路好畫嗎？"],[127,"小節 3｜照這根箭頭走，會得到什麼？"],[155,"小節 4｜全部資料混在一起，中間長什麼樣？"],[192,"小節 5｜站在一個位置，該往哪走？"],[248,"小節 6｜這個平均，真的把機率搬對了嗎？"],[282,"小節 7｜算不動的東西，怎麼當訓練目標？"],[394,"小節 8｜損失降不到 0，是訓練失敗嗎？"],[474,"小節 9｜實際訓練要做幾件事？"],[529,"小節 10｜打開原片看哪裡，下一堂解決什麼？"]],"sheet":"<p><a href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\">打開原片<\/a>。建議用<a href=\"#L02\" data-lec=\"L02\">原片字幕頁<\/a>，可逐句重聽、調慢速度；公式以投影片畫面為準。<\/p>\n<h3>看前導片之前：先答一次<\/h3>\n<p>先寫下答案，不查資料。看完原片後再答同樣三題，比較自己的差異。<\/p>\n<ol><li>只照條件向量場走，粒子最後到哪？為什麼還要邊際向量場？<\/li><li>直線時，回歸目標是什麼？為什麼不直接對邊際向量場回歸？<\/li><li>條件損失停在大於 0 的值，是失敗嗎？它和邊際損失是什麼關係？<\/li><\/ol>\n<h3>今天的八個詞<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>中文<\/th><th>英文<\/th><th>符號<\/th><th>白話<\/th><\/tr><\/thead><tbody><tr><td>條件<\/td><td>conditional<\/td><td>p_t(x|z)、u_t(x|z)<\/td><td>只看一筆資料<\/td><\/tr><tr><td>邊際<\/td><td>marginal<\/td><td>p_t(x)、u_t(x)<\/td><td>全部資料混在一起，忘掉是哪一筆<\/td><\/tr><tr><td>機率路徑<\/td><td>probability path<\/td><td>p_t<\/td><td>從雜訊到資料，每個時間的分布<\/td><\/tr><tr><td>高斯機率路徑<\/td><td>Gaussian probability path<\/td><td>N(α_t z, β_t² I)<\/td><td>每個時間都是鐘形，中心移向 z，寬度縮到 0<\/td><\/tr><tr><td>條件向量場<\/td><td>conditional vector field<\/td><td>u_t(x|z)<\/td><td>往某一筆資料走的箭頭，直線時就是 z − ε<\/td><\/tr><tr><td>邊際向量場<\/td><td>marginal vector field<\/td><td>u_t(x)<\/td><td>各筆箭頭按份量的加權平均<\/td><\/tr><tr><td>流匹配損失<\/td><td>flow matching loss<\/td><td>L_FM(θ)<\/td><td>網路和真正要的箭頭差多少，算不動<\/td><\/tr><tr><td>條件流匹配損失<\/td><td>conditional flow matching loss<\/td><td>L_CFM(θ)<\/td><td>網路和一條路的箭頭差多少，算得動<\/td><\/tr><\/tbody><\/table><\/div>\n<h3>聽得出這三個詞<\/h3>\n<ul class=\"checks\"><li class=\"check\"><input type=\"checkbox\" id=\"chk-02-1\"><label for=\"chk-02-1\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3294s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3294\">54:54<\/a>：tractable，算得動；not tractable 就是算不動<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-02-2\"><label for=\"chk-02-2\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3380s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3380\">56:20<\/a>：regress against，把某個量當答案去逼近<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-02-3\"><label for=\"chk-02-3\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3729s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3729\">62:09<\/a>：minimizer，讓損失最小的那組參數，不是最小值本身<\/label><\/li><\/ul>\n<h3>原片導航<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>時間<\/th><th>看什麼<\/th><\/tr><\/thead><tbody><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=169s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"169\">02:49<\/a><\/td><td>那張表，全堂都在填它<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3055s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3055\">50:55<\/a><\/td><td>時間有限，從這裡開始<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3553s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3553\">59:13<\/a><\/td><td>差一個常數，本堂高潮<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=4300s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"4300\">71:40<\/a><\/td><td>免模擬（simulation-free）：訓練全程不跑 ODE<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=4574s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"4574\">76:14<\/a><\/td><td>直線排程，最值得看<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=2086s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"2086\">34:46<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3923s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3923\">65:23<\/a><\/td><td>證明不必會，可先跳<\/td><\/tr><\/tbody><\/table><\/div>\n<p><strong>三個陷阱<\/strong>：<\/p>\n<ol><li><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=2180s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"2180\">36:20<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=2209s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"2209\">36:49<\/a> 與投影片 p.20 把連續方程式的符號說反了。依講義：增加＝流入－流出。<\/li><li><a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3814s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3814\">63:34<\/a> 說最小值相同是口誤。最小值不同，minimizer 相同（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=PNkMKWW8Khw&amp;t=3729s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L02\" data-t=\"3729\">62:09<\/a>）。<\/li><li>兩個損失不相等。L_FM = L_CFM + C 這條式子投影片沒有，寫在黑板和講義第 20 頁。<\/li><\/ol>\n<h3>練習：算一根箭頭<\/h3>\n<p>一維的直線路徑，z=3，ε=−1，t=0.5。算出位置 x，再用 z − ε 和 (z − x)/(1 − t) 各算一次箭頭，確認兩者相同。<\/p>\n<details class=\"answers\"><summary>參考答案（先自己答，再打開）<\/summary>\n<ol><li>全部收到同一筆資料 z，只是重現手上那一筆。我們要的是走向全部資料的路，所以需要邊際向量場。<\/li><li>目標是 z − ε。邊際向量場每算一根箭頭都要掃過全部資料，算不動。訓練時回歸條件箭頭就夠了，網路平均後學到的就是邊際向量場。<\/li><li>不是失敗。同一個位置有好幾個答案，不可能全對，所以損失有底；片中簡化模型的底約 3.35，這個數字只屬於這個模型。兩者關係是 L_FM = L_CFM + C，C 與 θ 無關，所以平均來說下坡方向相同；它們不相等，單一批次的方向也不一定相同。<\/li><\/ol>\n<p><strong>練習答案<\/strong>：x = 0.5×3 + 0.5×(−1) = 1。z − ε = 4；(3 − 1)/(1 − 0.5) = 4。<\/p>\n<p>片中粒子與 8 張圖都是簡化模型，只用來看機制，不代表真實影像模型的表現。<\/p>\n<\/details>","duration":"10:19","thumb":"data/thumb_02.jpg","status":"live"},{"no":"03","title":"分數匹配","lecture":"L03A","youtube":"RCD-PufM7Ps","topic":"score function、score matching、SDE 抽樣","range":null,"question":"流模型已經學好了，要怎麼加雜訊又不把結果弄壞？","timeline":[[0,"片頭"],[14,"小節 1｜為什麼要多學一個東西？"],[40,"小節 2｜分數：山坡上的箭頭"],[92,"小節 3｜一筆資料與全部資料"],[166,"小節 4｜換個寫法而已"],[211,"小節 5｜分數匹配，同一招"],[258,"小節 6｜其實是在猜雜訊"],[340,"小節 7｜加雜訊，推回來"],[409,"小節 8｜為什麼 σ 可以任選"],[472,"小節 9｜理論與實務"],[546,"小節 10｜打開原片看哪裡？"]],"sheet":"<p><a href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\">打開原片<\/a>。建議用<a href=\"#L03A\" data-lec=\"L03A\">原片字幕頁<\/a>，可逐句重聽、調慢速度；公式以投影片畫面為準。<\/p>\n<h3>看前導片之前：先答一次<\/h3>\n<p>先寫下答案，不查資料。看完原片後再答同樣三題，比較自己的差異。<\/p>\n<ol><li>條件分數的箭頭指向哪裡？和條件向量場同方向嗎？<\/li><li>網路猜雜訊，為什麼等於在學分數？為什麼不直接回歸分數？<\/li><li>流模型只加雜訊會怎樣？要加什麼才對？σ 真的什麼值都可以嗎？<\/li><\/ol>\n<h3>今天的八個詞<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>中文<\/th><th>英文<\/th><th>符號<\/th><th>白話<\/th><\/tr><\/thead><tbody><tr><td>對數概似<\/td><td>log-likelihood<\/td><td>log q(x)<\/td><td>機率取 log 之後的高度<\/td><\/tr><tr><td>梯度<\/td><td>gradient<\/td><td>∇<\/td><td>上升最快的方向<\/td><\/tr><tr><td>分數函數<\/td><td>score function<\/td><td>s(x)=∇log q(x)<\/td><td>往機率變大最快的方向指一根箭頭<\/td><\/tr><tr><td>條件分數<\/td><td>conditional score<\/td><td>∇log p_t(x|z)<\/td><td>只看一筆資料時的分數，指向 α_t z<\/td><\/tr><tr><td>邊際分數<\/td><td>marginal score<\/td><td>∇log p_t(x)<\/td><td>全部資料按份量投票的分數<\/td><\/tr><tr><td>重新參數化<\/td><td>reparameterization<\/td><td>u_t=a_t s_t+b_t x<\/td><td>同一件事，換個寫法，只限高斯路徑<\/td><\/tr><tr><td>去雜訊分數匹配<\/td><td>denoising score matching<\/td><td>L_CSM<\/td><td>給資料加雜訊，再學怎麼指回去<\/td><\/tr><tr><td>SDE 延伸技巧<\/td><td>SDE extension trick<\/td><td>dX=[u+(σ²/2)s]dt+σdW<\/td><td>加雜訊，同時用分數推回來<\/td><\/tr><\/tbody><\/table><\/div>\n<h3>聽得出這三個詞<\/h3>\n<ul class=\"checks\"><li class=\"check\"><input type=\"checkbox\" id=\"chk-03-1\"><label for=\"chk-03-1\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1132s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1132\">18:52<\/a>：brushing over，快速帶過；這段聽不完整沒關係<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-03-2\"><label for=\"chk-03-2\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2432s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2432\">40:32<\/a>：theory practice gap，理論和實務的落差<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-03-3\"><label for=\"chk-03-3\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2528s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2528\">42:08<\/a>：ablate over，一個一個試過去比較；<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2710s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2710\">45:10<\/a> 自動字幕寫成 a blade<\/label><\/li><\/ul>\n<h3>原片導航<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>時間<\/th><th>看什麼<\/th><\/tr><\/thead><tbody><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=146s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"146\">02:26<\/a><\/td><td>分數的定義<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=594s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"594\">09:54<\/a><\/td><td>換算公式<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=837s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"837\">13:57<\/a><\/td><td>去雜訊分數匹配<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1122s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1122\">18:42<\/a><\/td><td>其實在猜雜訊<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1288s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1288\">21:28<\/a><\/td><td>SDE 延伸技巧<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1658s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1658\">27:38<\/a><\/td><td>散開與推回<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2419s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2419\">40:19<\/a><\/td><td>為什麼還要比較 σ<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2689s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2689\">44:49<\/a><\/td><td>小結<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1720s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1720\">28:40<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2298s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2298\">38:18<\/a><\/td><td>證明不必會，第一次可跳過<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2379s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2379\">39:39<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2411s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2411\">40:11<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2576s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2576\">42:56<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2688s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2688\">44:48<\/a><\/td><td>蛋白質例子、Langevin 旁支，可先跳<\/td><\/tr><\/tbody><\/table><\/div>\n<p><strong>四個陷阱<\/strong>：<\/p>\n<ol><li><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1775s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1775\">29:35<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=1892s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"1892\">31:32<\/a> 的正負號說反了。依講義 p.29：增加＝流入－流出。<\/li><li><a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2275s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2275\">37:55<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=ngC3QnYSVNM&amp;t=2351s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03A\" data-t=\"2351\">39:11<\/a> 說不必訓練，意思是不必<strong>重新<\/strong>訓練。<\/li><li>講義 p.32 說丟掉常數 1/β²，它隨 t 變，其實是重新加權；投影片 p.15 的不穩定，口頭沒說。<\/li><li>本課 t=0 是雜訊、t=1 是資料，別的論文常相反，先確認方向（講義 p.84）。<\/li><\/ol>\n<h3>練習：算一根箭頭<\/h3>\n<p>一維的直線路徑，z=2，ε=1，t=0.5。α_t=t，β_t=1−t。<\/p>\n<ol><li>算出位置 x。<\/li><li>用 −(x−α_t z)/β_t² 和 −ε/β_t 各算一次條件分數，確認兩者相同。<\/li><li>用 a=(1−t)/t、b=1/t 算 a·s＋b·x，再和 z−ε 比較。<\/li><\/ol>\n<details class=\"answers\"><summary>參考答案（先自己答，再打開）<\/summary>\n<ol><li>指向此刻雲的中心 α_t z，不是 z。條件向量場指向 z，所以兩者一般不同方向；片中簡化模型的夾角中位數是 42.1 度，這個數字只屬於這個模型。<\/li><li>條件分數化簡後是 −ε/β_t，所以知道雜訊就知道答案，分數網路和雜訊網路差一個 −β_t。直接回歸時，t 接近 1 的答案太大，損失會出現巨大尖峰；雜訊的大小固定，訓練穩定很多。兩種損失不是差常數，是重新加權。<\/li><li>只加雜訊，分布會散開、螺旋會糊掉。要加修正項：分數乘 σ²/2。理論上 σ 任選，因為散開與推回一起和 σ² 成正比；實務上步數要跟 σ² 一起增加。片中簡化模型不報最佳 σ。<\/li><\/ol>\n<p><strong>練習答案<\/strong>：x = 0.5×2 + 0.5×1 = 1.5。−(1.5−1)/0.25 = −2；−1/0.5 = −2。a=1、b=2：1×(−2) + 2×1.5 = 1；z−ε = 1。<\/p>\n<p>片中粒子、三筆資料與小網路都是簡化模型，只用來看機制，不代表真實影像模型的表現；高維與真實圖片沒有驗證。<\/p>\n<\/details>","duration":"10:25","thumb":"data/thumb_03.jpg","status":"live"},{"no":"04","title":"無分類器引導","lecture":"L03B","youtube":"lAkPQQ0XjDk","topic":"classifier-free guidance","range":null,"question":"怎麼讓模型更聽提示的話？代價是什麼？","timeline":[[0,"片頭"],[14,"小節 1｜把提示放進去"],[68,"小節 2｜理論上做完了"],[114,"小節 3｜拆出提示的部分"],[169,"小節 4｜放大它"],[216,"小節 5｜分類器消失"],[286,"小節 6｜一個網路，偶爾不告訴它"],[345,"小節 7｜轉大之後，樣本去哪"],[435,"小節 8｜得到什麼，失去什麼"],[503,"小節 9｜打開原片看哪裡"]],"sheet":"<p><a href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\">打開原片<\/a>。建議用<a href=\"#L03B\" data-lec=\"L03B\">原片字幕頁<\/a>，可逐句重聽、調慢速度；公式以投影片與講義為準。<\/p>\n<h3>看前導片之前：先答一次<\/h3>\n<p>先寫下答案，不查資料。看完原片後再答同樣三題，比較自己的差異。<\/p>\n<ol><li>w=1 時，引導後的向量場等於哪一根箭頭？w=0 呢？<\/li><li>沒有訓練分類器，為什麼還能得到放大分類器的效果？訓練時要多做哪一件事？<\/li><li>w 變大，樣本會停在資料團的中心嗎？得到什麼，失去什麼？<\/li><\/ol>\n<h3>今天的八個詞<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>中文<\/th><th>英文<\/th><th>符號<\/th><th>白話<\/th><\/tr><\/thead><tbody><tr><td>提示<\/td><td>prompt<\/td><td>y<\/td><td>你告訴模型要什麼；可以是類別或一句文字<\/td><\/tr><tr><td>引導向量場<\/td><td>guided vector field<\/td><td>u_t(x|y)<\/td><td>多看提示的箭頭<\/td><\/tr><tr><td>基本引導<\/td><td>vanilla guidance<\/td><td>w=1<\/td><td>只把 y 多餵給網路，其他都不變<\/td><\/tr><tr><td>分類器<\/td><td>classifier<\/td><td>p_t(y|x)<\/td><td>看一眼（有雜訊的）資料，猜它是哪一類<\/td><\/tr><tr><td>分類器引導<\/td><td>classifier guidance<\/td><td>u(x)+w a_t∇log p_t(y|x)<\/td><td>把分類器那一塊放大；要多訓練一個模型<\/td><\/tr><tr><td>引導強度<\/td><td>guidance scale<\/td><td>w<\/td><td>提示要放大幾倍；1 是不放大<\/td><\/tr><tr><td>無分類器引導<\/td><td>classifier-free guidance（CFG）<\/td><td>(1−w)u(x|∅)+w u(x|y)<\/td><td>用兩根箭頭的差取代分類器<\/td><\/tr><tr><td>空標記<\/td><td>empty token<\/td><td>∅<\/td><td>告訴網路「這次沒有提示」；訓練時偶爾蓋掉標籤<\/td><\/tr><\/tbody><\/table><\/div>\n<p>注意：<strong>conditional<\/strong> 在本系列指一筆資料 z；對提示 y 用 <strong>guided<\/strong>。原片兩種都說 conditional。<\/p>\n<h3>聽得出這三個詞<\/h3>\n<ul class=\"checks\"><li class=\"check\"><input type=\"checkbox\" id=\"chk-04-1\"><label for=\"chk-04-1\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=376s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"376\">06:16<\/a>：reinforce，加強；要想辦法讓模型更聽提示<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-04-2\"><label for=\"chk-04-2\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2023s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2023\">33:43<\/a>：heuristic，經驗做法；有道理，但沒有保證<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-04-3\"><label for=\"chk-04-3\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2221s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2221\">37:01<\/a>：collapse to the modes，擠到少數幾團；<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2055s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2055\">34:15<\/a> 也這樣說。不是收到峰頂<\/label><\/li><\/ul>\n<h3>原片導航<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>時間<\/th><th>看什麼<\/th><\/tr><\/thead><tbody><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=333s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"333\">05:33<\/a><\/td><td>為什麼還不夠<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=554s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"554\">09:14<\/a><\/td><td>貝氏定理<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=917s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"917\">15:17<\/a><\/td><td>放大分類器那一塊<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1139s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1139\">18:59<\/a><\/td><td>分類器的麻煩<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1260s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1260\">21:00<\/a><\/td><td>無分類器引導 CFG<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1564s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1564\">26:04<\/a><\/td><td>w=1 會怎樣<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1643s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1643\">27:23<\/a><\/td><td>空標記<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1804s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1804\">30:04<\/a><\/td><td>成果對比（在原片看）<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1856s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1856\">30:56<\/a><\/td><td>訓練時丟標籤<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2023s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2023\">33:43<\/a><\/td><td>經驗做法<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2248s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2248\">37:28<\/a><\/td><td>每步兩次呼叫<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2281s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2281\">38:01<\/a><\/td><td>下一堂<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=389s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"389\">06:29<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=469s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"469\">07:49<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2155s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2155\">35:55<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2239s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2239\">37:19<\/a><\/td><td>兩段問答，第一次可略過<\/td><\/tr><tr><td>投影片 p.38–43<\/td><td>這堂沒講（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2272s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2272\">37:52<\/a>）；查文獻看講義 Appendix E<\/td><\/tr><\/tbody><\/table><\/div>\n<p><strong>四個陷阱<\/strong>：<\/p>\n<ol><li><strong>conditional<\/strong>：<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=232s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"232\">03:52<\/a> 指 z；<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=323s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"323\">05:23<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1914s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1914\">31:54<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=2255s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"2255\">37:35<\/a> 指提示 y。<\/li><li><a class=\"ts\" href=\"https://www.youtube.com/watch?v=8oWZ1bHwyRI&amp;t=1987s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L03B\" data-t=\"1987\">33:07<\/a> 的「放大 3 倍」是從看提示的箭頭多加 3 份；從不看提示的箭頭算是 4 倍，兩者相同。<\/li><li>投影片 p.37 的三團圖不是 CFG 的樣本，是原論文的傾斜密度。<\/li><li>本課 w=1 是基本引導；原論文的 w 差 1（論文的 w=0 才是不引導，論文 w=3＝本課 w=4）。<\/li><\/ol>\n<h3>練習：算一根箭頭<\/h3>\n<p>同一個點、同一個時間，網路給了兩根箭頭（一維）：不看提示 u(x|∅)=0.2，看提示 u(x|y)=1.0。<\/p>\n<ol><li>提示的部分（兩者的差）是多少？<\/li><li>用 ũ=(1−w)u(x|∅)+w u(x|y) 算 w=0、1、4 的 ũ。<\/li><li>用 u(x|y)+(w−1)(差) 再算一次 w=4，確認相同；再算錯誤寫法 u(x|∅)+(w−1)(差)，看差多少。<\/li><\/ol>\n<details class=\"answers\"><summary>參考答案（先自己答，再打開）<\/summary>\n<ol><li>w=1 時就是看提示的箭頭 u(x|y)，也就是基本引導；w=0 時只剩不看提示的箭頭 u(x|∅)。所以 w=1 不是「沒有引導」，w=0 才是。<\/li><li>分類器那一塊（乘上 a_t 之後）剛好等於「看提示的箭頭減掉不看提示的箭頭」，代進放大的式子後，分類器就消失了，只剩兩根向量場加權相加。兩根箭頭由同一個網路給：訓練時偶爾把標籤蓋成空標記 ∅。一次都不蓋，不看提示的那一支從沒練過，放大後就壞掉。免的只有分類器。代價是抽樣時每步要呼叫網路兩次，網路的小誤差也會被 w 放大。<\/li><li>不會。樣本越過團的中心繼續往外，只在分得出類別的方向變窄，與類別無關的方向不變。得到：比資料本身還對題（片中標錯的比例從 0.196 降到 0.0033）。失去：與別類共用、完全正當的那一部分也被抽乾（0.512 降到 0.005），樣本不再來自原本的資料分布。w 該多大沒有通則。<\/li><\/ol>\n<p><strong>練習答案<\/strong>：差＝1.0−0.2＝0.8。w=0：0.2；w=1：1.0；w=4：(1−4)×0.2＋4×1.0＝3.4。u(x|y)+3×0.8＝3.4，相同。錯誤寫法 0.2＋3×0.8＝2.6，差 0.8，剛好少了一份差。<\/p>\n<p>片中粒子、兩團、螺旋與小網路都是簡化模型，只用來看機制，不代表真實影像模型的表現；高維、真實圖片與文字提示沒有驗證。練習的 0.2、1.0 是手設的教學例，不來自計算結果，也不在影片畫面。<\/p>\n<\/details>","duration":"9:51","thumb":"data/thumb_04.jpg","status":"live"},{"no":"05","title":"潛在空間與 VAE","lecture":"L04","youtube":null,"topic":"潛在空間、自編碼器、VAE、潛在擴散","range":"原片 00:00–57:38","question":"影像太大、太冗餘，能不能先壓縮再生成？","timeline":[],"sheet":null,"duration":null,"thumb":null,"status":"making"},{"no":"06","title":"網路架構與案例","lecture":"L04","youtube":null,"topic":"時間與提示編碼、DiT、U-Net、案例","range":"原片 57:38–1:20:56","question":"向量場的網路實際上長什麼樣？","timeline":[],"sheet":"<p><a href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\">打開原片<\/a>（本段從 <a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3459s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3459\">57:39<\/a> 開始）。建議用<a href=\"#L04\" data-lec=\"L04\">原片字幕頁<\/a>，可逐句重聽、調慢速度；公式以投影片與講義為準。<\/p>\n<h3>看前導片之前：先答一次<\/h3>\n<p>先寫下答案，不查資料。看完原片後再答同樣三題，比較自己的差異。<\/p>\n<ol><li>向量場網路吃進 x、t、y，輸出什麼形狀？那是一張圖嗎？<\/li><li>一張 4×32×32 的潛在影像用 2×2 切塊，會變成幾個向量？如果改在 3×256×256 的像素影像上做（一樣 2×2 切），注意力要比對的格子大約變成幾倍？<\/li><li>讀 SD3 論文看到 t=0，那是雜訊還是資料？跟本課一樣嗎？<\/li><\/ol>\n<h3>今天的八個詞<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>中文<\/th><th>英文<\/th><th>符號<\/th><th>白話<\/th><\/tr><\/thead><tbody><tr><td>嵌入<\/td><td>embedding<\/td><td>—<\/td><td>把一個東西換成一條向量；時間嵌入、提示嵌入是兩個用法<\/td><\/tr><tr><td>切塊<\/td><td>patchify<\/td><td>N=(H/P)(W/P)<\/td><td>切小塊、攤平、排成一串；反過來叫拼回（unpatchify）<\/td><\/tr><tr><td>注意力<\/td><td>attention<\/td><td>softmax(QKᵀ/√d_h)V<\/td><td>每一塊拿自己的問題（query）去比對所有塊的標籤（key），按權重平均內容（value）<\/td><\/tr><tr><td>自注意力<\/td><td>self-attention<\/td><td>—<\/td><td>問題、標籤、內容都來自影像自己<\/td><\/tr><tr><td>交叉注意力<\/td><td>cross-attention<\/td><td>—<\/td><td>問題來自影像，標籤和內容來自文字；輸出個數跟影像塊一樣多<\/td><\/tr><tr><td>自適應層正規化<\/td><td>adaptive layer normalization（adaLN）<\/td><td>—<\/td><td>先把每塊拉到同一個尺度，再由 t 決定每個通道放大多少、平移多少<\/td><\/tr><tr><td>擴散 Transformer<\/td><td>diffusion transformer（DiT）<\/td><td>—<\/td><td>同一種方塊疊很多層，每層有注意力、小網路與殘差<\/td><\/tr><tr><td>時間慣例<\/td><td>time convention<\/td><td>t=0<\/td><td>一篇論文的 t=0 是雜訊還是資料；本課 t=0 是雜訊<\/td><\/tr><\/tbody><\/table><\/div>\n<p>注意：<strong>time embedding<\/strong> 片中叫「時間嵌入」，投影片標題 Encoding Time 譯作「時間編碼」，是同一件事。<\/p>\n<h3>聽得出這三個詞<\/h3>\n<ul class=\"checks\"><li class=\"check\"><input type=\"checkbox\" id=\"chk-06-1\"><label for=\"chk-06-1\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3532s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3532\">58:52<\/a>：boost up，撐大；把只有一個數字的時間，撐成一條長向量<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-06-2\"><label for=\"chk-06-2\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3758s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3758\">62:38<\/a>：beyond the scope，超出這堂課的範圍；這句之後 Transformer 講得很快，看不懂是正常的<\/label><\/li><li class=\"check\"><input type=\"checkbox\" id=\"chk-06-3\"><label for=\"chk-06-3\"><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3788s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3788\">63:08<\/a>：flavors，各種版本，不是口味；<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4008s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4008\">66:48<\/a> 又說一次<\/label><\/li><\/ul>\n<h3>原片導航<\/h3>\n<div class=\"table-wrap\"><table><thead><tr><th>時間<\/th><th>看什麼<\/th><\/tr><\/thead><tbody><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3459s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3459\">57:39<\/a><\/td><td>開講：網路架構<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3504s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3504\">58:24<\/a><\/td><td>網路輸出什麼<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3522s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3522\">58:42<\/a><\/td><td>時間怎麼變成向量<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3573s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3573\">59:33<\/a><\/td><td>文字提示<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3672s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3672\">61:12<\/a><\/td><td>影像<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3699s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3699\">61:39<\/a><\/td><td>切塊<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3788s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3788\">63:08<\/a><\/td><td>DiT<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3884s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3884\">64:44<\/a><\/td><td>注意力<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3945s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3945\">65:45<\/a><\/td><td>自注意力<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3967s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3967\">66:07<\/a><\/td><td>交叉注意力<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3989s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3989\">66:29<\/a><\/td><td>adaLN<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4024s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4024\">67:04<\/a><\/td><td>去做 Lab 3<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4060s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4060\">67:40<\/a><\/td><td>SD3<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4219s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4219\">70:19<\/a><\/td><td>MovieGen<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4342s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4342\">72:22<\/a><\/td><td>影片的切塊<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4427s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4427\">73:47<\/a><\/td><td>時間慣例<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4820s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4820\">80:20<\/a><\/td><td>下一堂<\/td><\/tr><tr><td><a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4299s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4299\">71:39<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4338s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4338\">72:18<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4374s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4374\">72:54<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4385s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4385\">73:05<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4546s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4546\">75:46<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4598s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4598\">76:38<\/a>、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4701s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4701\">78:21<\/a>–<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4809s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4809\">80:09<\/a><\/td><td>問答與一張圖，第一次可略過<\/td><\/tr><\/tbody><\/table><\/div>\n<p><strong>五個陷阱<\/strong>：<\/p>\n<ol><li><strong>網路輸出不是圖片<\/strong>（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=3509s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"3509\">58:29<\/a>）：形狀與 x 相同，內容是速度。<\/li><li><strong>SD3 不是交叉注意力<\/strong>（投影片 p.31、<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4196s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4196\">69:56<\/a>）：SD3 把文字與影像塊接成一串一起做注意力；MovieGen 才用交叉注意力。<\/li><li><strong>兩種時間<\/strong>（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4299s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4299\">71:39<\/a>）：t 是加噪進度，T 是影片的幀。<\/li><li><strong>6,000 張 GPU<\/strong>（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4358s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4358\">72:38<\/a>）：口頭約數；MovieGen 論文寫最多 6,144 張 H100。<\/li><li><strong>時間慣例<\/strong>（<a class=\"ts\" href=\"https://www.youtube.com/watch?v=g0MB1CCBmsI&amp;t=4427s\" target=\"_blank\" rel=\"noopener\" data-lec=\"L04\" data-t=\"4427\">73:47<\/a>）：SD3 論文 t=0 是資料，MovieGen 與本課 t=0 是雜訊。<\/li><\/ol>\n<p>另外兩個寫法差異：投影片 p.22 的時間嵌入係數讓長度只有 0.707，以講義式 (68) 為準；講義 U-Net 的中間層也叫 latent，數字是輸入的 2.67 倍，不是壓縮。<\/p>\n<h3>練習：算塊數與格子數<\/h3>\n<ol><li>一張 4×32×32 的潛在影像，用 P=4 切塊，會得到幾個向量？每個向量有幾個數？<\/li><li>同一張用 P=1 切，塊數是 P=4 的幾倍？注意力要比對的格子又是幾倍？<\/li><li>一張 3×32×48 的影像，用 P=4 切，會得到幾個向量？<\/li><\/ol>\n<details class=\"answers\"><summary>參考答案（先自己答，再打開）<\/summary>\n<ol><li>是一個形狀和 x 一樣的東西：4×32×32。可是它不是圖，每一格裝的是速度，告訴此刻這一點該往哪裡走。圖片要沿著箭頭解 ODE，一步一步走出來。<\/li><li>256 個（高 16 格、寬 16 格，每塊 4×2×2＝16 個數）。像素影像一樣 2×2 切有 16,384 塊，是 64 倍；注意力要比對的格子是塊數的平方，所以是 64×64＝4,096 倍。數字個數只差 48 倍（196,608 對 4,096），三個倍數不要混用。像素影像也用 2×2 切是假設情境。<\/li><li>是資料。SD3 論文的 t 方向和本課相反（t=0 資料、t=1 雜訊）。片中的簡化模型裡，不換算直接套用，粒子會飛到大約 −6.6，而資料在 2 附近。<\/li><\/ol>\n<p><strong>練習答案<\/strong>：1. (32/4)×(32/4)＝64 個，每個 4×4×4＝64 個數。2. P=1 有 1,024 塊，是 64 塊的 16 倍；格子是 16×16＝256 倍。3. (32/4)×(48/4)＝8×12＝96 個，每個 3×4×4＝48 個數。<\/p>\n<p>片中注意力、adaLN 與小 DiT 的權重都是隨機數、沒有訓練，只看形狀；時間慣例的粒子實驗是一維高斯的簡化模型。練習題的 64、1,024、96 與片中計算一致（P=4、P=1 的塊數、長方形切塊都已實算）。<\/p>\n<\/details>","duration":null,"thumb":null,"status":"making"},{"no":"07","title":"離散擴散","lecture":"L05","youtube":null,"topic":"CTMC 與離散擴散","range":null,"question":"文字這種離散資料，也能用流與擴散生成嗎？","timeline":[],"sheet":null,"duration":null,"thumb":null,"status":"planned"}],"lectures":{"L01":{"label":"Lecture 01","video":"9eJQQVrUUoI","length":"1:18:03","topic":"生成即抽樣、ODE、SDE、模擬","subs":true},"L02":{"label":"Lecture 02","video":"PNkMKWW8Khw","length":"1:23:24","topic":"機率路徑、向量場、flow matching","subs":true},"L03A":{"label":"Lecture 03A","video":"ngC3QnYSVNM","length":"45:44","topic":"score function、score matching、SDE 抽樣","subs":true},"L03B":{"label":"Lecture 03B","video":"8oWZ1bHwyRI","length":"39:12","topic":"classifier-free guidance","subs":true},"L04":{"label":"Lecture 04","video":"g0MB1CCBmsI","length":"1:20:56","topic":"潛在空間、VAE、網路架構","subs":true},"L05":{"label":"Lecture 05","video":"d0kmyEJN2hI","length":"1:21:11","topic":"CTMC 與離散擴散","subs":false}},"glossary":[["generative model","生成模型","01","聽過就好",""],["data distribution","資料分布","01","錨定","p_data"],["initial distribution","初始分布","01","聽過就好","p_init，通常是高斯雜訊"],["sampling","抽樣","01","錨定",""],["conditional generation","條件生成","01","聽過就好","第 3 堂主場"],["vector field","向量場","01","錨定","u_t(x)"],["trajectory","軌跡","01","聽力詞",""],["flow","流","01","聽過就好","ψ_t；單元 01 新增"],["flow model","流模型","01","錨定","網路輸出向量場"],["diffusion model","擴散模型","01","聽過就好","σ=0 時即流模型"],["ordinary differential equation","常微分方程","01","錨定","縮寫 ODE"],["stochastic differential equation","隨機微分方程","01","錨定","縮寫 SDE"],["Euler method","尤拉法","01","聽過就好","原片口頭未說，見 p.21"],["Euler–Maruyama method","Euler–Maruyama 法","01","聽過就好","原片口頭未說，見 p.31"],["Ornstein–Uhlenbeck process","OU 過程","01","聽過就好","θ 為回拉係數，不是網路參數"],["Picard–Lindelöf theorem","Picard–Lindelöf 定理","01","聽過就好","只出現在 p.19"],["dataset","資料集","01","聽過就好",""],["step size","步長","01","聽過就好","h"],["initial condition","初始條件","01","聽過就好",""],["stochastic process","隨機過程","01","聽過就好",""],["Brownian motion","布朗運動","01","錨定","W_t"],["diffusion coefficient","擴散係數","01","錨定","σ_t"],["is given by","由……決定","01","聽力詞",""],["scaled by","乘上……調整大小","01","聽力詞",""],["probability path","機率路徑","02","錨定","從雜訊到資料中間每個時間的分布；只規定分布，不規定單顆粒子怎麼走（p.8）"],["conditional probability path","條件機率路徑","02","聽過就好","p_t(x|z)；由 conditional＋probability path 組成，不另算錨定"],["marginal probability path","邊際機率路徑","02","聽過就好","p_t(x)；由 marginal＋probability path 組成，不另算錨定"],["conditional vector field","條件向量場","02","錨定","u_t^target(x|z)；直線排程時等於 z−ε"],["marginal vector field","邊際向量場","02","錨定","u_t^target(x)；條件向量場的加權平均，網路要學的就是它"],["continuity equation","連續方程式","02","聽過就好","只給流入流出的直覺；p.20 與原片 36:20 的符號說法與講義相反，見單元 02 source_notes"],["flow matching","流匹配","02","聽過就好","單元名稱；可保留英文。錨定的是 flow matching loss"],["score function","分數函數","02","錨定","第 2 堂只預告；第 3 堂主場；∇log q(x)"],["conditional","條件","02","錨定","固定一個 z；原片：per single data point；只看一筆資料"],["marginal","邊際","02","錨定","z 隨機、最後忘掉 z；原片：across data points；全部資料混在一起"],["Gaussian probability path","高斯機率路徑","02","錨定","N(α_t z, β_t² I)；實務最常用"],["flow matching loss","flow matching 損失","02","錨定","L_FM；目標是邊際向量場，算不出來"],["conditional flow matching loss","條件 flow matching 損失","02","錨定","L_CFM；目標是條件向量場，算得出來；與 L_FM 差一個常數，不是相等"],["straight line schedule","直線排程","02","聽過就好","α_t=t、β_t=1−t；口頭未說這個名稱，見 p.26"],["noise scheduler","雜訊排程","02","聽過就好","α_t、β_t"],["Dirac delta","狄拉克分布","02","聽過就好","δ_z，抽到的永遠是 z"],["divergence","散度","02","聽過就好","淨流出；原片口頭與 p.20 的正負號要小心"],["marginalization trick","邊際化技巧","02","聽過就好","講義 Theorem 9"],["posterior","後驗","02","聽過就好","站在 x 時對「來自哪個 z」的相信程度"],["Bayes' rule","貝氏定理","02","聽過就好","自動字幕寫成 Base theorem"],["CondOT","CondOT 路徑","02","聽過就好","講義對直線排程路徑的稱呼；口頭未說"],["simulation-free","免模擬","02","聽過就好","訓練時不必跑 ODE"],["regress against","對……做回歸","02","聽力詞","把某個量當答案去逼近"],["tractable","算得動","02","聽力詞","有公式、電腦算得動"],["minimizer","讓損失最小的那組參數","02","聽力詞","不是最小值本身"],["log-likelihood","對數概似","03","錨定","log q(x)；自動字幕常寫成 lock likelihood"],["gradient","梯度","03","錨定","∇；上升最快的方向"],["conditional score","條件分數","03","錨定","∇log p_t(x|z)；高斯路徑時 −(x−α_t z)/β_t²；指向 α_t z，不是 z"],["marginal score","邊際分數","03","錨定","∇log p_t(x)；條件分數依後驗加權平均"],["reparameterization","重新參數化","03","錨定","同一件事換寫法；u=a_t s+b_t x，限高斯路徑"],["denoising score matching","去雜訊分數匹配","03","錨定","L_CSM（投影片寫 L_dsm）"],["SDE extension trick","SDE 延伸技巧","03","錨定","講者自己取的名字（21:28）；講義 Theorem 17"],["score network","分數網路","03","聽過就好","s_t^θ"],["score matching loss","分數匹配損失","03","聽過就好","L_SM；目標是邊際分數，算不動"],["noise predictor","雜訊預測網路","03","聽過就好","ε_t^θ=−β_t s_t^θ"],["DDPM","DDPM","03","聽過就好","講義 p.32；去掉 1/β² 權重"],["denoiser","去雜訊器","03","聽過就好","講義 Remark 16；口頭未說"],["Fokker–Planck equation","Fokker–Planck 方程式","03","聽過就好","連續方程式多一項；自動字幕錯得很嚴重"],["Laplacian","拉普拉斯算子","03","聽過就好","Δ；散開的量"],["heat equation","熱方程式","03","聽過就好","散開的直覺"],["Langevin dynamics","Langevin 動力學","03","聽過就好","u=0 的特例；旁支"],["brushing over","快速帶過","03","聽力詞","18:51"],["theory practice gap","理論與實務的落差","03","聽力詞","40:37"],["ablate over","一個個試過去比較","03","聽力詞","42:10；字幕也寫成 a blade over"],["prompt","提示","04","錨定","y；文字或類別；原片字幕寫作提示詞"],["guided vector field","引導向量場","04","錨定","u_t(x|y)；講義 Remark 25：對 y 用 guided，對 z 用 conditional"],["unguided vector field","無引導向量場","04","聽過就好","u_t(x)＝u_t(x|∅)；guided 的反面"],["vanilla guidance","基本引導","04","錨定","只把 y 餵給網路；w=1"],["classifier","分類器","04","錨定","p_t(y|x)；吃有噪資料"],["classifier guidance","分類器引導","04","錨定","u(x)+w a_t ∇log p_t(y|x)；講義式 (62)"],["classifier-free guidance","無分類器引導","04","錨定","CFG；(1−w)u(x|∅)+w u(x|y)；講義式 (65)"],["guidance scale","引導強度","04","錨定","w；1 是不放大；論文慣例可能差 1"],["empty token","空標記","04","錨定","∅；訓練時以機率 η 丟標籤"],["diversity","多樣性","04","聽過就好","35:09"],["saturated","過飽和","04","聽過就好","36:50"],["reinforce","加強","04","聽力詞","06:16"],["heuristic","經驗做法","04","聽力詞","33:43；有道理但沒有保證"],["collapse to the modes","擠到少數幾團","04","聽力詞","37:01；不是收到峰頂"],["latent space","潛在空間","05","錨定","壓縮後的小空間 R^k；k<d"],["latent variable","潛在變數","05","聽過就好","z；Lecture 04 起 z 是潛在、x 是資料"],["autoencoder","自編碼器","05","錨定","編碼器＋解碼器一起訓練"],["encoder","編碼器","05","聽過就好","μ_φ 或 q_φ(z|x)；併入 autoencoder 卡"],["decoder","解碼器","05","聽過就好","μ_θ 或 p_θ(x|z)；併入 autoencoder 卡"],["reconstruction loss","重建損失","05","錨定","壓了再還原和原圖差多少；σ 固定時是放大的平方誤差"],["variational autoencoder","變分自編碼器","05","錨定","VAE；編碼結果是一團（高斯），再拉向先驗"],["KL divergence","KL 散度","05","錨定","≥0，相同才是 0；不對稱"],["prior","先驗","05","錨定","p_prior=N(0"],["posterior collapse","後驗崩塌","05","錨定","β 太大時編碼器忽略 x；37:25 原片說成 mode collapse"],["reparameterization trick","重新參數化技巧","05","聽過就好","z=μ+σε；與單元 03 的 reparameterization（u 換寫法）同名不同事"],["latent diffusion model","潛在擴散模型","05","錨定","LDM；在潛在空間訓練，生成後解碼"],["compression","壓縮","05","聽過就好","k<d"],["redundancy","冗餘","05","聽力詞","02:25；相鄰像素幾乎一樣"],["nice distribution","好學的分布","05","聽力詞","21:04；這堂特指接近高斯"],["trade off","取捨","05","聽力詞","34:35"],["embedding","嵌入","06","錨定","把一個東西換成一條向量；time embedding、prompt embedding 是兩個用法"],["time embedding","時間嵌入","06","聽過就好","講義式 (68)；長度 1；投影片 p.22 係數有誤；投影片標題 Encoding Time 譯「時間編碼」"],["prompt embedding","提示嵌入","06","聽過就好","S×d 的一串向量；CLIP、T5"],["patchify","切塊","06","錨定","N=(H/P)(W/P)；反向 unpatchify 拼回"],["unpatchify","拼回","06","聽過就好","講義寫 Depatchify"],["token","詞元／一塊","06","聽過就好","序列中的一個向量"],["attention","注意力","06","錨定","softmax(QKᵀ/√d_h)V；一串進、一串出"],["query／key／value","查詢／鍵／值","06","聽過就好","Q、K、V；注意力的三個輸入"],["self-attention","自注意力","06","錨定","Q、K、V 都來自影像"],["cross-attention","交叉注意力","06","錨定","Q 來自影像，K、V 來自文字；輸出長度＝影像塊數"],["adaptive layer normalization","自適應層正規化","06","錨定","adaLN；t 決定每個通道的縮放與平移"],["diffusion transformer","擴散 Transformer","06","錨定","DiT；講義 §6.1.2"],["U-Net","U-Net","06","聽過就好","講義 §6.1.3；原片沒講"],["vision transformer","視覺 Transformer","06","聽過就好","ViT；61:39"],["CLIP","CLIP","06","聽過就好","預訓練的文字／影像嵌入"],["T5","T5","06","聽過就好","預訓練的文字模型；SD3 用 T5-v1.1-XXL"],["MM-DiT","MM-DiT","06","聽過就好","SD3 的架構；文字與影像接成一串"],["time convention","時間慣例","06","錨定","本課 t=0 雜訊；SD3 論文 t=0 資料"],["forward process","前向過程","06","聽過就好","擴散論文的加噪寫法；p.36"],["stochastic interpolant","隨機內插","06","聽過就好","p.36；α、β 角色可能與本課相反"],["flavors","各種版本","06","聽力詞","63:08"],["boost up","撐大","06","聽力詞","58:52"],["beyond the scope","超出範圍","06","聽力詞","62:38；之後的 Transformer 細節講者跳過"]]};
+const UNITS = D.units, LECS = D.lectures;
+const STATUS = { live: "已上架", soon: "即將上架", making: "製作中", planned: "尚未開始" };
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const clock = (t) => {
+  const s = Math.floor(t), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60;
+  return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s % 60).padStart(2, "0");
+};
+const yt = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? `&t=${Math.floor(t)}s` : ""}`;
+const store = (k, v) => {
+  try { if (v === undefined) return localStorage.getItem("s184:" + k); localStorage.setItem("s184:" + k, v); } catch (e) { return null; }
+};
+const ext = '<span class="ext" aria-hidden="true">↗</span>';
+
+/* ---------- YouTube 播放器（只有靜態網站版會用到） ---------- */
+let ytApi = null, player = null, playerReady = false, tickFn = null;
+function loadYT() {
+  if (!ytApi) ytApi = new Promise((resolve) => {
+    window.onYouTubeIframeAPIReady = resolve;
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.append(s);
+  });
+  return ytApi;
+}
+function dropPlayer() {
+  if (player && player.destroy) { try { player.destroy(); } catch (e) {} }
+  player = null; playerReady = false; tickFn = null;
+}
+function makePlayer(elId, videoId, start) {
+  loadYT().then(() => {
+    if (!document.getElementById(elId)) return;
+    player = new YT.Player(elId, {
+      videoId,
+      playerVars: { rel: 0, playsinline: 1, cc_load_policy: 0, start: Math.floor(start || 0), origin: location.origin },
+      events: {
+        onReady: () => {
+          playerReady = true;
+          const sp = +store("speed");
+          if (sp) player.setPlaybackRate(sp);
+          if (start) { player.seekTo(start, true); player.playVideo(); }
+        },
+        // 原片頁自己顯示字幕，關掉 YouTube 自動字幕避免重複
+        onStateChange: (e) => { if (e.data === 1 && view.name === "lecture" && player.setOption) player.setOption("captions", "track", {}); },
+      },
+    });
+  });
+}
+function seek(t) {
+  if (!playerReady) return;
+  player.seekTo(t, true);
+  player.playVideo();
+}
+setInterval(() => { if (playerReady && tickFn && player.getCurrentTime) tickFn(player.getCurrentTime()); }, 200);
+
+/* ---------- 路由 ---------- */
+const view = { name: "home" };
+let pendingSeek = null;
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  dropPlayer();
+  const app = $("#app");
+  let name = "home";
+  if (/^u\d\d$/.test(h) && UNITS.find((u) => "u" + u.no === h)) { name = "unit"; renderUnit(app, UNITS.find((u) => "u" + u.no === h)); }
+  else if (LECS[h]) { name = "lecture"; renderLecture(app, h); }
+  else if (h === "glossary") { name = "glossary"; renderGlossary(app); }
+  else renderHome(app);
+  view.name = name;
+  document.querySelectorAll("[data-nav]").forEach((a) => {
+    const on = a.dataset.nav === (name === "unit" ? "home" : name);
+    if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+  const nl = $('[data-nav="lecture"]');
+  nl.href = "#" + lastLec();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+const lastLec = () => (LECS[store("lecture")] ? store("lecture") : "L01");
+
+/* ---------- 首頁 ---------- */
+function renderHome(app) {
+  const live = UNITS.filter((u) => u.status === "live").length;
+  app.innerHTML = `
+  <section class="hero">
+    <div>
+      <div class="kicker">MIT 6.S184 · IAP 2026 · Flow Matching and Diffusion Models</div>
+      <h1><span class="mono">MIT 6.S184</span>課程筆記</h1>
+      <p class="lede">每一堂課先看一支約 10 分鐘的繁中前導片，用動畫把核心公式看懂；再帶著學習單打開原片，配著整堂繁中字幕一句一句聽。</p>
+      <div class="row-btns">
+        <a class="btn primary" href="#u01">從單元 01 開始</a>
+        <a class="btn" href="#${lastLec()}">原片字幕</a>
+        <a class="btn" href="#glossary">術語表</a>
+        <a class="btn" href="${D.playlist}" target="_blank" rel="noopener">原始課程播放清單 ${ext}</a>
+      </div>
+    </div>
+    <figure class="flow" style="margin:0" aria-label="粒子從雜訊沿直線路徑移動到螺旋形資料分布的動畫">
+      <canvas id="flow"></canvas>
+      <div class="label">t = <b id="flowT">0.00</b></div>
+      <div class="eq">x_t = t·z + (1−t)·ε</div>
+    </figure>
+  </section>
+
+  <div class="section-head"><h2>怎麼用這個網頁</h2></div>
+  <ol class="steps">
+    <li><b>先答三題</b><span>打開單元頁的學習單，不查資料先寫下答案。</span></li>
+    <li><b>看前導片</b><span>約 10 分鐘，中英雙語字幕；點小節時間軸可以直接跳到那一段。</span></li>
+    <li><b>打開原片</b><span>照學習單的「原片導航」挑重點看，用原片字幕頁逐句重聽。</span></li>
+    <li><b>再答一次</b><span>對照參考答案，再到術語表複習本集的八個詞。</span></li>
+  </ol>
+
+  <div class="section-head">
+    <h2>前導片單元</h2>
+    <span class="note">已上架 ${live} / ${UNITS.length} 支，其餘陸續上架</span>
+  </div>
+  <div class="units">${UNITS.map(card).join("")}</div>`;
+  startFlow();
+}
+function card(u) {
+  const lec = LECS[u.lecture];
+  const thumb = u.thumb && u.status !== "making"
+    ? `<div class="thumb"><img src="${u.thumb}" alt="" loading="lazy">${u.duration ? `<span class="dur">${u.duration}</span>` : ""}</div>`
+    : `<div class="thumb empty">${u.status === "planned" ? "尚未開始" : "影片準備中"}</div>`;
+  return `<a class="card" href="#u${u.no}" style="--t:${UNITS.indexOf(u) / (UNITS.length - 1)}">
+    ${thumb}
+    <div class="body">
+      <div class="top"><span class="no">單元 ${u.no}</span><span class="pill ${u.status}">${STATUS[u.status]}</span></div>
+      <h3>${esc(u.title)}</h3>
+      <div class="topic">${esc(u.topic)}</div>
+      <div class="lec">${lec.label}${u.range ? " · " + esc(u.range.replace("原片 ", "")) : ""}</div>
+    </div>
+  </a>`;
+}
+
+/* 首頁動畫：直線機率路徑，雜訊 ε 與螺旋資料 z 之間的內插 */
+let flowRaf = 0;
+function startFlow() {
+  cancelAnimationFrame(flowRaf);
+  const cv = $("#flow");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const N = 700, pts = [];
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const gauss = () => Math.sqrt(-2 * Math.log(rnd() + 1e-9)) * Math.cos(2 * Math.PI * rnd());
+  for (let i = 0; i < N; i++) {
+    const s = rnd(), a = 0.6 + s * 3.4 * Math.PI, r = 0.12 + s * 0.78;
+    pts.push({ ex: gauss() * 0.42, ey: gauss() * 0.42, zx: r * Math.cos(a) + gauss() * 0.025, zy: r * Math.sin(a) + gauss() * 0.025 });
+  }
+  const css = getComputedStyle(document.documentElement);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+  const hex = (h) => { const m = h.trim().replace("#", ""); return [0, 2, 4].map((i) => parseInt(m.slice(i, i + 2), 16)); };
+  function draw(t) {
+    const dpr = Math.min(devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const c0 = hex(css.getPropertyValue("--noise")), c1 = hex(css.getPropertyValue("--data"));
+    const [r, g, b] = mix(c0, c1, t);
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    const sc = Math.min(w, h) * 0.5, cx = w / 2, cy = h / 2 + 6;
+    for (const p of pts) {
+      const x = t * p.zx + (1 - t) * p.ex, y = t * p.zy + (1 - t) * p.ey;
+      ctx.fillRect(cx + x * sc, cy - y * sc, 2, 2);
+    }
+    const lab = $("#flowT");
+    if (lab) lab.textContent = t.toFixed(2);
+  }
+  if (reduce) { draw(0.8); return; }
+  const t0 = performance.now();
+  const loop = (now) => {
+    if (!document.body.contains(cv)) return;
+    const k = ((now - t0) / 1000) % 9;          // 0–4 秒走過去、停 1.5 秒、2 秒退回、停 1.5 秒
+    const ease = (x) => x * x * (3 - 2 * x);
+    const t = k < 4 ? ease(k / 4) : k < 5.5 ? 1 : k < 7.5 ? 1 - ease((k - 5.5) / 2) : 0;
+    draw(t);
+    flowRaf = requestAnimationFrame(loop);
+  };
+  draw(0);
+  flowRaf = requestAnimationFrame(loop);
+}
+
+/* ---------- 單元頁 ---------- */
+function renderUnit(app, u) {
+  const lec = LECS[u.lecture];
+  const i = UNITS.indexOf(u), prev = UNITS[i - 1], next = UNITS[i + 1];
+  const canPlay = !!u.youtube;
+  let video;
+  if (canPlay && EMBED) video = `<div class="video"><div id="ytp"></div></div>`;
+  else if (canPlay) video = `<a class="video poster" href="${yt(u.youtube)}" target="_blank" rel="noopener">
+      ${u.thumb ? `<img src="${u.thumb}" alt="單元 ${u.no} 前導片畫面">` : ""}<span class="play">▶ 在 YouTube 播放</span></a>`;
+  else video = `<div class="video placeholder">${u.thumb ? `<img src="${u.thumb}" alt="">` : ""}
+      <div><b>影片準備中</b>${u.status === "soon" ? "成片已完成，近期上架" : u.status === "making" ? "正在製作，完成後放在這裡" : "這一堂還沒開始製作"}</div></div>`;
+
+  const tl = u.timeline.length
+    ? u.timeline.map(([t, label], k) => {
+        const [tag, ttl] = label.includes("｜") ? label.split("｜") : ["", label];
+        const inner = `<time>${clock(t)}</time><span class="tag">${esc(tag)}</span><span class="ttl">${esc(ttl)}</span>`;
+        if (canPlay && EMBED) return `<li><button class="item" data-t="${t}" data-k="${k}">${inner}</button></li>`;
+        if (canPlay) return `<li><a class="item" href="${yt(u.youtube, t)}" target="_blank" rel="noopener">${inner}</a></li>`;
+        return `<li><div class="item">${inner}</div></li>`;
+      }).join("")
+    : `<li class="empty">小節時間軸會在影片完成後補上。</li>`;
+  const n = u.timeline.filter(([, l]) => l.startsWith("小節")).length;
+
+  app.innerHTML = `
+  <div class="crumb"><a href="#home">單元</a> / 單元 ${u.no}</div>
+  <header class="unit-head" style="--t:${i / (UNITS.length - 1)}">
+    <div class="kicker">單元 ${u.no} · ${lec.label}${u.range ? " · " + esc(u.range) : ""}</div>
+    <h1>${esc(u.title)}</h1>
+    ${u.question ? `<p class="q">${esc(u.question)}</p>` : ""}
+  </header>
+  <div class="unit-grid">
+    <section class="watch" aria-label="前導片">
+      ${video}
+      <div class="meta">
+        <span class="pill ${u.status}">${STATUS[u.status]}</span>
+        ${u.duration ? `<span class="mono">${u.duration}</span>` : ""}
+        ${n ? `<span>${n} 個小節</span>` : ""}
+        ${canPlay ? `<a href="${yt(u.youtube)}" target="_blank" rel="noopener">在 YouTube 開啟 ${ext}</a>` : ""}
+      </div>
+      <div class="tl-head"><h2>小節時間軸</h2><span>${canPlay ? (EMBED ? "點一下跳到該段" : "點一下在 YouTube 從該段開始") : "影片上架後可點選跳轉"}</span></div>
+      <ol class="timeline" id="timeline">${tl}</ol>
+      <div class="row-btns">
+        <a class="btn small" href="#${u.lecture}">${lec.label} 原片字幕</a>
+        <a class="btn small" href="${yt(lec.video)}" target="_blank" rel="noopener">${lec.label} 原片 ${ext}</a>
+      </div>
+    </section>
+    <article class="sheet">
+      <h2>學習單</h2>
+      ${u.sheet || `<div class="pending">學習單會和影片一起完成。先看 <a href="#${u.lecture}">${lec.label} 原片字幕</a>，或到<a href="#glossary">術語表</a>預習本集的詞。</div>`}
+    </article>
+  </div>
+  <nav class="pager" aria-label="上一單元與下一單元">
+    ${prev ? `<a href="#u${prev.no}"><span>上一單元 ${prev.no}</span>${esc(prev.title)}</a>` : ""}
+    ${next ? `<a class="next" href="#u${next.no}"><span>下一單元 ${next.no}</span>${esc(next.title)}</a>` : ""}
+  </nav>`;
+
+  // 「原片導航」表的第三欄不是符號，取消等寬字樣式
+  app.querySelectorAll(".sheet .table-wrap").forEach((w) => {
+    const th = w.querySelector("th");
+    if (th && th.textContent.trim() === "時間") w.classList.add("nav-table");
+  });
+
+  // 學習單核取框：只記在這台瀏覽器
+  app.querySelectorAll('.sheet input[type="checkbox"]').forEach((c) => {
+    c.checked = store(c.id) === "1";
+    c.addEventListener("change", () => store(c.id, c.checked ? "1" : "0"));
+  });
+
+  if (canPlay && EMBED) {
+    makePlayer("ytp", u.youtube);
+    const items = [...app.querySelectorAll("#timeline .item")];
+    $("#timeline").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) seek(+b.dataset.t); });
+    tickFn = (t) => {
+      let k = -1;
+      u.timeline.forEach(([s], j) => { if (t >= s) k = j; });
+      items.forEach((it, j) => it.classList.toggle("active", j === k));
+    };
+  }
+}
+
+/* 學習單裡的原片時間點：靜態網站版改到原片字幕頁播放；claude.ai 版維持開 YouTube */
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("a.ts[data-lec]");
+  if (!a || !EMBED || !LECS[a.dataset.lec] || !LECS[a.dataset.lec].subs) return;
+  e.preventDefault();
+  pendingSeek = +a.dataset.t;
+  if (location.hash === "#" + a.dataset.lec) route(); else location.hash = a.dataset.lec;
+});
+
+/* ---------- 原片字幕頁 ---------- */
+const lecCache = {};
+async function getLecture(key) {
+  if (!lecCache[key]) lecCache[key] = fetch(`data/${key}.json`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  return lecCache[key];
+}
+const ls = { tab: "subs", showEn: store("showEn") !== "0", pauseEach: false, active: -1, stopAt: null };
+function renderLecture(app, key) {
+  store("lecture", key);
+  const lec = LECS[key];
+  const units = UNITS.filter((u) => u.lecture === key);
+  const embed = EMBED && lec.subs;
+  ls.active = -1; ls.stopAt = null;
+  app.innerHTML = `
+  <div class="kicker">原片字幕 · 繁中＋英文逐句對照</div>
+  <div class="lec-tabs" role="tablist" aria-label="選擇堂次">
+    ${Object.entries(LECS).map(([k, l]) => `<a class="btn small" href="#${k}" role="tab" aria-selected="${k === key}" ${k === key ? 'aria-pressed="true"' : ""}>${l.label.replace("Lecture ", "第 ")} 堂</a>`).join("")}
+  </div>
+  <div class="lec-head">
+    <h1>${lec.label}</h1>
+    <div class="meta">
+      <span class="mono">${lec.length}</span><span>${esc(lec.topic)}</span>
+      ${units.map((u) => `<a href="#u${u.no}">對照單元 ${u.no}｜${esc(u.title)}</a>`).join("")}
+      <a href="${yt(lec.video)}" target="_blank" rel="noopener">在 YouTube 開啟 ${ext}</a>
+    </div>
+  </div>
+  ${!lec.subs ? `<div class="sheet"><div class="pending">這一堂的繁中字幕還沒製作，完成後會放在這裡。可以先看 <a href="${yt(lec.video)}" target="_blank" rel="noopener">YouTube 原片 ${ext}</a>。</div></div>` : `
+  ${embed ? "" : `<p class="hint">點任一句，會在 YouTube 從那一秒開始播放；可以搜尋中文或英文。</p>`}
+  <div class="lec-grid ${embed ? "" : "noembed"}">
+    ${embed ? `<div class="stage">
+      <div class="video"><div id="ytp"></div></div>
+      <div class="now" aria-live="polite"><div class="zh" id="nowZh">按播放後，這裡會顯示目前這一句。</div><div class="en" id="nowEn"></div></div>
+      <div class="controls">
+        <button class="btn small" id="prev" title="鍵盤 ←">上一句</button>
+        <button class="btn small" id="again" title="鍵盤 R">重聽這句</button>
+        <button class="btn small" id="next" title="鍵盤 →">下一句</button>
+        <button class="btn small" id="pauseEach" aria-pressed="false">每句暫停</button>
+        <label for="speed">速度 <select id="speed">${[0.5, 0.75, 0.9, 1, 1.25, 1.5].map((s) => `<option value="${s}">${s}×</option>`).join("")}</select></label>
+      </div>
+    </div>` : ""}
+    <section class="panel">
+      <div class="bar">
+        <div class="seg">
+          <button class="btn small" data-tab="subs">逐句字幕</button>
+          <button class="btn small" data-tab="sections">原片小節</button>
+        </div>
+        <button class="btn small" id="toggleEn" aria-pressed="${ls.showEn}">英文</button>
+        <input type="search" id="search" placeholder="搜尋中文或英文，例如 vector field" aria-label="搜尋字幕">
+      </div>
+      <div class="list" id="list"><div class="msg">字幕載入中…</div></div>
+    </section>
+  </div>`}`;
+  if (!lec.subs) return;
+
+  let cues = [], sections = [];
+  const list = $("#list");
+  const href = (t) => yt(lec.video, t);
+  const row = (inner, t, i) => embed
+    ? `<button class="row" data-t="${t}"${i !== undefined ? ` data-i="${i}"` : ""}>${inner}</button>`
+    : `<a class="row" href="${href(t)}" target="_blank" rel="noopener"${i !== undefined ? ` data-i="${i}"` : ""}>${inner}</a>`;
+  function render() {
+    document.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.tab === ls.tab));
+    const q = $("#search").value.trim().toLowerCase();
+    if (ls.tab === "subs") {
+      const rows = [];
+      cues.forEach(([s, , zh, en], i) => {
+        if (q && !zh.toLowerCase().includes(q) && !en.toLowerCase().includes(q)) return;
+        rows.push(row(`<time>${clock(s)}</time>${esc(zh)}${ls.showEn && en ? `<span class="e">${esc(en)}</span>` : ""}`, s, i));
+      });
+      list.innerHTML = rows.join("") || `<div class="msg">找不到「${esc(q)}」。</div>`;
+    } else {
+      list.innerHTML = sections.length
+        ? sections.map((s) => row(`<time>${clock(s.t)}</time>${esc(s.title)}${s.note ? `<span class="e">${esc(s.note)}</span>` : ""}`, s.t)).join("")
+        : `<div class="msg">這一堂還沒有原片小節導航。</div>`;
+    }
+    mark(true);
+  }
+  function mark(quiet) {
+    const c = cues[ls.active];
+    if ($("#nowZh") && c) { $("#nowZh").textContent = c[2]; $("#nowEn").textContent = ls.showEn ? c[3] : ""; }
+    list.querySelectorAll(".row.active").forEach((r) => r.classList.remove("active"));
+    const r = list.querySelector(`[data-i="${ls.active}"]`);
+    if (r) {
+      r.classList.add("active");
+      if (!quiet) r.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => { ls.tab = b.dataset.tab; render(); }));
+  $("#search").addEventListener("input", render);
+  $("#toggleEn").addEventListener("click", (e) => {
+    ls.showEn = !ls.showEn; store("showEn", ls.showEn ? "1" : "0");
+    e.currentTarget.setAttribute("aria-pressed", ls.showEn); render();
+  });
+
+  getLecture(key).then((d) => {
+    cues = d.cues; sections = d.sections; render();
+  }).catch(() => {
+    list.innerHTML = `<div class="msg">字幕檔讀不到。若是直接用瀏覽器打開本機檔案，請改用網頁伺服器開啟（例如 GitHub Pages）。</div>`;
+  });
+
+  if (!embed) return;
+  const start = pendingSeek; pendingSeek = null;
+  if (start != null) { ls.tab = "subs"; }
+  makePlayer("ytp", lec.video, start);
+  const step = (d) => { const i = Math.min(Math.max(ls.active + d, 0), cues.length - 1); if (cues[i]) { ls.stopAt = null; seek(cues[i][0]); } };
+  list.addEventListener("click", (e) => { const r = e.target.closest("[data-t]"); if (r) { ls.stopAt = null; seek(+r.dataset.t); } });
+  $("#prev").addEventListener("click", () => step(-1));
+  $("#next").addEventListener("click", () => step(1));
+  $("#again").addEventListener("click", () => { const c = cues[ls.active]; if (c) { seek(c[0]); ls.stopAt = c[1]; } });
+  $("#pauseEach").addEventListener("click", (e) => { ls.pauseEach = !ls.pauseEach; e.currentTarget.setAttribute("aria-pressed", ls.pauseEach); });
+  const sp = $("#speed"); sp.value = store("speed") || "1";
+  sp.addEventListener("change", () => { store("speed", sp.value); if (playerReady) player.setPlaybackRate(+sp.value); });
+  tickFn = (t) => {
+    if (ls.stopAt !== null && t >= ls.stopAt) { player.pauseVideo(); ls.stopAt = null; return; }
+    const i = cues.findIndex((c) => t >= c[0] && t < c[1]);
+    if (i < 0 || i === ls.active) return;
+    if (ls.pauseEach && ls.active >= 0 && i === ls.active + 1 && player.getPlayerState() === 1) {
+      player.pauseVideo(); player.seekTo(cues[i][0], true);
+    }
+    ls.active = i; mark(ls.tab !== "subs");
+  };
+}
+document.addEventListener("keydown", (e) => {
+  if (view.name !== "lecture" || !playerReady || e.target.matches("input, select, textarea")) return;
+  if (e.key === "ArrowLeft") { e.preventDefault(); $("#prev")?.click(); }
+  if (e.key === "ArrowRight") { e.preventDefault(); $("#next")?.click(); }
+  if (e.key === "r" || e.key === "R") $("#again")?.click();
+});
+
+/* ---------- 術語表 ---------- */
+const gs = { q: "", unit: "all", layer: "all" };
+const LAYER_CLASS = { "錨定": "anchor", "聽力詞": "listen", "聽過就好": "heard" };
+function renderGlossary(app) {
+  const units = [...new Set(D.glossary.map((g) => g[2]))].sort();
+  const layers = ["錨定", "聽過就好", "聽力詞"];
+  app.innerHTML = `
+  <header class="g-head">
+    <div class="kicker">Glossary · ${D.glossary.length} 個詞</div>
+    <h1>系列術語表</h1>
+    <p class="hint" style="margin:0">「錨定」是那一集要真正學會的八個詞；「聽過就好」先認得即可；「聽力詞」是原片裡值得練耳朵的說法。</p>
+  </header>
+  <div class="g-tools">
+    <input type="search" id="gq" placeholder="搜尋英文、中文或說明" aria-label="搜尋術語" value="${esc(gs.q)}">
+    <div class="chips" id="gUnit"><span class="lbl">單元</span>
+      ${["all", ...units].map((u) => `<button class="btn small" data-v="${u}">${u === "all" ? "全部" : u}</button>`).join("")}</div>
+    <div class="chips" id="gLayer"><span class="lbl">類型</span>
+      ${["all", ...layers].map((l) => `<button class="btn small" data-v="${l}">${l === "all" ? "全部" : l}</button>`).join("")}</div>
+  </div>
+  <div class="count" id="gCount"></div>
+  <div class="table-wrap glossary"><table>
+    <thead><tr><th>英文</th><th>中文</th><th>說明</th><th>單元</th><th>類型</th></tr></thead>
+    <tbody id="gBody"></tbody>
+  </table></div>`;
+  function render() {
+    $("#gUnit").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === gs.unit));
+    $("#gLayer").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.v === gs.layer));
+    const q = gs.q.trim().toLowerCase();
+    const rows = D.glossary.filter(([en, zh, u, l, note]) =>
+      (gs.unit === "all" || u === gs.unit) && (gs.layer === "all" || l === gs.layer) &&
+      (!q || en.toLowerCase().includes(q) || zh.includes(q) || note.toLowerCase().includes(q)));
+    $("#gBody").innerHTML = rows.map(([en, zh, u, l, note]) => `<tr>
+      <td>${esc(en)}</td><td>${esc(zh)}</td><td>${esc(note)}</td>
+      <td><a href="#u${u}">${u}</a></td><td><span class="layer ${LAYER_CLASS[l] || ""}">${esc(l)}</span></td></tr>`).join("")
+      || `<tr><td colspan="5" style="color:var(--muted)">沒有符合的詞。</td></tr>`;
+    $("#gCount").textContent = `顯示 ${rows.length} 個詞`;
+  }
+  $("#gq").addEventListener("input", (e) => { gs.q = e.target.value; render(); });
+  $("#gUnit").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) { gs.unit = b.dataset.v; render(); } });
+  $("#gLayer").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) { gs.layer = b.dataset.v; render(); } });
+  render();
+}
+
+route();
+</script>
+
+</body></html>
