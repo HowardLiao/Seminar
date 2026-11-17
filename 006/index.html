@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>避開「偽專業陷阱」與默會知識外顯化｜Howard Liao Ph.D. Seminar 006</title>
+<meta name="description" content="Howard Liao Ph.D.｜把 AI 本事當自己本領？4 步驟建立 AI 判斷力 × 主管審查 3 問 × 組織默會知識外顯化閉環。HBR 週三編輯室 EP109 深度解析與企業賦能教材。">
+<meta name="theme-color" content="#141B2D">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="避開「偽專業陷阱」與默會知識外顯化｜Howard Liao Ph.D. Seminar 006">
+<meta property="og:description" content="AI 可以幫你快速產出答案，但真正的專業，是能夠判斷答案是否正確、適用，以及何時需要修正。4步驟建立AI判斷力 × 主管3問審查。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/006/">
+<meta property="og:image" content="slides/01.jpg">
+
+<link rel="icon" href="assets/howard-liao-portrait-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+
+<style>
+  :root {
+    --ink: #141B2D;
+    --ink2: #1E263D;
+    --ink-light: #2A3654;
+    --mist: #F4F6F9;
+    --coral: #F07A4A;
+    --amber: #D97706;
+    --rust: #A83212;
+    --teal: #0D9488;
+    --muted: #9AA3B8;
+    --text-dark: #1E293B;
+    --card-bg: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--ink);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 頂部導航 */
+  header {
+    height: 60px;
+    background: rgba(20, 27, 45, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(240, 122, 74, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--coral);
+    object-fit: cover;
+  }
+  header .title-box {
+    min-width: 0;
+    flex: 1;
+  }
+  header .title-box b {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  header .title-box span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px;
+    border-radius: 8px;
+  }
+  .nav-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .nav-tabs button.active {
+    background: var(--coral);
+    color: #fff;
+  }
+  header a.home-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+  header a.home-link:hover {
+    color: #fff;
+  }
+
+  /* 模式一：簡報播放區 */
+  #presentation-mode {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 60px);
+    user-select: none;
+    overflow: hidden;
+  }
+  .stage {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 72px;
+    min-height: 0;
+  }
+  .frame {
+    position: relative;
+    width: min(100%, calc((100dvh - 140px) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .frame .slide {
+    position: absolute;
+    inset: 0;
+    background: center / contain no-repeat;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .frame .slide.on {
+    opacity: 1;
+  }
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(20,27,45,0.78);
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover {
+    background: var(--coral);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .nav-btn.prev { left: 16px; }
+  .nav-btn.next { right: 16px; }
+  footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px 16px;
+    background: rgba(20,27,45,0.8);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--ink-light);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--coral), var(--amber));
+    transition: width 0.25s ease;
+  }
+  .count-box {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .action-btn {
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .action-btn:hover {
+    border-color: var(--coral);
+    color: var(--coral);
+  }
+
+  /* 縮圖網格 Modal */
+  .grid-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(12,16,28,0.96);
+    display: none;
+    overflow-y: auto;
+    padding: 32px 20px;
+  }
+  .grid-modal.open {
+    display: block;
+  }
+  .grid-modal .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    padding-top: 20px;
+  }
+  .grid-modal .th-card {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    background: #000 center / cover no-repeat;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    overflow: hidden;
+    transition: transform 0.2s, outline-color 0.2s;
+  }
+  .grid-modal .th-card:hover {
+    transform: translateY(-4px);
+    outline-color: var(--coral);
+  }
+  .grid-modal .th-card.cur {
+    outline-color: var(--coral);
+  }
+  .grid-modal .th-card span {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: rgba(20,27,45,0.85);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .grid-modal .close-btn {
+    position: sticky;
+    top: 10px;
+    float: right;
+    z-index: 10;
+  }
+
+  /* 模式二：講義與對話全貌區 */
+  #doc-mode {
+    display: none;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    color: var(--mist);
+    line-height: 1.8;
+  }
+  .hero-card {
+    background: linear-gradient(135deg, rgba(240, 122, 74, 0.15), rgba(30, 38, 61, 0.8));
+    border: 1px solid rgba(240, 122, 74, 0.3);
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-bottom: 40px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--coral);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  .hero-card h1 {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+  .hero-card p {
+    font-size: 16px;
+    color: #CBD5E1;
+  }
+  .quote-box {
+    background: rgba(20, 27, 45, 0.7);
+    border-left: 4px solid var(--coral);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 16px;
+    color: #E2E8F0;
+  }
+
+  .content-section {
+    background: var(--ink2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  .content-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 12px;
+  }
+  .content-section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--coral);
+    margin: 24px 0 12px;
+  }
+  .table-box {
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  th {
+    background: rgba(255,255,255,0.05);
+    color: var(--coral);
+    font-weight: 700;
+  }
+
+  /* 簡報 9 頁卡片式展示 */
+  .slide-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-top: 24px;
+  }
+  .slide-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .slide-item img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .slide-info {
+    padding: 20px 24px;
+  }
+  .slide-info h4 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .slide-info p {
+    font-size: 15px;
+    color: #CBD5E1;
+    line-height: 1.7;
+  }
+
+  /* 標籤小盒子 */
+  .tag-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .stage { padding: 0 8px; }
+    .nav-btn { width: 38px; height: 38px; font-size: 20px; }
+    .nav-btn.prev { left: 4px; }
+    .nav-btn.next { right: 4px; }
+    header .title-box span { display: none; }
+    header a.home-link span { display: none; }
+    .content-section { padding: 20px; }
+    .hero-card { padding: 24px 18px; }
+    .hero-card h1 { font-size: 24px; }
+  }
+
+  @media print {
+    header, footer, .nav-btn, .grid-modal, .nav-tabs { display: none !important; }
+    body, #doc-mode { background: #fff !important; color: #000 !important; display: block !important; }
+    .content-section, .hero-card { border: 1px solid #ccc !important; background: #fff !important; color: #000 !important; }
+    h1, h2, h3, h4 { color: #000 !important; }
+  }
+</style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false">
+
+<!-- 頂部導航 -->
+<header>
+  <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." draggable="false">
+  <div class="title-box">
+    <b>避開「偽專業陷阱」與默會知識外顯化</b>
+    <span>Howard Liao Ph.D.｜Seminar 006 (HBR EP109 深度解析)</span>
+  </div>
+  <div class="nav-tabs">
+    <button id="tab-pres" class="active" onclick="switchView('pres')">簡報放映</button>
+    <button id="tab-doc" onclick="switchView('doc')">完整講義與對話</button>
+  </div>
+  <a class="home-link" href="../">
+    <span>← 總目錄</span>
+  </a>
+</header>
+
+<!-- 模式一：簡報播放器 -->
+<div id="presentation-mode">
+  <div class="stage">
+    <button class="nav-btn prev" aria-label="上一頁">‹</button>
+    <div class="frame" id="frame"></div>
+    <button class="nav-btn next" aria-label="下一頁">›</button>
+  </div>
+  <footer>
+    <button class="action-btn" id="gridBtn">縮圖總覽</button>
+    <div class="progress-bar"><i id="bar"></i></div>
+    <div class="count-box" id="count">1 / 9</div>
+    <button class="action-btn" id="fsBtn">全螢幕</button>
+  </footer>
+</div>
+
+<!-- 縮圖 Modal -->
+<div class="grid-modal" id="grid">
+  <button class="action-btn close-btn" id="gridClose">✕ 關閉</button>
+  <div class="wrap" id="gridWrap"></div>
+</div>
+
+<!-- 模式二：深度研習講義與對話全貌 -->
+<div id="doc-mode">
+  <div class="hero-card">
+    <div class="badge">企業 AI 導入與組織賦能 ｜ SEMINAR 006</div>
+    <h1>避開「偽專業陷阱」與落實「默會知識外顯化」</h1>
+    <p>高管研習專題：當 AI 的答案看起來都對，同仁判斷得出錯誤嗎？新手「偽專業」與老手「默會障礙」的雙重突圍指南。</p>
+    <div class="quote-box">
+      <strong>終局定調：</strong><br>
+      「AI 可以幫你快速產出答案，但真正的專業，是能夠判斷答案是否正確、適用，以及何時需要修正。」<br>
+      「真正的專業，不只是提出答案，而是知道為什麼這樣做，以及什麼時候不該這樣做（When NOT to do it）。」
+    </div>
+  </div>
+
+  <!-- 痛點剖析 -->
+  <div class="content-section">
+    <h2>1. 企業輔導現場的「兩極化斷層」</h2>
+    <p>在推動企業全員導入 AI 的實務現場，資訊長與高階顧問往往發現最嚴峻的挑戰不是工具操作，而是組織內部的認知斷層：</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>族群分佈</th>
+            <th>核心症狀</th>
+            <th>底層成因</th>
+            <th>組織潛在危機</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>新手同仁<br>(Junior)</strong></td>
+            <td><strong>「偽專業陷阱」</strong><br>誤以為 AI 給出的流暢文字就是自己已經學會的本領。</td>
+            <td><strong>解釋深度錯覺</strong> (Illusion of Explanatory Depth)：認知流暢性誤導，無法察覺業務邊界與致命錯誤。</td>
+            <td>產出看似漂亮卻無法落地、充滿法規盲點或架構隱患的「毒蘋果成果」。</td>
+          </tr>
+          <tr>
+            <td><strong>資深老手<br>(Senior)</strong></td>
+            <td><strong>「默會知識障礙」</strong><br>具備豐富直覺與踩坑經驗，卻無法向 AI 精準下達指令。</td>
+            <td><strong>默會知識不可言傳</strong> (Tacit Knowledge)：多年直覺未曾逆向工程為具體規則與驗收指標。</td>
+            <td>老手抗拒或覺得 AI 產出平庸無用，難以將一甲子的實戰手感傳承給團隊。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 個人 4 步驟 -->
+  <div class="content-section">
+    <h2>2. 個人建立 AI 判斷力的「4 步驟防線」</h2>
+    <p>借鏡哈佛商業評論（HBR）週三編輯室 EP109，建立由個人主導的認知錨定流程，確保人工在迴路（Human-in-the-Loop）：</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>步驟</th>
+            <th>實戰機制</th>
+            <th>顧問業競研案例說明</th>
+            <th>關鍵產出 / 目的</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>步驟 1：先想<br>(Anchor)</strong></td>
+            <td>不開 AI，先在紙上或腦中擬定思考框架與基本假設。</td>
+            <td>確定客戶核心目標、主要競爭對象、市場進入壁壘與主要風險。</td>
+            <td>建立「認知基準線」，防止被 AI 牽著鼻子走。</td>
+          </tr>
+          <tr>
+            <td><strong>步驟 2：挑戰<br>(Red Teaming)</strong></td>
+            <td>指示 AI 產出多種對立方案，並模擬嚴苛角色自我質疑。</td>
+            <td>指令 AI：「請扮演挑剔的投資人，質疑這 3 種市場切入策略的死穴。」</td>
+            <td>打破認知盲區，逼出潛在的弱點與隱形假設。</td>
+          </tr>
+          <tr>
+            <td><strong>步驟 3：比較<br>(Delta Analysis)</strong></td>
+            <td>將 AI 的產出與第一步的想法逐項比對，進行批判性查核。</td>
+            <td>查核發現 AI 引用過期市調數據、漏列重大法規限制、低估地端合規成本。</td>
+            <td>剔除幻覺與常識漏洞，精煉出人工增值的 20% 核心關鍵。</td>
+          </tr>
+          <tr>
+            <td><strong>步驟 4：說明<br>(Explainability)</strong></td>
+            <td>向主管或客戶具體交代背後的判斷依據與修改軌跡。</td>
+            <td>清楚陳述：「AI 建議 X，但我調整為 Y，原因是補足了 2026 最新法規與供應鏈交期風險。」</td>
+            <td>展現真專業，提供決策可追溯性與權責擔當。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quote-box">
+      <strong>80/20 價值定律：</strong><br>
+      AI 可能幫你完成了 70%～80% 的繁瑣文字整理與架構草擬，但剩餘 20% 的人工專業過濾與風險修正，才真正決定了整份成果是資產還是災難。
+    </div>
+  </div>
+
+  <!-- 主管 3 問 -->
+  <div class="content-section">
+    <h2>3. 主管審查 AI 成果的「三個靈魂拷問」</h2>
+    <p>主管的審查重心，必須從過去的「只看成果長得好不好」，轉移到<strong>「審查同仁的思考與判斷過程」</strong>：</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>審查提問</th>
+            <th>主管核心考核意圖</th>
+            <th>防弊效益與人才識別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>問 1：AI 原本給你什麼答案？</strong></td>
+            <td>確認 AI 的原始建議與方案全貌，檢視同仁是否真的仔細閱讀過。</td>
+            <td>杜絕「未經大腦、直接複製貼上」的盲目轉發者。</td>
+          </tr>
+          <tr>
+            <td><strong>問 2：你修改了哪些地方？</strong></td>
+            <td>檢驗同仁是否具備專業批判力，能否抓出錯誤、局限與不適用場景。</td>
+            <td>一眼辨識同仁的專業高度、業務敏感度與經驗落差。</td>
+          </tr>
+          <tr>
+            <td><strong>問 3：為什麼要這樣修改？</strong></td>
+            <td>深究同仁的決策邏輯、商業洞察、因果推論與風險承擔力。</td>
+            <td>逼出同仁的獨立思考，將審查會議變成專業能力提升的教練場。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 團隊知識管理閉環 -->
+  <div class="content-section">
+    <h2>4. 團隊知識管理（KM）閉環：默會知識外顯化</h2>
+    <p>透過主管審查三問，組織能建立源源不絕的知識資產沉澱循環：</p>
+    <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; font-family: monospace; font-size: 14px; line-height: 2;">
+      同仁提交 AI 協作成果<br>
+      　➔ 附上：原始答案、修改內容、修改理由<br>
+      　➔ 主管敏銳辨識「能力缺口與判斷盲點」<br>
+      　➔ 主管提供精準指導，回饋實戰踩坑經驗<br>
+      　➔ 將前輩個人的「默會知識」沉澱為團隊的 Few-Shot、規則邊界與 SOP 規格書<br>
+      　➔ 帶動跨部門討論、經驗傳承與團隊整體專業躍升
+    </div>
+  </div>
+
+  <!-- 延伸：Model Routing 架構 -->
+  <div class="content-section">
+    <h2>5. 延伸技術架構：模型調度器（Model Routing）選型</h2>
+    <p>在同仁具備 AI 判斷力後，企業底層需要健全的智慧模型調度機制以平衡效能與算力成本：</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>方案類型</th>
+            <th>核心代表</th>
+            <th>調度機理與核心優勢</th>
+            <th>適用場景與評估</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>第三方跨雲中立閘道</strong></td>
+            <td><strong>MixRoute</strong><br><code>api.mixroute.ai/v1</code></td>
+            <td>毫秒級輕量 In-Memory 路由器、零加價、保留容量、跨時區智慧排程，降低 20%~40% Token 成本。</td>
+            <td>高併發、追求成本極致化之電商、遊戲、新創產品。</td>
+          </tr>
+          <tr>
+            <td><strong>全市場動態調度智庫</strong></td>
+            <td><strong>OpenRouter</strong><br><code>openrouter/auto</code></td>
+            <td>基於每週 55T token 全球流量智慧，11 項維度動態評估任務，具備 Model + Provider 雙層路由與成本上限。</td>
+            <td>複雜任務、程式碼生成（auto-code）與快速原型驗證。</td>
+          </tr>
+          <tr>
+            <td><strong>雲端原廠企業級方案</strong></td>
+            <td><strong>Azure Foundry / Google Vertex AI</strong></td>
+            <td>深度整合企業身分識別（IAM）、VPC-SC 隔離、HIPAA/GDPR 強法規合規與私有資料零外洩承諾。</td>
+            <td>金融、醫療、半導體與高度監管特許行業。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 9 頁簡報逐頁展覽 -->
+  <div class="content-section">
+    <h2>6. 研討會簡報 9 頁圖文全貌（Seminar Slide Deck）</h2>
+    <div class="slide-gallery">
+      
+      <div class="slide-item">
+        <img src="slides/01.jpg" alt="簡報 1/9">
+        <div class="slide-info">
+          <h4>01 / 9 ｜ AI 的本事，不等於你的本事</h4>
+          <p><strong>核心精粹：</strong>AI 負責快速給出方案，人的專業在於三道人工在迴路過濾機制——駁回（Reject ✗）、核准（Approve ✓）與質疑覆核（Challenge ?）。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/02.jpg" alt="簡報 2/9">
+        <div class="slide-info">
+          <h4>02 / 9 ｜ 偽專業陷阱：取得答案 ≠ 理解知識</h4>
+          <p><strong>核心精粹：</strong>以室內設計為例，AI 能秒出奢華 3D 渲染圖，但新手看不出承重牆不能拆、法規與消防限制。看得懂答案不等於能承擔後果。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/03.jpg" alt="簡報 3/9">
+        <div class="slide-info">
+          <h4>03 / 9 ｜ 為什麼 AI 讓人高估自己的能力？</h4>
+          <p><strong>核心精粹：</strong>認知心理學「解釋深度錯覺」。主管若只看秒出結論而嫌棄老手查證是拖延，將促成組織「快而不準、缺乏韌性」的致命文化。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/04.jpg" alt="簡報 4/9">
+        <div class="slide-info">
+          <h4>04 / 9 ｜ 從新手到專家：默會知識的價值</h4>
+          <p><strong>核心精粹：</strong>專家歷經規則、踩坑累積直覺，其價值在於默會知識。AI 時代專家必須將「憑經驗知道怎麼做」，升級為「能說清楚為什麼這樣做」。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/05.jpg" alt="簡報 5/9">
+        <div class="slide-info">
+          <h4>05 / 9 ｜ 四步驟建立 AI 判斷力</h4>
+          <p><strong>核心精粹：</strong>個人認知防禦四部曲：1. 先想 (Anchor) ➔ 2. 挑戰 (Red Teaming) ➔ 3. 比較 (Delta Analysis) ➔ 4. 交代判斷過程 (Explainability)。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/06.jpg" alt="簡報 6/9">
+        <div class="slide-info">
+          <h4>06 / 9 ｜ 四步驟如何實際運作？（管理顧問案例）</h4>
+          <p><strong>核心精粹：</strong>以新市場競爭分析為例，指令 AI 模擬挑剔投資人質疑；人負責抓過期數據與法規盲點。80% 靠 AI，20% 人工增值決定生死。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/07.jpg" alt="簡報 7/9">
+        <div class="slide-info">
+          <h4>07 / 9 ｜ 主管審查 AI 成果：只問三個問題</h4>
+          <p><strong>核心精粹：</strong>1. AI 原本給什麼？ 2. 你修改了哪些？ 3. 為什麼這樣修改？主管從檢查成果轉為檢查同仁的批判思考與判斷邏輯。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/08.jpg" alt="簡報 8/9">
+        <div class="slide-info">
+          <h4>08 / 9 ｜ 從個人判斷力到團隊知識管理</h4>
+          <p><strong>核心精粹：</strong>提交成果附帶修改軌跡 ➔ 辨識盲點 ➔ 指導分享 ➔ 默會知識轉為團隊 SOP 與規則庫 ➔ 打造持續進化的學習型組織。</p>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <img src="slides/09.jpg" alt="簡報 9/9">
+        <div class="slide-info">
+          <h4>09 / 9 ｜ 結論：AI 提高效率，人負責判斷</h4>
+          <p><strong>核心精粹：</strong>AI 角色是加速執行與方案對比；人的責任在於定義目標、驗證資訊與承擔責任。「知道何時不該這樣做（When NOT to do it）才是真專業。」</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const N = 9, pad = (n) => String(n).padStart(2, "0");
+  const frame = document.getElementById("frame"), bar = document.getElementById("bar"), count = document.getElementById("count");
+  const slides = [];
+
+  for (let i = 1; i <= N; i++) {
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.dataset.src = "slides/" + pad(i) + ".jpg";
+    frame.appendChild(d);
+    slides.push(d);
+  }
+
+  const load = (i) => {
+    const d = slides[i];
+    if (d && !d.style.backgroundImage) d.style.backgroundImage = "url(" + d.dataset.src + ")";
+  };
+
+  let cur = 0;
+  function go(i) {
+    cur = Math.min(Math.max(i, 0), N - 1);
+    slides.forEach((d, k) => d.classList.toggle("on", k === cur));
+    [cur, cur + 1, cur - 1, cur + 2].forEach(k => { if (k >= 0 && k < N) load(k); });
+    bar.style.width = ((cur + 1) / N * 100) + "%";
+    count.textContent = (cur + 1) + " / " + N;
+    history.replaceState(null, "", "#" + (cur + 1));
+    document.querySelectorAll(".grid-modal .th-card").forEach((t, k) => t.classList.toggle("cur", k === cur));
+  }
+
+  document.querySelector(".prev").onclick = () => go(cur - 1);
+  document.querySelector(".next").onclick = () => go(cur + 1);
+  frame.addEventListener("click", (e) => {
+    const r = frame.getBoundingClientRect();
+    go(e.clientX - r.left < r.width / 3 ? cur - 1 : cur + 1);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (["arrowright", "pagedown", " ", "enter"].includes(k)) { e.preventDefault(); go(cur + 1); }
+    else if (["arrowleft", "pageup", "backspace"].includes(k)) { e.preventDefault(); go(cur - 1); }
+    else if (k === "home") go(0);
+    else if (k === "end") go(N - 1);
+    else if (k === "f") toggleFs();
+    else if (k === "escape") document.getElementById("grid").classList.remove("open");
+  });
+
+  let sx = null;
+  frame.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  frame.addEventListener("touchend", (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+    sx = null;
+  });
+
+  function toggleFs() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+  document.getElementById("fsBtn").onclick = toggleFs;
+
+  // 縮圖 Modal
+  const grid = document.getElementById("grid"), wrap = document.getElementById("gridWrap");
+  for (let i = 1; i <= N; i++) {
+    const t = document.createElement("div");
+    t.className = "th-card";
+    t.style.backgroundImage = "url(slides/t" + pad(i) + ".jpg)";
+    t.innerHTML = "<span>" + i + " / " + N + "</span>";
+    t.onclick = () => { grid.classList.remove("open"); go(i - 1); };
+    wrap.appendChild(t);
+  }
+  document.getElementById("gridBtn").onclick = () => grid.classList.add("open");
+  document.getElementById("gridClose").onclick = () => grid.classList.remove("open");
+
+  // 初次載入
+  const m = location.hash.match(/^#(\d+)$/);
+  const startIdx = m ? Math.min(Math.max(+m[1], 1), N) - 1 : 0;
+  go(startIdx);
+})();
+
+function switchView(mode) {
+  const pres = document.getElementById("presentation-mode");
+  const doc = document.getElementById("doc-mode");
+  const tabPres = document.getElementById("tab-pres");
+  const tabDoc = document.getElementById("tab-doc");
+
+  if (mode === "pres") {
+    pres.style.display = "flex";
+    doc.style.display = "none";
+    tabPres.classList.add("active");
+    tabDoc.classList.remove("active");
+  } else {
+    pres.style.display = "none";
+    doc.style.display = "block";
+    tabDoc.classList.add("active");
+    tabPres.classList.remove("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+</script>
+</body>
+</html>
