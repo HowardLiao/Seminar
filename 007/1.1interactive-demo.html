@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>互動示範：S01 登入畫面</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,"Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif;color:#111827;background:#FBFBFF;min-height:100vh}
+header{max-width:900px;margin:0 auto;padding:28px 40px 0}
+h1{font-size:22px}
+.hint{color:#6B7280;font-size:14px;margin-top:6px}
+#stage{position:relative;width:900px;height:720px;margin:0 auto}
+#phone{position:absolute;left:40px;top:70px;width:390px;height:620px;border-radius:36px;background:#fff;box-shadow:0 0 0 2px #9CA3AF;overflow:hidden}
+.screen{position:absolute;inset:0;display:none}
+.screen.on{display:block}
+.logo{position:absolute;left:163px;top:44px;width:64px;height:64px;border-radius:50%;background:#EDE9FE;border:2px solid #7C3AED;color:#7C3AED;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.ttl{position:absolute;left:0;right:0;top:132px;text-align:center;font-size:26px;font-weight:700}
+input.f{position:absolute;left:24px;width:342px;height:48px;border:1.5px solid #9CA3AF;border-radius:12px;padding:0 16px;font:inherit;font-size:16px;outline:none;background:#fff}
+input.f:focus{border-color:#7C3AED;box-shadow:0 0 0 3px #EDE9FE}
+button.pri{position:absolute;border:0;border-radius:12px;background:#7C3AED;color:#fff;font:inherit;font-weight:700;font-size:18px;cursor:pointer}
+button.pri:hover{background:#6D28D9}
+button.lnk{position:absolute;border:0;background:none;color:#6B7280;font:inherit;font-size:15px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+#link-forgot{left:50%;transform:translateX(-50%);top:432px;padding:2px 6px;white-space:nowrap}
+/* S02 */
+.bar{position:absolute;left:0;right:0;top:0;height:64px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.bar b{font-size:20px}
+#btn-logout{position:static;width:80px;height:36px;font-size:15px;border-radius:10px;background:#fff;color:#7C3AED;border:1.5px solid #7C3AED}
+#btn-logout:hover{background:#EDE9FE}
+.hello{position:absolute;left:24px;top:92px;font-size:20px;font-weight:700}
+.card{position:absolute;left:24px;width:342px;height:110px;border-radius:16px;background:#F5F3FF;color:#6B7280;padding:18px;font-size:15px}
+/* S03 dialog */
+#mask{position:absolute;inset:0;background:rgba(17,24,39,.45);display:none}
+#mask.on{display:block}
+#dlg{position:absolute;left:45px;top:190px;width:300px;height:200px;border-radius:20px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#dlg h3{position:absolute;left:0;right:0;top:18px;text-align:center;font-size:18px}
+#dlg-mail{left:24px;top:60px;width:252px;height:44px}
+#dlg-send{left:24px;top:116px;width:252px;height:44px;font-size:16px}
+#dlg-cancel{left:50%;transform:translateX(-50%);top:166px;font-size:14px;padding:2px 6px}
+#toast{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);background:#111827;color:#fff;border-radius:20px;padding:8px 18px;font-size:14px;display:none;white-space:nowrap}
+/* annotation layer */
+#ann-layer{position:absolute;inset:0;pointer-events:none;display:none}
+body.ann-on #ann-layer{display:block}
+.o{position:absolute;border:2px dashed #7C3AED;border-radius:12px}
+.cm{position:absolute;left:520px;width:360px;font-size:16px;line-height:1.5}
+.cm b{font-size:17px}
+.sz{display:inline-block;background:#EDE9FE;color:#7C3AED;font-weight:700;font-size:13px;padding:1px 9px;border-radius:8px;margin-left:6px}
+.go{color:#6B7280;font-size:15px}.go em{font-style:normal;color:#7C3AED;font-weight:700}
+#tag{position:absolute;left:40px;top:28px;background:#EDE9FE;color:#7C3AED;font-weight:700;font-size:15px;padding:6px 16px;border-radius:10px;display:none}
+body.ann-on #tag{display:block}
+svg#lines{position:absolute;inset:0;width:100%;height:100%}
+#bar{position:fixed;top:12px;right:12px;z-index:9;display:flex;gap:8px}
+#bar button{cursor:pointer;border:1px solid #7C3AED;background:#fff;color:#7C3AED;border-radius:18px;padding:7px 16px;font:600 14px system-ui,"Microsoft JhengHei",sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+body.ann-on #bar button{background:#7C3AED;color:#fff}
+#legend{display:none;position:fixed;top:54px;right:12px;z-index:9;background:#fff;border:1px solid #DDD6FE;border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.8;max-width:250px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+body.ann-on #legend{display:block}
+@media(max-width:940px){#stage{transform-origin:top left}}
+</style>
+</head>
+<body>
+<header>
+  <h1>互動示範：登入流程（S01 → S02／S03）</h1>
+  <p class="hint">直接操作畫面看看；右上角的按鈕可以切換標註，顯示每個元素的實測尺寸與點擊結果。</p>
+</header>
+
+<div id="bar"><button id="toggle" type="button">顯示標註</button></div>
+<div id="legend"><b>標註說明</b><br>虛線框：元素範圍<br>紫色標籤：實測尺寸（寬 × 高 px）<br>「點擊後」：操作的結果與前往的畫面<br>畫面外的編號與名稱不屬於畫面內容</div>
+
+<div id="stage">
+  <div id="tag">S01｜登入畫面</div>
+  <div id="phone">
+    <section class="screen on" id="S01">
+      <div class="logo">Logo</div>
+      <div class="ttl">歡迎回來</div>
+      <input class="f" id="acc" style="top:194px" placeholder="帳號" aria-label="帳號">
+      <input class="f" id="pwd" type="password" style="top:266px" placeholder="密碼" aria-label="密碼">
+      <button class="pri" id="btn-login" type="button" style="left:24px;top:354px;width:342px;height:48px">登入</button>
+      <button class="lnk" id="link-forgot" type="button">忘記密碼？</button>
+    </section>
+    <section class="screen" id="S02">
+      <div class="bar"><b>首頁</b><button class="pri" id="btn-logout" type="button">登出</button></div>
+      <div class="hello">哈囉，歡迎回來</div>
+      <div class="card" style="top:150px">示範卡片</div>
+      <div class="card" style="top:276px">示範卡片</div>
+    </section>
+    <div id="mask">
+      <div id="dlg">
+        <h3>找回密碼</h3>
+        <input class="f" id="dlg-mail" placeholder="電子郵件" aria-label="電子郵件">
+        <button class="pri" id="dlg-send" type="button">送出</button>
+        <button class="lnk" id="dlg-cancel" type="button">取消</button>
+      </div>
+    </div>
+    <div id="toast">已寄出重設信</div>
+  </div>
+  <div id="ann-layer"><svg id="lines"></svg></div>
+</div>
+
+<script>
+(function(){
+var NAMES={S01:'登入畫面',S02:'首頁',S03:'找回密碼視窗'};
+var ITEMS={
+ S01:[{s:'#acc',l:'帳號欄位'},{s:'#pwd',l:'密碼欄位'},{s:'#btn-login',l:'「登入」按鈕',c:'前往 <em>S02 首頁</em>'},{s:'#link-forgot',l:'「忘記密碼？」連結',c:'開啟 <em>S03 找回密碼視窗</em>',nosz:1}],
+ S02:[{s:'#btn-logout',l:'「登出」按鈕',c:'回到 <em>S01 登入畫面</em>'}],
+ S03:[{s:'#dlg',l:'視窗'},{s:'#dlg-mail',l:'電子郵件欄位'},{s:'#dlg-send',l:'「送出」按鈕',c:'寄出重設信，關閉視窗並回到 <em>S01 登入畫面</em>'},{s:'#dlg-cancel',l:'「取消」連結',c:'關閉視窗，回到 <em>S01 登入畫面</em>',nosz:1}]
+};
+var cur='S01',dlg=false,tt;
+var $=function(s){return document.querySelector(s)};
+function show(id){cur=id;document.querySelectorAll('.screen').forEach(function(e){e.classList.toggle('on',e.id===id)});render()}
+function setDlg(on){dlg=on;$('#mask').classList.toggle('on',on);render()}
+$('#btn-login').onclick=function(){show('S02')};
+$('#btn-logout').onclick=function(){show('S01')};
+$('#link-forgot').onclick=function(){setDlg(true)};
+$('#dlg-cancel').onclick=function(){setDlg(false)};
+$('#dlg-send').onclick=function(){setDlg(false);var t=$('#toast');t.style.display='block';clearTimeout(tt);tt=setTimeout(function(){t.style.display='none'},1800)};
+$('#toggle').onclick=function(){setAnn(!document.body.classList.contains('ann-on'))};
+function setAnn(on){document.body.classList.toggle('ann-on',on);$('#toggle').textContent=on?'隱藏標註':'顯示標註';try{history.replaceState(null,'',on?'#ann':location.pathname+location.search)}catch(e){}render()}
+function render(){
+  var layer=$('#ann-layer'),svg=$('#lines');
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  layer.querySelectorAll('.o,.cm').forEach(function(n){n.remove()});
+  var key=dlg?'S03':cur;
+  $('#tag').textContent=key+'｜'+NAMES[key];
+  if(!document.body.classList.contains('ann-on'))return;
+  var st=$('#stage').getBoundingClientRect(),rows=[];
+  ITEMS[key].forEach(function(it){
+    var el=$(it.s);if(!el)return;var r=el.getBoundingClientRect();if(!r.width)return;
+    var x=r.left-st.left,y=r.top-st.top,w=r.width,h=r.height;
+    var o=document.createElement('div');o.className='o';o.style.cssText='left:'+(x-4)+'px;top:'+(y-4)+'px;width:'+(w+8)+'px;height:'+(h+8)+'px';layer.appendChild(o);
+    rows.push({it:it,right:x+w+4,cy:y+h/2,w:Math.round(w),h:Math.round(h)});
+  });
+  rows.sort(function(a,b){return a.cy-b.cy});
+  var minTop=-1e9;
+  rows.forEach(function(r){
+    var hgt=r.it.c?52:30,top=Math.max(r.cy-15,minTop);minTop=top+hgt+14;r.top=top;
+    var d=document.createElement('div');d.className='cm';d.style.top=top+'px';
+    d.innerHTML='<b>'+r.it.l+'</b>'+(r.it.nosz?'':'<span class="sz">'+r.w+' × '+r.h+' px</span>')+(r.it.c?'<br><span class="go">點擊後：'+r.it.c+'</span>':'');
+    layer.appendChild(d);
+    var ty=top+15,p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d','M'+r.right+' '+r.cy+'H'+(r.right+24)+'L'+(500-12)+' '+ty+'H510');
+    p.setAttribute('fill','none');p.setAttribute('stroke','#A78BFA');p.setAttribute('stroke-width','1.5');svg.appendChild(p);
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.right);c.setAttribute('cy',r.cy);c.setAttribute('r',4);c.setAttribute('fill','#7C3AED');svg.appendChild(c);
+  });
+}
+window.addEventListener('resize',render);
+var q=new URLSearchParams(location.search);
+if(q.get('s')==='S02')show('S02');
+if(q.get('dlg')==='1')setDlg(true);
+setAnn(location.hash==='#ann');
+})();
+</script>
+</body>
+</html>

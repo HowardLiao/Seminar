@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>網頁與 APP 需求規格制定 × 網站建置方案比較｜Howard Liao Ph.D. Seminar 007</title>
+<meta name="description" content="Howard Liao Ph.D.｜盛欣、盛碁 2026 技術戰略研習：把需求說清楚讓合作更順暢 × 登入流程互動示範 × 客服問題回報改版範例說明 × 網站建置架構方案策略比較（一頁式、架站機、前後端分離三年TCO）。">
+<meta name="theme-color" content="#141B2D">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="網頁與 APP 需求規格制定 × 網站建置架構方案策略比較｜Howard Liao Ph.D. Seminar 007">
+<meta property="og:description" content="盛欣、盛碁 2026 技術戰略研習：4大成果循序呈現——把需求說清楚簡報、登入流程互動示範、客服工單改版範例、網站建置方案比較（含三年 TCO 與選型指南）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/007/">
+<meta property="og:image" content="slides2/01.jpg">
+
+<link rel="icon" href="assets/howard-liao-portrait-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+
+<style>
+  :root {
+    --ink: #141B2D;
+    --ink2: #1E263D;
+    --ink3: #28324E;
+    --surface: #192238;
+    --surface-light: #222C47;
+    --border: rgba(240, 122, 74, 0.22);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --coral: #F07A4A;
+    --coral-light: #FF976D;
+    --amber: #D97706;
+    --amber-soft: #FDE68A;
+    --rust: #A83212;
+    --teal: #0D9488;
+    --cyan: #06B6D4;
+    --green: #10B981;
+    --muted: #9AA3B8;
+    --text-main: #F8FAFC;
+    --text-sub: #CBD5E1;
+    --card-bg: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* 頂部導航 */
+  header.masthead {
+    height: 64px;
+    background: rgba(20, 27, 45, 0.96);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .brand-area img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--coral);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .brand-info {
+    min-width: 0;
+  }
+  .brand-info .title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-sem {
+    background: linear-gradient(135deg, var(--coral), var(--rust));
+    color: #FFF;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  .brand-info .sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* 頂部標籤導航 */
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+  }
+  .nav-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-tabs button:hover {
+    color: #FFF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .nav-tabs button.active {
+    background: var(--coral);
+    color: #FFF;
+    box-shadow: 0 2px 8px rgba(240, 122, 74, 0.35);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-hub-return {
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-hub-return:hover {
+    background: rgba(240, 122, 74, 0.15);
+    color: #FFF;
+    border-color: var(--coral);
+  }
+
+  /* 主容器 */
+  main.container {
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* 英雄區塊 Hero */
+  .hero-box {
+    background: radial-gradient(circle at 85% 15%, rgba(240, 122, 74, 0.15), transparent 45%),
+                linear-gradient(180deg, var(--surface) 0%, var(--ink2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 36px 32px;
+    margin-bottom: 36px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(240, 122, 74, 0.14);
+    border: 1px solid var(--coral);
+    color: var(--coral-light);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .hero-title {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.3;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text-sub);
+    line-height: 1.7;
+    max-width: 980px;
+    margin-bottom: 24px;
+  }
+  .hero-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 18px;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-meta-item strong {
+    color: var(--text-main);
+  }
+
+  /* 4大成果循序索引卡片 (Workflow Stepper Grid) */
+  .section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--coral);
+    box-shadow: 0 0 10px var(--coral);
+  }
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .deliv-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .deliv-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.25s;
+  }
+  .deliv-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--coral);
+    box-shadow: 0 12px 30px rgba(240, 122, 74, 0.15);
+  }
+  .deliv-card.active {
+    border-color: var(--coral);
+    background: linear-gradient(180deg, var(--surface-light) 0%, var(--surface) 100%);
+    box-shadow: 0 8px 24px rgba(240, 122, 74, 0.2);
+  }
+  .deliv-card.active::before {
+    background: linear-gradient(90deg, var(--coral), var(--amber));
+  }
+  .deliv-step {
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--coral);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .deliv-badge-type {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-sub);
+    margin-left: auto;
+  }
+  .deliv-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFF;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .deliv-desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+  .deliv-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+  .deliv-tag {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--muted);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .deliv-btn-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(240, 122, 74, 0.15);
+    color: var(--coral-light);
+    border: 1px solid rgba(240, 122, 74, 0.4);
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .deliv-btn-open:hover {
+    background: var(--coral);
+    color: #FFF;
+    border-color: var(--coral);
+  }
+
+  /* 檢視區塊容器 */
+  .view-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  }
+  .panel-header {
+    background: var(--ink2);
+    border-bottom: 1px solid var(--border-light);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .panel-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .panel-num {
+    font-family: var(--font-mono, monospace);
+    background: var(--coral);
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .panel-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFF;
+  }
+  .panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-btn {
+    border: 1px solid var(--border-light);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-sub);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .panel-btn:hover {
+    border-color: var(--coral);
+    color: #FFF;
+    background: rgba(240, 122, 74, 0.15);
+  }
+  .panel-btn.highlight {
+    background: var(--coral);
+    color: #FFF;
+    border-color: var(--coral);
+  }
+  .panel-btn.highlight:hover {
+    background: var(--coral-light);
+  }
+
+  /* 簡報放映器樣式 (Slide Viewer) */
+  .slide-stage-wrap {
+    position: relative;
+    background: #0A0E17;
+    padding: 24px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 520px;
+  }
+  .slide-frame {
+    position: relative;
+    width: min(100%, 1020px);
+    aspect-ratio: 16 / 9;
+    background: #FFF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+  }
+  .slide-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #FFF;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .slide-img.active {
+    opacity: 1;
+    z-index: 2;
+  }
+  .slide-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(20, 27, 45, 0.85);
+    color: #FFF;
+    font-size: 20px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .slide-nav-btn:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .slide-nav-btn.prev { left: 20px; }
+  .slide-nav-btn.next { right: 20px; }
+
+  .slide-footer-bar {
+    background: var(--ink2);
+    border-top: 1px solid var(--border-light);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-rail {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--coral), var(--amber));
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+  .slide-counter {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 65px;
+    text-align: right;
+  }
+
+  /* 縮圖網格抽屜 (Thumbnail Drawer) */
+  .thumbs-drawer {
+    background: #0D1322;
+    border-top: 1px solid var(--border-light);
+    padding: 16px 20px;
+    display: none;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 12px;
+  }
+  .thumbs-drawer.open {
+    display: flex;
+  }
+  .thumb-item {
+    width: 140px;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.65;
+    transition: all 0.2s;
+    background: #1E263D;
+    flex-shrink: 0;
+  }
+  .thumb-item:hover {
+    opacity: 1;
+    border-color: var(--muted);
+  }
+  .thumb-item.active {
+    opacity: 1;
+    border-color: var(--coral);
+    box-shadow: 0 0 10px rgba(240, 122, 74, 0.5);
+  }
+  .thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* 互動原型 iframe 嵌入樣式 */
+  .iframe-container {
+    width: 100%;
+    height: 820px;
+    background: #FFF;
+    position: relative;
+    border: 0;
+  }
+  .iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* 下載資源專區樣式 */
+  .downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+  }
+  .downloads-table th {
+    background: var(--ink2);
+    color: var(--muted);
+    font-weight: 700;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .downloads-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-sub);
+    vertical-align: middle;
+  }
+  .downloads-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .file-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono, monospace);
+  }
+  .file-badge.pptx { background: rgba(240, 122, 74, 0.18); color: var(--coral-light); border: 1px solid var(--coral); }
+  .file-badge.html { background: rgba(6, 182, 212, 0.18); color: var(--cyan); border: 1px solid var(--cyan); }
+  .file-badge.pdf  { background: rgba(239, 68, 68, 0.18); color: #FCA5A5; border: 1px solid #EF4444; }
+
+  /* 頁尾 */
+  footer.page-footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.8;
+  }
+  footer.page-footer a {
+    color: var(--coral-light);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  footer.page-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* RWD 響應式優化 */
+  @media (max-width: 1100px) {
+    .deliverables-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    header.masthead {
+      padding: 0 16px;
+      height: auto;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      gap: 10px;
+    }
+    .nav-tabs {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+    .hero-box {
+      padding: 24px 20px;
+    }
+    .hero-title {
+      font-size: 24px;
+    }
+    .deliverables-grid {
+      grid-template-columns: 1fr;
+    }
+    .slide-stage-wrap {
+      padding: 16px 56px;
+      min-height: 280px;
+    }
+    .slide-nav-btn {
+      width: 38px;
+      height: 38px;
+      font-size: 16px;
+    }
+    .slide-nav-btn.prev { left: 8px; }
+    .slide-nav-btn.next { right: 8px; }
+    .iframe-container {
+      height: 600px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- 頂部導航 -->
+<header class="masthead">
+  <div class="brand-area">
+    <img src="assets/howard-liao-portrait-circle.png" onerror="this.src='https://howardliao.github.io/portfolio/assets/howard-liao-portrait-circle.png'" alt="Howard Liao Ph.D.">
+    <div class="brand-info">
+      <div class="title">
+        <span>Howard Liao Ph.D.</span>
+        <span class="badge-sem">Seminar 007</span>
+      </div>
+      <div class="sub">盛欣、盛碁 2026 技術戰略研習 · 網頁需求規格範例</div>
+    </div>
+  </div>
+
+  <nav class="nav-tabs">
+    <button type="button" class="tab-btn active" data-target="section-overview"><span>📌</span> 總覽導覽</button>
+    <button type="button" class="tab-btn" data-target="section-p1"><span>📑</span> 1. 需求簡報</button>
+    <button type="button" class="tab-btn" data-target="section-d1"><span>📱</span> 1.1 登入互動</button>
+    <button type="button" class="tab-btn" data-target="section-d2"><span>📋</span> 1.1.1 客服原型</button>
+    <button type="button" class="tab-btn" data-target="section-p2"><span>🏛️</span> 2. 建置方案比較</button>
+    <button type="button" class="tab-btn" data-target="section-downloads"><span>📦</span> 原檔下載</button>
+  </nav>
+
+  <div class="nav-actions">
+    <a href="../" class="btn-hub-return">
+      <span>←</span> <span>回 Seminar 矩陣</span>
+    </a>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 英雄導覽區 -->
+  <section class="hero-box" id="section-overview">
+    <div class="hero-tagline">
+      <span>★ 盛欣、盛碁 2026 企業架構與需求工程專題</span>
+    </div>
+    <h1 class="hero-title">網頁與 APP 需求規格制定 × 網站建置架構方案策略比較</h1>
+    <p class="hero-desc">
+      本專案收錄 2026 盛欣與盛碁團隊在「網站與行動 APP 需求規格制定標準」及「網站建置架構商業選型」之四大循序落地成果。涵蓋規格制定溝通之五大實踐、AI 協作 Prompt 範本、可交互標註原型（S01 登入畫面）、企業級客服工單排查改版原型，以及針對「一頁式網站、SaaS 架站機、前後端分離」三大架構之三年 TCO 總擁有成本深度比較。
+    </p>
+
+    <div class="hero-meta-row">
+      <div class="hero-meta-item">
+        <span>報告負責人：</span>
+        <strong>Howard Liao Ph.D. (廖倫豪 博士)</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>研討對象：</span>
+        <strong>盛欣網絡 / 盛碁網絡科技 · 產銷發人財跨部門團隊</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>成果總計：</span>
+        <strong>2 份高階商業簡報 (21 頁) ＋ 2 套端到端可互動原型</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>合規與發布：</span>
+        <strong>GitHub Pages 100% 靜態相容 · 無外源資料庫依賴</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- 四大循序成果導覽卡片 -->
+  <div class="section-heading">
+    <div class="section-title">
+      <span class="dot"></span>
+      <span>四大成果循序交付導覽 (Sequential Deliverables)</span>
+    </div>
+    <div class="section-subtitle">點擊卡片快速平滑跳轉至對應展示區塊與下載原檔</div>
+  </div>
+
+  <div class="deliverables-grid">
+    <!-- 卡片 1 -->
+    <div class="deliv-card active" onclick="scrollToSection('section-p1')">
+      <div>
+        <div class="deliv-step">
+          <span>STEP 01</span>
+          <span class="deliv-badge-type">PPTX / PDF · 8 頁</span>
+        </div>
+        <h3 class="deliv-title">1. 把需求說清楚，讓合作更順暢</h3>
+        <p class="deliv-desc">
+          規格制定小做法：畫面編號規範（S01）、點擊跳轉指向、Claude Prompt 實用範本、手機 APP 跨端注意事項及送出前驗收檢核清單。
+        </p>
+      </div>
+      <div>
+        <div class="deliv-tags">
+          <span class="deliv-tag">五大溝通做法</span>
+          <span class="deliv-tag">Claude Prompt</span>
+          <span class="deliv-tag">驗收檢核</span>
+        </div>
+        <a href="#section-p1" class="deliv-btn-open" onclick="event.stopPropagation(); scrollToSection('section-p1');">
+          <span>📑</span> <span>前往線上簡報放映</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 卡片 2 -->
+    <div class="deliv-card" onclick="scrollToSection('section-d1')">
+      <div>
+        <div class="deliv-step">
+          <span>STEP 02</span>
+          <span class="deliv-badge-type">HTML · 可互動原型</span>
+        </div>
+        <h3 class="deliv-title">1.1 互動示範：S01 登入畫面</h3>
+        <p class="deliv-desc">
+          登入流程輕量示範：S01 登入 → S02 首頁 / S03 找回密碼。右上角一鍵切換標註，顯示元素實測像素尺寸（px）與點擊跳轉事件。
+        </p>
+      </div>
+      <div>
+        <div class="deliv-tags">
+          <span class="deliv-tag">S01~S03流程</span>
+          <span class="deliv-tag">像素標註切換</span>
+          <span class="deliv-tag">輕量單頁</span>
+        </div>
+        <a href="#section-d1" class="deliv-btn-open" onclick="event.stopPropagation(); scrollToSection('section-d1');">
+          <span>📱</span> <span>前往互動體驗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 卡片 3 -->
+    <div class="deliv-card" onclick="scrollToSection('section-d2')">
+      <div>
+        <div class="deliv-step">
+          <span>STEP 03</span>
+          <span class="deliv-badge-type">HTML · 完整規格說明</span>
+        </div>
+        <h3 class="deliv-title">1.1.1 範例說明：客服問題回報修改版</h3>
+        <p class="deliv-desc">
+          企業級客服工單修改版原型：開單前排查三部曲、問題分級判定樹（P1~P4）、影響範圍四維分析、裝置交叉檢查與全欄位改版歷史標註卡。
+        </p>
+      </div>
+      <div>
+        <div class="deliv-tags">
+          <span class="deliv-tag">開單前排查</span>
+          <span class="deliv-tag">P1~P4逐步判定</span>
+          <span class="deliv-tag">改版標註卡</span>
+        </div>
+        <a href="#section-d2" class="deliv-btn-open" onclick="event.stopPropagation(); scrollToSection('section-d2');">
+          <span>📋</span> <span>前往工單原型檢驗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 卡片 4 -->
+    <div class="deliv-card" onclick="scrollToSection('section-p2')">
+      <div>
+        <div class="deliv-step">
+          <span>STEP 04</span>
+          <span class="deliv-badge-type">PPTX / PDF · 13 頁</span>
+        </div>
+        <h3 class="deliv-title">2. 網站建置方案比較：一頁式、架站機、前後端分離</h3>
+        <p class="deliv-desc">
+          WEBSITE STRATEGY 2026：一句話分清三方案、技術組成與維運彈性、台灣市場建置與持續費用行情、三年 TCO 模型及採購驗收必問四題。
+        </p>
+      </div>
+      <div>
+        <div class="deliv-tags">
+          <span class="deliv-tag">三年TCO比較</span>
+          <span class="deliv-tag">前後端分離</span>
+          <span class="deliv-tag">採購避坑4問</span>
+        </div>
+        <a href="#section-p2" class="deliv-btn-open" onclick="event.stopPropagation(); scrollToSection('section-p2');">
+          <span>🏛️</span> <span>前往策略簡報放映</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 模組 1：把需求說清楚簡報 ==================== -->
+  <section class="view-panel" id="section-p1">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">01 / 04</span>
+        <h2 class="panel-title">1. 把需求說清楚，讓合作更順暢（8 頁線上簡報）</h2>
+      </div>
+      <div class="panel-actions">
+        <button type="button" class="panel-btn" onclick="toggleThumbs('p1')"><span>🖼️</span> <span>切換縮圖導航</span></button>
+        <button type="button" class="panel-btn" onclick="toggleFullscreen('slide-stage-p1')"><span>⛶</span> <span>全螢幕放映</span></button>
+        <a href="1.把需求說清楚合作更順暢.pptx" class="panel-btn" download><span>📥</span> <span>下載 PPTX</span></a>
+        <a href="1.把需求說清楚合作更順暢.pdf" class="panel-btn highlight" download><span>📄</span> <span>下載 PDF</span></a>
+      </div>
+    </div>
+
+    <div class="slide-stage-wrap" id="slide-stage-p1">
+      <button type="button" class="slide-nav-btn prev" onclick="changeSlide('p1', -1)" aria-label="上一頁">❮</button>
+      <div class="slide-frame">
+        <img src="slides1/01.jpg" class="slide-img active" alt="Slide 1">
+        <img src="slides1/02.jpg" class="slide-img" alt="Slide 2">
+        <img src="slides1/03.jpg" class="slide-img" alt="Slide 3">
+        <img src="slides1/04.jpg" class="slide-img" alt="Slide 4">
+        <img src="slides1/05.jpg" class="slide-img" alt="Slide 5">
+        <img src="slides1/06.jpg" class="slide-img" alt="Slide 6">
+        <img src="slides1/07.jpg" class="slide-img" alt="Slide 7">
+        <img src="slides1/08.jpg" class="slide-img" alt="Slide 8">
+      </div>
+      <button type="button" class="slide-nav-btn next" onclick="changeSlide('p1', 1)" aria-label="下一頁">❯</button>
+    </div>
+
+    <!-- 縮圖抽屜 -->
+    <div class="thumbs-drawer" id="thumbs-p1">
+      <div class="thumb-item active" onclick="gotoSlide('p1', 0)"><img src="slides1/t01.jpg" alt="Thumb 1"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 1)"><img src="slides1/t02.jpg" alt="Thumb 2"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 2)"><img src="slides1/t03.jpg" alt="Thumb 3"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 3)"><img src="slides1/t04.jpg" alt="Thumb 4"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 4)"><img src="slides1/t05.jpg" alt="Thumb 5"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 5)"><img src="slides1/t06.jpg" alt="Thumb 6"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 6)"><img src="slides1/t07.jpg" alt="Thumb 7"></div>
+      <div class="thumb-item" onclick="gotoSlide('p1', 7)"><img src="slides1/t08.jpg" alt="Thumb 8"></div>
+    </div>
+
+    <div class="slide-footer-bar">
+      <div class="progress-rail">
+        <div class="progress-fill" id="p1-progress" style="width: 12.5%;"></div>
+      </div>
+      <div class="slide-counter" id="p1-counter">1 / 8</div>
+    </div>
+  </section>
+
+  <!-- ==================== 模組 2：1.1 登入流程互動示範 ==================== -->
+  <section class="view-panel" id="section-d1">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">02 / 04</span>
+        <h2 class="panel-title">1.1 互動示範：S01 登入畫面（內嵌即時操作與標註）</h2>
+      </div>
+      <div class="panel-actions">
+        <button type="button" class="panel-btn" onclick="toggleIframeAnnotation('iframe-d1')"><span>🎯</span> <span>切換右上標註說明</span></button>
+        <a href="1.1interactive-demo.html" target="_blank" class="panel-btn highlight"><span>↗</span> <span>新分頁全螢幕開啟</span></a>
+        <a href="1.1interactive-demo.html" class="panel-btn" download><span>📥</span> <span>下載原始 HTML</span></a>
+      </div>
+    </div>
+
+    <div class="iframe-container" style="height: 780px;">
+      <iframe id="iframe-d1" src="1.1interactive-demo.html" title="1.1 互動示範：S01 登入畫面" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- ==================== 模組 3：1.1.1 客服工單改版範例 ==================== -->
+  <section class="view-panel" id="section-d2">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">03 / 04</span>
+        <h2 class="panel-title">1.1.1 範例說明：客服問題回報修改版（完整原型與變更標註）</h2>
+      </div>
+      <div class="panel-actions">
+        <button type="button" class="panel-btn" onclick="toggleIframeAnnotation('iframe-d2')"><span>🏷️</span> <span>切換改版標註開關</span></button>
+        <a href="1.1.1.範例說明.html" target="_blank" class="panel-btn highlight"><span>↗</span> <span>新分頁全螢幕開啟</span></a>
+        <a href="1.1.1.範例說明.html" class="panel-btn" download><span>📥</span> <span>下載原始 HTML</span></a>
+      </div>
+    </div>
+
+    <div class="iframe-container" style="height: 860px;">
+      <iframe id="iframe-d2" src="1.1.1.範例說明.html" title="1.1.1 範例說明：客服問題回報修改版" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- ==================== 模組 4：2. 網站建置方案比較簡報 ==================== -->
+  <section class="view-panel" id="section-p2">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">04 / 04</span>
+        <h2 class="panel-title">2. 網站建置方案比較：一頁式、架站機、前後端分離（13 頁線上簡報）</h2>
+      </div>
+      <div class="panel-actions">
+        <button type="button" class="panel-btn" onclick="toggleThumbs('p2')"><span>🖼️</span> <span>切換縮圖導航</span></button>
+        <button type="button" class="panel-btn" onclick="toggleFullscreen('slide-stage-p2')"><span>⛶</span> <span>全螢幕放映</span></button>
+        <a href="2.網站建置方案比較.pptx" class="panel-btn" download><span>📥</span> <span>下載 PPTX</span></a>
+        <a href="2.網站建置方案比較.pdf" class="panel-btn highlight" download><span>📄</span> <span>下載 PDF</span></a>
+      </div>
+    </div>
+
+    <div class="slide-stage-wrap" id="slide-stage-p2">
+      <button type="button" class="slide-nav-btn prev" onclick="changeSlide('p2', -1)" aria-label="上一頁">❮</button>
+      <div class="slide-frame">
+        <img src="slides2/01.jpg" class="slide-img active" alt="Slide 1">
+        <img src="slides2/02.jpg" class="slide-img" alt="Slide 2">
+        <img src="slides2/03.jpg" class="slide-img" alt="Slide 3">
+        <img src="slides2/04.jpg" class="slide-img" alt="Slide 4">
+        <img src="slides2/05.jpg" class="slide-img" alt="Slide 5">
+        <img src="slides2/06.jpg" class="slide-img" alt="Slide 6">
+        <img src="slides2/07.jpg" class="slide-img" alt="Slide 7">
+        <img src="slides2/08.jpg" class="slide-img" alt="Slide 8">
+        <img src="slides2/09.jpg" class="slide-img" alt="Slide 9">
+        <img src="slides2/10.jpg" class="slide-img" alt="Slide 10">
+        <img src="slides2/11.jpg" class="slide-img" alt="Slide 11">
+        <img src="slides2/12.jpg" class="slide-img" alt="Slide 12">
+        <img src="slides2/13.jpg" class="slide-img" alt="Slide 13">
+      </div>
+      <button type="button" class="slide-nav-btn next" onclick="changeSlide('p2', 1)" aria-label="下一頁">❯</button>
+    </div>
+
+    <!-- 縮圖抽屜 -->
+    <div class="thumbs-drawer" id="thumbs-p2">
+      <div class="thumb-item active" onclick="gotoSlide('p2', 0)"><img src="slides2/t01.jpg" alt="Thumb 1"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 1)"><img src="slides2/t02.jpg" alt="Thumb 2"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 2)"><img src="slides2/t03.jpg" alt="Thumb 3"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 3)"><img src="slides2/t04.jpg" alt="Thumb 4"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 4)"><img src="slides2/t05.jpg" alt="Thumb 5"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 5)"><img src="slides2/t06.jpg" alt="Thumb 6"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 6)"><img src="slides2/t07.jpg" alt="Thumb 7"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 7)"><img src="slides2/t08.jpg" alt="Thumb 8"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 8)"><img src="slides2/t09.jpg" alt="Thumb 9"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 9)"><img src="slides2/t10.jpg" alt="Thumb 10"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 10)"><img src="slides2/t11.jpg" alt="Thumb 11"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 11)"><img src="slides2/t12.jpg" alt="Thumb 12"></div>
+      <div class="thumb-item" onclick="gotoSlide('p2', 12)"><img src="slides2/t13.jpg" alt="Thumb 13"></div>
+    </div>
+
+    <div class="slide-footer-bar">
+      <div class="progress-rail">
+        <div class="progress-fill" id="p2-progress" style="width: 7.7%;"></div>
+      </div>
+      <div class="slide-counter" id="p2-counter">1 / 13</div>
+    </div>
+  </section>
+
+  <!-- ==================== 下載資源專區 ==================== -->
+  <section class="view-panel" id="section-downloads">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">DOWNLOADS</span>
+        <h2 class="panel-title">專案交付資源清單（四項成果原始檔與高清向量 PDF）</h2>
+      </div>
+      <div class="panel-actions">
+        <span style="font-size: 13px; color: var(--muted);">全部檔案均已就緒</span>
+      </div>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table class="downloads-table">
+        <thead>
+          <tr>
+            <th style="width: 100px;">序號</th>
+            <th style="width: 120px;">格式</th>
+            <th>檔案名稱與描述</th>
+            <th style="width: 120px;">檔案大小</th>
+            <th style="width: 180px; text-align: right;">下載與檢視</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>01</strong></td>
+            <td><span class="file-badge pptx">PPTX</span></td>
+            <td>
+              <strong>1.把需求說清楚合作更順暢.pptx</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">原始 PowerPoint 投影片簡報 · 8 頁規格制定指南</div>
+            </td>
+            <td>305 KB</td>
+            <td style="text-align: right;">
+              <a href="1.把需求說清楚合作更順暢.pptx" class="panel-btn" download>下載 PPTX</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>01-B</strong></td>
+            <td><span class="file-badge pdf">PDF</span></td>
+            <td>
+              <strong>1.把需求說清楚合作更順暢.pdf</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">高解析度向量印刷版 PDF · 適合跨裝置免微軟軟體瀏覽</div>
+            </td>
+            <td>1.7 MB</td>
+            <td style="text-align: right;">
+              <a href="1.把需求說清楚合作更順暢.pdf" class="panel-btn highlight" download>下載 PDF</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>02</strong></td>
+            <td><span class="file-badge html">HTML</span></td>
+            <td>
+              <strong>1.1interactive-demo.html</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">單頁獨立可執行互動原型 · S01 登入與點擊跳轉標註</div>
+            </td>
+            <td>9.9 KB</td>
+            <td style="text-align: right;">
+              <a href="1.1interactive-demo.html" class="panel-btn highlight" target="_blank">直接開啟</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>03</strong></td>
+            <td><span class="file-badge html">HTML</span></td>
+            <td>
+              <strong>1.1.1.範例說明.html</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">完整客服工單改版原型 · 包含 Vuetify 互動組件與改版審查標籤</div>
+            </td>
+            <td>726 KB</td>
+            <td style="text-align: right;">
+              <a href="1.1.1.範例說明.html" class="panel-btn highlight" target="_blank">直接開啟</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>04</strong></td>
+            <td><span class="file-badge pptx">PPTX</span></td>
+            <td>
+              <strong>2.網站建置方案比較.pptx</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">原始 PowerPoint 投影片簡報 · 13 頁網站策略與 TCO 比較</div>
+            </td>
+            <td>88 KB</td>
+            <td style="text-align: right;">
+              <a href="2.網站建置方案比較.pptx" class="panel-btn" download>下載 PPTX</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>04-B</strong></td>
+            <td><span class="file-badge pdf">PDF</span></td>
+            <td>
+              <strong>2.網站建置方案比較.pdf</strong>
+              <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">高解析度向量印刷版 PDF · 包含完整的選型建議與成本矩陣</div>
+            </td>
+            <td>305 KB</td>
+            <td style="text-align: right;">
+              <a href="2.網站建置方案比較.pdf" class="panel-btn highlight" download>下載 PDF</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p><strong>Howard Liao Ph.D. (廖倫豪 博士)</strong> ｜ 前沿技術論壇與研討會專案矩陣 (Seminar Hub)</p>
+  <p style="margin-top: 4px;">本專案線上網址：<a href="https://howardliao.github.io/Seminar/007/">https://howardliao.github.io/Seminar/007/</a> ｜ GitHub: <a href="https://github.com/HowardLiao/Seminar">HowardLiao/Seminar</a></p>
+  <p style="margin-top: 4px; font-size: 12px; color: var(--muted);">盛欣網絡 · 盛碁網絡科技 · 2026 網頁與 APP 需求工程標準化資產</p>
+</footer>
+
+<script>
+(function(){
+  // 簡報控制器狀態
+  var SLIDES = {
+    p1: { current: 0, total: 8 },
+    p2: { current: 0, total: 13 }
+  };
+
+  window.changeSlide = function(presKey, delta) {
+    var state = SLIDES[presKey];
+    if (!state) return;
+    var next = state.current + delta;
+    if (next < 0) next = 0;
+    if (next >= state.total) next = state.total - 1;
+    gotoSlide(presKey, next);
+  };
+
+  window.gotoSlide = function(presKey, index) {
+    var state = SLIDES[presKey];
+    if (!state) return;
+    state.current = index;
+
+    // 更新投影片圖片
+    var wrap = document.getElementById('slide-stage-' + presKey);
+    if (wrap) {
+      var imgs = wrap.querySelectorAll('.slide-img');
+      imgs.forEach(function(img, idx) {
+        img.classList.toggle('active', idx === index);
+      });
+    }
+
+    // 更新進度條與計數器
+    var prog = document.getElementById(presKey + '-progress');
+    if (prog) {
+      prog.style.width = ((index + 1) / state.total * 100) + '%';
+    }
+    var cnt = document.getElementById(presKey + '-counter');
+    if (cnt) {
+      cnt.textContent = (index + 1) + ' / ' + state.total;
+    }
+
+    // 更新縮圖高亮
+    var drawer = document.getElementById('thumbs-' + presKey);
+    if (drawer) {
+      var thumbs = drawer.querySelectorAll('.thumb-item');
+      thumbs.forEach(function(th, idx) {
+        th.classList.toggle('active', idx === index);
+      });
+      // 自動捲動縮圖可見
+      if (thumbs[index]) {
+        thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  };
+
+  window.toggleThumbs = function(presKey) {
+    var drawer = document.getElementById('thumbs-' + presKey);
+    if (drawer) {
+      drawer.classList.toggle('open');
+    }
+  };
+
+  window.toggleFullscreen = function(elementId) {
+    var el = document.getElementById(elementId);
+    if (!el) return;
+    if (!document.fullscreenElement) {
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  };
+
+  // 平滑捲動至指定區塊
+  window.scrollToSection = function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      var top = el.getBoundingClientRect().top + window.pageYOffset - 74;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  };
+
+  // 頂部導航按鈕點擊
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var targetId = btn.getAttribute('data-target');
+      scrollToSection(targetId);
+    });
+  });
+
+  // 切換 iframe 內的標註（若跨域同源允許）
+  window.toggleIframeAnnotation = function(iframeId) {
+    var ifr = document.getElementById(iframeId);
+    if (!ifr) return;
+    try {
+      var iDoc = ifr.contentDocument || ifr.contentWindow.document;
+      // 1.1 互動示範的標註按鈕 ID 為 toggle
+      var btn1 = iDoc.getElementById('toggle');
+      if (btn1) { btn1.click(); return; }
+      // 1.1.1 範例說明的標註按鈕在 ann-bar
+      var btn2 = iDoc.querySelector('#ann-bar button');
+      if (btn2) { btn2.click(); return; }
+    } catch(e) {
+      console.log('Iframe access blocked or not loaded yet.');
+    }
+  };
+
+  // 鍵盤左右鍵控制主頁面目前可見的簡報
+  window.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var rect1 = document.getElementById('section-p1').getBoundingClientRect();
+    var rect2 = document.getElementById('section-p2').getBoundingClientRect();
+    var mid = window.innerHeight / 2;
+
+    var activeKey = 'p1';
+    if (Math.abs(rect2.top - mid) < Math.abs(rect1.top - mid)) {
+      activeKey = 'p2';
+    }
+
+    if (e.key === 'ArrowLeft') {
+      changeSlide(activeKey, -1);
+    } else if (e.key === 'ArrowRight' || e.key === ' ') {
+      changeSlide(activeKey, 1);
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
