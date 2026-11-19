@@ -773,6 +773,218 @@
     color: var(--amber-soft);
     font-weight: 700;
   }
+
+  /* 擴充合規指南樣式 */
+  .guide-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(240, 122, 74, 0.4), transparent);
+    margin: 36px 0 28px;
+  }
+  .guide-part-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .guide-part-num {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(240, 122, 74, 0.2);
+    color: var(--coral-light);
+    border: 1px solid var(--coral);
+  }
+  .guide-part-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: #FFF;
+  }
+  .guide-intro-banner {
+    background: rgba(20, 27, 45, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-sub);
+  }
+  .guide-intro-banner strong {
+    color: #FFF;
+  }
+  .guide-table-wrap {
+    background: var(--surface-light);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 28px;
+  }
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    text-align: left;
+  }
+  .guide-table th {
+    background: var(--ink2);
+    color: var(--coral-light);
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+    white-space: nowrap;
+  }
+  .guide-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-sub);
+    line-height: 1.6;
+    vertical-align: top;
+  }
+  .guide-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .guide-table td strong {
+    color: #FFF;
+  }
+  .guide-ref-pill {
+    display: inline-block;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--muted);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .guide-ref-pill:hover {
+    color: var(--coral-light);
+    border-color: var(--coral);
+    background: rgba(240, 122, 74, 0.1);
+  }
+  .guide-subcard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .guide-subcard {
+    background: var(--surface-light);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 22px 20px;
+  }
+  .guide-subcard-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .guide-subcard-title span.badge {
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--coral);
+    color: #FFF;
+  }
+  .guide-subcard ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13.5px;
+    color: var(--text-sub);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .guide-subcard p {
+    font-size: 13.5px;
+    color: var(--text-sub);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .guide-subcard p strong {
+    color: #FFF;
+  }
+  .guide-tree-card {
+    background: #090D17;
+    border: 1px solid rgba(240, 122, 74, 0.3);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+  }
+  .guide-tree-card pre {
+    font-family: var(--font-mono, monospace);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--amber-soft);
+    margin: 0;
+    white-space: pre-wrap;
+  }
+  .guide-tree-card .tree-caption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 10px;
+  }
+  .guide-checklist-wrap {
+    background: var(--surface-light);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .guide-checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+    color: var(--text-sub);
+    line-height: 1.6;
+  }
+  .guide-checklist-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .guide-check-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--green);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .guide-special-note {
+    background: rgba(217, 119, 6, 0.08);
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-sub);
+  }
+  .guide-special-note strong {
+    color: var(--amber-soft);
+  }
+  @media (max-width: 900px) {
+    .guide-subcard-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 1024px) {
     .guide-grid { grid-template-columns: repeat(2, 1fr); }
     .guide-callouts-row { grid-template-columns: 1fr; }
@@ -1150,40 +1362,53 @@
     <div class="panel-header">
       <div class="panel-title-wrap">
         <span class="panel-num">STRATEGY ADVISORY</span>
-        <h2 class="panel-title">手遊公司的官網要準備到什麼程度？（平台審查與建置選型實務）</h2>
+        <h2 class="panel-title">手遊公司的官網要準備到什麼程度？（App Store / Google Play 雙平台審查與臺灣營運法規實務）</h2>
       </div>
       <div class="panel-actions">
-        <span style="font-size: 13px; color: var(--coral-light); font-weight: 700;">★ 平台審查機制 × 成本平衡選型</span>
+        <span style="font-size: 13px; color: var(--coral-light); font-weight: 700;">★ 雙平台送審要求 × 臺灣營運法規 × 成本選型平衡</span>
       </div>
     </div>
 
     <div class="strategy-guide-body">
+      <!-- 核心原則導言 -->
       <div class="guide-lead-box">
-        <p class="guide-lead-title">不必為了申請先做大型形象網站。我的建議是，先做一個<strong>內容完整、能清楚辨識經營主體</strong>的官網：</p>
+        <p class="guide-lead-title">
+          以<strong>「臺灣營運的手遊，準備送 App Store／Google Play 審核」</strong>來說，官網建議先備齊：<strong>遊戲基本資料、營運公司資訊、客服聯絡方式、隱私權政策、服務條款、遊戲分級標示，以及有帳號功能時的帳號刪除頁面</strong>。
+        </p>
+      </div>
+
+      <div class="guide-intro-banner">
+        重點不是官網做得多華麗，而是審核者與玩家能查到<strong>「誰營運、怎麼聯絡、資料怎麼用、帳號怎麼刪」</strong>。其中平台送審要求與臺灣營運法規要分開確認，不能只放一張遊戲形象圖就送審。<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" class="guide-ref-pill">Apple 審核規範 ↗</a>
+      </div>
+
+      <!-- 四大基礎定位 -->
+      <div class="guide-part-header">
+        <span class="guide-part-num">FOUNDATION</span>
+        <h3 class="guide-part-title">不必為了申請先做大型形象網站，先做內容完整、能清楚辨識經營主體的官網</h3>
       </div>
 
       <div class="guide-grid">
         <div class="guide-card">
           <div class="guide-card-icon">🏢</div>
-          <h3 class="guide-card-title">公司介紹</h3>
+          <h4 class="guide-card-title">公司介紹</h4>
           <p class="guide-card-desc">公司法定名稱、主要業務，以及研發或發行手遊的定位。</p>
         </div>
 
         <div class="guide-card">
           <div class="guide-card-icon">🎮</div>
-          <h3 class="guide-card-title">遊戲／服務介紹</h3>
+          <h4 class="guide-card-title">遊戲／服務介紹</h4>
           <p class="guide-card-desc">說明正在開發或營運的產品；未公開的內容不需要揭露機密。</p>
         </div>
 
         <div class="guide-card">
           <div class="guide-card-icon">📞</div>
-          <h3 class="guide-card-title">聯絡資訊</h3>
+          <h4 class="guide-card-title">聯絡資訊</h4>
           <p class="guide-card-desc">企業 Email、公司電話與聯絡地址。</p>
         </div>
 
         <div class="guide-card">
           <div class="guide-card-icon">🔗</div>
-          <h3 class="guide-card-title">品牌與公司的關係</h3>
+          <h4 class="guide-card-title">品牌與公司的關係</h4>
           <p class="guide-card-desc">遊戲品牌若與法人名稱不同，清楚寫明由哪家公司開發或營運。</p>
         </div>
       </div>
@@ -1210,7 +1435,7 @@
         </div>
       </div>
 
-      <div class="guide-summary-box">
+      <div class="guide-summary-box" style="margin-bottom: 32px;">
         <div class="summary-icon">💡</div>
         <div class="summary-content">
           <div class="summary-label">關鍵結論 (Executive Takeaway)</div>
@@ -1218,6 +1443,186 @@
             簡單講：<strong>鄧白氏編碼是公司的識別碼，公司官網則是平台要求的對外身分展示；兩者互補，不能互相取代。</strong>
           </div>
         </div>
+      </div>
+
+      <div class="guide-divider"></div>
+
+      <!-- 一、官網應準備的資料清單 -->
+      <div class="guide-part-header">
+        <span class="guide-part-num">PART 01</span>
+        <h3 class="guide-part-title">一、官網應準備的資料清單</h3>
+      </div>
+
+      <div class="guide-table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 150px;">項目</th>
+              <th style="width: 40%;">要準備什麼</th>
+              <th>必要性與注意事項</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>遊戲基本資料</strong></td>
+              <td>正式遊戲名稱、Logo、遊戲簡介、實際遊戲畫面、支援平台</td>
+              <td>建議首頁具備；名稱、圖片及功能說明應與送審版本、商店頁一致，不要宣稱尚未提供的功能。<br><a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 規範 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>營運／代理商資訊</strong></td>
+              <td>實際提供服務的公司名稱、營運或代理身分；公司詳細聯絡資訊可與服務條款整合</td>
+              <td>臺灣遊戲官網應注意服務條款及代理商資訊揭露，不宜只放品牌名稱、無法辨識實際營運主體。<br><a href="https://www.gamerating.org.tw/Faq?mid=14&itemid=4&group=7" target="_blank" class="guide-ref-pill">數位娛樂軟體分級 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>客服／支援頁</strong></td>
+              <td>客服 Email 或可實際送出的客服表單；建議補充服務時間、問題回報方式</td>
+              <td>Apple 明確要求 App 與 Support URL 提供容易聯絡的方式；不能只有無法使用的「聯絡我們」按鈕。<br><a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" class="guide-ref-pill">Apple 支援要求 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>隱私權政策</strong></td>
+              <td>收集資料類型、用途、分享對象、第三方 SDK、保存與刪除方式、聯絡管道</td>
+              <td>Apple 與 Google Play 都要求提供，且 App 內也要能找到連結；即使宣稱不收集個資，Google Play 仍要求隱私權政策。<br><a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 隱私要求 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>服務條款／會員契約</strong></td>
+              <td>服務提供者、帳號與使用規則、付費及退費、停權終止、申訴等適用條款</td>
+              <td>臺灣主管機關 FAQ 說明，官網揭露服務條款與代理商資訊涉及消保法的定型化契約明示要求；正式內容應由法務核對適用規範。<br><a href="https://www.gamerating.org.tw/Faq?mid=14&itemid=4&group=7" target="_blank" class="guide-ref-pill">消保法定型化契約 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>遊戲分級</strong></td>
+              <td>臺灣分級圖示、內容情節及警語</td>
+              <td>臺灣上市遊戲須完成資訊登載並依規定標示分級資訊；無實體包裝者，應在說明、下載、起始網頁或連結旁明顯標示。<br><a href="https://www.gamerating.org.tw/Faq?mid=14&itemid=4&group=7" target="_blank" class="guide-ref-pill">分級標示辦法 ↗</a></td>
+            </tr>
+            <tr>
+              <td><strong>帳號刪除頁</strong></td>
+              <td>刪除申請入口、驗證方式、處理流程、刪除範圍，以及依法保留資料的說明</td>
+              <td>Google Play 對可建立帳號的 App，要求 App 內及外部網頁都能發起刪除；Apple 則要求能從 App 內發起，只有官網頁面仍不夠。<br><a href="https://support.google.com/googleplay/android-developer/answer/13327111?hl=en" target="_blank" class="guide-ref-pill">Google Play 帳號刪除 ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guide-divider"></div>
+
+      <!-- 二、隱私權政策與刪除帳號最容易漏掉什麼 -->
+      <div class="guide-part-header">
+        <span class="guide-part-num">PART 02</span>
+        <h3 class="guide-part-title">二、隱私權政策與刪除帳號，最容易漏掉什麼？</h3>
+      </div>
+
+      <div class="guide-subcard-grid">
+        <div class="guide-subcard">
+          <div class="guide-subcard-title">
+            <span class="badge">1. 隱私權政策</span>
+            <span>不能只是通用範本，須按實際情況填寫</span>
+          </div>
+          <p>應按遊戲實際使用情況填寫，尤其是：</p>
+          <ul>
+            <li><strong>登入、會員及角色相關資料</strong>。</li>
+            <li><strong>裝置資訊、使用紀錄</strong>，以及實際使用的分析、廣告或其他 SDK 所涉及的資料。</li>
+            <li><strong>資料使用目的、分享對象、保存及刪除規則</strong>。</li>
+            <li><strong>玩家如何聯絡你、撤回同意或提出資料刪除請求</strong>。</li>
+          </ul>
+          <p>
+            政策內容必須與實際 App 行為一致；Apple 的隱私申報也包含整合進 App 的第三方合作夥伴資料處理行為。<a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 隱私申報 ↗</a>
+          </p>
+          <p>
+            Google Play 的政策網址<strong>須公開可讀、不能要求登入、不能限制地區，也不能只提供 PDF 或下載檔案</strong>。<a href="https://support.google.com/googleplay/android-developer/answer/9859455?hl=en" target="_blank" class="guide-ref-pill">Google 政策網址要求 ↗</a>
+          </p>
+        </div>
+
+        <div class="guide-subcard">
+          <div class="guide-subcard-title">
+            <span class="badge">2. 刪除頁</span>
+            <span>不能只寫「請至遊戲內操作」</span>
+          </div>
+          <p>
+            <strong>Google Play 要求</strong>：要讓已移除遊戲的人，也能透過外部網頁提出刪除申請。頁面應清楚顯示遊戲或開發者名稱，並提供真正可用的申請途徑，而不是把玩家導回 App、要求重新安裝。<a href="https://support.google.com/googleplay/android-developer/answer/13327111?hl=en" target="_blank" class="guide-ref-pill">Google 刪除途徑規範 ↗</a>
+          </p>
+          <p>
+            <strong>Apple 要求</strong>：App 內必須有容易找到的刪除入口；<strong>只提供暫停、凍結或停用帳號，不等於刪除帳號</strong>。一般非高度監管產業的 App，也不應把電話、Email 或客服聊天設為必經的刪除程序。<a href="https://developer.apple.com/help/app-review/guideline-reference/5-1-1-account-deletion/" target="_blank" class="guide-ref-pill">Apple 5.1.1 帳號刪除 ↗</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="guide-divider"></div>
+
+      <!-- 三、可直接交給官網廠商的最小網站架構 -->
+      <div class="guide-part-header">
+        <span class="guide-part-num">PART 03</span>
+        <h3 class="guide-part-title">三、可直接交給官網廠商的最小網站架構</h3>
+      </div>
+
+      <div class="guide-tree-card">
+        <pre><code>首頁
+├─ 遊戲名稱、Logo、簡介、實際遊戲畫面
+├─ 營運／代理公司資訊
+├─ 遊戲分級、內容情節與警語
+└─ 頁尾固定連結
+   ├─ 客服中心
+   ├─ 隱私權政策
+   ├─ 服務條款／會員契約
+   └─ 帳號與資料刪除</code></pre>
+        <div class="tree-caption">
+          💡 <strong>架構設計思維</strong>：以下是建議的交付架構，不代表平台規定一定要拆成六頁。這個架構把平台要求的客服、隱私及刪除入口，與臺灣營運需要注意的服務條款、營運主體和分級資訊放在同一個可查找的位置。<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" class="guide-ref-pill">Apple 審查指南 ↗</a>
+        </div>
+      </div>
+
+      <div class="guide-divider"></div>
+
+      <!-- 四、送審前驗收清單 -->
+      <div class="guide-part-header">
+        <span class="guide-part-num">PART 04</span>
+        <h3 class="guide-part-title">四、送審前驗收清單（Checklist）</h3>
+      </div>
+
+      <div class="guide-checklist-wrap">
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>官網、隱私頁、客服頁及刪除頁皆可正常開啟</strong>，沒有空白頁、佔位文字或「建置中」。<a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 規範 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>隱私頁在未登入、海外網路環境也能閱讀</strong>，且不是 PDF。<a href="https://support.google.com/googleplay/android-developer/answer/9859455?hl=en" target="_blank" class="guide-ref-pill">Google Play 要求 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>官網、App、商店頁的遊戲名稱與營運主體資訊一致</strong>，各項政策對應實際遊戲行為。<a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 規範 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>客服信箱或表單確實能收件</strong>，聯絡管道真實有效。<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" class="guide-ref-pill">Apple 規範 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>有帳號建立功能時，實測 App 內刪除入口及 Google Play 外部刪除申請流程</strong>。<a href="https://support.google.com/googleplay/android-developer/answer/13327111?hl=en" target="_blank" class="guide-ref-pill">Google Play 規範 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>臺灣分級圖示、情節及警語已依規定明顯標示</strong>。<a href="https://www.gamerating.org.tw/Faq?mid=14&itemid=4&group=7" target="_blank" class="guide-ref-pill">數位娛樂軟體分級 ↗</a>
+          </div>
+        </div>
+        <div class="guide-checklist-item">
+          <div class="guide-check-box">✓</div>
+          <div>
+            <strong>審核測試帳號、操作說明另填在平台後台，不要公開放在官網</strong>；審核期間後端服務須穩定可用。<a href="https://developer.apple.com/app-store/review/guidelines/tw/" target="_blank" class="guide-ref-pill">Apple 規範 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-special-note">
+        ⚠️ <strong>重要法規提醒</strong>：如果你說的「送審」是<strong>臺灣遊戲分級登錄</strong>，而不是雙平台上架，還要另外核對登錄資料；若為代理中國大陸遊戲，亦有額外證明文件要求，不能只準備官網。<a href="https://www.gamerating.org.tw/Faq?mid=14&itemid=4&group=7" target="_blank" class="guide-ref-pill">數位娛樂軟體分級查詢 ↗</a>
       </div>
     </div>
   </section>
