@@ -1,0 +1,2383 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="pharaoh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gartner 2027 十大策略技術趨勢深度解析 ｜ Mastering the New Boundaries of Machine Behavior ｜ Howard Liao Ph.D. Seminar 010</title>
+<meta name="description" content="Gartner 2027 Top 10 Strategic Technology Trends 全景深度戰略解析：非文字 AI 前沿（量化模型、語音推理、世界模型）、自主代理平台治理（上下文平台、編碼代理 Harness、代理身分、自主曝險修復）、長效敏捷架構（主權科技、拋棄式應用、生物運算 Wetware）。報告人：Howard Liao Ph.D.">
+<meta name="theme-color" content="#D96B27">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="Gartner 2027 十大策略技術趨勢深度解析 ｜ Howard Liao Ph.D. Seminar 010">
+<meta property="og:description" content="掌握機器行為的新邊界：從軟體稀缺走向軟體充裕，三大戰略主軸 × 十大前沿趨勢 × C-Level 落地責任矩陣。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/010/">
+<meta property="og:image" content="assets/gartner_p3_0.jpg">
+
+<link rel="icon" href="assets/howard-liao-portrait-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+
+<style>
+  /* --------------------------------------------------------------------------
+     設計系統規範：統一遵循 Egyptian Pharaoh Academic 與跨主題切換架構
+     -------------------------------------------------------------------------- */
+  :root, html[data-theme="pharaoh"] {
+    --primary: #D96B27;
+    --primary-dark: #B25016;
+    --primary-light: #F48C42;
+    --secondary: #2B5F6B;
+    --secondary-dark: #1E4650;
+    --secondary-light: #3D7F8F;
+    --tertiary: #E5A93C;
+    --tertiary-soft: #FEF7E9;
+    --text-main: #1F2421;
+    --text-muted: #6B726C;
+    --bg-page: #FAF7F2;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F6F2EA;
+    --border: #E8DFD8;
+    --border-accent: rgba(217, 107, 39, 0.28);
+    --shadow-sm: 0 2px 6px rgba(31, 36, 33, 0.04);
+    --shadow-md: 0 6px 18px rgba(217, 107, 39, 0.08);
+    --shadow-lg: 0 12px 32px rgba(31, 36, 33, 0.1);
+    --code-bg: #F0ECE4;
+    --badge-bg: #FEF3E2;
+    --badge-text: #B25016;
+    --accent-red: #C53030;
+    --accent-green: #276749;
+    --accent-blue: #2B6CB0;
+  }
+
+  html[data-theme="obsidian"] {
+    --primary: #F07A4A;
+    --primary-dark: #DE5814;
+    --primary-light: #FF976D;
+    --secondary: #0D9488;
+    --secondary-dark: #0F766E;
+    --secondary-light: #14B8A6;
+    --tertiary: #F59E0B;
+    --tertiary-soft: #242D3D;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --bg-page: #0F172A;
+    --bg-card: #1E293B;
+    --bg-card-alt: #162032;
+    --border: #334155;
+    --border-accent: rgba(240, 122, 74, 0.35);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
+    --code-bg: #0B1120;
+    --badge-bg: #372A22;
+    --badge-text: #FF976D;
+    --accent-red: #FC8181;
+    --accent-green: #68D391;
+    --accent-blue: #63B3ED;
+  }
+
+  html[data-theme="milan"] {
+    --primary: #A83212;
+    --primary-dark: #7A240D;
+    --primary-light: #C94825;
+    --secondary: #78350F;
+    --secondary-dark: #50230A;
+    --secondary-light: #9A4A1C;
+    --tertiary: #D97706;
+    --tertiary-soft: #FFFBEB;
+    --text-main: #27272A;
+    --text-muted: #71717A;
+    --bg-page: #FDFBF7;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F7F3EA;
+    --border: #E4DCD0;
+    --border-accent: rgba(168, 50, 18, 0.25);
+    --shadow-sm: 0 2px 6px rgba(39, 39, 42, 0.04);
+    --shadow-md: 0 6px 18px rgba(168, 50, 18, 0.08);
+    --shadow-lg: 0 12px 32px rgba(39, 39, 42, 0.1);
+    --code-bg: #F3EFE6;
+    --badge-bg: #FEF2F2;
+    --badge-text: #991B1B;
+    --accent-red: #DC2626;
+    --accent-green: #15803D;
+    --accent-blue: #1D4ED8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* 容器規格 */
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* 頂部導航列 */
+  .masthead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    transition: all 0.25s ease;
+  }
+  .masthead-inner {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .brand-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .brand-text h1 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .brand-text p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card-alt);
+    color: var(--text-main);
+  }
+  .nav-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .nav-btn.primary {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+  }
+  .nav-btn.primary:hover {
+    background: var(--primary-dark);
+  }
+
+  /* 主題切換按鈕 */
+  .theme-select {
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Hero 視覺大橫幅 */
+  .hero-section {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-page) 100%);
+  }
+  .hero-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border: 1px solid var(--border-accent);
+  }
+  .badge.cyan {
+    background: rgba(43, 95, 107, 0.12);
+    color: var(--secondary);
+    border-color: rgba(43, 95, 107, 0.3);
+  }
+  .hero-title {
+    font-size: clamp(2rem, 3.8vw, 2.9rem);
+    font-weight: 900;
+    line-height: 1.25;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero-title span {
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 860px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .hero-author-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .hero-author-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  .hero-author-text strong {
+    color: var(--primary);
+  }
+
+  /* 關鍵指標儀表卡片 (Metrics Grid) */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .metric-card {
+    background: var(--bg-card);
+    padding: 20px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+  }
+  .metric-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+  }
+  .metric-val {
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--primary);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  .metric-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  /* 頁面導航錨點 (Sticky TOC Bar) */
+  .toc-bar {
+    position: sticky;
+    top: 68px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .toc-bar::-webkit-scrollbar { display: none; }
+  .toc-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 12px;
+  }
+  .toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .toc-link:hover, .toc-link.active {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+  }
+
+  /* 章節通用規格 */
+  section.content-section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 1.95rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 920px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* 視覺呼叫框 Callout Box */
+  .callout-box {
+    background: var(--tertiary-soft);
+    border-left: 4px solid var(--primary);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 24px 0;
+  }
+  .callout-box.teal {
+    background: rgba(43, 95, 107, 0.08);
+    border-left-color: var(--secondary);
+  }
+  .callout-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-box.teal .callout-title {
+    color: var(--secondary);
+  }
+  .callout-content {
+    font-size: 0.92rem;
+    color: var(--text-main);
+    line-height: 1.6;
+  }
+
+  /* 三大戰略主軸卡片 */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .pillar-header {
+    padding: 24px 24px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .pillar-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  .pillar-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .pillar-img-box {
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    background: var(--bg-card-alt);
+    position: relative;
+  }
+  .pillar-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .pillar-card:hover .pillar-img-box img {
+    transform: scale(1.03);
+  }
+  .pillar-body {
+    padding: 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pillar-trends-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pillar-trend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .trend-num-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--tertiary-soft);
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* 時程規劃表 (Planning Horizons Matrix) */
+  .horizon-table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    background: var(--bg-card);
+  }
+  table.horizon-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  table.horizon-table th {
+    background: var(--bg-card-alt);
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  table.horizon-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  table.horizon-table tr:last-child td {
+    border-bottom: none;
+  }
+  table.horizon-table tr:hover {
+    background: var(--tertiary-soft);
+  }
+
+  /* 趨勢詳細卡片 (Trend Detail Card) */
+  .trend-detail-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-sm);
+    scroll-margin-top: 130px;
+    transition: border-color 0.25s ease;
+  }
+  .trend-detail-block:hover {
+    border-color: var(--primary);
+  }
+  .trend-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .trend-title-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .trend-badge-large {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #FFFFFF;
+  }
+  .trend-main-name {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+  .trend-horizon-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    background: var(--bg-card-alt);
+    color: var(--secondary);
+  }
+
+  .trend-two-col {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 900px) {
+    .trend-two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .trend-img-frame {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card-alt);
+    box-shadow: var(--shadow-sm);
+  }
+  .trend-img-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .img-caption {
+    padding: 10px 14px;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    font-family: "JetBrains Mono", monospace;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+  }
+
+  .trend-definition-box {
+    margin-bottom: 16px;
+  }
+  .trend-def-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .trend-def-text {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--text-main);
+  }
+
+  .prediction-stat-box {
+    background: var(--badge-bg);
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .stat-big-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .stat-text {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text-main);
+    font-weight: 600;
+  }
+
+  /* 4 步落地行動表 */
+  .action-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .action-step-card {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--secondary);
+    margin-bottom: 6px;
+  }
+  .step-outcome {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .step-action-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* 三方角色職責卡片 (Role Breakdown) */
+  .roles-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+  }
+  @media (max-width: 800px) {
+    .roles-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  .role-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.84rem;
+  }
+  .role-card-title {
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: var(--secondary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .role-card ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .role-card li strong {
+    color: var(--text-main);
+  }
+
+  /* RACI 全景決策表 */
+  .raci-table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+  }
+  table.raci-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  table.raci-table th {
+    background: var(--bg-card-alt);
+    padding: 12px 16px;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+  table.raci-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  table.raci-table tr:hover {
+    background: var(--tertiary-soft);
+  }
+
+  /* 下載與連結區 */
+  .download-box {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--tertiary-soft) 100%);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 36px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 40px 0;
+  }
+  .download-info h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  .download-info p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+  .download-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--primary);
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(217, 107, 39, 0.35);
+    transition: all 0.2s ease;
+  }
+  .btn-download:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  /* 頁尾 */
+  footer.site-footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 48px 0 64px;
+    margin-top: 60px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-author {
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .footer-author span {
+    color: var(--primary);
+  }
+
+  /* 列印版式優化 */
+  @media print {
+    .masthead, .toc-bar, .theme-select, .nav-tools, .btn-download { display: none !important; }
+    body { background: #FFFFFF !important; color: #000000 !important; }
+    .container { max-width: 100% !important; padding: 0 !important; }
+    .trend-detail-block { page-break-inside: avoid; border: 1px solid #CCCCCC !important; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- 頂部導航列 -->
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a href="../" class="brand-group" title="返回 Seminar 系列首頁">
+      <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." class="brand-avatar">
+      <div class="brand-text">
+        <h1>Howard Liao Ph.D. ｜ Seminar 010</h1>
+        <p>Gartner 2027 Strategic Technology Trends</p>
+      </div>
+    </a>
+
+    <div class="nav-tools">
+      <select class="theme-select" id="themeSwitcher" title="切換視覺主題風格" aria-label="切換風格">
+        <option value="pharaoh">🏛 埃及法老暖金 (預設)</option>
+        <option value="obsidian">🌑 曜石深灰黑夜</option>
+        <option value="milan">🎨 米蘭編排雙軌</option>
+      </select>
+      <a href="top-10-strategic-technology-trends-for-2027.pdf" download class="nav-btn primary">
+        <span>📄</span> <span>下載原廠 PDF</span>
+      </a>
+      <a href="../" class="nav-btn">
+        <span>⬅</span> <span>返回總目錄</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- 快速章節浮動導覽列 -->
+<nav class="toc-bar" aria-label="文章快速導覽">
+  <div class="container toc-bar-inner">
+    <a href="#macro-overview" class="toc-link">戰略宏觀視野</a>
+    <a href="#three-pillars" class="toc-link">三大戰略主軸</a>
+    <a href="#horizons-matrix" class="toc-link">落地三地平線</a>
+    <span style="color:var(--border);">|</span>
+    <a href="#trend-1" class="toc-link">1. 量化模型 LQM</a>
+    <a href="#trend-2" class="toc-link">2. 語音推理模型</a>
+    <a href="#trend-3" class="toc-link">3. 世界模型</a>
+    <a href="#trend-4" class="toc-link">4. AI 上下文平台</a>
+    <a href="#trend-5" class="toc-link">5. 編碼代理 Harness</a>
+    <a href="#trend-6" class="toc-link">6. 代理身分識別</a>
+    <a href="#trend-7" class="toc-link">7. 自主曝險修復</a>
+    <a href="#trend-8" class="toc-link">8. 主權科技</a>
+    <a href="#trend-9" class="toc-link">9. 拋棄式應用</a>
+    <a href="#trend-10" class="toc-link">10. 生物運算 Wetware</a>
+    <span style="color:var(--border);">|</span>
+    <a href="#raci-matrix" class="toc-link">C-Level 權責矩陣</a>
+  </div>
+</nav>
+
+<!-- 主內容區 -->
+<main>
+
+  <!-- Hero 區域 -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-badge-row">
+        <span class="badge">★ 研討會專案 Seminar 010</span>
+        <span class="badge cyan">Gartner 官方白皮書深度戰略轉譯</span>
+        <span class="badge">Mastering Machine Behavior</span>
+        <span class="badge">2026–2030 企業技術路線圖</span>
+      </div>
+
+      <h1 class="hero-title">
+        Gartner 2027 十大策略技術趨勢深度解析：<br>
+        <span>掌握機器行為的新邊界</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        傳統 IT 根植於「軟體稀缺（Software Scarcity）」；2027 年將徹底進入「軟體充裕（Software Abundance）」新紀元。
+        單純執行靜態代碼的時代已經終結，取而代之的是<strong>自主數位工作者（Autonomous Machine Workers）</strong>、<strong>非文字感知 AI</strong> 與<strong>數位主權邊界</strong>的協同調度。
+      </p>
+
+      <div class="hero-author-bar">
+        <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." style="width:36px; height:36px; border-radius:50%; border:1px solid var(--primary);">
+        <div class="hero-author-text">
+          <strong>報告人 Howard Liao Ph.D.(廖倫豪 博士)</strong> ｜ 企業前沿技術論壇與戰略架構研討會專案矩陣
+        </div>
+      </div>
+
+      <!-- 8 大關鍵指標儀表 -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">25%</div>
+          <div class="metric-label">LQM 替代預測 (2030)</div>
+          <div class="metric-desc">在重大企業預測與營運建模任務中，LQM 將取代 25% 傳統 LLM 任務。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">70%</div>
+          <div class="metric-label">語音自主處理 (2030)</div>
+          <div class="metric-desc">企業語音互動由原生語音推理模型全自主承接（2026 年不足 10%）。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">40%</div>
+          <div class="metric-label">機器人世界模型 (2030)</div>
+          <div class="metric-desc">機器人應用導入世界模型，實現空間、時間與物理因果預先模擬。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">+80%</div>
+          <div class="metric-label">Agent 準確度提升</div>
+          <div class="metric-desc">建立語意 AI 上下文平台，能降低 60% 算力浪費並使決策精準度暴增 80%。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">20%</div>
+          <div class="metric-label">AI 公開 Commit (2026)</div>
+          <div class="metric-desc">自主編碼代理將產出 20% 全球代碼提交，閉環 Harness 安全挽具成為剛需。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">25%</div>
+          <div class="metric-label">Agent 資安漏洞 (2028)</div>
+          <div class="metric-desc">四分之一的企業資安入侵將歸咎於 Agent 權限濫用，急需複合身分治理。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">&lt;48h</div>
+          <div class="metric-label">自主曝險圍堵 (2031)</div>
+          <div class="metric-desc">自主曝險修復將傳統 50 天的漏洞暴露窗口極限壓縮至 48 小時以內。</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-val">80%</div>
+          <div class="metric-label">拋棄式應用 (2030)</div>
+          <div class="metric-desc">因應 SaaS 疲勞與 Vibe Coding，八成新應用均採「預設壽命、隨用隨丟」模式。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- 第一章：戰略宏觀視野與範式轉移 -->
+  <section class="content-section" id="macro-overview">
+    <div class="container">
+      <span class="section-tag">Chapter 01 ｜ Macro Paradigm Shift</span>
+      <h2 class="section-title">戰略宏觀視野：從軟體稀缺走向軟體充裕</h2>
+      <p class="section-lead">
+        Gartner 傑出副總裁 Gene Alvarez 明確指出：技術領導者必須帶領組織安全跨越至「自治時代（Autonomous Era）」。
+        過去 IT 仰賴軟體稀缺性建立護城河；2027 年將帶來軟體充裕海嘯。瓶頸不再是「誰能寫出程式碼」，而是「如何控制與驗證機器的行為邊界」。
+      </p>
+
+      <div class="callout-box">
+        <div class="callout-title">
+          <span>💡</span> 核心架構斷裂點：軟體生產速度超越人類審計極限
+        </div>
+        <div class="callout-content">
+          當 AI Agent 能在數秒內生成完整專案、修復漏洞並自主調用金流與基礎設施，<strong>人工手動審查（Manual Review）成為企業最大的吞吐量瓶頸</strong>。
+          若無系統級控制平面（System-Level Control Plane），未經約束的自治代碼將在數月內累積數十年的致命技術債。
+        </div>
+      </div>
+
+      <div style="margin: 32px 0;">
+        <div class="trend-img-frame">
+          <img src="assets/gartner_p3_0.jpg" alt="Gartner 2027 策略時程三地平線總圖" loading="lazy">
+          <div class="img-caption">圖 1.1：Gartner Top 10 Strategic Technology Trends for 2027 — Planning Horizons (Now / Near / Future)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 第二章：三大營運戰略主軸全景導覽 -->
+  <section class="content-section" id="three-pillars">
+    <div class="container">
+      <span class="section-tag">Chapter 02 ｜ Three Operational Fronts</span>
+      <h2 class="section-title">三大營運戰略主軸全景導覽</h2>
+      <p class="section-lead">
+        Gartner 將這 10 項前沿趨勢歸納為技術領導者必須即刻聚焦的「三大營運戰線」：
+      </p>
+
+      <div class="pillars-grid">
+        <!-- 主軸 1 -->
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-num">FRONT 01 ｜ NONTEXTUAL AI</div>
+            <h3 class="pillar-title">開拓非文字 AI 前沿</h3>
+            <p class="pillar-sub">Leverage the nontextual AI frontier：模型會計算、聆聽與模擬，提供確定性精度與感官深度。</p>
+          </div>
+          <div class="pillar-img-box">
+            <img src="assets/gartner_p4_0.jpg" alt="非文字 AI 前沿封面" loading="lazy">
+          </div>
+          <div class="pillar-body">
+            <ul class="pillar-trends-list">
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 01</span>
+                <div><strong>大型量化模型 (LQMs)</strong>：突破機率預測，以數值神經網絡承接確定性計算。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 02</span>
+                <div><strong>語音推理模型 (Speech Reasoning)</strong>：直接在原生音訊上推理，跳過文字轉譯損失。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 03</span>
+                <div><strong>世界模型 (World Models)</strong>：學習物理與因果規律，為自主決策執行事前模擬。</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 主軸 2 -->
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-num">FRONT 02 ｜ AGENT PLATFORM GOVERNANCE</div>
+            <h3 class="pillar-title">治理自主代理平台</h3>
+            <p class="pillar-sub">Govern the autonomous agent platform：系統級控制平面，確保數位勞動力的自主性值得信賴。</p>
+          </div>
+          <div class="pillar-img-box">
+            <img src="assets/gartner_p11_0.jpg" alt="治理自主代理平台封面" loading="lazy">
+          </div>
+          <div class="pillar-body">
+            <ul class="pillar-trends-list">
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 04</span>
+                <div><strong>AI 上下文平台 (Context Platforms)</strong>：本體論與知識圖譜構建機器可讀的真理層。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 05</span>
+                <div><strong>AI 編碼代理安全框架 (Coding Harness)</strong>：閉環 SDLC 門禁與防回壓安全防護。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 06</span>
+                <div><strong>AI 代理身分識別 (Agent Identity)</strong>：從人類身分邁向複合身分與零信任綁定。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 07</span>
+                <div><strong>自主曝險修復 (Autonomous Remediation)</strong>：機器速度防禦，48小時自動修補與回滾。</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 主軸 3 -->
+        <div class="pillar-card">
+          <div class="pillar-header">
+            <div class="pillar-num">FRONT 03 ｜ DURABLE AGILITY</div>
+            <h3 class="pillar-title">建構長效敏捷性</h3>
+            <p class="pillar-sub">Architect durable agility：轉向主權、拋棄式與生物運算環境，防範供應商鎖定與能源極限。</p>
+          </div>
+          <div class="pillar-img-box">
+            <img src="assets/gartner_p20_0.jpg" alt="建構長效敏捷性封面" loading="lazy">
+          </div>
+          <div class="pillar-body">
+            <ul class="pillar-trends-list">
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 08</span>
+                <div><strong>主權科技 (SovereignTech)</strong>：技術與法律雙退出機制，保障永續可用與合規自由。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 09</span>
+                <div><strong>拋棄式應用 (Disposable Apps)</strong>：打破傳統永久 SaaS 枷鎖，用完即退場的敏捷資產。</div>
+              </li>
+              <li class="pillar-trend-item">
+                <span class="trend-num-badge">Trend 10</span>
+                <div><strong>生物運算即服務 (Wetware as a Service)</strong>：雲端活體神經元處理器，打破矽晶片功耗牆。</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 第三章：落地時程三地平線矩陣 -->
+  <section class="content-section" id="horizons-matrix">
+    <div class="container">
+      <span class="section-tag">Chapter 03 ｜ Strategic Planning Horizons</span>
+      <h2 class="section-title">企業落地三地平線規劃矩陣 (Now / Near / Future)</h2>
+      <p class="section-lead">
+        技術決策必須在「即刻營運效率」與「長期業務生存能力」之間取得平衡。企業應循序在各階段進行準備 (Prepare)、試點 (Pilot) 與規模化 (Scale)：
+      </p>
+
+      <div class="horizon-table-wrap">
+        <table class="horizon-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">落地時程階段</th>
+              <th style="width: 28%;">涵蓋戰略技術趨勢</th>
+              <th style="width: 27%;">戰略目標與驅動因素</th>
+              <th style="width: 27%;">CIO 核心行動指南</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong style="color:var(--primary); font-size:1.05rem;">即刻行動 (Now)</strong><br>
+                <span style="font-size:0.8rem; color:var(--text-muted); font-family:monospace;">1 – 3 年 (2026–2028)</span>
+              </td>
+              <td>
+                <strong>Trend 1: 大型量化模型 (LQM)</strong><br>
+                <strong>Trend 2: 語音推理模型</strong><br>
+                <strong>Trend 4: AI 上下文平台</strong><br>
+                <strong>Trend 5: AI 編碼代理安全框架</strong><br>
+                <strong>Trend 6: AI 代理身分識別</strong>
+              </td>
+              <td>
+                解決生成式 AI「能說不能算、語音延遲高、缺乏企業內部真實語意、代碼技術債與 Agent 越權濫用」之即刻危機。
+              </td>
+              <td>
+                立即在開發平台建立門禁 Harness；全面盤點影子 Agent 並廢止共用人類帳號；建構企業級本體論/知識圖譜真理層。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong style="color:var(--secondary); font-size:1.05rem;">近期籌備 (Near)</strong><br>
+                <span style="font-size:0.8rem; color:var(--text-muted); font-family:monospace;">3 – 5 年 (2028–2030)</span>
+              </td>
+              <td>
+                <strong>Trend 3: 世界模型 (World Models)</strong><br>
+                <strong>Trend 7: 自主曝險修復</strong><br>
+                <strong>Trend 8: 主權科技 (SovereignTech)</strong><br>
+                <strong>Trend 9: 拋棄式應用 (Disposable Apps)</strong>
+              </td>
+              <td>
+                因應地緣政治斷供法規（CLOUD Act / DORA）、SaaS 續約成本飆漲、實體機器人模擬需求與全自動化漏洞圍堵。
+              </td>
+              <td>
+                在採購合約中強制要求具備無殺死開關（No-killswitch）保證與退出架構；建立用完即拆的拋棄式軟體生命週期標準。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong style="color:var(--tertiary); font-size:1.05rem;">未來探索 (Future)</strong><br>
+                <span style="font-size:0.8rem; color:var(--text-muted); font-family:monospace;">5+ 年 (2030+)</span>
+              </td>
+              <td>
+                <strong>Trend 10: 生物運算即服務 (Wetware as a Service)</strong>
+              </td>
+              <td>
+                傳統矽晶片在資料中心散熱、耗電量達物理極限，生物神經網絡以百萬分之一極低功耗進行高階模式識別。
+              </td>
+              <td>
+                建立混合運算排程器（Silicon + Quantum + Neuromorphic + Wetware）；跨領域延攬神經科學與倫理法務專家。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 第四章：十大策略技術趨勢深度全析 -->
+  <section class="content-section" id="ten-trends">
+    <div class="container">
+      <span class="section-tag">Chapter 04 ｜ In-Depth Trend Analysis</span>
+      <h2 class="section-title">十大策略技術趨勢全景深入拆解</h2>
+      <p class="section-lead">
+        逐一解剖 10 項前沿技術的定義、爆發斷裂點、關鍵量化預測、實施四步行動方針與 CIO / IT / 業務跨部門權責矩陣：
+      </p>
+
+      <!-- Trend 1 -->
+      <article class="trend-detail-block" id="trend-1">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">01</div>
+            <div>
+              <h3 class="trend-main-name">大型量化模型 Large Quantitative Models (LQMs)</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：開拓非文字 AI 前沿 ｜ 模組化神經網絡 × 確定性數值推理</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Now ｜ 1 – 3 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是大型量化模型？</div>
+              <p class="trend-def-text">
+                專門處理和分析量化數據的模組化混合神經網絡架構。它結合了確定性計算、建立在既有數學公式、統計方法與數值算法之上的能力，精確模擬複雜非線性系統。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                企業在 GenAI 的龐大投資無法覆蓋數值計算場景。LLM 的本質是「機率式猜測」，在嚴謹數學推理上頻繁出錯且 Token 推理成本昂貴。LQM 專為數值運算打造，記憶體與算力消耗極低，更能深度結合物理、工程、生物與化學等科學定律。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">25%</div>
+              <div class="stat-text">
+                到 2030 年，LQM 將在主要企業功能中，取代 25% 策略預測與營運建模任務中的 LLM。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p5_0.jpg" alt="Trend 1 LQM 架構原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.1：LQM 核心架構（混合神經網絡＋領域知識＋時間序列）</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 步行動 -->
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 部署混合 AI 架構</div>
+            <div class="step-outcome">預期成果：快速預測捷徑</div>
+            <div class="step-action-desc">結合 LLM 的自然語言對話能力與量化模型的確定性數值分析威力。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 瞄準高價值數學場景</div>
+            <div class="step-outcome">預期成果：前所未有的敏捷</div>
+            <div class="step-action-desc">優先導入財務風險建模、供應鏈物流排程、能源負載與農業分析。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 建立數據驗證協定</div>
+            <div class="step-outcome">預期成果：安全部署自主預測</div>
+            <div class="step-action-desc">確保所有數值輸入無瑕疵，防止污染下游預測模型導致重大偏差。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 調整 ModelOps 策略</div>
+            <div class="step-outcome">預期成果：降低算力與再訓練成本</div>
+            <div class="step-action-desc">持續監控部署漂移，防止過擬合並維持高產出運算效率。</div>
+          </div>
+        </div>
+
+        <!-- 角色職責 -->
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>制定量化 AI 策略以改善預測與營運決策。</li>
+              <li><strong>投資：</strong>優先佈局數學精準度能轉化為競爭壁壘的高價值場景。</li>
+              <li><strong>推進：</strong>將 LQM 整合至複合式 AI (Composite AI) 體系。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>數據與 AI 團隊：</strong>建構高精度時間序列與模擬管線。</li>
+              <li><strong>企業架構師：</strong>建立 LQM 與現有 ERP/BI 無縫整合平台。</li>
+              <li><strong>ModelOps：</strong>持續監控模型性能、可解釋性與數據品質。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>營運主管：</strong>鎖定瓶頸流程，驗證實際預測改進指標。</li>
+              <li><strong>財務與策略：</strong>將量化洞見應用於情境模擬與資本配置。</li>
+              <li><strong>領域專家：</strong>校驗模型假設與輸入，確保業務合規。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 2 -->
+      <article class="trend-detail-block" id="trend-2">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">02</div>
+            <div>
+              <h3 class="trend-main-name">語音推理模型 Speech Reasoning Models</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：開拓非文字 AI 前沿 ｜ 音訊原生端到端推理 × 意圖情緒捕捉</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Now ｜ 1 – 3 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是語音推理模型？</div>
+              <p class="trend-def-text">
+                直接在原始音訊（Audio）上進行推理的語音 AI 系統。它能在對話過程中追蹤語境、語氣與真實意圖，自主決定下一步行動。徹底跳過文字轉錄中介，具備多輪複雜問題解決與錯誤恢復能力。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                語音是企業最高頻的互動管道，但過去十年 IVR 與級聯模型（STT $	o$ LLM $	o$ TTS）因延遲長、語氣丟失、跨輪 context 斷裂，無法處理判斷密集型對話。語音推理模型帶來根本性架構革命，更是實體機器人與人形人機互動的統一基石。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">70%</div>
+              <div class="stat-text">
+                到 2030 年，超過 70% 的企業語音互動將由語音推理模型全自主處理（2026 年僅不到 10%）。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p7_0.jpg" alt="Trend 2 Speech Reasoning 架構原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.2：語音演進歷程（IVR ➔ 級聯模型 ➔ 原生語音推理模型）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 擬定嚴格法規要求</div>
+            <div class="step-outcome">預期成果：確保全球合規防線</div>
+            <div class="step-action-desc">針對各法域制定隱私、聲紋同意授權與完整審計日誌標準。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 按複雜度分類分流</div>
+            <div class="step-outcome">預期成果：優化成本與延遲架構</div>
+            <div class="step-action-desc">低複雜度走極速低延遲模型，高爭議/高判斷走深度語音推理模型。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 盤點高頻語音資產</div>
+            <div class="step-outcome">預期成果：清晰的高品質標註資產</div>
+            <div class="step-action-desc">在微調前，全面整理高頻客服錄音與多輪話術對話樹。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 監控情緒與轉真人邊界</div>
+            <div class="step-outcome">預期成果：零死角客戶體驗</div>
+            <div class="step-action-desc">設定精確的情緒升級門檻，在情緒失控時毫秒級無縫接回真人專員。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>制定貫穿客戶與員工體驗的自主語音互動戰略。</li>
+              <li><strong>優先：</strong>投資能兼顧服務效率、精準度與客戶信任的模型。</li>
+              <li><strong>治理：</strong>確立語音數據的使用授權、合規與責任政策。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>CX 與 AI 團隊：</strong>設計支援複雜多輪對話的語音架構。</li>
+              <li><strong>數據平台：</strong>管理語音模型性能與領域專用微調資產。</li>
+              <li><strong>資安與法規：</strong>實施聲紋私密控制與防偽審計日誌。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>行銷品牌：</strong>定義語音 Persona 人格特質與對話規範。</li>
+              <li><strong>客服領導層：</strong>識別高 ROI 場景並驗證最終解決率。</li>
+              <li><strong>法務團隊：</strong>確保所有司法管轄區的隱私與知情同意。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 3 -->
+      <article class="trend-detail-block" id="trend-3">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">03</div>
+            <div>
+              <h3 class="trend-main-name">世界模型 World Models</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：開拓非文字 AI 前沿 ｜ 多模態虛實環境抽象表徵 × 物理因果模擬</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Near ｜ 3 – 5 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是世界模型？</div>
+              <p class="trend-def-text">
+                以多模態資料訓練的運算系統，旨在學習物理與虛擬環境的抽象表徵。它賦予自主代理在採取實際行動前，能預先「在腦中」模擬未來狀態、預測結果並評估代價的能力。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                語言模型缺乏對物理世界、時間空間與因果邏輯的原生理解。世界模型建立「物理優先（Physics-First）」典範，包含數據科學、電腦圖學、物理學、神經科學、控制論與社會科學六大視角。隨機器人與自駕車投資暴增，訓練成本預計三年內暴跌十倍，企業級模擬將極具經濟價值。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">40%</div>
+              <div class="stat-text">
+                到 2030 年，40% 的機器人應用將整合世界模型以做出最適決策（2025 年不足 1%）。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p9_0.jpg" alt="Trend 3 World Models 6大視角原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.3：世界模型的 6 種世界觀（物理、神經科學、控制論等）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 建立五年技術路線圖</div>
+            <div class="step-outcome">預期成果：規模化工業智能</div>
+            <div class="step-action-desc">系統性評估並佈局世界模型算力、數據收集與整合管線。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 驗證可衡量的業務價值</div>
+            <div class="step-outcome">預期成果：決策支援最佳化</div>
+            <div class="step-action-desc">鎖定高回報的製程最佳化、生產安全模擬與數位雙生試驗。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 打造部署發射台</div>
+            <div class="step-outcome">預期成果：自主決策自動化</div>
+            <div class="step-action-desc">整合合成數據（Synthetic Data）生成管線，降低實體試錯成本。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 建立虛實校準回饋環</div>
+            <div class="step-outcome">預期成果：消除虛擬與現實差距</div>
+            <div class="step-action-desc">將實體世界 sensor 數據持續校準模擬器誤差（Sim-to-Real）。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>制定長期世界模型策略，賦能自動化決策與情境預測。</li>
+              <li><strong>投資：</strong>打造跨模態數據、空間運算與人才梯隊基礎。</li>
+              <li><strong>推進：</strong>透過風險降低、產能提升具體證明 ROI 價值。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>數據團隊：</strong>建構支援大規模模擬的多模態管線。</li>
+              <li><strong>架構師：</strong>設計未來能承載物理引擎與空間 AI 的底層平台。</li>
+              <li><strong>工程團隊：</strong>建立可靠的驗證與安全圍欄機制。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>業務主管：</strong>提出需要高度情境預測的關鍵商業瓶頸。</li>
+              <li><strong>營運團隊：</strong>提供實體製程真實邊界條件以校準模型。</li>
+              <li><strong>財務策略：</strong>支持增強企業韌性與長期競爭力的前瞻投資。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 4 -->
+      <article class="trend-detail-block" id="trend-4">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">04</div>
+            <div>
+              <h3 class="trend-main-name">AI 上下文平台 AI Context Platforms</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：治理自主代理平台 ｜ 本體論 Ontology × 知識圖譜 × 營運狀態真理層</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Now ｜ 1 – 3 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是 AI 上下文平台？</div>
+              <p class="trend-def-text">
+                負責管理、整合並交付 AI Agent 做出符合商業目標決策所需動態背景知識的平台。它將散落在企業孤島的數據提煉為機器可讀的「真理層（Truth Layer）」，賦予 Agent 正確的實體關聯、指標定義與業務規則。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                雖然 42% 企業預計 2026 年底部署 AI Agent，但目前僅 22% 真正取得實質價值。斷裂主因在於「碎片化的營運知識」導致嚴重的幻覺與昂貴的 Token 重複檢索。上下文平台由三大組件構成：<strong>語意（Semantics）</strong>、<strong>治理（Governance）</strong>與<strong>操作狀態（Operational State）</strong>。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">+80%</div>
+              <div class="stat-text">
+                到 2027 年，優先建構「語意就緒數據（AI-ready data）」的企業，將使 Agent 準確度提升達 80%，並降低多達 60% 的運算成本。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p12_0.jpg" alt="Trend 4 AI Context Platforms 原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.4：上下文層的三大構件（語意、治理與操作狀態）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 制定分階段成熟度路線圖</div>
+            <div class="step-outcome">預期成果：從基礎升級至語意自主</div>
+            <div class="step-action-desc">先集中與結構化政策，再過渡至基於規則的語意自動化。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 建立雙本體架構治理</div>
+            <div class="step-outcome">預期成果：提升精準度並壓低成本</div>
+            <div class="step-action-desc">嚴格劃分「被動商業規則」與「機器生成的動態決策軌跡」。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 實施雙向持續所有權</div>
+            <div class="step-outcome">預期成果：確保知識可解釋與安全</div>
+            <div class="step-action-desc">IT 維護基礎設施與標準，業務部門負責驗證指導政策的有效性。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 延攬知識工程專家</div>
+            <div class="step-outcome">預期成果：打造自服務知識網</div>
+            <div class="step-action-desc">全面導入 RDF、OWL、SPARQL 等關鍵語意 Web 標準與圖技術。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>確立企業級上下文戰略，支撐可信、可擴展的 Agent。</li>
+              <li><strong>投資：</strong>打造全公司共享的上下文平台，避免各部門重複造輪子。</li>
+              <li><strong>治理：</strong>定義業務知識所有權、責任歸屬與語意標準。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>數據與 AI：</strong>建置並維護語意模型、知識圖譜與存取控制。</li>
+              <li><strong>企業架構：</strong>制定可重用、可攜帶的上下文跨專案整合標準。</li>
+              <li><strong>資安稽核：</strong>實施血緣追蹤（Lineage）、資料品質與合規日誌。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>領域主管：</strong>定義並動態更新引導 Agent 決策的業務規則。</li>
+              <li><strong>營運負責人：</strong>識別高價值 Agent 場景，確保上下文反映真實流程。</li>
+              <li><strong>風控合規：</strong>確保上下文資料符合監管與內部法規框架。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 5 -->
+      <article class="trend-detail-block" id="trend-5">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">05</div>
+            <div>
+              <h3 class="trend-main-name">AI 編碼代理安全框架 AI Coding Agent Harness</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：治理自主代理平台 ｜ 閉環 SDLC 治理 × 門禁驗證 × 自動防回壓</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Now ｜ 1 – 3 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是 AI 編碼代理安全框架 (Harness)？</div>
+              <p class="trend-def-text">
+                一套閉環系統，負責在整個軟體開發生命週期（SDLC）中約束並管理自主開發代理（Autonomous Developer）的行為。它串接編碼工具、企業內部 Context、模型調度、驗證門禁與反饋回路，確保代碼符合企業安全與品質標準。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                AI Coding 已從單純的「Copilot 補全」進化為「端到端自主執行」。如果只擴大代碼生成速度卻沒有相應擴展驗證能力，瓶頸將從「寫程式碼」轉移為「證明改動安全無害」。未受約束的自主代碼會在極短時間內堆砌毀滅性的技術債。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">20%</div>
+              <div class="stat-text">
+                到 2026 年底，自主編碼代理將產出全球 20% 的公開代碼提交（Commits），使得閉環安全框架（Harness）成為防止重大交付事故的強制標準。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p14_0.jpg" alt="Trend 5 Coding Harness SDLC 閉環原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.5：AI Coding Harness 閉環 SDLC（研究➔規劃➔執行➔治理驗證）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 指定平台團隊專責</div>
+            <div class="step-outcome">預期成果：標準化企業軟體交付</div>
+            <div class="step-action-desc">成立專屬平台工程團隊，維護 Harness 配置、工具調度與驗證政策。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 架構標準轉為機器可讀</div>
+            <div class="step-outcome">預期成果：給予 Agent 明確指引</div>
+            <div class="step-action-desc">將組織設計規範、踩坑經驗與安全規約轉譯為機器可直接調用的 Context。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 強制自動化防回壓門禁</div>
+            <div class="step-outcome">預期成果：阻絕未經驗證的劣質代碼</div>
+            <div class="step-action-desc">在代碼進入人工審查前，自動執行 Lint、測試、資安掃描與文檔審核。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 監控代碼膨脹與重構週期</div>
+            <div class="step-outcome">預期成果：長期維持架構精純</div>
+            <div class="step-action-desc">定期執行靜態複雜度掃描，主動調度 Agent 對歷史代碼進行精簡維護。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>將 AI 原生軟體交付確立為企業核心平台戰略能力。</li>
+              <li><strong>資助：</strong>投資專責平台工程團隊以統一掌控治理框架。</li>
+              <li><strong>治理：</strong>定義自主代碼交付的風險容忍度與法律責任。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>平台工程：</strong>掌握 Harness 腳手架、Model Routing 與開發者體驗。</li>
+              <li><strong>架構師：</strong>將企業標準、模式與制度轉化為機器可讀 Context。</li>
+              <li><strong>資安團隊：</strong>嵌入安全門禁，防範 Harness 控制平面被篡改。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>產品經理：</strong>提供高品質、結構清晰的 PRD 與驗收條件。</li>
+              <li><strong>財務管理：</strong>評估平台投資與研發週期縮短所帶來的 ROI。</li>
+              <li><strong>法務風控：</strong>確保自動生成之代碼無開源許可證與智慧財產權衝突。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 6 -->
+      <article class="trend-detail-block" id="trend-6">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">06</div>
+            <div>
+              <h3 class="trend-main-name">AI 代理身分識別 AI Agent Identity</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：治理自主代理平台 ｜ 複合身分 Composite Identity × 零信任特權管理</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Now ｜ 1 – 3 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是 AI 代理身分識別？</div>
+              <p class="trend-def-text">
+                用於主動管理企業內部自主數位工作者的獨特數位代表機制。它將代理的「可變計算元素」（模型權重、System Prompts、工具憑證）與「執行階段行為（Runtime Behavior）」深度關聯，建立持續的信任鏈與人類最終問責制。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                傳統 IAM（身分存取管理）無法應對具備自主行動力的 Agent。多數企業放任 Agent 共用員工憑證或持有長期靜態密鑰，直接瓦解了零信任（Zero Trust）架構。資安巨頭正發動併購潮，競相推出能同時治理「人」與「機器」的收斂式身分平台。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">25%</div>
+              <div class="stat-text">
+                到 2028 年，25% 的企業資安事件將源自 AI Agent 權限遭濫用；若不解決此身分挑戰，將有超過半數的企業 AI 專案被迫全面叫停。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p16_22.jpg" alt="Trend 6 Agent Identity 複合身分架構原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.6：AI 代理複合身分模型（Workload ID + 提示詞 + 工具憑證 + 運行時行為）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 全面盤點 Agent 身分</div>
+            <div class="step-outcome">預期成果：消滅盲區與影子代理</div>
+            <div class="step-action-desc">主動探測、繪製並管控環境中已核准與私自運行的影子 Agent。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 嚴禁共用人類員工憑證</div>
+            <div class="step-outcome">預期成果：權責劃分與完整可審計</div>
+            <div class="step-action-desc">為每個自主工作負載核發獨立、專屬之短效特權憑證。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 轉型至複合身分架構</div>
+            <div class="step-outcome">預期成果：動態零信任防禦</div>
+            <div class="step-action-desc">實施動態基於策略的即時存取控制（JIT Access）與行為漂移阻斷。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 採購收斂式身分平台</div>
+            <div class="step-outcome">預期成果：單一統一控制平面</div>
+            <div class="step-action-desc">要求資安供應商提供能統一管理人類與機器工作負載的集中主控台。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>將 AI Agent 作為數位員工，納入組織級治理戰略。</li>
+              <li><strong>優先：</strong>投資能統一治理人與機器的身分安全平台。</li>
+              <li><strong>治理：</strong>明確劃分 AI 代理所有工作負載的最終人權責任。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>身分資安團隊：</strong>實施複合身分模型、最小權限原則與持續驗證。</li>
+              <li><strong>架構師：</strong>制定 Agent 註冊、金鑰生命週期與策略授權標準。</li>
+              <li><strong>維運團隊 (I&O)：</strong>監控執行期行為，配置即時阻斷與隔離閘道。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>風控法規：</strong>確保 Agent 行為符合企業內控與外部審計標準。</li>
+              <li><strong>法務團隊：</strong>建立 Agent 代理簽署或執行交易所引發的責任歸屬。</li>
+              <li><strong>業務主管：</strong>驗證並動態核准業務流程中賦予 Agent 的權限清單。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 7 -->
+      <article class="trend-detail-block" id="trend-7">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">07</div>
+            <div>
+              <h3 class="trend-main-name">自主曝險修復 Autonomous Exposure Remediation</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：治理自主代理平台 ｜ 機器速度防禦 × 自動補丁部署 × 安全回滾</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Near ｜ 3 – 5 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是自主曝險修復？</div>
+              <p class="trend-def-text">
+                整合 AI 與自動化技術，在企業整個數位資產中主動發現、排定優先級並自動修補安全漏洞的端到端能力。它能自動將補丁部署至生產環境，並發動測試循環，一旦失敗便安全自動回滾。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                傳統由人類主導的防禦流程已經崩潰。目前企業漏洞平均暴露窗口長達 50 天，安全團隊被淹沒在海量被動告警中。唯有以「機器速度對抗機器速度」，將靜態漏洞清單轉變為主動防禦護盾，才能避免致命勒索與外洩。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">&lt;48h</div>
+              <div class="stat-text">
+                到 2031 年，部署自主曝險修復的企業，將把平均漏洞圍堵窗口從傳統的數週極限縮短至 48 小時以內。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p18_0.jpg" alt="Trend 7 自主修復五階段原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.7：自主曝險修復五階段（掃描➔驗證➔規劃➔修復➔回滾）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 從窄範圍專案起步</div>
+            <div class="step-outcome">預期成果：安全試點與累積經驗</div>
+            <div class="step-action-desc">先在非核心、自定義代碼庫試行自動補丁生成與自動回滾。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 融入主動開發循環</div>
+            <div class="step-outcome">預期成果：及早攔截風險</div>
+            <div class="step-action-desc">在工程師撰寫代碼的 IDE 與 CI 階段，即時推薦已驗證的修正代碼。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 平衡自動掃描與優先級</div>
+            <div class="step-outcome">預期成果：避免告警疲勞</div>
+            <div class="step-action-desc">嚴格根據可利用性（Exploitability）與商業衝擊過濾告警。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 監控算力與 Token 成本</div>
+            <div class="step-outcome">預期成果：預防資安預算失控</div>
+            <div class="step-action-desc">精算大型推理模型分析漏洞時的 Token 消耗，建立成本天花板。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>制定對齊業務營運韌性的自主修復路線圖。</li>
+              <li><strong>優先：</strong>投資能真正壓縮暴露窗口並提升自動修補率的系統。</li>
+              <li><strong>治理：</strong>定義自動修補的安全閾值與人類覆核紅線。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>資安團隊：</strong>定義漏洞修補優先級與 AI 驗證工作流。</li>
+              <li><strong>軟體工程：</strong>將自動測試與補丁驗收整合進部署流水線。</li>
+              <li><strong>維運架構：</strong>維護生產環境的零中斷熱修補與即時回滾機制。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>風控稽核：</strong>確保自動化修補動作符合嚴格的審計記錄規範。</li>
+              <li><strong>產品主管：</strong>在業務交付時程與資安阻斷修補間取得平衡。</li>
+              <li><strong>財務管理：</strong>量化資安中斷事件防範對企業獲利的實質保全。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 8 -->
+      <article class="trend-detail-block" id="trend-8">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">08</div>
+            <div>
+              <h3 class="trend-main-name">主權科技 SovereignTech (SovTech)</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：建構長效敏捷性 ｜ 法律與技術雙重退出機制 × 地緣合規自由</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Near ｜ 3 – 5 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是主權科技？</div>
+              <p class="trend-def-text">
+                從硬體、軟體、資料庫到 AI 模型，在技術與法律架構上均具備從關鍵供應商手中「無痛退出（Realistic Exit Strategies）」之能力。確保底層資產永久可用，防範斷供與技術鎖定。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                地緣政治摩擦升溫與長臂管轄法律（如美國 CLOUD Act）隨時可能切斷境外服務。歐盟 DORA 強制要求金融機構具備經證明的雲端退出機制。若將企業核心資料與運營完全綁定於單一外國模型，等於將命脈交由他國主宰，並面臨訂閱費暴漲的財富外流危機。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">75%</div>
+              <div class="stat-text">
+                到 2030 年，超過 75% 的非美企業將採納數位主權戰略，遷移關鍵工作負載以降低地緣政治與單一廠商鎖定風險。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p21_7.jpg" alt="Trend 8 SovereignTech 主權架構原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.8：主權科技架構（司法豁免＋業務連續性＋永續可用性）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 追蹤分散式主權交付</div>
+            <div class="step-outcome">預期成果：明確主權技術要求</div>
+            <div class="step-action-desc">評估私有化、地端部署與生態系驅動之在地替代方案。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 善用精實創新策略</div>
+            <div class="step-outcome">預期成果：跨區域營運韌性</div>
+            <div class="step-action-desc">巧妙運用 N-1 代晶片與開源架構，與信賴盟友建立相互備援機制。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 監控全球主權標準</div>
+            <div class="step-outcome">預期成果：對齊新興監管規範</div>
+            <div class="step-action-desc">深入研究歐盟科技主權法案（EU Tech Sovereignty Package）等標準。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 要求供應商簽訂免死開關</div>
+            <div class="step-outcome">預期成果：極小化依賴風險</div>
+            <div class="step-action-desc">在商用合約中嚴格加入「無殺死開關（No-killswitch）」保證與原始碼代管。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>定義與業務連續性相吻合的組織數位主權總策略。</li>
+              <li><strong>優先：</strong>嚴格清查關鍵依賴，針對單一核心供應商建立替代方案。</li>
+              <li><strong>治理：</strong>在技術創新、地緣風險與自主控制權之間取得平衡。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>企業架構：</strong>採用高可移植性、開放標準與多雲互通技術。</li>
+              <li><strong>雲端基礎設施：</strong>評估分散式主權雲與本地私有叢集架構。</li>
+              <li><strong>資安團隊：</strong>演練斷網與封鎖情境下的緊急業務連續性運作。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>採購部門：</strong>將退出條款、數據贖回權作為採購一票否決標準。</li>
+              <li><strong>法務團隊：</strong>審查跨境數據傳輸合規、司法管轄權衝突防範。</li>
+              <li><strong>財務管理：</strong>將單一廠商突發漲價與匯率波動風險納入評估。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 9 -->
+      <article class="trend-detail-block" id="trend-9">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">09</div>
+            <div>
+              <h3 class="trend-main-name">拋棄式應用 Disposable Applications</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：建構長效敏捷性 ｜ 預先設定生命週期 × SaaS 疲勞解方 × 軟體豐饒</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Near ｜ 3 – 5 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是拋棄式應用？</div>
+              <p class="trend-def-text">
+                為滿足特定業務目的而快速構建，並在目標達成或需求失效後「主動且乾淨退場」的專用企業級軟體。它徹底顛覆了無限期維護遺留系統的重資產思維，將軟體資產組合轉化為自我更新的動態有機體。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                AI 賦能的 Vibe Coding 等工具極大降低了軟體構建門檻，公民開發者與工程師能在數小時內產出高度客製的臨時系統。企業不再需要為短期專案購買動輒綁約數年的昂貴 SaaS。軟體具備預設壽命，避免資產僵化。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">80%</div>
+              <div class="stat-text">
+                到 2030 年，因應廣泛的 SaaS 疲勞與 AI 帶來的軟體充裕，領先企業將確保 80% 的新應用具備拋棄式特徵且易於被替換。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p23_0.jpg" alt="Trend 9 拋棄式應用生命週期原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.9：拋棄式應用的動態生命週期（需求➔建置➔運營➔評估➔安全退場）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 審計既有軟體資產組合</div>
+            <div class="step-outcome">預期成果：現代化退場路線圖</div>
+            <div class="step-action-desc">分類核心永久系統與適合短期、即用即棄的周邊應用。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 建立平台工程護欄</div>
+            <div class="step-outcome">預期成果：快速且標準化流轉</div>
+            <div class="step-action-desc">提供經審批的輕量建置範本、自動認證與安全退場管線。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 善用 SaaS 合約續約談判</div>
+            <div class="step-outcome">預期成果：破除廠商坐地起價</div>
+            <div class="step-action-desc">以拋棄式內部替代方案為籌碼，大舉砍減 SaaS 席位費並爭取開放 API。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 制定自動數據歸檔標準</div>
+            <div class="step-outcome">預期成果：零數據殘留與外洩</div>
+            <div class="step-action-desc">當應用達到預定生命週期終點時，一鍵銷毀實例並安全歸檔交易數據。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>將應用程式生命週期與實質業務價值產出時間強制對齊。</li>
+              <li><strong>投資：</strong>打造支撐快速創建與乾淨銷毀的底層自動化平台。</li>
+              <li><strong>治理：</strong>對所有瞬態應用建立明確的所有人與自動退役觸發器。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>平台工程：</strong>提供模組化腳手架與一鍵銷毀基礎設施環境。</li>
+              <li><strong>企業架構：</strong>依據風險與預期壽命，實施輕重分級的彈性架構。</li>
+              <li><strong>維運資安：</strong>負責廢棄應用訪問權限註銷、金鑰廢止與數據封存。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>業務負責人：</strong>提出具體業務期程，確認系統功成身退的時機點。</li>
+              <li><strong>財務管理：</strong>轉變預算撥付模型，由沉沒資本支出轉為靈活產出撥款。</li>
+              <li><strong>合規審計：</strong>確保拋棄式應用在整個生命週期中均未脫離風控監管。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Trend 10 -->
+      <article class="trend-detail-block" id="trend-10">
+        <div class="trend-header-row">
+          <div class="trend-title-group">
+            <div class="trend-badge-large">10</div>
+            <div>
+              <h3 class="trend-main-name">生物運算即服務 Wetware as a Service (WaaS)</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">主軸：建構長效敏捷性 ｜ 活體神經元有機處理器 × 突破矽晶片能耗牆</p>
+            </div>
+          </div>
+          <span class="trend-horizon-pill">Future ｜ 5+ 年</span>
+        </div>
+
+        <div class="trend-two-col">
+          <div>
+            <div class="trend-definition-box">
+              <div class="trend-def-label">什麼是生物運算即服務？</div>
+              <p class="trend-def-text">
+                透過雲端遠端存取活體（Living）或合成生物系統進行運算的新興模式。這些託管在無菌實驗室的有機處理器利用生化神經網絡的自然可塑性，以僅為傳統伺服器極小比例的超低功耗，高效執行複雜算法。
+              </p>
+            </div>
+
+            <div class="trend-definition-box">
+              <div class="trend-def-label">為什麼現在爆發？ (Why Trending)</div>
+              <p class="trend-def-text">
+                傳統矽晶片在能源消耗與散熱上面臨不可跨越的物理障礙，難以無限期擴展企業 AI。實驗室培養的生物神經元能以極端能源效率完成模式識別。新創公司將昂貴的生化濕實驗室封裝為雲端訂閱服務，使企業無需自建生化設施即可啟動概念驗證。
+              </p>
+            </div>
+
+            <div class="prediction-stat-box">
+              <div class="stat-big-num">25%</div>
+              <div class="stat-text">
+                到 2030 年，在優先考慮專用超低功耗 AI 的企業組織中，將有 25% 部署生物運算以繞過傳統矽晶片極限。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="trend-img-frame">
+              <img src="assets/gartner_p25_0.jpg" alt="Trend 10 Wetware 混合算力調度原廠圖" loading="lazy">
+              <div class="img-caption">圖 4.10：運算調度多元架構（矽晶 ＋ 量子 ＋ 神經形態 ＋ 生物運算）</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-top:16px;">四步落地行動方案 (Action Plan)</h4>
+        <div class="action-steps-grid">
+          <div class="action-step-card">
+            <div class="step-header"><span>01</span> 審查高耗能軟體架構</div>
+            <div class="step-outcome">預期成果：辨識極端回報場景</div>
+            <div class="step-action-desc">篩選適合轉移至低功耗生物基質的複雜模式識別與訊號處理任務。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>02</span> 建立低風險雲端沙盒</div>
+            <div class="step-outcome">預期成果：安全試點生物晶片</div>
+            <div class="step-action-desc">透過遠端訂閱服務建立工程師對活體處理器運算特性的初步了解。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>03</span> 召集跨學科專案小組</div>
+            <div class="step-outcome">預期成果：彌合生物與資訊鴻溝</div>
+            <div class="step-action-desc">結合軟體工程師、神經科學家與倫理法務專家共同評估可行性。</div>
+          </div>
+          <div class="action-step-card">
+            <div class="step-header"><span>04</span> 設計複製與容錯備援政策</div>
+            <div class="step-outcome">預期成果：防範生物細胞死亡風險</div>
+            <div class="step-action-desc">針對生物神經元壽命衰竭與突發性死亡，配置雙軌矽晶片熱備援。</div>
+          </div>
+        </div>
+
+        <div class="roles-row">
+          <div class="role-card">
+            <div class="role-card-title"><span>👑</span> CIO 領導決策</div>
+            <ul>
+              <li><strong>主導：</strong>將生物運算探索納入未來 5-10 年 AI 與綠色基建戰略。</li>
+              <li><strong>投資：</strong>打造能跨異質平台（矽晶、量子、神經形態、生物）的動態路由層。</li>
+              <li><strong>治理：</strong>前瞻制定神經資料權利（Neurorights）與生物倫理準則。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>🛠</span> IT 技術夥伴</div>
+            <ul>
+              <li><strong>企業架構：</strong>評估能受益於生物運算的非傳統非線性工作負載。</li>
+              <li><strong>平台工程：</strong>建立跨運算範式的混合編譯與中介軟體抽象層。</li>
+              <li><strong>資安團隊：</strong>制定神經隱私、認知數據防護與容錯連續性方案。</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="role-card-title"><span>💼</span> 業務夥伴 (Business)</div>
+            <ul>
+              <li><strong>研發創新：</strong>探索在複雜藥物設計、材料科學上的突破性機會。</li>
+              <li><strong>法務風控：</strong>緊盯新興神經科技智財權與人權監管立法趨勢。</li>
+              <li><strong>財務管理：</strong>評估長期用電成本巨幅削減對 ESG 評級之正向助益。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- 第五章：C-Level 跨部門權責矩陣與落地推動指南 -->
+  <section class="content-section" id="raci-matrix">
+    <div class="container">
+      <span class="section-tag">Chapter 05 ｜ Executive Alignment</span>
+      <h2 class="section-title">C-Level 跨部門協作權責矩陣 (Cross-Functional Alignment)</h2>
+      <p class="section-lead">
+        任何策略技術趨勢若僅停留於 IT 部門，注定淪為昂貴的玩具。以下呈現技術長（CIO/CTO）、IT 技術夥伴（架構/資安/數據）與業務主管（CEO/CFO/營運）在各項趨勢中的核心權責對照：
+      </p>
+
+      <div class="raci-table-wrap">
+        <table class="raci-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">技術趨勢</th>
+              <th style="width: 28%;">CIO / 技術決策者 (Lead & Govern)</th>
+              <th style="width: 29%;">IT 技術夥伴 (Build & Protect)</th>
+              <th style="width: 28%;">業務與運營主管 (Value & Compliance)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01. 大型量化模型</strong></td>
+              <td>主導數值 AI 戰略，投資高精度財務與供應鏈預測。</td>
+              <td>搭建時間序列管線，整合 LQM 與現有 ERP/BI 平台。</td>
+              <td>驗證預測假設，將量化洞見轉化為動態營運決策。</td>
+            </tr>
+            <tr>
+              <td><strong>02. 語音推理模型</strong></td>
+              <td>確立自主語音服務準則，把關全球隱私與知情授權。</td>
+              <td>設計原生音訊對話架構，建立毫秒級情緒轉真人通道。</td>
+              <td>定義品牌 Voice Persona，驗證客服端到端問題解決率。</td>
+            </tr>
+            <tr>
+              <td><strong>03. 世界模型</strong></td>
+              <td>規劃 5 年模擬與數位雙生戰略，投資跨模態基建。</td>
+              <td>架構空間 AI 與物理模擬器，消除虛擬到實體差距。</td>
+              <td>提出高價值實體製程瓶頸，提供真實邊界參數校準。</td>
+            </tr>
+            <tr>
+              <td><strong>04. AI 上下文平台</strong></td>
+              <td>投資全公司單一真實層，防止各部門資料孤島與幻覺。</td>
+              <td>建構本體論、知識圖譜，實施雙向所有權與資料血緣。</td>
+              <td>持續維護與動態修正業務規則，確保 Agent 決策合規。</td>
+            </tr>
+            <tr>
+              <td><strong>05. 編碼代理 Harness</strong></td>
+              <td>將 AI SDLC 提升為平台戰略能力，資助專屬平台團隊。</td>
+              <td>打造閉環門禁（Lint/Test/Security）與自動防回壓。</td>
+              <td>提供結構化 PRD，防範開源版權衝突並量化研發提速。</td>
+            </tr>
+            <tr>
+              <td><strong>06. 代理身分識別</strong></td>
+              <td>制定 AI 數位員工身分戰略，廢止共用員工帳號。</td>
+              <td>實施複合身分模型、JIT 短效特權與運行時行為阻斷。</td>
+              <td>明確劃分 Agent 決策的法律責任，動態核發業務權限。</td>
+            </tr>
+            <tr>
+              <td><strong>07. 自主曝險修復</strong></td>
+              <td>建立業務韌性修復路線圖，將暴露窗口壓縮至48小時。</td>
+              <td>自動生成補丁，打造生產環境零中斷部署與自動回滾。</td>
+              <td>平衡交付速度與停機風險，量化資安中斷保全效益。</td>
+            </tr>
+            <tr>
+              <td><strong>08. 主權科技</strong></td>
+              <td>制定數位主權脫鉤防線，將合約退出機制列為一票否決。</td>
+              <td>採用高度可移植架構與本地主權備援，定期演練斷網。</td>
+              <td>嚴防境外法規長臂管轄，抵抗單一廠商巨額租金勒索。</td>
+            </tr>
+            <tr>
+              <td><strong>09. 拋棄式應用</strong></td>
+              <td>推行動態軟體資產組合，應用壽命與商業價值嚴格對齊。</td>
+              <td>提供經審批的輕量建置腳手架與自動一鍵乾淨銷毀管線。</td>
+              <td>以內部敏捷工具為籌碼，大舉砍減 SaaS 續約席位費用。</td>
+            </tr>
+            <tr>
+              <td><strong>10. 生物運算 WaaS</strong></td>
+              <td>探索 5-10 年綠色低功耗 AI 基建，規劃混合多範式路由。</td>
+              <td>建置跨矽晶/神經運算抽象層，設計雙軌矽晶容錯備援。</td>
+              <td>評估 ESG 巨額節能效益，追蹤神經科技人權法規走向。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 第六章：官方白皮書下載與參考文獻 -->
+  <section class="content-section" style="border-bottom:none;">
+    <div class="container">
+      <div class="download-box">
+        <div class="download-info">
+          <h3>📥 取得 Gartner 2027 官方白皮書完整文檔</h3>
+          <p>
+            包含 28 頁完整英文報告、原廠架構模型圖、量化預測曲線與各產業落地方案。
+          </p>
+        </div>
+        <div class="download-actions">
+          <a href="top-10-strategic-technology-trends-for-2027.pdf" download class="btn-download">
+            <span>📄</span> <span>下載原廠 PDF (2.9 MB)</span>
+          </a>
+          <button onclick="window.print()" class="nav-btn" style="padding:14px 20px; font-size:1rem; border-radius:8px;">
+            <span>🖨</span> <span>列印 / 存為報告 PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 頁尾 -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-author">
+        報告人 <span>Howard Liao Ph.D.(廖倫豪 博士)</span>
+      </div>
+      <div style="font-size:0.8rem; margin-top:4px;">
+        前沿技術論壇與研討會專案矩陣 ｜ Seminar 010 ｜ Egyptian Pharaoh Academic Unified Design System
+      </div>
+    </div>
+
+    <div>
+      <a href="../" style="color:var(--primary); text-decoration:none; font-weight:700;">
+        ⬅ 返回 Seminar 研討會矩陣目錄
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- 互動切換與導航邏輯腳本 -->
+<script>
+  // 主題切換器
+  const themeSwitcher = document.getElementById('themeSwitcher');
+  const htmlEl = document.documentElement;
+
+  // 讀取本地儲存的主題偏好
+  const savedTheme = localStorage.getItem('seminar_theme') || 'pharaoh';
+  htmlEl.setAttribute('data-theme', savedTheme);
+  themeSwitcher.value = savedTheme;
+
+  themeSwitcher.addEventListener('change', (e) => {
+    const val = e.target.value;
+    htmlEl.setAttribute('data-theme', val);
+    localStorage.setItem('seminar_theme', val);
+  });
+
+  // TOC 捲動高亮
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const sections = Array.from(tocLinks).map(link => {
+    const targetId = link.getAttribute('href').replace('#', '');
+    return document.getElementById(targetId);
+  }).filter(Boolean);
+
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const scrollPos = window.scrollY + 180;
+
+    sections.forEach(sec => {
+      if (sec.offsetTop <= scrollPos) {
+        currentId = sec.id;
+      }
+    });
+
+    tocLinks.forEach(link => {
+      if (link.getAttribute('href') === '#' + currentId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }, { passive: true });
+</script>
+
+</body>
+</html>

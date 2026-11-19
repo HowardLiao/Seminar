@@ -45,6 +45,11 @@ Seminar/
 │   ├── index.html                                                  # 向量 SVG 拓撲圖、四象限解析卡、四大支柱與企業決策樹
 │   └── assets/                                                     # 報告人肖像資產
 │
+├── 010/                                                            # 【010 專題】Gartner 2027 十大策略技術趨勢深度解析
+│   ├── index.html                                                  # 掌握機器行為的新邊界全景深度戰略門戶（三大主軸 × 十大趨勢 × RACI 矩陣）
+│   ├── top-10-strategic-technology-trends-for-2027.pdf             # Gartner 官方原廠 28 頁完整白皮書
+│   └── assets/                                                     # 原廠高解析架構圖解、時程地圖與報告人肖像
+│
 ├── 002/ (規劃中)                                                   # 全球算力基礎設施與推論架構大遷徙
 └── 003/ (規劃中)                                                   # 企業主權 AI (Sovereign AI) 與數位員工防禦體系
 ```
@@ -113,6 +118,30 @@ Seminar/
 - **實務建置指南**：手遊公司官網準備深度與 Apple 平台審查機制（法定主體、產品揭露、四項必備資訊與鄧白氏編碼互補實務）。
 
 ---
+
+## 010 專案摘要：Gartner 2027 十大策略技術趨勢：掌握機器行為的新邊界 (Mastering Machine Behavior)
+
+- **專案背景**：2027 策略技術趨勢峰會 · Gartner 官方白皮書深度戰略轉譯與 C-Level 落地指引
+- **報告人**：Howard Liao Ph.D. (廖倫豪 博士)
+- **展示入口**：[https://howardliao.github.io/Seminar/010/](https://howardliao.github.io/Seminar/010/)
+- **下載白皮書**：[Gartner 官方原廠 28 頁白皮書 PDF](010/top-10-strategic-technology-trends-for-2027.pdf)
+- **三大營運戰略主軸**：
+  1. **開拓非文字 AI 前沿 (Leverage the nontextual AI frontier)**：模型會計算、聆聽與模擬，提供確定性精度與感官深度。
+  2. **治理自主代理平台 (Govern the autonomous agent platform)**：系統級控制平面，確保數位勞動力的自主性值得信賴。
+  3. **建構長效敏捷性 (Architect durable agility)**：轉向主權、拋棄式與生物運算環境，防範供應商鎖定與能源極限。
+- **十大核心技術趨勢深入解析**：
+  1. **大型量化模型 (LQMs)**：突破 LLM 機率猜測缺陷，2030 年取代 25% 預測與營運建模任務。
+  2. **語音推理模型 (Speech Reasoning)**：端到端音訊推理，2030 年承接 70% 企業語音對話。
+  3. **世界模型 (World Models)**：物理優先與空間模擬，2030 年導入 40% 機器人應用。
+  4. **AI 上下文平台 (AI Context Platforms)**：建立企業真理層，精準度提升 80%、成本降 60%。
+  5. **AI 編碼代理安全框架 (AI Coding Agent Harness)**：閉環 SDLC 門禁與防回壓，應對 2026 年底 AI 產出 20% 公開 Commits。
+  6. **AI 代理身分識別 (AI Agent Identity)**：複合身分模型與動態零信任，化解 2028 年 25% Agent 權限濫用危機。
+  7. **自主曝險修復 (Autonomous Exposure Remediation)**：機器速度防禦，將漏洞暴露窗口自數週壓縮至 48 小時內。
+  8. **主權科技 (SovereignTech)**：技術與法律雙退出機制，2030 年 75% 非美企業採納數位主權防斷供。
+  9. **拋棄式應用 (Disposable Applications)**：預設壽命、隨用隨丟，2030 年 80% 新應用為拋棄式以破除 SaaS 綁架。
+  10. **生物運算即服務 (Wetware as a Service)**：活體神經元有機處理器突破矽晶片能耗牆，2030 年 25% 低功耗 AI 企業部署。
+- **C-Level 跨部門權責矩陣**：CIO 領導治理、IT 架構防護與業務主管價值創造之端到端對照表。
+
 
 ## 008 專案摘要：AI 核心架構全景解析：Skill、Project、Agent、MCP
 
