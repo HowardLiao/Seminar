@@ -945,6 +945,175 @@
     transform: scale(1.15);
   }
 
+  /* 下載驗證彈窗 */
+  .pdf-auth-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .pdf-auth-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+  .pdf-auth-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 440px;
+    padding: 28px 26px 24px;
+    box-shadow: var(--shadow-lg), 0 20px 40px rgba(0,0,0,0.3);
+    position: relative;
+    animation: authZoomIn 0.22s ease-out;
+  }
+  @keyframes authZoomIn {
+    from { transform: scale(0.94); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .pdf-auth-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .pdf-auth-icon {
+    font-size: 2rem;
+    line-height: 1;
+    background: var(--badge-bg);
+    color: var(--primary);
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .pdf-auth-title-box h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0 0 4px 0;
+  }
+  .pdf-auth-title-box p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .pdf-auth-body {
+    margin: 16px 0 20px;
+  }
+  .pdf-auth-label {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  .pdf-auth-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    font-family: inherit;
+    font-weight: 700;
+    text-align: center;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card-alt);
+    color: var(--text-main);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .pdf-auth-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--border-accent);
+  }
+  .pdf-auth-msg {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    min-height: 22px;
+    line-height: 1.4;
+    transition: all 0.2s;
+  }
+  .pdf-auth-msg.error {
+    color: var(--accent-red);
+    font-weight: 600;
+    animation: authShake 0.35s ease;
+  }
+  .pdf-auth-msg.success {
+    color: var(--accent-green);
+    font-weight: 700;
+  }
+  @keyframes authShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  .pdf-auth-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .pdf-auth-btn-cancel {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .pdf-auth-btn-cancel:hover {
+    background: var(--bg-card-alt);
+    color: var(--text-main);
+  }
+  .pdf-auth-btn-submit {
+    padding: 10px 22px;
+    border-radius: 6px;
+    border: none;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(217, 107, 39, 0.3);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .pdf-auth-btn-submit:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+  }
+  .pdf-auth-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+  }
+  .pdf-auth-close:hover {
+    color: var(--text-main);
+  }
+
 </style>
 </head>
 
@@ -967,7 +1136,7 @@
         <option value="obsidian">🌑 曜石深灰黑夜</option>
         <option value="milan">🎨 米蘭編排雙軌</option>
       </select>
-      <a href="top-10-strategic-technology-trends-for-2027.pdf" download class="nav-btn primary">
+      <a href="javascript:void(0)" id="btnDownloadHeader" class="nav-btn primary" title="點擊輸入密碼下載原廠白皮書">
         <span>📄</span> <span>下載原廠 PDF</span>
       </a>
       <a href="../" class="nav-btn">
@@ -2378,7 +2547,7 @@
           </p>
         </div>
         <div class="download-actions">
-          <a href="top-10-strategic-technology-trends-for-2027.pdf" download class="btn-download">
+          <a href="javascript:void(0)" id="btnDownloadSection" class="btn-download" title="點擊輸入密碼下載原廠白皮書">
             <span>📄</span> <span>下載原廠 PDF (2.9 MB)</span>
           </a>
           <button onclick="window.print()" class="nav-btn" style="padding:14px 20px; font-size:1rem; border-radius:8px;">
@@ -2465,6 +2634,29 @@
   </div>
 </div>
 
+<!-- 原廠白皮書下載密碼驗證彈窗 -->
+<div class="pdf-auth-modal" id="pdfAuthModal" role="dialog" aria-modal="true" aria-labelledby="pdfAuthTitle">
+  <div class="pdf-auth-card">
+    <button class="pdf-auth-close" id="pdfAuthClose" title="關閉">&times;</button>
+    <div class="pdf-auth-header">
+      <div class="pdf-auth-icon">🔒</div>
+      <div class="pdf-auth-title-box">
+        <h3 id="pdfAuthTitle">原廠白皮書下載驗證</h3>
+        <p>Gartner 2027 Strategic Technology Trends (28 頁原廠 PDF)</p>
+      </div>
+    </div>
+    <div class="pdf-auth-body">
+      <label class="pdf-auth-label" for="pdfAuthPassword">請輸入研討會存取密碼：</label>
+      <input type="password" id="pdfAuthPassword" class="pdf-auth-input" placeholder="••••••••" maxlength="20" autocomplete="off">
+      <div class="pdf-auth-msg" id="pdfAuthMsg"></div>
+    </div>
+    <div class="pdf-auth-actions">
+      <button type="button" class="pdf-auth-btn-cancel" id="pdfAuthCancel">取消</button>
+      <button type="button" class="pdf-auth-btn-submit" id="pdfAuthSubmit">驗證並下載</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // 燈箱互動邏輯
   const lbModal = document.getElementById('imageLightbox');
@@ -2512,6 +2704,89 @@
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lbModal.classList.contains('active')) {
       closeLightbox();
+    }
+  });
+
+  // 原廠 PDF 下載密碼驗證邏輯 (密碼: 11111111)
+  const pdfAuthModal = document.getElementById('pdfAuthModal');
+  const pdfAuthPassword = document.getElementById('pdfAuthPassword');
+  const pdfAuthMsg = document.getElementById('pdfAuthMsg');
+  const pdfAuthSubmit = document.getElementById('pdfAuthSubmit');
+  const pdfAuthCancel = document.getElementById('pdfAuthCancel');
+  const pdfAuthClose = document.getElementById('pdfAuthClose');
+
+  const PDF_TARGET_URL = 'top-10-strategic-technology-trends-for-2027.pdf';
+  const PDF_AUTH_PASS = '11111111';
+
+  function openPdfAuthModal() {
+    pdfAuthPassword.value = '';
+    pdfAuthMsg.className = 'pdf-auth-msg';
+    pdfAuthMsg.textContent = '';
+    pdfAuthModal.classList.add('active');
+    setTimeout(() => pdfAuthPassword.focus(), 120);
+  }
+
+  function closePdfAuthModal() {
+    pdfAuthModal.classList.remove('active');
+  }
+
+  function triggerPdfDownload() {
+    const a = document.createElement('a');
+    a.href = PDF_TARGET_URL;
+    a.download = PDF_TARGET_URL;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function verifyPdfPassword() {
+    const entered = pdfAuthPassword.value.trim();
+    if (entered === PDF_AUTH_PASS) {
+      pdfAuthMsg.className = 'pdf-auth-msg success';
+      pdfAuthMsg.textContent = '✓ 驗證成功！正在啟動下載...（檔案密碼同為 11111111）';
+      triggerPdfDownload();
+      setTimeout(() => {
+        closePdfAuthModal();
+      }, 1200);
+    } else {
+      pdfAuthMsg.className = 'pdf-auth-msg error';
+      pdfAuthMsg.textContent = '❌ 密碼錯誤，請確認後重新輸入（如需授權請洽主辦人）';
+      pdfAuthPassword.select();
+      pdfAuthPassword.focus();
+    }
+  }
+
+  const btnHeader = document.getElementById('btnDownloadHeader');
+  const btnSection = document.getElementById('btnDownloadSection');
+  if (btnHeader) {
+    btnHeader.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPdfAuthModal();
+    });
+  }
+  if (btnSection) {
+    btnSection.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPdfAuthModal();
+    });
+  }
+
+  pdfAuthSubmit.addEventListener('click', verifyPdfPassword);
+  pdfAuthCancel.addEventListener('click', closePdfAuthModal);
+  pdfAuthClose.addEventListener('click', closePdfAuthModal);
+
+  pdfAuthPassword.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      verifyPdfPassword();
+    } else if (e.key === 'Escape') {
+      closePdfAuthModal();
+    }
+  });
+
+  pdfAuthModal.addEventListener('click', (e) => {
+    if (e.target === pdfAuthModal) {
+      closePdfAuthModal();
     }
   });
 </script>
