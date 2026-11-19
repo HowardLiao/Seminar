@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI 核心架構全景解析：Skill、Project、Agent、MCP ｜ Howard Liao Ph.D. Seminar 008</title>
-<meta name="description" content="Howard Liao Ph.D.｜用米其林廚房比喻深入剖析 AI 系統四大核心概念：Skill 技能包四大支柱、Project 專案邊界與 Token 經濟學、Agent 主從協作治理體系、MCP 外部生態標準協定。企業級架構決策指南。">
-<meta name="theme-color" content="#141B2D">
+<meta name="description" content="Howard Liao Ph.D.｜融會米其林星級廚房思維與現代 Agentic AI 治理架構：深入解構 Skill 四大支柱、Project 邊界隔離、Agent 三級主從協同、MCP 外掛協議、出菜口 Evals 驗收機制與 CIO 每次合格完成成本 (TCO) 經濟學。">
+<meta name="theme-color" content="#0d121f">
 
 <!-- OpenGraph -->
 <meta property="og:title" content="AI 核心架構全景解析：Skill、Project、Agent、MCP ｜ Seminar 008">
-<meta property="og:description" content="釐清 AI 專有名詞黑話：用米其林廚房看懂技能包（食譜）、專案（廚房配置）、智能助手（廚師群）與 MCP（冷鏈倉庫）的協同運作。">
+<meta property="og:description" content="告別名詞恐慌！用米其林星級廚房透析企業級 AI 系統核心：解構技能包隨取即用、專案脈絡邊界、智能助手階層制衡、MCP 標準協議與 TCO 成本治理。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://howardliao.github.io/Seminar/008/">
 <meta property="og:image" content="assets/howard-liao-portrait-square.jpg">
@@ -17,13 +17,14 @@
 <link rel="icon" href="assets/howard-liao-portrait-circle.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 
 <style>
   :root {
     --ink: #0d121f;
     --ink-card: #151c2e;
     --ink-elevated: #1b243b;
+    --ink-hover: #222e4c;
     --ink-border: rgba(255, 255, 255, 0.08);
     --border-highlight: rgba(240, 122, 74, 0.35);
     
@@ -31,6 +32,7 @@
     --amber: #f59e0b;
     --gold: #fbbf24;
     --blue: #38bdf8;
+    --cyan: #22d3ee;
     --purple: #c084fc;
     --emerald: #34d399;
     --rose: #fb7185;
@@ -102,10 +104,11 @@
     background: rgba(240, 122, 74, 0.15);
     border: 1px solid rgba(240, 122, 74, 0.4);
     color: var(--coral);
-    padding: 4px 10px;
+    padding: 3px 10px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
+    font-family: var(--font-mono);
   }
   .btn-hub {
     display: inline-flex;
@@ -135,23 +138,23 @@
 
   /* Hero 橫幅 */
   .hero-banner {
-    background: linear-gradient(135deg, rgba(21, 28, 46, 0.9) 0%, rgba(13, 18, 31, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(21, 28, 46, 0.95) 0%, rgba(13, 18, 31, 0.98) 100%);
     border: 1px solid var(--border-highlight);
     border-radius: 16px;
     padding: 40px;
     position: relative;
     overflow: hidden;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 36px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
   }
   .hero-banner::after {
     content: "";
     position: absolute;
     top: -80px;
     right: -80px;
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(circle, rgba(240, 122, 74, 0.15) 0%, transparent 70%);
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(240, 122, 74, 0.18) 0%, transparent 70%);
     pointer-events: none;
   }
   .seminar-tag {
@@ -162,9 +165,10 @@
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 12px;
+    font-family: var(--font-mono);
   }
   h1.hero-title {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 900;
     line-height: 1.35;
     color: #ffffff;
@@ -174,7 +178,7 @@
   p.hero-subtitle {
     font-size: 16px;
     color: var(--text-secondary);
-    max-width: 860px;
+    max-width: 900px;
     margin-bottom: 24px;
     line-height: 1.8;
   }
@@ -199,36 +203,64 @@
 
   /* 核心引言金句 */
   .quote-card {
-    background: rgba(245, 158, 11, 0.06);
+    background: rgba(245, 158, 11, 0.07);
     border-left: 4px solid var(--amber);
     border-radius: 0 12px 12px 0;
-    padding: 18px 24px;
+    padding: 20px 24px;
     margin: 28px 0;
     font-size: 15px;
     color: #fef3c7;
-    line-height: 1.8;
+    line-height: 1.85;
   }
   .quote-card strong {
     color: var(--gold);
+  }
+
+  /* 快速跳轉導覽列 */
+  .quick-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0 36px 0;
+    padding: 12px 16px;
+    background: var(--ink-card);
+    border: 1px solid var(--ink-border);
+    border-radius: 12px;
+  }
+  .quick-nav a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+  }
+  .quick-nav a:hover {
+    color: #fff;
+    background: rgba(240, 122, 74, 0.15);
+    border-color: rgba(240, 122, 74, 0.3);
   }
 
   /* 章節標題 */
   .section-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 50px 0 24px 0;
+    gap: 14px;
+    margin: 60px 0 24px 0;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--ink-border);
   }
   .section-number {
     font-family: var(--font-mono);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--coral);
     background: rgba(240, 122, 74, 0.12);
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 6px;
+    border: 1px solid rgba(240, 122, 74, 0.3);
   }
   h2.section-title {
     font-size: 24px;
@@ -250,7 +282,7 @@
     line-height: 1.8;
   }
 
-  /* 核心全景架構圖 Bento 容器 */
+  /* Bento 容器 */
   .bento-canvas {
     background: var(--ink-card);
     border: 1px solid var(--ink-border);
@@ -263,7 +295,7 @@
     font-size: 18px;
     font-weight: 700;
     color: var(--gold);
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -284,13 +316,14 @@
     background: var(--ink-elevated);
     border: 1px solid var(--ink-border);
     border-radius: 12px;
-    padding: 22px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    padding: 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
   }
   .quad-card:hover {
     transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
   .quad-card.skill { border-top: 3px solid var(--emerald); }
   .quad-card.project { border-top: 3px solid var(--amber); }
@@ -309,6 +342,7 @@
     padding: 2px 8px;
     border-radius: 4px;
     text-transform: uppercase;
+    font-family: var(--font-mono);
   }
   .quad-card.skill .quad-tag { background: rgba(52, 211, 153, 0.15); color: var(--emerald); }
   .quad-card.project .quad-tag { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
@@ -356,7 +390,7 @@
   .quad-card.agent .quad-checklist li::before { color: var(--blue); }
   .quad-card.mcp .quad-checklist li::before { color: var(--purple); }
 
-  /* 深入章節：四支柱圖解卡 */
+  /* 四支柱卡片 */
   .pillar-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -369,17 +403,21 @@
   @media (max-width: 520px) {
     .pillar-grid { grid-template-columns: 1fr; }
   }
-
   .pillar-box {
     background: rgba(21, 28, 46, 0.85);
     border: 1px solid var(--ink-border);
-    border-radius: 10px;
-    padding: 18px 16px;
+    border-radius: 12px;
+    padding: 20px 16px;
     text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .pillar-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(52, 211, 153, 0.4);
   }
   .pillar-num {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--emerald);
     background: rgba(52, 211, 153, 0.1);
@@ -431,20 +469,32 @@
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-  /* 警示呼籲盒 */
+  /* 警示盒與注意盒 */
   .warning-box {
     background: rgba(244, 63, 94, 0.08);
     border-left: 4px solid var(--rose);
     border-radius: 0 10px 10px 0;
-    padding: 16px 20px;
-    margin: 20px 0;
+    padding: 18px 22px;
+    margin: 22px 0;
     font-size: 14px;
     color: #ffe4e6;
-    line-height: 1.7;
+    line-height: 1.75;
   }
   .warning-box strong { color: var(--rose); }
 
-  /* 專家架構決策清單 */
+  .info-box {
+    background: rgba(56, 189, 248, 0.08);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 22px 0;
+    font-size: 14px;
+    color: #e0f2fe;
+    line-height: 1.75;
+  }
+  .info-box strong { color: var(--blue); }
+
+  /* 樹狀步驟 (Agent 階層) */
   .decision-tree {
     background: var(--ink-elevated);
     border: 1px dashed var(--ink-border);
@@ -455,12 +505,12 @@
   .tree-step {
     display: flex;
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
   .tree-step:last-child { margin-bottom: 0; }
   .step-badge {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: var(--coral);
     color: #fff;
@@ -474,12 +524,233 @@
   .step-body h4 {
     font-size: 16px;
     color: #fff;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
   .step-body p {
     font-size: 14px;
     color: var(--text-secondary);
     margin: 0;
+    line-height: 1.7;
+  }
+
+  /* 互動式標籤切換頁 (Tabbed Views) */
+  .tab-container {
+    background: var(--ink-card);
+    border: 1px solid var(--ink-border);
+    border-radius: 14px;
+    padding: 20px;
+    margin: 28px 0;
+  }
+  .tab-buttons {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--ink-border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .tab-btn.active {
+    background: rgba(240, 122, 74, 0.15);
+    border-color: rgba(240, 122, 74, 0.4);
+    color: var(--coral);
+  }
+  .tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 實戰情境步進器 (Simulator Stepper) */
+  .stepper-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+  .step-nav-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--ink-border);
+    background: var(--ink-elevated);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .step-nav-btn.active {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: #fff;
+  }
+  .step-detail-card {
+    background: var(--ink-elevated);
+    border: 1px solid var(--ink-border);
+    border-radius: 12px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .step-detail-card { grid-template-columns: 1fr; }
+  }
+
+  /* 互動式 TCO 計算器 */
+  .calc-container {
+    background: linear-gradient(135deg, rgba(21, 28, 46, 0.95), rgba(27, 36, 59, 0.95));
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 840px) {
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+  .calc-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .input-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #e2e8f0;
+  }
+  .input-label-row span.val {
+    font-family: var(--font-mono);
+    color: var(--gold);
+    font-weight: 700;
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--coral);
+    cursor: pointer;
+  }
+  .calc-results {
+    background: var(--ink);
+    border: 1px solid var(--ink-border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+  }
+  .result-metric {
+    border-bottom: 1px solid var(--ink-border);
+    padding-bottom: 12px;
+  }
+  .result-metric:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .result-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    margin-bottom: 4px;
+  }
+  .result-value {
+    font-size: 26px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+  }
+  .result-value.primary { color: var(--gold); }
+  .result-value.success { color: var(--emerald); }
+  .result-value.danger { color: var(--rose); }
+
+  /* 互動式智慧選型精靈 Wizard */
+  .wizard-card {
+    background: var(--ink-elevated);
+    border: 1px solid var(--ink-border);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 28px 0;
+  }
+  .wizard-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 700px) {
+    .wizard-options { grid-template-columns: 1fr; }
+  }
+  .wizard-btn {
+    text-align: left;
+    padding: 16px;
+    background: var(--ink-card);
+    border: 1px solid var(--ink-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+  }
+  .wizard-btn:hover {
+    border-color: rgba(240, 122, 74, 0.4);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .wizard-btn.active {
+    border-color: var(--coral);
+    background: rgba(240, 122, 74, 0.12);
+  }
+  .wizard-btn strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+  .wizard-btn span {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .wizard-result-box {
+    background: var(--ink);
+    border: 1px solid rgba(240, 122, 74, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .wizard-result-box.active {
+    display: block;
   }
 
   /* 頁尾 */
@@ -497,7 +768,7 @@
     font-weight: 600;
   }
 
-  /* 懸浮按鈕 */
+  /* 懸浮快捷按鈕 */
   .fab-container {
     position: fixed;
     bottom: 24px;
@@ -519,33 +790,34 @@
     justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
     transition: all 0.2s ease;
   }
   .fab-btn:hover {
     background: var(--coral);
     border-color: var(--coral);
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 
-  /* 列印樣式 */
+  /* 列印專用樣式 */
   @media print {
-    header, .fab-container, .btn-hub { display: none !important; }
+    header, .fab-container, .btn-hub, .quick-nav, .stepper-nav, .tab-buttons, input[type="range"] { display: none !important; }
     body { background: #fff !important; color: #000 !important; }
-    .hero-banner, .quad-card, .panel, .bento-canvas {
+    .hero-banner, .quad-card, .panel, .bento-canvas, .calc-container, .wizard-card, .tab-container {
       border: 1px solid #ccc !important;
       background: #fff !important;
       color: #000 !important;
       box-shadow: none !important;
     }
     h1, h2, h3, h4, strong { color: #000 !important; }
-    p, td, li { color: #333 !important; }
+    p, td, li, span { color: #333 !important; }
+    .tab-pane, .wizard-result-box { display: block !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- 頂部導航 -->
+<!-- 頂部固定導航 -->
 <header>
   <a href="../" class="nav-left">
     <img src="assets/howard-liao-portrait-circle.png" onerror="this.src='../assets/howard-liao-portrait-circle.png'" alt="Howard Liao Ph.D." class="avatar">
@@ -568,111 +840,190 @@
     <div class="seminar-tag">SEMINAR 008 ｜ 企業級 AI 架構決策與資源治理</div>
     <h1 class="hero-title">AI 核心架構全景解析：<br>Skill、Project、Agent、MCP</h1>
     <p class="hero-subtitle">
-      告別名詞恐慌，用「米其林星級廚房」思維透析 AI 系統運作核心：解構技能包隨取即用的四大支柱、專案配置的 Context 治理防線、智能助手的階層制衡，以及 MCP 標準化外掛協議。
+      告別名詞恐慌與主廚迷思，用「米其林星級廚房」思維透析企業級 AI 系統工程：解構技能包隨取即用的四大支柱、專案配置的 Context 治理防線、智能助手的階層制衡、MCP 標準外掛協議，以及出菜口驗收與 CIO 每次合格完成成本 (TCO) 經濟學。
     </p>
     <div class="hero-meta-grid">
-      <span>研討專題：<strong>前沿系統架構與資源調度</strong></span>
+      <span>研討專題：<strong>前沿系統架構、資源調度與系統治理</strong></span>
       <span>主講報告人：<strong>Howard Liao Ph.D.</strong></span>
-      <span>發布狀態：<strong>出版級完整解析</strong></span>
+      <span>發布狀態：<strong>出版級完整解析（含動態互動演算）</strong></span>
     </div>
   </div>
 
-  <!-- 終局金句 -->
+  <!-- 終局架構金句 -->
   <div class="quote-card">
     <strong>架構師終極洞察：</strong><br>
-    「很多組織在推動 AI 落地時，最常犯的錯誤就是把所有食譜、廚具和食材一股腦堆在工作檯上——這不僅浪費寶貴的記憶體與 Token，更會造成嚴重的記憶污染與推論失真。真正的專業架構，在於清晰的邊界隔離、隨需加載的輕量技能，以及權責分明的主從協作。」
+    「很多組織在推動 AI 落地時，最常犯的錯誤就是把大型語言模型比喻成全知全能的單一主廚，把所有食譜、廚具和食材一股腦堆在工作檯上——這不僅浪費寶貴的記憶體與 Token，更會造成嚴重的記憶污染與推論失真。<br>
+    <strong>企業真正需要的，是一套能持續交付合格成果、控制邊際成本，而且出錯時能追溯責任的星級營運系統。</strong>」
+  </div>
+
+  <!-- 快速導覽列 -->
+  <div class="quick-nav">
+    <a href="#sec-01">01 全貌對照</a>
+    <a href="#sec-02">02 Prompt/RAG/FT</a>
+    <a href="#sec-03">03 Skill 四大支柱</a>
+    <a href="#sec-04">04 Project 邊界</a>
+    <a href="#sec-05">05 Agent 主從調度</a>
+    <a href="#sec-06">06 MCP 外掛協議</a>
+    <a href="#sec-07">07 出菜口 Evals & 權限</a>
+    <a href="#sec-08">08 維運情境實戰模擬</a>
+    <a href="#sec-09">09 CIO TCO 計算器</a>
+    <a href="#sec-10">10 智慧選型精靈</a>
   </div>
 
   <!-- 01. 核心比喻總覽 -->
-  <div class="section-header">
+  <div id="sec-01" class="section-header">
     <span class="section-number">01</span>
     <h2 class="section-title">米其林廚房總覽：破解 AI 專有名詞黑話</h2>
   </div>
   <p class="lead">
-    走進一間米其林星級廚房，你不會看見廚師把幾百本食譜全部攤在料理桌上，也不會看到主廚親自去切每一顆洋蔥。廚房之所以能以極致速度出餐並維持頂級品質，關鍵在於「全域環境、專業廚師、標準食譜、外部供應鏈」四大支柱的精準分工。這與當代 AI 系統的架構分工完全一致：
+    走進一間米其林星級廚房，你不會看見廚師把幾百本食譜全部攤在料理桌上，也不會看到行政總廚親自去切每一顆洋蔥。廚房之所以能以極致速度出餐並維持頂級品質，關鍵在於「全域環境、專業廚師、標準食譜、外部供應鏈、出菜驗收」的精準分工。從 CIO 視角來看，採購一個強模型近似聘到一位能力卓越的主廚，但食材供應、設備權限、出餐標準與營運制度，仍必須由架構完整搭建。
   </p>
 
-  <!-- 視覺化圖解 Canvas -->
+  <!-- 全景對照表 -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>廚房元素</th>
+          <th>AI 系統技術對應</th>
+          <th>企業管理與架構核心重點</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>客人點餐</strong></td>
+          <td>使用者需求、任務規格</td>
+          <td>先定義交付成果、邊界限制與驗收條件。</td>
+        </tr>
+        <tr>
+          <td><strong>主廚的能力</strong></td>
+          <td>基礎模型 (Foundation Model)</td>
+          <td>評估模型是否適合任務特性，而非只迷信公開排行榜。</td>
+        </tr>
+        <tr>
+          <td><strong>食材與來源</strong></td>
+          <td>企業文件、資料庫、即時資訊</td>
+          <td>確保企業數據的正確性、時效性與存取合法權限。</td>
+        </tr>
+        <tr>
+          <td><strong>當班備料台</strong></td>
+          <td>Context Window（上下文視窗）</td>
+          <td>當次載入哪些精準資訊，排除哪些噪音與干擾。</td>
+        </tr>
+        <tr>
+          <td><strong>食譜與出餐規格</strong></td>
+          <td>System Prompt、任務指令、範例</td>
+          <td>明確宣告角色立場、約束邊界與強型別輸出格式。</td>
+        </tr>
+        <tr>
+          <td><strong>找食材與調閱食譜</strong></td>
+          <td>RAG（檢索增強生成）、向量檢索</td>
+          <td>精準檢索與問題真正具備語意關聯的事實證據。</td>
+        </tr>
+        <tr>
+          <td><strong>爐具與廚房設備</strong></td>
+          <td>API、資料庫查詢、Code Execution 工具</td>
+          <td>建立工具調用契約、執行權限分離與容錯防呆機制。</td>
+        </tr>
+        <tr>
+          <td><strong>廚房分工與傳菜</strong></td>
+          <td>Workflow、Agent Orchestration</td>
+          <td>決定固定流水線還是動態決策、交接格式與循環停止條件。</td>
+        </tr>
+        <tr>
+          <td><strong>出菜口驗收</strong></td>
+          <td>Evals、程式規則檢查、人工覆核</td>
+          <td>不看「說得好不好」，只驗證「任務是否合格達成」。</td>
+        </tr>
+        <tr>
+          <td><strong>營運紀錄與行車記錄器</strong></td>
+          <td>Traces、Logs、成本與延遲指標</td>
+          <td>在發生事故時具備重現問題、定位瓶頸與追溯責任能力。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 視覺化 Topology SVG 圖 -->
   <div class="bento-canvas">
     <div class="bento-canvas-title">
-      <span>🏛️ AI 核心架構拓撲圖（米其林廚房對照）</span>
+      <span>🏛️ AI 核心架構拓撲圖（米其林星級廚房對照）</span>
       <span style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">TOPOLOGY VIEW</span>
     </div>
 
-    <!-- 向量 SVG 架構圖 -->
-    <div style="width: 100%; margin: 20px 0; overflow-x: auto;">
-      <svg viewBox="0 0 900 480" width="100%" height="auto" style="min-width: 720px; background: #0f1626; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+    <div style="width: 100%; margin: 10px 0 20px 0; overflow-x: auto;">
+      <svg viewBox="0 0 920 500" width="100%" height="auto" style="min-width: 760px; background: #0f1626; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
         <!-- 廚房外框 (Project) -->
-        <rect x="20" y="20" width="860" height="440" rx="16" fill="rgba(245,158,11,0.03)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 6" />
-        <text x="44" y="52" fill="#fbbf24" font-size="14" font-weight="bold">🏛️ 2. Project 專案（整個廚房的配置）— 全域脈絡預載 · Context Window 邊界</text>
+        <rect x="20" y="20" width="880" height="460" rx="16" fill="rgba(245,158,11,0.03)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 6" />
+        <text x="44" y="52" fill="#fbbf24" font-size="14" font-weight="bold">🏛️ 2. Project 專案（整間廚房實體規格）— 全域脈絡預載 · Context Window 邊界隔離</text>
 
         <!-- 左側：Agent 廚師群 -->
-        <rect x="50" y="80" width="370" height="260" rx="12" fill="#151d30" stroke="#38bdf8" stroke-width="1.5" />
-        <text x="70" y="110" fill="#38bdf8" font-size="14" font-weight="bold">👨‍🍳 3. Agent 智能助手（具自主判斷力的廚師群）</text>
+        <rect x="45" y="80" width="380" height="275" rx="12" fill="#151d30" stroke="#38bdf8" stroke-width="1.5" />
+        <text x="65" y="110" fill="#38bdf8" font-size="14" font-weight="bold">👨‍🍳 3. Agent 智能助手（具自主判斷力的廚師群）</text>
 
         <!-- 管家 Agent -->
-        <rect x="70" y="130" width="330" height="50" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1" />
-        <text x="85" y="152" fill="#e2e8f0" font-size="12" font-weight="bold">🛎️ 管家 Agent (Expediter)</text>
-        <text x="85" y="168" fill="#94a3b8" font-size="11">總指揮 · 意圖識別與任務分派 · 節省 Token 成本</text>
+        <rect x="65" y="130" width="340" height="52" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1" />
+        <text x="80" y="152" fill="#e2e8f0" font-size="12" font-weight="bold">🛎️ 管家 Agent (Expediter / Router)</text>
+        <text x="80" y="169" fill="#94a3b8" font-size="11">意圖識別與任務分流 · 省下 80% 大模型 Token 成本</text>
 
         <!-- 主 Agent -->
-        <rect x="70" y="190" width="330" height="65" rx="8" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1" />
-        <text x="85" y="212" fill="#38bdf8" font-size="12" font-weight="bold">👑 主 Agent (Executive Chef)</text>
-        <text x="85" y="228" fill="#e2e8f0" font-size="11">大腦中樞 · 複雜邏輯推理 · 唯一對外最終交付窗口</text>
-        <text x="85" y="244" fill="#7dd3fc" font-size="10">★ 嚴格把關品質，承擔架構責任</text>
+        <rect x="65" y="195" width="340" height="70" rx="8" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.2" />
+        <text x="80" y="218" fill="#38bdf8" font-size="12" font-weight="bold">👑 主 Agent (Executive Chef)</text>
+        <text x="80" y="235" fill="#e2e8f0" font-size="11">大腦中樞 · 複雜推理與架構權衡 · 唯一對外交付窗口</text>
+        <text x="80" y="252" fill="#7dd3fc" font-size="10">★ 嚴格把關品質，承擔架構責任</text>
 
         <!-- Sub-Agent -->
-        <rect x="70" y="265" width="330" height="55" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="1" />
-        <text x="85" y="287" fill="#cbd5e1" font-size="12" font-weight="bold">🍳 Sub-Agent (Line Cook 助手學徒)</text>
-        <text x="85" y="303" fill="#94a3b8" font-size="11">機械執行 · 資料清洗 / 爬蟲 / 粗活 · 成果內部回傳</text>
+        <rect x="65" y="278" width="340" height="58" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="1" />
+        <text x="80" y="300" fill="#cbd5e1" font-size="12" font-weight="bold">🍳 Sub-Agent (Line Cook / Worker)</text>
+        <text x="80" y="318" fill="#94a3b8" font-size="11">沙盒平行粗活 · 資料清洗 / 爬蟲 · 成果僅內部回報主 Agent</text>
 
-        <!-- 連線箭頭：管家 -> 主/Sub -->
-        <path d="M 400 155 L 435 155 L 435 210 L 400 210" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
-        <polygon points="400,210 406,206 406,214" fill="#c084fc" />
+        <!-- 連線：管家 -> 主廚 -->
+        <path d="M 405 156 L 435 156 L 435 225 L 405 225" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
+        <polygon points="405,225 412,221 412,229" fill="#c084fc" />
 
         <!-- 右側：Skill 食譜抽屜 -->
-        <rect x="460" y="80" width="390" height="260" rx="12" fill="#151d30" stroke="#34d399" stroke-width="1.5" />
-        <text x="480" y="110" fill="#34d399" font-size="14" font-weight="bold">📖 1. Skill 技能包（食譜抽屜）— 隨需翻閱 · 零常駐負擔</text>
+        <rect x="450" y="80" width="425" height="275" rx="12" fill="#151d30" stroke="#34d399" stroke-width="1.5" />
+        <text x="470" y="110" fill="#34d399" font-size="14" font-weight="bold">📖 1. Skill 技能包（食譜抽屜）— 隨需翻閱 · 零常駐負擔</text>
 
-        <rect x="480" y="130" width="165" height="75" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
-        <text x="492" y="152" fill="#a7f3d0" font-size="11" font-weight="bold">① 提示詞模板</text>
-        <text x="492" y="170" fill="#cbd5e1" font-size="10">Prompt Template</text>
-        <text x="492" y="188" fill="#6ee7b7" font-size="9">固定提問語境與約束</text>
+        <rect x="470" y="130" width="190" height="78" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
+        <text x="482" y="152" fill="#a7f3d0" font-size="11" font-weight="bold">① 提示詞模板</text>
+        <text x="482" y="170" fill="#cbd5e1" font-size="10">Prompt Template</text>
+        <text x="482" y="190" fill="#6ee7b7" font-size="9">固定提問語境、約束與負面清單</text>
 
-        <rect x="665" y="130" width="165" height="75" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
-        <text x="677" y="152" fill="#a7f3d0" font-size="11" font-weight="bold">② Few-shot 範例</text>
-        <text x="677" y="170" fill="#cbd5e1" font-size="10">Golden Samples</text>
-        <text x="677" y="188" fill="#6ee7b7" font-size="9">對齊標準與踩坑示範</text>
+        <rect x="670" y="130" width="190" height="78" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
+        <text x="682" y="152" fill="#a7f3d0" font-size="11" font-weight="bold">② Few-shot 範例</text>
+        <text x="682" y="170" fill="#cbd5e1" font-size="10">Golden Samples</text>
+        <text x="682" y="190" fill="#6ee7b7" font-size="9">對齊標準答案與踩坑示範</text>
 
-        <rect x="480" y="220" width="165" height="75" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
-        <text x="492" y="242" fill="#a7f3d0" font-size="11" font-weight="bold">③ 輸出規範規格</text>
-        <text x="492" y="260" fill="#cbd5e1" font-size="10">Output Schema</text>
-        <text x="492" y="278" fill="#6ee7b7" font-size="9">JSON / DDL / 表格規範</text>
+        <rect x="470" y="222" width="190" height="78" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
+        <text x="482" y="244" fill="#a7f3d0" font-size="11" font-weight="bold">③ 輸出規格規範</text>
+        <text x="482" y="262" fill="#cbd5e1" font-size="10">Output Schema</text>
+        <text x="482" y="282" fill="#6ee7b7" font-size="9">強約束 JSON / 表格 / DDL 結構</text>
 
-        <rect x="665" y="220" width="165" height="75" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
-        <text x="677" y="242" fill="#a7f3d0" font-size="11" font-weight="bold">④ 程式/腳本調用</text>
-        <text x="677" y="260" fill="#cbd5e1" font-size="10">Code Execution</text>
-        <text x="677" y="278" fill="#6ee7b7" font-size="9">代碼驗證 · 算力卸載</text>
+        <rect x="670" y="222" width="190" height="78" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="1" />
+        <text x="682" y="244" fill="#a7f3d0" font-size="11" font-weight="bold">④ 程式/腳本調用</text>
+        <text x="682" y="262" fill="#cbd5e1" font-size="10">Code Execution</text>
+        <text x="682" y="282" fill="#6ee7b7" font-size="9">代碼精確計算 · 算力卸載</text>
 
-        <text x="560" y="322" fill="#94a3b8" font-size="11">💡 做洋蔥湯才翻開，做完立即歸位收起</text>
+        <text x="560" y="336" fill="#94a3b8" font-size="11">💡 JIT 動態加載：做洋蔥湯才翻開，做完立即釋放</text>
 
-        <!-- 交互雙向箭頭：Agent 與 Skill -->
-        <path d="M 400 220 L 460 220" fill="none" stroke="#fbbf24" stroke-width="2" />
-        <polygon points="400,220 408,216 408,224" fill="#fbbf24" />
-        <polygon points="460,220 452,216 452,224" fill="#fbbf24" />
+        <!-- 雙向調度箭頭：Agent 與 Skill -->
+        <path d="M 405 230 L 450 230" fill="none" stroke="#fbbf24" stroke-width="2" />
+        <polygon points="405,230 412,226 412,234" fill="#fbbf24" />
+        <polygon points="450,230 443,226 443,234" fill="#fbbf24" />
 
-        <!-- 底部：MCP 倉庫與冰箱 -->
-        <rect x="50" y="360" width="800" height="80" rx="12" fill="#2e1065" stroke="#c084fc" stroke-width="1.5" />
-        <text x="75" y="390" fill="#c084fc" font-size="14" font-weight="bold">🧊 4. MCP（Model Context Protocol）= 倉庫與冰箱（外部冷鏈與標準通道）</text>
-        <text x="75" y="414" fill="#e9d5ff" font-size="12">社群標準協定 · 即插即用外部工具庫 · 避免重複造輪子（企業內部 DB、外部搜尋引擎、雲端 API、分析器）</text>
+        <!-- 底部：MCP 冷鏈倉庫 -->
+        <rect x="45" y="375" width="830" height="85" rx="12" fill="#2e1065" stroke="#c084fc" stroke-width="1.5" />
+        <text x="70" y="405" fill="#c084fc" font-size="14" font-weight="bold">🧊 4. MCP（Model Context Protocol）= 倉庫與冰箱（外部冷鏈與標準通道）</text>
+        <text x="70" y="428" fill="#e9d5ff" font-size="12">社群開放標準協定 · 零信任安全圍欄 · 雙向即時脈絡感知（企業私有 DB、GitHub、Jira、系統 API）</text>
 
-        <!-- 連線箭頭：廚房內部 -> MCP 倉庫 -->
-        <line x1="235" y1="340" x2="235" y2="360" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
-        <line x1="655" y1="340" x2="655" y2="360" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
+        <!-- 連線：內部廚房 -> MCP 倉庫 -->
+        <line x1="235" y1="355" x2="235" y2="375" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
+        <line x1="662" y1="355" x2="662" y2="375" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" />
       </svg>
     </div>
 
-    <!-- 四大模組四象限卡片 -->
+    <!-- 四大架構實體四象限卡片 -->
     <div class="quad-grid">
       <!-- 1. Skill -->
       <div class="quad-card skill">
@@ -699,7 +1050,7 @@
         </div>
         <div class="quad-metaphor">廚房比喻：整間廚房的物理規格與裝備</div>
         <p class="quad-desc">
-          每次開啟對話都必須將所有全域規則、專案背景文件（Knowledge base）與歷史紀錄一次性預載。消耗資源巨大，維護成本最高。
+          每次開啟對話都必須將所有全域規則、專案背景文件（Knowledge Base）與歷史紀錄一次性預載。消耗資源巨大，維護成本最高。
         </p>
         <ul class="quad-checklist">
           <li><strong>高昂成本：</strong>每次對話都需要重新加載大量背景 Token。</li>
@@ -737,16 +1088,92 @@
         </p>
         <ul class="quad-checklist">
           <li><strong>拒絕重造輪子：</strong>直接連線外部 GitHub、Postgres、Slack 或自訂 API。</li>
-          <li><strong>安全沙盒：</strong>在特定隔離協議下讀取資料，防止 prompt injection 越權。</li>
+          <li><strong>安全沙盒：</strong>在特定隔離協議下讀取資料，防止 Prompt Injection 越權。</li>
           <li><strong>即插即用：</strong>標準協議一處編寫，所有合規 Agent 皆能無縫調用。</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- 02. Skill 深入拆解 -->
-  <div class="section-header">
+  <!-- 02. 概念解耦：Prompt vs RAG vs Fine-tuning -->
+  <div id="sec-02" class="section-header">
     <span class="section-number">02</span>
+    <h2 class="section-title">概念解耦：訓練、備料與現場烹調的界線</h2>
+  </div>
+  <p class="lead">
+    企業導入 AI 最常犯的技術選型錯誤，就是把「食材沒送到」誤判為「廚師能力不足」。必須將 Prompt、RAG 與 Fine-tuning 徹底拆開理解：
+  </p>
+
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(event, 'tab-concept-1')">1. Prompt：現場烹調指示</button>
+      <button class="tab-btn" onclick="switchTab(event, 'tab-concept-2')">2. RAG：接單後的冷鏈備料</button>
+      <button class="tab-btn" onclick="switchTab(event, 'tab-concept-3')">3. Fine-tuning：廚藝專項深造</button>
+      <button class="tab-btn" onclick="switchTab(event, 'tab-concept-4')">🔍 痛點快速診斷矩陣</button>
+    </div>
+
+    <!-- Tab 1 -->
+    <div id="tab-concept-1" class="tab-pane active">
+      <h3 style="color: #fff; margin-bottom: 10px;">Prompt：告訴廚師，這一餐怎麼做</h3>
+      <p>著重在「當次任務」的具體指示、立場、約束邊界與範例示範。對企業導入而言，優先改善指令結構與任務拆解，通常比直接進入微調更容易快速驗證業務效益。</p>
+      <div style="background: rgba(0,0,0,0.3); border-left: 3px solid var(--emerald); padding: 12px 16px; border-radius: 6px; font-family: var(--font-mono); font-size: 13px; color: #a7f3d0;">
+        「請根據提供的事件日誌，產出故障時間線與處置措施；每項事實嚴格附上證據行號，無法確認的部分標示為假設，嚴禁未經求證的臆測。」
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div id="tab-concept-2" class="tab-pane">
+      <h3 style="color: #fff; margin-bottom: 10px;">RAG：接單後，去找這道菜需要的食材</h3>
+      <p><strong>RAG 絕不是把整座圖書館硬塞給模型</strong>，而是先檢索與當前問題最相關的碎片資料，再餵給模型生成解答。其效果完全取決於知識庫的清洗品質與向量取回（Retrieval）的相關性。</p>
+      <p style="color: var(--amber); font-size: 13px;">⚠️ 檢索到資料不等於資料完全正確；未經過濾的 RAG 只會將垃圾食材送上料理台，造成模型食物中毒（嚴重幻覺）。</p>
+    </div>
+
+    <!-- Tab 3 -->
+    <div id="tab-concept-3" class="tab-pane">
+      <h3 style="color: #fff; margin-bottom: 10px;">Fine-tuning：讓廚師接受特定領域作風的再訓練</h3>
+      <p>微調是改變廚師的固定作風、語態與特定領域推理習慣（如生醫語料、金融合規格式），而不是每次上菜前提供最新數據。它無法取代日常知識庫更新，且迭代與資料工程成本最高。</p>
+    </div>
+
+    <!-- Tab 4 -->
+    <div id="tab-concept-4" class="tab-pane">
+      <h3 style="color: var(--gold); margin-bottom: 12px;">企業痛點快速選型診斷矩陣</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>企業面臨的實際痛點</th>
+            <th>架構師優先驗證方向</th>
+            <th>技術選型對策</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>模型不知道本公司最新修改的內規或商品</td>
+            <td>資料更新時效與 Context 供給</td>
+            <td><strong style="color: var(--amber);">RAG 檢索增強 / 向量庫更新</strong></td>
+          </tr>
+          <tr>
+            <td>模型知道資料，但格式或口吻不符要求</td>
+            <td>指令明確性、約束邊界與 Few-shot 範例</td>
+            <td><strong style="color: var(--emerald);">Prompt Template / Output Schema</strong></td>
+          </tr>
+          <tr>
+            <td>固定任務的輸出表現依然不穩定、抖動大</td>
+            <td>先建立 Evals 評估基準，再比較微調或升級模型</td>
+            <td><strong style="color: var(--blue);">Evals 基準測試 $\rightarrow$ Fine-tuning</strong></td>
+          </tr>
+          <tr>
+            <td>需要即時查詢或操作外部系統（DB/Jira/K8s）</td>
+            <td>工具契約、權限分離與沙盒協議</td>
+            <td><strong style="color: var(--purple);">MCP 標準協議 / API Tool Calling</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 03. Skill 深入拆解 -->
+  <div id="sec-03" class="section-header">
+    <span class="section-number">03</span>
     <h2 class="section-title">深入剖析 Skill：隨用隨取、零常駐負擔的四大支柱</h2>
   </div>
   <p class="lead">
@@ -779,17 +1206,17 @@
   <div class="warning-box">
     <strong>⚠️ 為什麼食譜絕不能攤滿整張桌子？</strong><br>
     如果在對話一開始就把 50 個 Skill 的全部說明塞進 Prompt，會引發兩大架構性災難：<br>
-    1. <strong>上下文衰退（Context Degradation）：</strong>長上下文容易導致模型注意力分散（Lost in the Middle），遺忘關鍵指令。<br>
+    1. <strong>上下文衰退（Context Degradation）：</strong>長上下文容易導致模型注意力分散（Lost in the Middle），遺忘關鍵指令與細節邊界。<br>
     2. <strong>Token 經濟崩盤：</strong>每一次無關的問答都在為這 50 份食譜重複付費，讓推理成本暴增 10 倍以上。因此，成熟架構只註冊輕量 Description，觸發時才動態載入（Just-In-Time Loading）。
   </div>
 
-  <!-- 03. Project 深入拆解 -->
-  <div class="section-header">
-    <span class="section-number">03</span>
+  <!-- 04. Project 深入拆解 -->
+  <div id="sec-04" class="section-header">
+    <span class="section-number">04</span>
     <h2 class="section-title">深入剖析 Project：專案邊界與 Token 經濟學</h2>
   </div>
   <p class="lead">
-    在 Claude Projects 或 OpenAI Custom GPTs 中，建立一個 Project 就像是租下了一整間特定的廚房。它的特點是把全域背景知識庫（Files）、長期指令（Instructions）永久常駐。
+    在 Claude Projects 或 OpenAI Custom GPTs 中，建立一個 Project 就像是租下了一整間特定的專用廚房。它的特點是把全域背景知識庫（Files）、長期指令（Instructions）永久常駐。
   </p>
 
   <div class="table-box">
@@ -831,13 +1258,37 @@
     </table>
   </div>
 
-  <!-- 04. Agent 深入拆解 -->
-  <div class="section-header">
-    <span class="section-number">04</span>
-    <h2 class="section-title">深入剖析 Agent：具判斷力的主從階層與治理圍欄</h2>
+  <!-- 05. Agent 深入拆解 -->
+  <div id="sec-05" class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">深入剖析 Agent：具判斷力的主從階層與調度模式</h2>
   </div>
   <p class="lead">
-    如果說 LLM 是一顆單純的大腦，那麼 Agent 就是具備「手腳、感官與自省能力」的完整廚師。然而在企業系統中，絕不能讓單一 Agent 承擔所有權責，必須落實<strong>三級主從協同體系</strong>：
+    這是理解 Agentic AI 最關鍵的分水嶺：究竟該採「套餐流水線（Workflow）」還是「授權主廚臨場調度（Agent）」？
+  </p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0;">
+    <div style="background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; padding: 22px;">
+      <h3 style="color: var(--emerald); font-size: 16px; margin-bottom: 8px;">Workflow：預先定義出餐流程</h3>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">適合需求清楚、流程高度可預測、需要極致一致性與低延遲的任務：</p>
+      <div style="background: #0f172a; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #cbd5e1;">
+        接收問題 → 查詢資料 → 產生摘要 → 規則驗證 → 人工核准
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px;">★ 流程由確定性代碼控制，模型僅作為局部運算節點。</p>
+    </div>
+
+    <div style="background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; padding: 22px;">
+      <h3 style="color: var(--blue); font-size: 16px; margin-bottom: 8px;">Agent：模型依現場回饋自主決定下一步</h3>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">適合故障調查、競品探索等需根據環境反饋動態補查的任務：</p>
+      <div style="background: #0f172a; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #cbd5e1;">
+        接收目標 → 選擇工具 → 評估證據 → 不足則換查詢 / 足夠則收斂
+      </div>
+      <p style="font-size: 12px; color: var(--rose); margin-top: 10px;">⚠️ Agent 是以更高的延遲與成本換取彈性，切忌無謂濫用！</p>
+    </div>
+  </div>
+
+  <p class="lead">
+    如果必須採用 Agent，在企業系統中絕不能讓單一 Agent 承擔所有權責，必須落實<strong>三級主從協同體系</strong>：
   </p>
 
   <div class="decision-tree">
@@ -846,7 +1297,7 @@
       <div class="step-body">
         <h4>🛎️ 管家 Agent（Expediter / Router）：全域分流與 Token 守門員</h4>
         <p>
-          使用極低成本的輕量模型（如 Claude 3.5 Haiku 或 Gemini 2.0 Flash），僅負責分析使用者意圖，判斷當前需求該調用哪個專屬通道，避免大模型無謂空轉。
+          使用極低成本的輕量模型（如 Claude 3.5 Haiku 或 Gemini 2.0 Flash），僅負責分析使用者意圖，判斷當前需求該調用哪個專屬通道，避免大模型無謂空轉，直接省下 80% Token 成本。
         </p>
       </div>
     </div>
@@ -870,9 +1321,9 @@
     </div>
   </div>
 
-  <!-- 05. MCP 深入拆解 -->
-  <div class="section-header">
-    <span class="section-number">05</span>
+  <!-- 06. MCP 深入拆解 -->
+  <div id="sec-06" class="section-header">
+    <span class="section-number">06</span>
     <h2 class="section-title">深入剖析 MCP：打破孤島的外部標準協議通道</h2>
   </div>
   <p class="lead">
@@ -881,84 +1332,256 @@
   </p>
 
   <div class="bento-canvas" style="background: rgba(46, 16, 101, 0.2); border-color: rgba(192, 132, 252, 0.3);">
-    <div style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 12px;">
+    <div style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 14px;">
       🔌 MCP 的核心價值：開放、標準、隨插即用
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-      <div style="background: var(--ink-card); padding: 16px; border-radius: 8px; border: 1px solid var(--ink-border);">
-        <strong style="color: #fff; display: block; margin-bottom: 6px;">① 外部預製工具庫</strong>
-        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">直接使用社群官方維護的 GitHub、SQLite、Puppeteer MCP Server，省去 90% 的客製化外掛開發。</p>
+      <div style="background: var(--ink-card); padding: 18px; border-radius: 10px; border: 1px solid var(--ink-border);">
+        <strong style="color: #fff; display: block; margin-bottom: 8px;">① 外部預製工具庫</strong>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6;">直接使用社群官方維護的 GitHub、SQLite、Puppeteer MCP Server，省去 90% 的客製化外掛開發成本。</p>
       </div>
-      <div style="background: var(--ink-card); padding: 16px; border-radius: 8px; border: 1px solid var(--ink-border);">
-        <strong style="color: #fff; display: block; margin-bottom: 6px;">② 零信任安全圍欄</strong>
-        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">模型不再擁有無限制的系統最高權限，而是透過 MCP 協議規範的端點進行受限資料交換，杜絕越界指令。</p>
+      <div style="background: var(--ink-card); padding: 18px; border-radius: 10px; border: 1px solid var(--ink-border);">
+        <strong style="color: #fff; display: block; margin-bottom: 8px;">② 零信任安全圍欄</strong>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6;">模型不再擁有無限制的系統最高權限，而是透過 MCP 協議規範的受限端點傳輸，杜絕越權風險。</p>
       </div>
-      <div style="background: var(--ink-card); padding: 16px; border-radius: 8px; border: 1px solid var(--ink-border);">
-        <strong style="color: #fff; display: block; margin-bottom: 6px;">③ 雙向即時脈絡感知</strong>
-        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">MCP 不僅能被動讓 Agent 調用工具，更能主動向 Agent 提供環境上下文（Resources）與即時事件通知（Prompts）。</p>
+      <div style="background: var(--ink-card); padding: 18px; border-radius: 10px; border: 1px solid var(--ink-border);">
+        <strong style="color: #fff; display: block; margin-bottom: 8px;">③ 雙向即時脈絡感知</strong>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6;">MCP 不僅能被動讓 Agent 調用工具，更能主動向 Agent 提供環境上下文（Resources）與事件通知（Prompts）。</p>
       </div>
     </div>
   </div>
 
-  <!-- 06. 企業落地決策樹 -->
-  <div class="section-header">
-    <span class="section-number">06</span>
-    <h2 class="section-title">企業架構決策樹：如何為特定業務選型？</h2>
+  <!-- 07. 出菜口 Evals 與工具雙軌治理 -->
+  <div id="sec-07" class="section-header">
+    <span class="section-number">07</span>
+    <h2 class="section-title">星級品質工程：出菜口 Evals 與工具雙軌治理</h2>
   </div>
   <p class="lead">
-    面對實際業務場景，技術決策者常困惑該使用何種架構。下表為企業落地時的標準指引矩陣：
+    「提供一把刀」和「允許任何人隨時使用任何設備」是兩回事。不能讓主廚自己說好吃就算合格，企業必須把品質做進流程：
   </p>
 
-  <div class="table-box">
-    <table>
-      <thead>
-        <tr>
-          <th>業務特質</th>
-          <th>推薦首選架構</th>
-          <th>典型應用範例</th>
-          <th>治理重點與防呆防線</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>固定步驟、強規格約束</strong></td>
-          <td><span style="color: var(--emerald); font-weight: 700;">Skill 技能包</span></td>
-          <td>程式碼自動 Review、季度報表轉檔、固定格式 PRD</td>
-          <td>落實四大支柱，配置嚴格的 JSON Schema 驗證。</td>
-        </tr>
-        <tr>
-          <td><strong>長期上下文、高關聯知識庫</strong></td>
-          <td><span style="color: var(--amber); font-weight: 700;">Project 專案</span></td>
-          <td>跨部門法規合規專案、年度戰略數位轉型顧問案</td>
-          <td>嚴格控制上傳文件體積，定期清理過期歷史快照。</td>
-        </tr>
-        <tr>
-          <td><strong>多步驟決策、需自主拆解探索</strong></td>
-          <td><span style="color: var(--blue); font-weight: 700;">Agent 智能體</span></td>
-          <td>競品全網情報監控、端到端自動除錯修復、自主客訴調查</td>
-          <td>建立管家-主-從階層制，嚴格限制最大循環執行步數。</td>
-        </tr>
-        <tr>
-          <td><strong>跨異質系統、已有現成介面</strong></td>
-          <td><span style="color: var(--purple); font-weight: 700;">MCP 外部協議</span></td>
-          <td>直連企業內部 Postgres、讀取 Jira 工單、操作本機終端</td>
-          <td>落實網路沙盒、RBAC 角色存取權限與審計日誌。</td>
-        </tr>
-      </tbody>
-    </table>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0;">
+    <div style="background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; padding: 22px;">
+      <h3 style="color: var(--gold); font-size: 16px; margin-bottom: 12px;">🛡️ 工具權限雙軌制（Two-Tier Governance）</h3>
+      <div style="margin-bottom: 14px;">
+        <span style="background: rgba(56, 189, 248, 0.15); color: var(--blue); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700;">查詢類 (Read-Only)</span>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: 6px;">讀取日誌、查詢指標、檢索知識庫。採最小權限原則快速授權。</p>
+      </div>
+      <div>
+        <span style="background: rgba(251, 113, 133, 0.15); color: var(--rose); padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700;">變更類 (Mutation)</span>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: 6px;">重啟服務、修改配置、退款、封鎖。必須具備獨立 Service Account、操作熔斷與人工覆核（Human-in-the-Loop）。</p>
+      </div>
+    </div>
+
+    <div style="background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; padding: 22px;">
+      <h3 style="color: var(--emerald); font-size: 16px; margin-bottom: 12px;">⚖️ 出菜口驗收（Evals）三層防禦網</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: #cbd5e1; display: flex; flex-direction: column; gap: 10px;">
+        <li><strong style="color: #fff;">1. 程式與規則檢查：</strong>格式、欄位、數值合理性、自動化測試通過與否。</li>
+        <li><strong style="color: #fff;">2. 模型評分 (LLM-as-a-Judge)：</strong>語意相關性、回答完整度、事實依據支撐率。</li>
+        <li><strong style="color: #fff;">3. 專業人工覆核：</strong>高風險決策、法律合規邊界與模糊爭議案例。</li>
+      </ul>
+      <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px;">★ 「另一個模型也認為正確」不宜作為唯一出餐標準，必須多層驗收。</p>
+    </div>
   </div>
 
-  <!-- 結語 -->
+  <!-- 08. 維運情境實戰模擬器 -->
+  <div id="sec-08" class="section-header">
+    <span class="section-number">08</span>
+    <h2 class="section-title">實戰情境模擬器：高並發平台 AI 值班助理</h2>
+  </div>
+  <p class="lead">
+    情境設定：玩家與用戶反映登入延遲與連線逾時，AI 值班助理如何協助工程師在 5 分鐘內完成受控調查並安全恢復？點擊步驟探索閉環設計：
+  </p>
+
+  <div class="tab-container">
+    <div class="stepper-nav">
+      <button class="step-nav-btn active" onclick="switchStep(0)">步驟 1：接單</button>
+      <button class="step-nav-btn" onclick="switchStep(1)">步驟 2：備料</button>
+      <button class="step-nav-btn" onclick="switchStep(2)">步驟 3：烹調</button>
+      <button class="step-nav-btn" onclick="switchStep(3)">步驟 4：試味</button>
+      <button class="step-nav-btn" onclick="switchStep(4)">步驟 5：出菜</button>
+      <button class="step-nav-btn" onclick="switchStep(5)">步驟 6：受控執行</button>
+    </div>
+
+    <div id="step-content" class="step-detail-card">
+      <div>
+        <h3 id="step-title" style="color: var(--gold); margin-bottom: 8px;">步驟 1：接單（Alert Ingestion & Triage）</h3>
+        <p id="step-system" style="font-size: 14px; color: #e2e8f0; line-height: 1.7; margin-bottom: 12px;">
+          <strong>系統設計：</strong>管家 Agent 接收 APM 告警，解析影響區域、發生時間與受影響服務名稱，並嚴格區分「調查任務」與「修復任務」，避免一開始就觸發危險操作。
+        </p>
+      </div>
+      <div style="background: var(--ink-card); padding: 16px; border-radius: 8px; border-left: 3px solid var(--coral);">
+        <strong style="color: var(--coral); display: block; margin-bottom: 6px;">核心控制重點：</strong>
+        <p id="step-control" style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6;">
+          明確宣告交付邊界，限制只能執行唯讀調查，嚴禁在此階段擅自重啟容器或變更安全組規則。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09. CIO 核心度量衡：互動式 TCO 成本計算器 -->
+  <div id="sec-09" class="section-header">
+    <span class="section-number">09</span>
+    <h2 class="section-title">CIO 核心度量衡：每次合格完成成本 (TCO) 計算器</h2>
+  </div>
+  <p class="lead">
+    廚房若只追求降低食材單價，可能增加退菜與客訴；AI 若只追求降低 Token 單價，也可能增加重試、人工覆核與錯誤處理成本。
+    請使用下方計算器，實時觀察<strong>「有效交付成本」</strong>的真實變化：
+  </p>
+
+  <div class="calc-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="color: #fff; font-size: 18px;">📊 企業級有效交付成本動態模擬器</h3>
+      <span style="font-size: 12px; color: var(--gold); font-family: var(--font-mono);">FORMULA: TOTAL TCO / QUALIFIED COUNT</span>
+    </div>
+
+    <div class="calc-grid">
+      <!-- 控制滑桿 -->
+      <div class="calc-inputs">
+        <div class="input-group">
+          <div class="input-label-row">
+            <span>每月任務總量 (Task Volume)</span>
+            <span id="lbl-volume" class="val">1,000 件</span>
+          </div>
+          <input type="range" id="input-volume" min="100" max="10000" step="100" value="1000" oninput="calculateTCO()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label-row">
+            <span>每次任務 Token 耗費 (k tokens)</span>
+            <span id="lbl-tokens" class="val">15 k</span>
+          </div>
+          <input type="range" id="input-tokens" min="2" max="60" step="1" value="15" oninput="calculateTCO()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label-row">
+            <span>模型 Token 單價 ($ / 1M tokens)</span>
+            <span id="lbl-price" class="val">$ 3.00</span>
+          </div>
+          <input type="range" id="input-price" min="0.2" max="15.0" step="0.2" value="3.0" oninput="calculateTCO()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label-row">
+            <span>出菜口合格率 (Evals Pass Rate)</span>
+            <span id="lbl-pass" class="val">75 %</span>
+          </div>
+          <input type="range" id="input-pass" min="30" max="99" step="1" value="75" oninput="calculateTCO()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label-row">
+            <span>單件人工覆核與重工成本 ($/件)</span>
+            <span id="lbl-rework" class="val">$ 8.00</span>
+          </div>
+          <input type="range" id="input-rework" min="1" max="30" step="1" value="8" oninput="calculateTCO()">
+        </div>
+      </div>
+
+      <!-- 計算結果 -->
+      <div class="calc-results">
+        <div class="result-metric">
+          <div class="result-label">每次合格完成成本 (Effective Cost per Qualified Delivery)</div>
+          <div id="res-effective-cost" class="result-value primary">$ 0.00</div>
+          <span style="font-size: 11px; color: var(--text-muted);">納入重工成本與合格損耗之真正單件成本</span>
+        </div>
+
+        <div class="result-metric">
+          <div class="result-label">每月總投入成本 (Total Monthly TCO)</div>
+          <div id="res-total-tco" class="result-value success">$ 0.00</div>
+        </div>
+
+        <div class="result-metric">
+          <div class="result-label">每月重工損耗金額 (Rework & Waste)</div>
+          <div id="res-waste" class="result-value danger">$ 0.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 智慧選型精靈 -->
+  <div id="sec-10" class="section-header">
+    <span class="section-number">10</span>
+    <h2 class="section-title">企業架構智慧選型決策精靈 (Decision Wizard)</h2>
+  </div>
+  <p class="lead">
+    點選您當前面臨的實際業務特質，系統將即時為您推薦最適架構配置與關鍵治理圍欄：
+  </p>
+
+  <div class="wizard-card">
+    <div class="wizard-options">
+      <button class="wizard-btn active" onclick="switchWizard(0)">
+        <strong>情境 A：固定格式與強型別轉換</strong>
+        <span>如：代碼審查、季度報表轉檔、結構化 PRD 產出</span>
+      </button>
+      <button class="wizard-btn" onclick="switchWizard(1)">
+        <strong>情境 B：長期專案與龐大跨文件法規</strong>
+        <span>如：ISO 四階輔導、跨年度策略諮詢、企業合約審查</span>
+      </button>
+      <button class="wizard-btn" onclick="switchWizard(2)">
+        <strong>情境 C：多步驟未知環境探索與自動修復</strong>
+        <span>如：全網競品情報、線上故障根因調查、自主客服排障</span>
+      </button>
+      <button class="wizard-btn" onclick="switchWizard(3)">
+        <strong>情境 D：直連企業內部系統與私有資產</strong>
+        <span>如：查詢 Postgres DB、自動操作 Jira 工單、K8s 狀態</span>
+      </button>
+    </div>
+
+    <!-- 結果展示區 -->
+    <div id="wiz-res-0" class="wizard-result-box active">
+      <h3 style="color: var(--emerald); margin-bottom: 6px;">💡 推薦首選架構：Skill 技能包模式（抽屜食譜 JIT）</h3>
+      <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 10px;">
+        <strong>架構優勢：</strong>極度輕量、隨需加載，任務結束立即釋放，100% 保持 Context 純淨，杜絕 Context Degradation。
+      </p>
+      <p style="font-size: 13px; color: var(--gold); margin: 0;">
+        <strong>必備治理防線：</strong>嚴格落實四大支柱（提示詞模板 + Golden Few-shot + JSON Output Schema + Code Execution），缺少任何一項均會退化為平庸聊天。
+      </p>
+    </div>
+
+    <div id="wiz-res-1" class="wizard-result-box">
+      <h3 style="color: var(--amber); margin-bottom: 6px;">💡 推薦首選架構：Project 專案邊界模式（整間專用廚房）</h3>
+      <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 10px;">
+        <strong>架構優勢：</strong>預載整套封閉知識庫與長期法規指令，讓每一次對話都具備全局法律約束力與跨文件語意關聯。
+      </p>
+      <p style="font-size: 13px; color: var(--rose); margin: 0;">
+        <strong>必備治理防線：</strong>嚴格監控每次對話的 Token 成本；定期清理歷史快照與過期版本文件，嚴防「知識混淆（Knowledge Bleed）」。
+      </p>
+    </div>
+
+    <div id="wiz-res-2" class="wizard-result-box">
+      <h3 style="color: var(--blue); margin-bottom: 6px;">💡 推薦首選架構：三級主從 Agent 智能體制衡體系</h3>
+      <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 10px;">
+        <strong>架構優勢：</strong>具備環境感知與反覆調查能力，能依據上一動的執行結果動態規劃下一步。
+      </p>
+      <p style="font-size: 13px; color: var(--purple); margin: 0;">
+        <strong>必備治理防線：</strong>必須由輕量管家 Agent 先分流、旗艦主 Agent 獨家把關最終交付、Sub-Agent 沙盒並行；強制限制最大執行迴圈次數與超時熔斷。
+      </p>
+    </div>
+
+    <div id="wiz-res-3" class="wizard-result-box">
+      <h3 style="color: var(--purple); margin-bottom: 6px;">💡 推薦首選架構：MCP（Model Context Protocol）標準外掛通道</h3>
+      <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 10px;">
+        <strong>架構優勢：</strong>打破異質工具孤島，避免重複造輪子；一處編寫標準 MCP Server，所有符合規格的 Agent 均能無縫掛載。
+      </p>
+      <p style="font-size: 13px; color: var(--emerald); margin: 0;">
+        <strong>必備治理防線：</strong>嚴格落實網路沙盒、RBAC 角色權限隔離、唯讀/變更雙軌分流與全生命週期 Audit Trail。
+      </p>
+    </div>
+  </div>
+
+  <!-- 11. 結語總結 -->
   <div class="section-header">
-    <span class="section-number">07</span>
+    <span class="section-number">11</span>
     <h2 class="section-title">架構師總結：邁向精確工程化的 AI 新紀元</h2>
   </div>
   <p>
     從單純的「提示詞對話」邁向「企業級系統落地」，本質上是一場<strong>從手工作坊走向米其林標準化廚房</strong>的工程革命。
   </p>
   <p>
-    不要被炫目的名詞所綁架，記住這條清晰的物理法則：
-    <strong>將知識提煉為隨取即用的 Skill；將邊界嚴格劃定在受控的 Project；將推理與品質把關賦予分級的 Agent；將外部生態連通交給標準化的 MCP。</strong>
+    不要被炫目的專有名詞所綁架，記住這條清晰的物理法則：<br>
+    <strong>將知識提煉為隨取即用的 Skill；將邊界嚴格劃定在受控的 Project；將推理與品質把關賦予分級的 Agent；將外部生態連通交給標準化的 MCP。</strong><br>
     唯有如此，企業才能在爆炸式增長的算力時代，兼顧卓越品質、極致安全與高投報率的成本治理。
   </p>
 
@@ -978,9 +1601,116 @@
     專案發布門戶：<a href="https://howardliao.github.io/Seminar/">https://howardliao.github.io/Seminar/</a> ｜ GitHub: <a href="https://github.com/HowardLiao/Seminar">HowardLiao/Seminar</a>
   </p>
   <p style="margin-top: 4px; font-size: 11px; color: var(--text-muted);">
-    Executive Two-Track Design System ｜ 版權所有 © 2026 Howard Liao Ph.D. 保留所有權利
+    Executive Deep Obsidian Design System ｜ 版權所有 © 2026 Howard Liao Ph.D. 保留所有權利
   </p>
 </footer>
+
+<script>
+  // 1. Tab 切換邏輯
+  function switchTab(evt, tabId) {
+    const parent = evt.target.closest('.tab-container');
+    parent.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    parent.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+    evt.target.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  // 2. 實戰模擬器步進切換
+  const stepsData = [
+    {
+      title: "步驟 1：接單（Alert Ingestion & Triage）",
+      system: "管家 Agent 接收 APM 告警，解析影響區域、發生時間與受影響服務名稱，並嚴格區分「調查任務」與「修復任務」，避免一開始就觸發危險操作。",
+      control: "明確宣告交付邊界，限制只能執行唯讀調查，嚴禁在此階段擅自重啟容器或變更安全組規則。"
+    },
+    {
+      title: "步驟 2：備料（Context & Knowledge Sourcing）",
+      system: "透過 RAG 動態檢索最新版本 Runbook、近期發布變更紀錄 (Git Commits) 與歷史相同事件事故報告 (Incident Reports)。",
+      control: "檢查資料時效性與版本一致性，過期文件嚴禁進入 Context Window，避免誤導排查方向。"
+    },
+    {
+      title: "步驟 3：烹調（Read-only Investigation via MCP）",
+      system: "調用 MCP 工具查詢 Prometheus 指標、ELK 日誌叢集與 DB 連線池狀態，Sub-Agent 並行抓取各微服務關鍵異常堆疊。",
+      control: "嚴格採用唯讀帳號（Read-Only Service Account），限制查詢範圍、取回行數上限與逾時中斷（Timeout）。"
+    },
+    {
+      title: "步驟 4：試味（Evals Fact-Checking & Deductive Logic）",
+      system: "主 Agent 比對時間線、指標波動與部署發布日誌，將「客觀事實」、「推論假設」與「待驗證事項」嚴格拆分標註。",
+      control: "落實 Evals 事實依據支撐率檢驗，禁止無證據的臆測，標註不確定性等級。"
+    },
+    {
+      title: "步驟 5：出菜（Executive Chef Sign-off & Delivery）",
+      system: "主 Agent 交付結構化故障時間線、可能根因診斷與精確處置建議至值班工程師頻道（Slack/Teams）。",
+      control: "唯一正式對外窗口；非經主 Agent 覆核之 Sub-Agent 粗糙碎片嚴禁直面值班人員。"
+    },
+    {
+      title: "步驟 6：受控執行（Controlled Mutation with Human-in-the-Loop）",
+      system: "值班工程師按下核准按鈕，Agent 透過變更類工具執行平滑重啟或限流降級，並自動驗證指標是否恢復正常。",
+      control: "限定執行目標、保留完整 Audit Trail、預備即時 Rollback 腳本，落實最小授權與可逆原則。"
+    }
+  ];
+
+  function switchStep(index) {
+    const btns = document.querySelectorAll('.step-nav-btn');
+    btns.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    const data = stepsData[index];
+    document.getElementById('step-title').innerText = data.title;
+    document.getElementById('step-system').innerHTML = "<strong>系統設計：</strong>" + data.system;
+    document.getElementById('step-control').innerText = data.control;
+  }
+
+  // 3. TCO 計算器邏輯
+  function calculateTCO() {
+    const volume = parseInt(document.getElementById('input-volume').value);
+    const tokens = parseInt(document.getElementById('input-tokens').value);
+    const price = parseFloat(document.getElementById('input-price').value);
+    const passRate = parseInt(document.getElementById('input-pass').value) / 100.0;
+    const reworkCost = parseFloat(document.getElementById('input-rework').value);
+
+    // 更新標籤
+    document.getElementById('lbl-volume').innerText = volume.toLocaleString() + " 件";
+    document.getElementById('lbl-tokens').innerText = tokens + " k";
+    document.getElementById('lbl-price').innerText = "$ " + price.toFixed(2);
+    document.getElementById('lbl-pass').innerText = Math.round(passRate * 100) + " %";
+    document.getElementById('lbl-rework').innerText = "$ " + reworkCost.toFixed(2);
+
+    // 模型推論成本 (Token cost)
+    const tokenCostPerTask = (tokens / 1000.0) * price;
+    const totalTokenCost = volume * tokenCostPerTask;
+
+    // 重工成本 (不合格件數 * 人工覆核成本)
+    const failedTasks = volume * (1 - passRate);
+    const totalReworkCost = failedTasks * reworkCost;
+
+    // 總 TCO
+    const totalTCO = totalTokenCost + totalReworkCost;
+
+    // 合格件數
+    const qualifiedTasks = volume * passRate;
+    const effectiveCostPerQualified = qualifiedTasks > 0 ? (totalTCO / qualifiedTasks) : 0;
+
+    // 渲染數值
+    document.getElementById('res-effective-cost').innerText = "$ " + effectiveCostPerQualified.toFixed(2);
+    document.getElementById('res-total-tco').innerText = "$ " + Math.round(totalTCO).toLocaleString();
+    document.getElementById('res-waste').innerText = "$ " + Math.round(totalReworkCost).toLocaleString();
+  }
+
+  // 4. 智慧選型精靈 Wizard
+  function switchWizard(index) {
+    const btns = document.querySelectorAll('.wizard-btn');
+    btns.forEach((btn, i) => btn.classList.toggle('active', i === index));
+    for (let i = 0; i < 4; i++) {
+      const box = document.getElementById('wiz-res-' + i);
+      if (box) box.classList.toggle('active', i === index);
+    }
+  }
+
+  // 初始化
+  window.addEventListener('DOMContentLoaded', () => {
+    calculateTCO();
+  });
+</script>
 
 </body>
 </html>
