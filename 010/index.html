@@ -12,7 +12,7 @@
 <meta property="og:description" content="掌握機器行為的新邊界：從軟體稀缺走向軟體充裕，三大戰略主軸 × 十大前沿趨勢 × C-Level 落地責任矩陣。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://howardliao.github.io/Seminar/010/">
-<meta property="og:image" content="assets/gartner_p3_0.jpg">
+<meta property="og:image" content="assets/gartner_overview_horizons.png">
 
 <link rel="icon" href="assets/howard-liao-portrait-circle.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -869,6 +869,82 @@
     .container { max-width: 100% !important; padding: 0 !important; }
     .trend-detail-block { page-break-inside: avoid; border: 1px solid #CCCCCC !important; }
   }
+
+  /* Lightbox & Image Hover enhancement */
+  .trend-img-frame img, .pillar-img-box img, figure img {
+    cursor: zoom-in;
+    transition: transform 0.25s ease, filter 0.25s ease;
+  }
+  .trend-img-frame:hover img {
+    transform: scale(1.015);
+  }
+  .img-lightbox-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .img-lightbox-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+  .img-lightbox-content {
+    max-width: 94vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: lbZoomIn 0.25s ease-out;
+  }
+  @keyframes lbZoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .img-lightbox-content img {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 8px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+    background: #fff;
+    object-fit: contain;
+  }
+  .img-lightbox-caption {
+    margin-top: 14px;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .img-lightbox-close {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    color: #fff;
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 2px 8px;
+    line-height: 1;
+    opacity: 0.85;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .img-lightbox-close:hover {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
 </style>
 </head>
 
@@ -1030,7 +1106,7 @@
 
       <div style="margin: 32px 0;">
         <div class="trend-img-frame">
-          <img src="assets/gartner_p3_0.jpg" alt="Gartner 2027 策略時程三地平線總圖" loading="lazy">
+          <img src="assets/gartner_overview_horizons.png" alt="Gartner 2027 策略時程三地平線總圖" loading="lazy">
           <div class="img-caption">圖 1.1：Gartner Top 10 Strategic Technology Trends for 2027 — Planning Horizons (Now / Near / Future)</div>
         </div>
       </div>
@@ -1056,7 +1132,7 @@
             <p class="pillar-sub">Leverage the nontextual AI frontier：模型會計算、聆聽與模擬，提供確定性精度與感官深度。</p>
           </div>
           <div class="pillar-img-box">
-            <img src="assets/gartner_p4_0.jpg" alt="非文字 AI 前沿封面" loading="lazy">
+            <img src="assets/gartner_front_01.png" alt="非文字 AI 前沿封面" loading="lazy">
           </div>
           <div class="pillar-body">
             <ul class="pillar-trends-list">
@@ -1084,7 +1160,7 @@
             <p class="pillar-sub">Govern the autonomous agent platform：系統級控制平面，確保數位勞動力的自主性值得信賴。</p>
           </div>
           <div class="pillar-img-box">
-            <img src="assets/gartner_p11_0.jpg" alt="治理自主代理平台封面" loading="lazy">
+            <img src="assets/gartner_front_02.png" alt="治理自主代理平台封面" loading="lazy">
           </div>
           <div class="pillar-body">
             <ul class="pillar-trends-list">
@@ -1116,7 +1192,7 @@
             <p class="pillar-sub">Architect durable agility：轉向主權、拋棄式與生物運算環境，防範供應商鎖定與能源極限。</p>
           </div>
           <div class="pillar-img-box">
-            <img src="assets/gartner_p20_0.jpg" alt="建構長效敏捷性封面" loading="lazy">
+            <img src="assets/gartner_front_03.png" alt="建構長效敏捷性封面" loading="lazy">
           </div>
           <div class="pillar-body">
             <ul class="pillar-trends-list">
@@ -1267,7 +1343,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p5_0.jpg" alt="Trend 1 LQM 架構原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_01.png" alt="Trend 1 LQM 架構原廠圖" loading="lazy">
               <div class="img-caption">圖 4.1：LQM 核心架構（混合神經網絡＋領域知識＋時間序列）</div>
             </div>
           </div>
@@ -1366,7 +1442,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p7_0.jpg" alt="Trend 2 Speech Reasoning 架構原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_02.png" alt="Trend 2 Speech Reasoning 架構原廠圖" loading="lazy">
               <div class="img-caption">圖 4.2：語音演進歷程（IVR ➔ 級聯模型 ➔ 原生語音推理模型）</div>
             </div>
           </div>
@@ -1463,7 +1539,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p9_0.jpg" alt="Trend 3 World Models 6大視角原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_03.png" alt="Trend 3 World Models 6大視角原廠圖" loading="lazy">
               <div class="img-caption">圖 4.3：世界模型的 6 種世界觀（物理、神經科學、控制論等）</div>
             </div>
           </div>
@@ -1560,7 +1636,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p12_0.jpg" alt="Trend 4 AI Context Platforms 原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_04.png" alt="Trend 4 AI Context Platforms 原廠圖" loading="lazy">
               <div class="img-caption">圖 4.4：上下文層的三大構件（語意、治理與操作狀態）</div>
             </div>
           </div>
@@ -1657,7 +1733,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p14_0.jpg" alt="Trend 5 Coding Harness SDLC 閉環原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_05.png" alt="Trend 5 Coding Harness SDLC 閉環原廠圖" loading="lazy">
               <div class="img-caption">圖 4.5：AI Coding Harness 閉環 SDLC（研究➔規劃➔執行➔治理驗證）</div>
             </div>
           </div>
@@ -1754,7 +1830,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p16_22.jpg" alt="Trend 6 Agent Identity 複合身分架構原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_06.png" alt="Trend 6 Agent Identity 複合身分架構原廠圖" loading="lazy">
               <div class="img-caption">圖 4.6：AI 代理複合身分模型（Workload ID + 提示詞 + 工具憑證 + 運行時行為）</div>
             </div>
           </div>
@@ -1851,7 +1927,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p18_0.jpg" alt="Trend 7 自主修復五階段原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_07.png" alt="Trend 7 自主修復五階段原廠圖" loading="lazy">
               <div class="img-caption">圖 4.7：自主曝險修復五階段（掃描➔驗證➔規劃➔修復➔回滾）</div>
             </div>
           </div>
@@ -1948,7 +2024,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p21_7.jpg" alt="Trend 8 SovereignTech 主權架構原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_08.png" alt="Trend 8 SovereignTech 主權架構原廠圖" loading="lazy">
               <div class="img-caption">圖 4.8：主權科技架構（司法豁免＋業務連續性＋永續可用性）</div>
             </div>
           </div>
@@ -2045,7 +2121,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p23_0.jpg" alt="Trend 9 拋棄式應用生命週期原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_09.png" alt="Trend 9 拋棄式應用生命週期原廠圖" loading="lazy">
               <div class="img-caption">圖 4.9：拋棄式應用的動態生命週期（需求➔建置➔運營➔評估➔安全退場）</div>
             </div>
           </div>
@@ -2142,7 +2218,7 @@
 
           <div>
             <div class="trend-img-frame">
-              <img src="assets/gartner_p25_0.jpg" alt="Trend 10 Wetware 混合算力調度原廠圖" loading="lazy">
+              <img src="assets/gartner_trend_10.png" alt="Trend 10 Wetware 混合算力調度原廠圖" loading="lazy">
               <div class="img-caption">圖 4.10：運算調度多元架構（矽晶 ＋ 量子 ＋ 神經形態 ＋ 生物運算）</div>
             </div>
           </div>
@@ -2377,6 +2453,67 @@
       }
     });
   }, { passive: true });
+</script>
+
+
+<!-- 高解析度圖片燈箱檢視器 -->
+<div class="img-lightbox-modal" id="imageLightbox" role="dialog" aria-modal="true">
+  <div class="img-lightbox-content">
+    <button class="img-lightbox-close" id="lightboxClose" title="關閉 (Esc)">&times;</button>
+    <img src="" alt="" id="lightboxImg">
+    <div class="img-lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<script>
+  // 燈箱互動邏輯
+  const lbModal = document.getElementById('imageLightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCaption = document.getElementById('lightboxCaption');
+  const lbClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, alt, captionText) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lbCaption.textContent = captionText || alt || '';
+    lbModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lbModal.classList.remove('active');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  // 監聽所有架構圖與趨勢圖卡點擊
+  document.querySelectorAll('.trend-img-frame img, .pillar-img-box img, figure img').forEach(img => {
+    img.addEventListener('click', () => {
+      let caption = '';
+      const parentFrame = img.closest('.trend-img-frame');
+      if (parentFrame) {
+        const capEl = parentFrame.querySelector('.img-caption, .trend-img-caption');
+        if (capEl) caption = capEl.textContent.trim();
+      } else {
+        const fig = img.closest('figure');
+        if (fig) {
+          const figcap = fig.querySelector('figcaption');
+          if (figcap) caption = figcap.textContent.trim();
+        }
+      }
+      openLightbox(img.src, img.alt, caption);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbModal.addEventListener('click', (e) => {
+    if (e.target === lbModal) closeLightbox();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lbModal.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
 </script>
 
 </body>
