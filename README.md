@@ -124,7 +124,6 @@ Seminar/
 ## 008 專案摘要：AI 核心架構全景解析：Skill、Project、Agent、MCP
 
 - **主講／報告人**：Howard Liao Ph.D.
-- **核心來源**：李佳達米其林星級廚房架構比喻體系深度解構
 - **展示入口**：[https://howardliao.github.io/Seminar/008/](https://howardliao.github.io/Seminar/008/)
 - **形式**：出版級架構互動解析門戶、向量 SVG 拓撲視覺化、四象限決策矩陣與企業落地評估表
 - **核心內容**：
