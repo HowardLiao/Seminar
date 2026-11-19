@@ -171,14 +171,15 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
   }
   .nav-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
+    padding: 7px 13px;
     border-radius: 6px;
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -186,6 +187,8 @@
     border: 1px solid var(--border);
     background: var(--bg-card-alt);
     color: var(--text-main);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   .nav-btn:hover {
     border-color: var(--primary);
@@ -339,33 +342,242 @@
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
   }
-  .toc-bar::-webkit-scrollbar { display: none; }
   .toc-bar-inner {
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 48px;
-    padding: 0 12px;
+    justify-content: space-between;
+    gap: 10px;
+    height: 50px;
+    padding: 0 16px;
+  }
+  .toc-nav-left, .toc-nav-center, .toc-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .toc-link:hover, .toc-link.active {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+  }
+  .toc-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* 下拉選單組件 */
+  .toc-dropdown {
+    position: relative;
+  }
+  .toc-dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--tertiary-soft);
+    border: 1px solid var(--border-accent);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .toc-dropdown-btn:hover,
+  .toc-dropdown.active .toc-dropdown-btn {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(217, 107, 39, 0.25);
+  }
+  .toc-dropdown-btn.in-view {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--border-accent);
+  }
+  .dropdown-arrow {
+    transition: transform 0.2s ease;
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+  .toc-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  .toc-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 680px;
+    max-width: 94vw;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.1);
+    padding: 14px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    z-index: 9999;
+    animation: dropFadeIn 0.18s ease-out;
+  }
+  .toc-dropdown.active .toc-dropdown-menu,
+  .toc-dropdown:hover .toc-dropdown-menu {
+    display: grid;
+  }
+  @keyframes dropFadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .toc-col-card {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .toc-col-title {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: var(--primary);
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .toc-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toc-menu-item:hover, .toc-menu-item.active {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+    transform: translateX(2px);
+  }
+  .toc-num-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--badge-bg);
+    padding: 1px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* 數字膠囊捷徑群 */
+  .toc-pills {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .toc-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--text-muted);
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .toc-pill:hover {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(217, 107, 39, 0.25);
+  }
+  .toc-pill.active {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    font-weight: 800;
+    box-shadow: 0 0 0 2px var(--border-accent);
+  }
+
+  /* 下載快捷按鈕在導航列 */
+  .toc-btn-download {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-weight: 700;
+    color: #FFFFFF;
+    background: var(--primary);
     text-decoration: none;
     transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(217, 107, 39, 0.25);
+    white-space: nowrap;
+    font-family: inherit;
   }
-  .toc-link:hover, .toc-link.active {
-    background: var(--tertiary-soft);
-    color: var(--primary);
+  .toc-btn-download:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1080px) {
+    .toc-pills { display: none; }
+  }
+  @media (max-width: 768px) {
+    .toc-dropdown-menu {
+      grid-template-columns: 1fr;
+      width: 90vw;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .toc-bar-inner {
+      padding: 0 8px;
+      gap: 4px;
+    }
+    .toc-link {
+      padding: 5px 6px;
+      font-size: 0.78rem;
+    }
   }
 
   /* 章節通用規格 */
@@ -1146,25 +1358,72 @@
   </div>
 </header>
 
-<!-- 快速章節浮動導覽列 -->
+<!-- 快速章節浮動導覽列 (精簡架構與十大趨勢下拉分組) -->
 <nav class="toc-bar" aria-label="文章快速導覽">
   <div class="container toc-bar-inner">
-    <a href="#macro-overview" class="toc-link">戰略宏觀視野</a>
-    <a href="#three-pillars" class="toc-link">三大戰略主軸</a>
-    <a href="#horizons-matrix" class="toc-link">落地三地平線</a>
-    <span style="color:var(--border);">|</span>
-    <a href="#trend-1" class="toc-link">1. 量化模型 LQM</a>
-    <a href="#trend-2" class="toc-link">2. 語音推理模型</a>
-    <a href="#trend-3" class="toc-link">3. 世界模型</a>
-    <a href="#trend-4" class="toc-link">4. AI 上下文平台</a>
-    <a href="#trend-5" class="toc-link">5. 編碼代理 Harness</a>
-    <a href="#trend-6" class="toc-link">6. 代理身分識別</a>
-    <a href="#trend-7" class="toc-link">7. 自主曝險修復</a>
-    <a href="#trend-8" class="toc-link">8. 主權科技</a>
-    <a href="#trend-9" class="toc-link">9. 拋棄式應用</a>
-    <a href="#trend-10" class="toc-link">10. 生物運算 Wetware</a>
-    <span style="color:var(--border);">|</span>
-    <a href="#raci-matrix" class="toc-link">C-Level 權責矩陣</a>
+    <!-- 左側宏觀架構 -->
+    <div class="toc-nav-left">
+      <a href="#macro-overview" class="toc-link" data-spy="macro-overview">戰略宏觀</a>
+      <a href="#three-pillars" class="toc-link" data-spy="three-pillars">三大主軸</a>
+      <a href="#horizons-matrix" class="toc-link" data-spy="horizons-matrix">落地時程</a>
+    </div>
+
+    <div class="toc-divider"></div>
+
+    <!-- 中間十大技術趨勢 (下拉選單 + 01~10 數字快速鍵) -->
+    <div class="toc-nav-center">
+      <div class="toc-dropdown" id="tocDropdown">
+        <button type="button" class="toc-dropdown-btn" id="tocDropdownBtn" aria-haspopup="true" aria-expanded="false">
+          <span>⚡ 十大技術趨勢</span>
+          <span class="dropdown-arrow">▼</span>
+        </button>
+        <div class="toc-dropdown-menu" id="tocDropdownMenu">
+          <div class="toc-col-card">
+            <div class="toc-col-title">🪐 主軸一：非文字 AI</div>
+            <a href="#trend-1" class="toc-menu-item" data-spy="trend-1"><span class="toc-num-tag">01</span> 量化模型 (LQM)</a>
+            <a href="#trend-2" class="toc-menu-item" data-spy="trend-2"><span class="toc-num-tag">02</span> 語音推理模型</a>
+            <a href="#trend-3" class="toc-menu-item" data-spy="trend-3"><span class="toc-num-tag">03</span> 世界模型 (World Models)</a>
+          </div>
+          <div class="toc-col-card">
+            <div class="toc-col-title">🤖 主軸二：自主代理</div>
+            <a href="#trend-4" class="toc-menu-item" data-spy="trend-4"><span class="toc-num-tag">04</span> AI 上下文平台</a>
+            <a href="#trend-5" class="toc-menu-item" data-spy="trend-5"><span class="toc-num-tag">05</span> 編碼代理 Harness</a>
+            <a href="#trend-6" class="toc-menu-item" data-spy="trend-6"><span class="toc-num-tag">06</span> 代理身分識別</a>
+            <a href="#trend-7" class="toc-menu-item" data-spy="trend-7"><span class="toc-num-tag">07</span> 自主曝險修復</a>
+          </div>
+          <div class="toc-col-card">
+            <div class="toc-col-title">⚙️ 主軸三：架構運算</div>
+            <a href="#trend-8" class="toc-menu-item" data-spy="trend-8"><span class="toc-num-tag">08</span> 主權科技</a>
+            <a href="#trend-9" class="toc-menu-item" data-spy="trend-9"><span class="toc-num-tag">09</span> 拋棄式應用</a>
+            <a href="#trend-10" class="toc-menu-item" data-spy="trend-10"><span class="toc-num-tag">10</span> 神經型態運算</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 01~10 快速數字膠囊按鈕 -->
+      <div class="toc-pills" aria-label="10 大趨勢數字快捷跳轉">
+        <a href="#trend-1" class="toc-pill" data-spy="trend-1" title="趨勢 01：量化模型 (LQM)">01</a>
+        <a href="#trend-2" class="toc-pill" data-spy="trend-2" title="趨勢 02：語音推理模型">02</a>
+        <a href="#trend-3" class="toc-pill" data-spy="trend-3" title="趨勢 03：世界模型">03</a>
+        <a href="#trend-4" class="toc-pill" data-spy="trend-4" title="趨勢 04：AI 上下文平台">04</a>
+        <a href="#trend-5" class="toc-pill" data-spy="trend-5" title="趨勢 05：編碼代理 Harness">05</a>
+        <a href="#trend-6" class="toc-pill" data-spy="trend-6" title="趨勢 06：代理身分識別">06</a>
+        <a href="#trend-7" class="toc-pill" data-spy="trend-7" title="趨勢 07：自主曝險修復">07</a>
+        <a href="#trend-8" class="toc-pill" data-spy="trend-8" title="趨勢 08：主權科技">08</a>
+        <a href="#trend-9" class="toc-pill" data-spy="trend-9" title="趨勢 09：拋棄式應用">09</a>
+        <a href="#trend-10" class="toc-pill" data-spy="trend-10" title="趨勢 10：生物運算 Wetware">10</a>
+      </div>
+    </div>
+
+    <div class="toc-divider"></div>
+
+    <!-- 右側治理與白皮書下載 -->
+    <div class="toc-nav-right">
+      <a href="#raci-matrix" class="toc-link" data-spy="raci-matrix">權責矩陣</a>
+      <button type="button" class="toc-btn-download" id="btnDownloadToc" title="點擊輸入密碼下載原廠白皮書">
+        <span>📄 下載 PDF</span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -2597,31 +2856,67 @@
     localStorage.setItem('seminar_theme', val);
   });
 
-  // TOC 捲動高亮
-  const tocLinks = document.querySelectorAll('.toc-link');
-  const sections = Array.from(tocLinks).map(link => {
-    const targetId = link.getAttribute('href').replace('#', '');
-    return document.getElementById(targetId);
-  }).filter(Boolean);
+  // 導覽選單下拉互動 (十大技術趨勢)
+  const tocDropdown = document.getElementById('tocDropdown');
+  const tocDropdownBtn = document.getElementById('tocDropdownBtn');
+  if (tocDropdown && tocDropdownBtn) {
+    tocDropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tocDropdown.classList.toggle('active');
+      const expanded = tocDropdown.classList.contains('active');
+      tocDropdownBtn.setAttribute('aria-expanded', expanded);
+    });
+    document.addEventListener('click', (e) => {
+      if (!tocDropdown.contains(e.target)) {
+        tocDropdown.classList.remove('active');
+        tocDropdownBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.querySelectorAll('.toc-menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        tocDropdown.classList.remove('active');
+        tocDropdownBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 
-  window.addEventListener('scroll', () => {
+  // 全方位 TOC 捲動即時高亮 (支援 宏觀連結、01~10 數字膠囊、下拉項目)
+  const spyTargets = [
+    'macro-overview', 'three-pillars', 'horizons-matrix',
+    'trend-1', 'trend-2', 'trend-3', 'trend-4', 'trend-5',
+    'trend-6', 'trend-7', 'trend-8', 'trend-9', 'trend-10',
+    'raci-matrix'
+  ].map(id => document.getElementById(id)).filter(Boolean);
+
+  const spyElements = document.querySelectorAll('[data-spy]');
+
+  function updateScrollSpy() {
     let currentId = '';
-    const scrollPos = window.scrollY + 180;
-
-    sections.forEach(sec => {
-      if (sec.offsetTop <= scrollPos) {
+    spyTargets.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= 160) {
         currentId = sec.id;
       }
     });
 
-    tocLinks.forEach(link => {
-      if (link.getAttribute('href') === '#' + currentId) {
-        link.classList.add('active');
+    spyElements.forEach(el => {
+      if (el.getAttribute('data-spy') === currentId) {
+        el.classList.add('active');
       } else {
-        link.classList.remove('active');
+        el.classList.remove('active');
       }
     });
-  }, { passive: true });
+
+    // 若當前在 10 大趨勢之一，讓下拉按鈕也微亮提示
+    if (currentId && currentId.startsWith('trend-')) {
+      if (tocDropdownBtn) tocDropdownBtn.classList.add('in-view');
+    } else {
+      if (tocDropdownBtn) tocDropdownBtn.classList.remove('in-view');
+    }
+  }
+
+  window.addEventListener('scroll', updateScrollSpy, { passive: true });
+  updateScrollSpy();
 </script>
 
 
@@ -2758,6 +3053,7 @@
 
   const btnHeader = document.getElementById('btnDownloadHeader');
   const btnSection = document.getElementById('btnDownloadSection');
+  const btnToc = document.getElementById('btnDownloadToc');
   if (btnHeader) {
     btnHeader.addEventListener('click', (e) => {
       e.preventDefault();
@@ -2766,6 +3062,12 @@
   }
   if (btnSection) {
     btnSection.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPdfAuthModal();
+    });
+  }
+  if (btnToc) {
+    btnToc.addEventListener('click', (e) => {
       e.preventDefault();
       openPdfAuthModal();
     });
