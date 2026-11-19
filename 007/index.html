@@ -645,6 +645,144 @@
     text-decoration: underline;
   }
 
+  /* 實務指南樣式 */
+  .strategy-guide-body {
+    padding: 30px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--ink2) 100%);
+  }
+  .guide-lead-box {
+    background: rgba(240, 122, 74, 0.1);
+    border-left: 4px solid var(--coral);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 24px;
+  }
+  .guide-lead-title {
+    font-size: 16px;
+    color: #FFF;
+    line-height: 1.6;
+  }
+  .guide-lead-title strong {
+    color: var(--amber-soft);
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .guide-card {
+    background: var(--surface-light);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 20px 18px;
+    transition: all 0.2s ease;
+  }
+  .guide-card:hover {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+  .guide-card-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .guide-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFF;
+    margin-bottom: 8px;
+  }
+  .guide-card-desc {
+    font-size: 13.5px;
+    color: var(--text-sub);
+    line-height: 1.55;
+  }
+  .guide-callouts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .guide-callout {
+    background: rgba(20, 27, 45, 0.6);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-sub);
+  }
+  .guide-callout.warn {
+    border-color: rgba(217, 119, 6, 0.35);
+    background: rgba(217, 119, 6, 0.06);
+  }
+  .guide-callout.cost {
+    border-color: rgba(13, 148, 136, 0.35);
+    background: rgba(13, 148, 136, 0.06);
+  }
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #FFF;
+    font-size: 14.5px;
+  }
+  .callout-badge {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--coral);
+    color: #FFF;
+  }
+  .guide-callout.cost .callout-badge {
+    background: var(--teal);
+  }
+  .guide-callout strong {
+    color: #FFF;
+  }
+  .guide-summary-box {
+    background: linear-gradient(135deg, rgba(240, 122, 74, 0.16), rgba(217, 119, 6, 0.12));
+    border: 1px solid var(--coral);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .summary-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .summary-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--coral-light);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .summary-text {
+    font-size: 16px;
+    color: #FFF;
+    line-height: 1.6;
+  }
+  .summary-text strong {
+    color: var(--amber-soft);
+    font-weight: 700;
+  }
+  @media (max-width: 1024px) {
+    .guide-grid { grid-template-columns: repeat(2, 1fr); }
+    .guide-callouts-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .strategy-guide-body { padding: 20px 16px; }
+    .summary-text { font-size: 14.5px; }
+  }
+
   /* RWD 響應式優化 */
   @media (max-width: 1100px) {
     .deliverables-grid {
@@ -713,6 +851,7 @@
     <button type="button" class="tab-btn" data-target="section-d1"><span>📱</span> 1.1 登入互動</button>
     <button type="button" class="tab-btn" data-target="section-d2"><span>📋</span> 1.1.1 客服原型</button>
     <button type="button" class="tab-btn" data-target="section-p2"><span>🏛️</span> 2. 建置方案比較</button>
+    <button type="button" class="tab-btn" data-target="section-strategy-guide"><span>💡</span> 官網建置指南</button>
     <button type="button" class="tab-btn" data-target="section-downloads"><span>📦</span> 原檔下載</button>
   </nav>
 
@@ -1003,6 +1142,83 @@
         <div class="progress-fill" id="p2-progress" style="width: 7.7%;"></div>
       </div>
       <div class="slide-counter" id="p2-counter">1 / 13</div>
+    </div>
+  </section>
+
+  <!-- ==================== 實務評估：手遊公司官網準備指南 ==================== -->
+  <section class="view-panel" id="section-strategy-guide">
+    <div class="panel-header">
+      <div class="panel-title-wrap">
+        <span class="panel-num">STRATEGY ADVISORY</span>
+        <h2 class="panel-title">手遊公司的官網要準備到什麼程度？（平台審查與建置選型實務）</h2>
+      </div>
+      <div class="panel-actions">
+        <span style="font-size: 13px; color: var(--coral-light); font-weight: 700;">★ 平台審查機制 × 成本平衡選型</span>
+      </div>
+    </div>
+
+    <div class="strategy-guide-body">
+      <div class="guide-lead-box">
+        <p class="guide-lead-title">不必為了申請先做大型形象網站。我的建議是，先做一個<strong>內容完整、能清楚辨識經營主體</strong>的官網：</p>
+      </div>
+
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-card-icon">🏢</div>
+          <h3 class="guide-card-title">公司介紹</h3>
+          <p class="guide-card-desc">公司法定名稱、主要業務，以及研發或發行手遊的定位。</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-icon">🎮</div>
+          <h3 class="guide-card-title">遊戲／服務介紹</h3>
+          <p class="guide-card-desc">說明正在開發或營運的產品；未公開的內容不需要揭露機密。</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-icon">📞</div>
+          <h3 class="guide-card-title">聯絡資訊</h3>
+          <p class="guide-card-desc">企業 Email、公司電話與聯絡地址。</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-icon">🔗</div>
+          <h3 class="guide-card-title">品牌與公司的關係</h3>
+          <p class="guide-card-desc">遊戲品牌若與法人名稱不同，清楚寫明由哪家公司開發或營運。</p>
+        </div>
+      </div>
+
+      <div class="guide-callouts-row">
+        <div class="guide-callout warn">
+          <div class="callout-header">
+            <span class="callout-badge">審查關鍵</span>
+            <strong>Apple 平台的核心要求：真實可用與實質關聯</strong>
+          </div>
+          <p>
+            以上是建置建議，不是平台逐項規定的固定版型；Apple 的核心要求是<strong>網站真實可用、與公司有關聯，且不能只有極少內容</strong>。因此，只有「公司 Logo＋敬請期待」的頁面不適合拿來申請。
+          </p>
+        </div>
+
+        <div class="guide-callout cost">
+          <div class="callout-header">
+            <span class="callout-badge">成本選型</span>
+            <strong>以成本角度先採靜態官網，非盲目追逐重型系統</strong>
+          </div>
+          <p>
+            以成本角度，您可以<strong>先採內容完整的靜態官網，不必建會員系統、金流或複雜後台</strong>；但不能保證「一頁式網站」就一定通過，仍取決於內容是否足以呈現公司與業務。
+          </p>
+        </div>
+      </div>
+
+      <div class="guide-summary-box">
+        <div class="summary-icon">💡</div>
+        <div class="summary-content">
+          <div class="summary-label">關鍵結論 (Executive Takeaway)</div>
+          <div class="summary-text">
+            簡單講：<strong>鄧白氏編碼是公司的識別碼，公司官網則是平台要求的對外身分展示；兩者互補，不能互相取代。</strong>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
