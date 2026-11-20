@@ -53,6 +53,9 @@ Seminar/
 │   ├── index.html                                                  # 全情境 AI 治理、自主端點、機器特權與 PQC 密碼敏捷（僅供線上瀏覽）
 │   └── assets/                                                     # 6 幅米蘭風格向量架構圖與報告人肖像
 │
+├── 012/                                                            # 【012 專題】Howard AI Governance (HAG) 企業 AI 治理產品架構白皮書
+│   └── index.html                                                  # 單檔自包含高管互動門戶（3D 架構圖 + 8 幅實機介面 + 6 大主題，僅供線上瀏覽）
+│
 ├── 002/ (規劃中)                                                   # 全球算力基礎設施與推論架構大遷徙
 └── 003/ (規劃中)                                                   # 企業主權 AI (Sovereign AI) 與數位員工防禦體系
 ```
@@ -174,3 +177,15 @@ Seminar/
   4. **製造業產線防線與機器特權身分治理 (Idira™ Identity Governance)**：直擊智慧工廠機器身分與人類比率高達 **109 : 1** 的失控危機；落實 Idira 身分治理三部曲（盤點 Inventory、零常駐特權 ZSP、委任代理 OBO），推動企業由 Level 1 躍升至 Level 4/5 密碼學通用工作負載身分。
   5. **後量子密碼學敏捷性與密碼技術清冊 (Crypto Agility & CBOM)**：應對 Google 47 天憑證縮短危機與「先擷取、後解密」(Harvest Now, Decrypt Later) 國安級威脅；自動探勘建立 CBOM 密碼資產清冊，並引進 **PQC 密碼轉換中繼閘道**，實現機齡 10~15 年之 OT 舊機台 **100% 零停機抗量子升級**。
 - **企業落地三階段藍圖**：盤點止血（1~3月）➔ 控管自動化（3~6月）➔ 敏捷韌性（6~12月）三階段推進，全面平衡創新效能與邊界安全。
+
+---
+
+## 012 專案摘要：Howard AI Governance (HAG) 企業 AI 治理產品架構白皮書
+
+- **專案定位**：L.L.H Enterprise Edition — 企業級 AI Agent 集中治理與可信賴底座
+- **報告人**：Howard Liao Ph.D. (廖倫豪 博士)
+- **展示入口**：[https://howardliao.github.io/Seminar/012/](https://howardliao.github.io/Seminar/012/)
+- **形式**：單檔自包含響應式高管互動門戶，支援 6 大高管設計主題切換、互動四層架構檢視、3D 全局架構圖與 8 幅實機控制台截圖（附分類篩選與全螢幕 Lightbox；全站僅供線上瀏覽，不提供檔案下載）
+- **核心治理架構**：
+  1. **四層解耦架構**：User Portal 統一入口 ➔ L.L.H AI Studio / BYOA 應用層 ➔ HAG 集中治理層 ➔ 跨雲／地端多模型基礎設施層。
+  2. **四大治理支柱（SEE / GOVERN / SECURE / CONTROL）**：全組織 AI 資產清冊與全鏈路稽核、Enterprise RBAC 與 BYOA API Key 納管、OWASP LLM 動態護欄（PII 遮罩 / Prompt Injection 阻斷 / Sandbox 驗證）、以及團隊與使用者 Token／USD 預算上限控管。
