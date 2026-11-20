@@ -1348,9 +1348,6 @@
         <option value="obsidian">🌑 曜石深灰黑夜</option>
         <option value="milan">🎨 米蘭編排雙軌</option>
       </select>
-      <a href="javascript:void(0)" id="btnDownloadHeader" class="nav-btn primary" title="點擊輸入密碼下載原廠白皮書">
-        <span>📄</span> <span>下載原廠 PDF</span>
-      </a>
       <a href="../" class="nav-btn">
         <span>⬅</span> <span>返回總目錄</span>
       </a>
@@ -1417,12 +1414,9 @@
 
     <div class="toc-divider"></div>
 
-    <!-- 右側治理與白皮書下載 -->
+    <!-- 右側治理導覽 -->
     <div class="toc-nav-right">
       <a href="#raci-matrix" class="toc-link" data-spy="raci-matrix">權責矩陣</a>
-      <button type="button" class="toc-btn-download" id="btnDownloadToc" title="點擊輸入密碼下載原廠白皮書">
-        <span>📄 下載 PDF</span>
-      </button>
     </div>
   </div>
 </nav>
@@ -2794,29 +2788,6 @@
     </div>
   </section>
 
-
-  <!-- 第六章：官方白皮書下載與參考文獻 -->
-  <section class="content-section" style="border-bottom:none;">
-    <div class="container">
-      <div class="download-box">
-        <div class="download-info">
-          <h3>📥 取得 Gartner 2027 官方白皮書完整文檔</h3>
-          <p>
-            包含 28 頁完整英文報告、原廠架構模型圖、量化預測曲線與各產業落地方案。
-          </p>
-        </div>
-        <div class="download-actions">
-          <a href="javascript:void(0)" id="btnDownloadSection" class="btn-download" title="點擊輸入密碼下載原廠白皮書">
-            <span>📄</span> <span>下載原廠 PDF (2.9 MB)</span>
-          </a>
-          <button onclick="window.print()" class="nav-btn" style="padding:14px 20px; font-size:1rem; border-radius:8px;">
-            <span>🖨</span> <span>列印 / 存為報告 PDF</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <!-- 頁尾 -->
@@ -2929,29 +2900,6 @@
   </div>
 </div>
 
-<!-- 原廠白皮書下載密碼驗證彈窗 -->
-<div class="pdf-auth-modal" id="pdfAuthModal" role="dialog" aria-modal="true" aria-labelledby="pdfAuthTitle">
-  <div class="pdf-auth-card">
-    <button class="pdf-auth-close" id="pdfAuthClose" title="關閉">&times;</button>
-    <div class="pdf-auth-header">
-      <div class="pdf-auth-icon">🔒</div>
-      <div class="pdf-auth-title-box">
-        <h3 id="pdfAuthTitle">原廠白皮書下載驗證</h3>
-        <p>Gartner 2027 Strategic Technology Trends (28 頁原廠 PDF)</p>
-      </div>
-    </div>
-    <div class="pdf-auth-body">
-      <label class="pdf-auth-label" for="pdfAuthPassword">請輸入研討會存取密碼：</label>
-      <input type="password" id="pdfAuthPassword" class="pdf-auth-input" placeholder="••••••••" maxlength="20" autocomplete="off">
-      <div class="pdf-auth-msg" id="pdfAuthMsg"></div>
-    </div>
-    <div class="pdf-auth-actions">
-      <button type="button" class="pdf-auth-btn-cancel" id="pdfAuthCancel">取消</button>
-      <button type="button" class="pdf-auth-btn-submit" id="pdfAuthSubmit">驗證並下載</button>
-    </div>
-  </div>
-</div>
-
 <script>
   // 燈箱互動邏輯
   const lbModal = document.getElementById('imageLightbox');
@@ -2999,96 +2947,6 @@
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lbModal.classList.contains('active')) {
       closeLightbox();
-    }
-  });
-
-  // 原廠 PDF 下載密碼驗證邏輯 (密碼: 11111111)
-  const pdfAuthModal = document.getElementById('pdfAuthModal');
-  const pdfAuthPassword = document.getElementById('pdfAuthPassword');
-  const pdfAuthMsg = document.getElementById('pdfAuthMsg');
-  const pdfAuthSubmit = document.getElementById('pdfAuthSubmit');
-  const pdfAuthCancel = document.getElementById('pdfAuthCancel');
-  const pdfAuthClose = document.getElementById('pdfAuthClose');
-
-  const PDF_TARGET_URL = 'top-10-strategic-technology-trends-for-2027.pdf';
-  const PDF_AUTH_PASS = '11111111';
-
-  function openPdfAuthModal() {
-    pdfAuthPassword.value = '';
-    pdfAuthMsg.className = 'pdf-auth-msg';
-    pdfAuthMsg.textContent = '';
-    pdfAuthModal.classList.add('active');
-    setTimeout(() => pdfAuthPassword.focus(), 120);
-  }
-
-  function closePdfAuthModal() {
-    pdfAuthModal.classList.remove('active');
-  }
-
-  function triggerPdfDownload() {
-    const a = document.createElement('a');
-    a.href = PDF_TARGET_URL;
-    a.download = PDF_TARGET_URL;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  function verifyPdfPassword() {
-    const entered = pdfAuthPassword.value.trim();
-    if (entered === PDF_AUTH_PASS) {
-      pdfAuthMsg.className = 'pdf-auth-msg success';
-      pdfAuthMsg.textContent = '✓ 驗證成功！正在啟動下載...（檔案密碼同為 11111111）';
-      triggerPdfDownload();
-      setTimeout(() => {
-        closePdfAuthModal();
-      }, 1200);
-    } else {
-      pdfAuthMsg.className = 'pdf-auth-msg error';
-      pdfAuthMsg.textContent = '❌ 密碼錯誤，請確認後重新輸入（如需授權請洽主辦人）';
-      pdfAuthPassword.select();
-      pdfAuthPassword.focus();
-    }
-  }
-
-  const btnHeader = document.getElementById('btnDownloadHeader');
-  const btnSection = document.getElementById('btnDownloadSection');
-  const btnToc = document.getElementById('btnDownloadToc');
-  if (btnHeader) {
-    btnHeader.addEventListener('click', (e) => {
-      e.preventDefault();
-      openPdfAuthModal();
-    });
-  }
-  if (btnSection) {
-    btnSection.addEventListener('click', (e) => {
-      e.preventDefault();
-      openPdfAuthModal();
-    });
-  }
-  if (btnToc) {
-    btnToc.addEventListener('click', (e) => {
-      e.preventDefault();
-      openPdfAuthModal();
-    });
-  }
-
-  pdfAuthSubmit.addEventListener('click', verifyPdfPassword);
-  pdfAuthCancel.addEventListener('click', closePdfAuthModal);
-  pdfAuthClose.addEventListener('click', closePdfAuthModal);
-
-  pdfAuthPassword.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      verifyPdfPassword();
-    } else if (e.key === 'Escape') {
-      closePdfAuthModal();
-    }
-  });
-
-  pdfAuthModal.addEventListener('click', (e) => {
-    if (e.target === pdfAuthModal) {
-      closePdfAuthModal();
     }
   });
 </script>

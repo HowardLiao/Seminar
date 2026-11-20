@@ -46,8 +46,7 @@ Seminar/
 │   └── assets/                                                     # 報告人肖像資產
 │
 ├── 010/                                                            # 【010 專題】Gartner 2027 十大策略技術趨勢深度解析
-│   ├── index.html                                                  # 掌握機器行為的新邊界全景深度戰略門戶（三大主軸 × 十大趨勢 × RACI 矩陣）
-│   ├── top-10-strategic-technology-trends-for-2027.pdf             # Gartner 官方原廠 28 頁完整白皮書
+│   ├── index.html                                                  # 掌握機器行為的新邊界全景深度戰略門戶（三大主軸 × 十大趨勢 × RACI 矩陣，僅供線上瀏覽）
 │   └── assets/                                                     # 原廠高解析架構圖解、時程地圖與報告人肖像
 │
 ├── 002/ (規劃中)                                                   # 全球算力基礎設施與推論架構大遷徙
@@ -124,7 +123,7 @@ Seminar/
 - **專案背景**：2027 策略技術趨勢峰會 · Gartner 官方白皮書深度戰略轉譯與 C-Level 落地指引
 - **報告人**：Howard Liao Ph.D. (廖倫豪 博士)
 - **展示入口**：[https://howardliao.github.io/Seminar/010/](https://howardliao.github.io/Seminar/010/)
-- **下載白皮書**：[Gartner 官方原廠 28 頁白皮書 PDF](010/top-10-strategic-technology-trends-for-2027.pdf)（開啟/下載密碼：`11111111`）
+- **形式**：全靜態響應式高管戰略門戶，僅供線上互動瀏覽（全站不提供檔案下載）
 - **三大營運戰略主軸**：
   1. **開拓非文字 AI 前沿 (Leverage the nontextual AI frontier)**：模型會計算、聆聽與模擬，提供確定性精度與感官深度。
   2. **治理自主代理平台 (Govern the autonomous agent platform)**：系統級控制平面，確保數位勞動力的自主性值得信賴。
