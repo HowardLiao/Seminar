@@ -49,6 +49,10 @@ Seminar/
 │   ├── index.html                                                  # 掌握機器行為的新邊界全景深度戰略門戶（三大主軸 × 十大趨勢 × RACI 矩陣，僅供線上瀏覽）
 │   └── assets/                                                     # 原廠高解析架構圖解、時程地圖與報告人肖像
 │
+├── 011/                                                            # 【011 專題】Palo Alto Networks 2026 Security by Design 高階白皮書
+│   ├── index.html                                                  # 全情境 AI 治理、自主端點、機器特權與 PQC 密碼敏捷（僅供線上瀏覽）
+│   └── assets/                                                     # 6 幅米蘭風格向量架構圖與報告人肖像
+│
 ├── 002/ (規劃中)                                                   # 全球算力基礎設施與推論架構大遷徙
 └── 003/ (規劃中)                                                   # 企業主權 AI (Sovereign AI) 與數位員工防禦體系
 ```
@@ -154,3 +158,19 @@ Seminar/
   - **Agent 具判斷力的主從階層分工**：管家 Agent（任務路由與 Token 守門員）、主 Agent（深度推理與唯一對外把關窗口）、Sub-Agent（機械子任務與粗活執行隔離）。
   - **MCP 開放標準外掛協議**：打破 API 孤島、避免重複造輪子、企業私有數據與安全沙盒對接。
   - **企業架構選型決策樹**：針對不同業務特質（固定步驟、長期脈絡、多步探索、跨系統介接）的標準決策矩陣。
+
+---
+
+## 011 專案摘要：Palo Alto Networks 2026 Security by Design：從全情境 AI 治理、自主端點防禦、產線機器特權身分到後量子密碼學的實務落地綱領
+
+- **專案背景**：Palo Alto Networks 2026 年度實體技術研討會（台灣 ‧ 台中）
+- **報告人**：Howard Liao Ph.D. (廖倫豪 博士)
+- **展示入口**：[https://howardliao.github.io/Seminar/011/](https://howardliao.github.io/Seminar/011/)
+- **形式**：全靜態響應式高階戰略門戶，米蘭暖琥珀風格，含 6 幅全客製向量示意圖、10 組決策表格與 C-Level 4 大指標（全站僅供線上專業研習瀏覽，不提供實體檔案下載）
+- **五大核心戰略支柱**：
+  1. **全情境 AI 應用治理與防禦中樞 (Prisma AIRS & AI Gateway)**：部署前掃描未宣告能力（如 `panos-ngfw-Skill` 惡意讀檔），運行時以 Portkey 整合反向代理實施 Prompt Injection/Jailbreak 即時語意過濾、全域 Trace 追蹤、動態 PII 遮罩與資料庫試探阻斷。
+  2. **自主式時代端點防禦重構 (Cortex AES & AIDR)**：針對 Claude Code、Cursor 等本機自主代理提權風險，發表以 **KOI 安全閘道為第 1 階核心**的五階防線（KOI 閘道 ➔ AIDR 執行階段 ➔ 憑證管道 ➔ 版本冷卻 ➔ 持續補救），徹底阻斷 **Shai-Hulud** 開源供應鏈投毒。
+  3. **人機雙軌工作力量與安全企業瀏覽器 (Prisma Access Browser)**：「One Company, Two Types of Employees」共存治理模型，以瀏覽器政策引擎動態區隔真人與 AI 代理，實施 DOM 級敏感資料遮罩、背景未授權下載攔截、Step-up MFA 中斷審批與全量提示詞稽核。
+  4. **製造業產線防線與機器特權身分治理 (Idira™ Identity Governance)**：直擊智慧工廠機器身分與人類比率高達 **109 : 1** 的失控危機；落實 Idira 身分治理三部曲（盤點 Inventory、零常駐特權 ZSP、委任代理 OBO），推動企業由 Level 1 躍升至 Level 4/5 密碼學通用工作負載身分。
+  5. **後量子密碼學敏捷性與密碼技術清冊 (Crypto Agility & CBOM)**：應對 Google 47 天憑證縮短危機與「先擷取、後解密」(Harvest Now, Decrypt Later) 國安級威脅；自動探勘建立 CBOM 密碼資產清冊，並引進 **PQC 密碼轉換中繼閘道**，實現機齡 10~15 年之 OT 舊機台 **100% 零停機抗量子升級**。
+- **企業落地三階段藍圖**：盤點止血（1~3月）➔ 控管自動化（3~6月）➔ 敏捷韌性（6~12月）三階段推進，全面平衡創新效能與邊界安全。

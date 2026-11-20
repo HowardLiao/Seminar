@@ -1,0 +1,1868 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="milan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Palo Alto Networks 2026 Security by Design ｜ AI 時代端到端防禦與架構演進 ｜ Howard Liao Ph.D. Seminar 011</title>
+<meta name="description" content="Palo Alto Networks 2026 Security by Design 高階資安技術研討會全景白皮書：全情境 AI 治理 (Prisma AIRS & AI Gateway)、自主端點防禦 (Cortex AES 5 階防護阻斷 Shai-Hulud 供應鏈投毒)、人機雙軌工作力量 (Prisma Browser)、產線機器特權身分 (Idira ZSP/JIT/OBO) 與後量子密碼學敏捷性 (CBOM & PQC 中繼閘道)。報告人：Howard Liao Ph.D.">
+<meta name="theme-color" content="#B45309">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="Palo Alto Networks 2026 Security by Design 技術戰略報告 ｜ Seminar 011">
+<meta property="og:description" content="從全情境 AI 治理、自主端點防禦、產線機器特權身分到後量子密碼學的實務落地綱領。報告負責人：Howard Liao Ph.D.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/011/">
+<meta property="og:image" content="assets/schematic_1_airs_gateway.png">
+
+<link rel="icon" href="assets/howard-liao-portrait-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+
+<style>
+  /* --------------------------------------------------------------------------
+     設計系統規範：6 大核心主題支援 (Milan Warm Amber 預設首選)
+     -------------------------------------------------------------------------- */
+  :root, html[data-theme="milan"] {
+    --primary: #B45309;
+    --primary-dark: #92400E;
+    --primary-light: #D97706;
+    --secondary: #78350F;
+    --secondary-dark: #451A03;
+    --secondary-light: #9A3412;
+    --tertiary: #D97706;
+    --tertiary-soft: #FAF8F5;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --bg-page: #FAF8F5;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F8F6F0;
+    --border: #E5E7EB;
+    --border-accent: rgba(180, 83, 9, 0.35);
+    --shadow-sm: 0 2px 6px rgba(31, 41, 55, 0.04);
+    --shadow-md: 0 6px 18px rgba(180, 83, 9, 0.08);
+    --shadow-lg: 0 12px 32px rgba(31, 41, 55, 0.1);
+    --code-bg: #F5F3EF;
+    --badge-bg: #FEF3C7;
+    --badge-text: #92400E;
+    --accent-red: #DC2626;
+    --accent-green: #16A34A;
+    --accent-blue: #2563EB;
+  }
+
+  html[data-theme="pharaoh"] {
+    --primary: #D96B27;
+    --primary-dark: #B25016;
+    --primary-light: #F48C42;
+    --secondary: #2B5F6B;
+    --secondary-dark: #1E4650;
+    --secondary-light: #3D7F8F;
+    --tertiary: #E5A93C;
+    --tertiary-soft: #FEF7E9;
+    --text-main: #1F2421;
+    --text-muted: #6B726C;
+    --bg-page: #FAF7F2;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F6F2EA;
+    --border: #E8DFD8;
+    --border-accent: rgba(217, 107, 39, 0.28);
+    --shadow-sm: 0 2px 6px rgba(31, 36, 33, 0.04);
+    --shadow-md: 0 6px 18px rgba(217, 107, 39, 0.08);
+    --shadow-lg: 0 12px 32px rgba(31, 36, 33, 0.1);
+    --code-bg: #F0ECE4;
+    --badge-bg: #FEF3E2;
+    --badge-text: #B25016;
+    --accent-red: #C53030;
+    --accent-green: #276749;
+    --accent-blue: #2B6CB0;
+  }
+
+  html[data-theme="obsidian"] {
+    --primary: #F07A4A;
+    --primary-dark: #DE5814;
+    --primary-light: #FF976D;
+    --secondary: #0D9488;
+    --secondary-dark: #0F766E;
+    --secondary-light: #14B8A6;
+    --tertiary: #F59E0B;
+    --tertiary-soft: #1E293B;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --bg-page: #0F172A;
+    --bg-card: #1E293B;
+    --bg-card-alt: #162032;
+    --border: #334155;
+    --border-accent: rgba(240, 122, 74, 0.35);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
+    --code-bg: #0B1120;
+    --badge-bg: #372A22;
+    --badge-text: #FF976D;
+    --accent-red: #FC8181;
+    --accent-green: #68D391;
+    --accent-blue: #63B3ED;
+  }
+
+  html[data-theme="klimt"] {
+    --primary: #C69214;
+    --primary-dark: #9E730B;
+    --primary-light: #DFAC2D;
+    --secondary: #1E3F20;
+    --secondary-dark: #132B15;
+    --secondary-light: #2E5A31;
+    --tertiary: #8B263E;
+    --tertiary-soft: #F9F6ED;
+    --text-main: #2A2416;
+    --text-muted: #736952;
+    --bg-page: #FDFCF7;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F6F2E3;
+    --border: #E6DCB8;
+    --border-accent: rgba(198, 146, 20, 0.35);
+    --shadow-sm: 0 2px 6px rgba(42, 36, 22, 0.04);
+    --shadow-md: 0 6px 18px rgba(198, 146, 20, 0.09);
+    --shadow-lg: 0 12px 32px rgba(42, 36, 22, 0.12);
+    --code-bg: #F2ECDC;
+    --badge-bg: #FBF0CC;
+    --badge-text: #825F05;
+    --accent-red: #B91C1C;
+    --accent-green: #15803D;
+    --accent-blue: #1D4ED8;
+  }
+
+  html[data-theme="ninagawa"] {
+    --primary: #E91E63;
+    --primary-dark: #C2185B;
+    --primary-light: #FF4081;
+    --secondary: #9C27B0;
+    --secondary-dark: #7B1FA2;
+    --secondary-light: #BA68C8;
+    --tertiary: #00E5FF;
+    --tertiary-soft: #23122E;
+    --text-main: #FDFBFF;
+    --text-muted: #C4B5CD;
+    --bg-page: #0D0614;
+    --bg-card: #190C25;
+    --bg-card-alt: #221233;
+    --border: #381E48;
+    --border-accent: rgba(233, 30, 99, 0.4);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(233, 30, 99, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.7);
+    --code-bg: #12071C;
+    --badge-bg: #3E1030;
+    --badge-text: #FF80AB;
+    --accent-red: #FF5252;
+    --accent-green: #69F0AE;
+    --accent-blue: #448AFF;
+  }
+
+  html[data-theme="miro"] {
+    --primary: #E53935;
+    --primary-dark: #C62828;
+    --primary-light: #EF5350;
+    --secondary: #1E88E5;
+    --secondary-dark: #1565C0;
+    --secondary-light: #42A5F5;
+    --tertiary: #FDD835;
+    --tertiary-soft: #FFFDE7;
+    --text-main: #212121;
+    --text-muted: #616161;
+    --bg-page: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F1F3F5;
+    --border: #E0E0E0;
+    --border-accent: rgba(229, 57, 53, 0.35);
+    --shadow-sm: 0 2px 6px rgba(33, 33, 33, 0.05);
+    --shadow-md: 0 6px 18px rgba(229, 57, 53, 0.08);
+    --shadow-lg: 0 12px 32px rgba(33, 33, 33, 0.1);
+    --code-bg: #EEEEEE;
+    --badge-bg: #FFEBEE;
+    --badge-text: #C62828;
+    --accent-red: #D32F2F;
+    --accent-green: #2E7D32;
+    --accent-blue: #1976D2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* 頂部導航列 */
+  .masthead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    transition: all 0.25s ease;
+  }
+  .masthead-inner {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .brand-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .brand-text h1 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .brand-text p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card-alt);
+    color: var(--text-main);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .nav-btn.primary {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+  }
+  .nav-btn.primary:hover {
+    background: var(--primary-dark);
+  }
+
+  .theme-select {
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* 頁面導航錨點 (Sticky TOC Bar) */
+  .toc-bar {
+    position: sticky;
+    top: 68px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .toc-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    height: 50px;
+    padding: 0 16px;
+  }
+  .toc-nav-left, .toc-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .toc-link:hover, .toc-link.active {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+  }
+  .toc-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* 下拉選單組件 */
+  .toc-dropdown {
+    position: relative;
+  }
+  .toc-dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--tertiary-soft);
+    border: 1px solid var(--border-accent);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .toc-dropdown-btn:hover,
+  .toc-dropdown.active .toc-dropdown-btn {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25);
+  }
+  .dropdown-arrow {
+    transition: transform 0.2s ease;
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+  .toc-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  .toc-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    max-width: 94vw;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.08);
+    padding: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    z-index: 9999;
+  }
+  .toc-dropdown.active .toc-dropdown-menu {
+    display: grid;
+  }
+  .toc-col-card {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .toc-col-title {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: var(--primary);
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .toc-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toc-menu-item:hover, .toc-menu-item.active {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+    transform: translateX(2px);
+  }
+  .toc-num-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--badge-bg);
+    padding: 1px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .toc-pills {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .toc-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--text-muted);
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .toc-pill:hover, .toc-pill.active {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--primary);
+  }
+
+  @media (max-width: 1080px) {
+    .toc-pills { display: none; }
+  }
+  @media (max-width: 768px) {
+    .toc-dropdown-menu {
+      grid-template-columns: 1fr;
+      width: 90vw;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  }
+
+  /* Hero 視覺大橫幅 */
+  .hero-section {
+    padding: 54px 0 38px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-page) 100%);
+  }
+  .hero-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border: 1px solid var(--border-accent);
+  }
+  .badge.dark {
+    background: var(--primary-dark);
+    color: #FFFFFF;
+    border-color: var(--primary-dark);
+  }
+  .hero-title {
+    font-size: clamp(2rem, 3.6vw, 2.85rem);
+    font-weight: 900;
+    line-height: 1.25;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .hero-title span {
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 960px;
+    margin-bottom: 24px;
+  }
+
+  /* 研討會資訊列 Metadata */
+  .hero-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 28px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-k {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .meta-v {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  /* Bento Grid 核心指標卡 */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 32px 0 20px;
+  }
+  .metric-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 20px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+  }
+  .metric-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+  }
+  .metric-val {
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--primary);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .metric-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  .metric-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  /* 視覺呼叫框 Callout Box */
+  .callout-box {
+    background: var(--tertiary-soft);
+    border-left: 4px solid var(--primary);
+    padding: 22px 24px;
+    border-radius: 0 10px 10px 0;
+    margin: 28px 0;
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .callout-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .callout-list li {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    padding-left: 18px;
+    position: relative;
+  }
+  .callout-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 900;
+  }
+
+  /* 章節通用規格 */
+  section.content-section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 110px;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 960px;
+    line-height: 1.7;
+    margin-bottom: 26px;
+  }
+  .subsection-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .content-p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    margin-bottom: 16px;
+    color: var(--text-main);
+  }
+  .bold-prefix {
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  /* 示意圖展示容器 */
+  .figure-wrap {
+    margin: 32px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .figure-wrap:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-md);
+  }
+  .figure-img-box {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-card-alt);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .figure-img-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .figure-caption {
+    padding: 14px 20px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .caption-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .caption-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* 響應式高階數據表格 */
+  .table-responsive {
+    overflow-x: auto;
+    margin: 28px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    background: var(--bg-card);
+  }
+  .table-title-bar {
+    padding: 12px 18px;
+    background: var(--bg-card-alt);
+    border-bottom: 2px solid var(--border);
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  table.milan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  table.milan-table th {
+    background: var(--primary);
+    color: #FFFFFF;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  table.milan-table th:last-child {
+    border-right: none;
+  }
+  table.milan-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--text-main);
+  }
+  table.milan-table td:last-child {
+    border-right: none;
+  }
+  table.milan-table tr:nth-child(even) td {
+    background: var(--bg-card-alt);
+  }
+  table.milan-table tr:hover td {
+    background: var(--tertiary-soft);
+  }
+  table.milan-table td.col-highlight {
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  /* 頁腳 */
+  .hub-footer {
+    padding: 48px 0 60px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .footer-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<!-- 頂部導航列 -->
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a href="../" class="brand-group">
+      <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." class="brand-avatar">
+      <div class="brand-text">
+        <h1>Howard Liao Ph.D. ｜ 研討會系列專案</h1>
+        <p>SEMINAR 011 · PALO ALTO 2026 SECURITY BY DESIGN</p>
+      </div>
+    </a>
+
+    <div class="nav-tools">
+      <a href="../" class="nav-btn">
+        <span>←</span> <span>返回研討會門戶</span>
+      </a>
+
+      <!-- 主題切換器 -->
+      <select id="themeSwitcher" class="theme-select" aria-label="主題切換器">
+        <option value="milan" selected>米蘭暖琥珀 (Milan Style)</option>
+        <option value="pharaoh">法老橘 (Egyptian Pharaoh)</option>
+        <option value="obsidian">深邃黑曜 (Deep Obsidian)</option>
+        <option value="klimt">克林姆金 (Gustav Klimt)</option>
+        <option value="ninagawa">蜷川夜紫 (Mika Ninagawa)</option>
+        <option value="miro">米羅紅藍 (Joan Miró)</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<!-- 頁面快速導航 TOC Bar -->
+<nav class="toc-bar">
+  <div class="container toc-bar-inner">
+    <div class="toc-nav-left">
+      <a href="#overview" class="toc-link">宏觀全景</a>
+      <a href="#metrics" class="toc-link">C-Level 指標</a>
+      <a href="#executive-summary" class="toc-link">戰略摘要</a>
+    </div>
+
+    <div class="toc-nav-center">
+      <div class="toc-dropdown" id="tocDropdown">
+        <button class="toc-dropdown-btn" id="tocDropdownBtn" aria-expanded="false">
+          <span>七大深度篇章章節目錄</span>
+          <span class="dropdown-arrow">▼</span>
+        </button>
+
+        <div class="toc-dropdown-menu">
+          <div class="toc-col-card">
+            <div class="toc-col-title">AI 治理與終端重構</div>
+            <a href="#ch1" class="toc-menu-item"><span class="toc-num-tag">01</span> 研討會全景與宏觀趨勢</a>
+            <a href="#ch2" class="toc-menu-item"><span class="toc-num-tag">02</span> Prisma AIRS & AI Gateway</a>
+            <a href="#ch3" class="toc-menu-item"><span class="toc-num-tag">03</span> Cortex AES 5階自主防禦</a>
+            <a href="#ch4" class="toc-menu-item"><span class="toc-num-tag">04</span> 人機雙軌與 Prisma Browser</a>
+          </div>
+          <div class="toc-col-card">
+            <div class="toc-col-title">產線身分與量子敏捷</div>
+            <a href="#ch5" class="toc-menu-item"><span class="toc-num-tag">05</span> 產線機器特權身分治理 Idira</a>
+            <a href="#ch6" class="toc-menu-item"><span class="toc-num-tag">06</span> 後量子密碼敏捷性 CBOM & PQC</a>
+            <a href="#ch7" class="toc-menu-item"><span class="toc-num-tag">07</span> 企業落地三階段實施藍圖</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="toc-divider"></div>
+
+      <div class="toc-pills">
+        <a href="#ch1" class="toc-pill" title="第壹章 宏觀趨勢">01</a>
+        <a href="#ch2" class="toc-pill" title="第貳章 AI Gateway">02</a>
+        <a href="#ch3" class="toc-pill" title="第參章 Cortex AES">03</a>
+        <a href="#ch4" class="toc-pill" title="第肆章 人機雙軌">04</a>
+        <a href="#ch5" class="toc-pill" title="第伍章 機器身分">05</a>
+        <a href="#ch6" class="toc-pill" title="第陸章 後量子PQC">06</a>
+        <a href="#ch7" class="toc-pill" title="第柒章 行動藍圖">07</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="overview">
+  <div class="container">
+    <div class="hero-badge-row">
+      <span class="badge dark">★ Palo Alto Networks 2026 技術戰略報告</span>
+      <span class="badge">Security by Design 端到端防禦</span>
+      <span class="badge">Milan Warm Amber Style</span>
+      <span class="badge">僅供線上專業瀏覽</span>
+    </div>
+
+    <h1 class="hero-title">
+      Palo Alto Networks 2026 Security by Design<br>
+      <span>技術戰略與高階資安防禦架構心得報告</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      從全情境 AI 治理、自主端點防禦、產線機器特權身分到後量子密碼學的實務落地綱領。解構企業邁入「人機雙軌」與「代理自主化」時代的系統性防線建置路徑。
+    </p>
+
+    <!-- 研討會資訊列 -->
+    <div class="hero-meta-grid">
+      <div class="meta-item">
+        <span class="meta-k">研討會日期</span>
+        <span class="meta-v">2026 年 11 月 12 日</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-k">會議地點</span>
+        <span class="meta-v">台灣 ‧ 台中（Palo Alto 實體峰會）</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-k">策略報告負責人</span>
+        <span class="meta-v">Howard Liao Ph.D. (廖倫豪 博士)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-k">設計排版體系</span>
+        <span class="meta-v">Milan Warm Amber (米蘭暖琥珀金)</span>
+      </div>
+    </div>
+
+    <!-- C-Level 4 大商業衝擊 Bento 指標 -->
+    <div class="metrics-grid" id="metrics">
+      <div class="metric-card">
+        <div class="metric-val">109 : 1</div>
+        <div class="metric-label">產線機器身分暴增比率</div>
+        <div class="metric-desc">高科技製造業內部機器身分與人類員工數比率達 109:1，機台與 AGV 皆為特權帳號，身分治理成為核心戰場。</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-val">5 階防線</div>
+        <div class="metric-label">Cortex AES 自主端點安全</div>
+        <div class="metric-desc">以 KOI 安全閘道為進入點核心，重構端點安全；徹底阻斷 Shai-Hulud 等開源相依套件供應鏈投毒。</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-val">100%</div>
+        <div class="metric-label">舊機台 PQC 零停機升級</div>
+        <div class="metric-desc">以中繼轉換閘道（Transition Gateway）封裝 ML-KEM 抗量子加密，舊有 PLC 與機台免更換韌體對外量子防護。</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-val">47 天</div>
+        <div class="metric-label">憑證壽命極限壓縮</div>
+        <div class="metric-desc">Google 倡議將 SSL/TLS 憑證效期縮短至 47 天；需建立 CBOM 密碼技術清冊並落實 ACME 全自動輪替。</div>
+      </div>
+    </div>
+
+    <!-- C-Level 戰略執行摘要 Callout -->
+    <div class="callout-box" id="executive-summary">
+      <div class="callout-title">
+        <span>📋</span> <span>C-Level 戰略執行摘要 (Executive Summary)</span>
+      </div>
+      <ul class="callout-list">
+        <li><strong>典範轉移痛點：</strong>企業 AI 正由單純的「問答對話」快速躍遷至「自主決策代理 (Agentic AI)」。調研顯示 71% 的 CXO 苦於部門 AI 孤島與影子 AI (Shadow AI)，缺乏統一能見度與治理中樞。</li>
+        <li><strong>端點威脅升級：</strong>研發人員本機廣泛調用 Claude Code、Cursor 等具備指令執行與檔案存取權限的代理；近期的 Shai-Hulud 開源投毒攻擊證明，傳統 EDR 已無法防禦動態供應鏈污染。</li>
+        <li><strong>人機共存常態：</strong>「One Company, Two Types of Employees」正式成真。企業必須在同一個 Web 系統上，以企業安全瀏覽器區隔人類操作與 AI 代理行為，並對高風險動作實施 Step-up MFA 中斷審批。</li>
+        <li><strong>產線身分危機：</strong>機器身分與人類身分比率已達驚人的 109 : 1！所有製造機台、AOI 視覺 AI 與 MES 派工皆為特權帳號，Idira™ 推動零常駐特權 (ZSP)、JIT 動態簽發與 OBO 委任鏈審計。</li>
+        <li><strong>後量子密碼學迫近：</strong>憑證壽命極限壓縮至 47 天，加上「先擷取、後解密」(Harvest Now, Decrypt Later) 威脅，企業必須加速建置 CBOM 密碼技術清冊，並引進免停機的 PQC 中繼閘道架構。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 1 -->
+<section class="content-section" id="ch1">
+  <div class="container">
+    <span class="section-tag">Chapter 01 ｜ 宏觀全景與 AI 演進</span>
+    <h2 class="section-title">第壹章 研討會全景與宏觀趨勢：從輔助工具到自主決策代理</h2>
+    <p class="section-lead">
+      生成式 AI 正以超乎預期的速度，從單純的聊天機器人（Chatbot）躍遷為具備自主權限的決策代理（Agentic AI）。企業傳統資安邊界在面臨多部門分散導入與影子 AI 擴散時，正遭受前所未有的結構性挑戰。
+    </p>
+
+    <p class="content-p">
+      在當前企業組織中，AI 應用並非由單一部門集中採購，而是由行銷、業務、工程、研發等不同團隊依各自需求自行導入。現場調研數據顯示，高達 <span class="bold-prefix">71% 的 CXO 坦言內部團隊運用 AI 缺乏統一策略</span>，形成嚴重的技術孤島。企業面臨三大失控痛點：
+    </p>
+
+    <p class="content-p">
+      <span class="bold-prefix">1. 影子 AI (Shadow AI) 蔓延：</span>企業內部充斥未經審核的第三方模型與外掛外，商業機密與個人隱私數據（PII）在員工日常對話中無管制外洩。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. 代理失控 (Agentic Sprawl)：</span>研發團隊引進自主代理（如 Claude Code、Cursor），代理程式自動在開發者電腦上下載相依套件、讀取本機機密環境變數，甚至將機密代碼外傳至未授權伺服器。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">3. 成本與治理失控 (FinOps & Compliance Risk)：</span>缺乏統一的 API 閘道進行流量配額調配、快取管理與防禦護欄，造成 Token 費用爆表與安全合規審計全面脫鉤。
+    </p>
+
+    <!-- Schematic 1 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_1_airs_gateway.png" alt="示意圖 1：全情境 AI 應用治理與防禦中樞架構">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 1</span> <span>全情境 AI 應用治理與防禦中樞架構</span>
+        </div>
+        <div class="caption-desc">Prisma AIRS & AI Gateway 涵蓋部署前檢測（Skills 掃描、紅隊演練）、運行時護欄（Portkey 整合、語意過濾、PII 遮罩）與全域可觀測性（Trace 追蹤、統一 Dashboard）。</div>
+      </div>
+    </div>
+
+    <!-- Table 1 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 1</span> <span>AI 應用治理全生命週期維度與架構工具對照表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">治理生命週期</th>
+            <th style="width: 22%;">核心防護維度</th>
+            <th style="width: 24%;">傳統防護盲點</th>
+            <th style="width: 24%;">Palo Alto 創新架構</th>
+            <th style="width: 16%;">達成之治理效益</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">部署前<br>(Pre-Deployment)</td>
+            <td>AI 產物與外掛掃描<br>AI 紅隊模擬演練</td>
+            <td>傳統 SAST/DAST 無法解析 Prompt 語意與 Agent Skills</td>
+            <td>Prisma AIRS 套件語意深度靜態檢測、AI 紅隊滲透演練</td>
+            <td>在上線前阻斷惡意提示詞、越獄漏洞與未宣告存取權限</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">運行時<br>(Runtime)</td>
+            <td>AI Gateway 反向代理<br>Policy & Guardrails 護欄</td>
+            <td>傳統 WAF 無法解析自然語言，難以防範越獄 (Jailbreak)</td>
+            <td>Portkey 整合閘道、即時語意過濾、資料庫試探阻斷、動態 PII 遮罩</td>
+            <td>確保敏感個資不外洩，阻斷 Prompt 注入與越獄攻擊</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">持續運作<br>(Observability)</td>
+            <td>全景檢視畫面 (Dashboard)<br>全域 Trace ID 稽核軌跡</td>
+            <td>各部門各自綁定 API 金鑰，缺乏統一合規日誌與使用量分析</td>
+            <td>單一儀表板、全景合規態勢追蹤、即時異常阻斷與自動警報</td>
+            <td>具備法律級鑑識軌跡，精準監控 Token 消耗並消除影子 AI</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout-box">
+      <div class="callout-title">
+        <span>💡</span> <span>研討會宏觀趨勢金句</span>
+      </div>
+      <ul class="callout-list">
+        <li>「當 AI 從『回答問題』演進為『調用工具與自主寫入』，如果企業的安全控制無法同步理解語意與意圖，那麼所有的端點與雲端都將暴露在巨大的自主特權盲區之中！」</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 2 -->
+<section class="content-section" id="ch2">
+  <div class="container">
+    <span class="section-tag">Chapter 02 ｜ AI 防禦中樞</span>
+    <h2 class="section-title">第貳章 全情境 AI 應用治理與防禦中樞 (Prisma AIRS & AI Gateway)</h2>
+    <p class="section-lead">
+      針對 AI 孤島與代理失控問題，Palo Alto Networks 提出了以 Prisma AIRS（AI Runtime Security）為核心的全方位治理架構。涵蓋部署前檢測、運行時動態護欄與全域可觀測性三大層級。
+    </p>
+
+    <h3 class="subsection-title"><span>一、部署前安全檢測 (Pre-deployment Security)</span></h3>
+    <p class="content-p">
+      深度檢測 AI Agent 程式庫與延伸外掛（Skills）。在研討會現場實機示範中，安全引擎成功掃描到一個名為 <span class="bold-prefix">panos-ngfw-Skill</span> 的外掛套件，雖然表面上宣稱為防火牆設定查詢工具，但在其依賴的底層 Python 腳本中，卻暗藏了：
+    </p>
+    <p class="content-p" style="font-family: 'JetBrains Mono', monospace; background: var(--code-bg); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border);">
+      "Undeclared Capability: FS_READ_SENSITIVE — 試圖讀取主機高敏感檔案與設定檔"
+    </p>
+    <p class="content-p">
+      Prisma AIRS 在套件進入部署環境前即刻觸發政策阻斷，防止其被引入生產環境。此外，系統提供：
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">1. AI 紅隊測試 (AI Red Teaming)：</span>透過自動化安全引擎對 LLM 與 Agent 發動高強度語意攻擊，模擬提示注入（Prompt Injection）、越獄（Jailbreak）與邏輯旁路。協助企業在模型對外發布前全面掌握潛在弱點。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. 供應鏈態勢評估 (Supply Chain Posture)：</span>評估 Agent 供應鏈風險，全面盤點第三方相依模組、外掛程式庫的來源信譽與數位簽章，防範類似開源軟體投毒的「AI 供應鏈污染」。
+    </p>
+
+    <h3 class="subsection-title"><span>二、運行時保護與 AI Gateway (Portkey 整合)</span></h3>
+    <p class="content-p">
+      在運行時階段，Prisma AIRS 透過整合 Portkey 的高效能 AI Gateway 作為流量反向代理。該閘道支援超過 3,000 種 LLM API，具備四大關鍵能力：
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">1. Trace 交易追蹤：</span>為每次請求與回應配置全域 Trace ID，記錄完整提示詞、回應內容、呼叫時間與延遲，滿足企業稽核與取證需求。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. 資料庫試探防護 (Database Probing Guard)：</span>動態防護針對 LLM 的模糊資料庫試探攻擊（如試圖利用 Prompt 拼湊 SQL/NoSQL 查詢以汲取後端機密資料庫），即時阻斷並產生日誌警報。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">3. 機密資料遮罩 (PII Masking & DLP)：</span>在 Prompt 傳送至外部公共雲端模型（如 OpenAI、Anthropic）前，自動遮罩或置換身分證字號、信用卡、原始碼金鑰及財務數據，確保資料外洩防護（DLP）不留死角。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">4. 配額與負載平衡：</span>針對不同部門與團隊設定使用額度、存取頻率限制，並在多個模型供應商間進行動態負載平衡，達到資安與維運成本的最佳平衡。
+    </p>
+
+    <!-- Table 2 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 2</span> <span>Prisma AIRS AI Gateway vs. 傳統 API 閘道 vs. 開源自建技術規格對照表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 16%;">功能構面</th>
+            <th style="width: 25%;">Prisma AIRS AI Gateway</th>
+            <th style="width: 22%;">傳統 API 閘道 (Kong/Apigee)</th>
+            <th style="width: 20%;">開源自建 Proxy</th>
+            <th style="width: 17%;">資安合規優勢</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">語意防護<br>(Semantic Guard)</td>
+            <td>原生內建 Prompt Injection 與越獄行為即時過濾</td>
+            <td>僅支援一般正則/字串比對，無法識別自然語言攻擊語意</td>
+            <td>需自行串接外部審查模型，延遲極高且維護繁重</td>
+            <td>毫秒級自然語言語意解析，阻斷越獄攻擊</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">機密防護<br>(PII & DLP)</td>
+            <td>自動識別敏感資料與遮罩，支援金融/醫療/研發機密規則</td>
+            <td>需依賴外部 DLP 模組串接，無法精準理解對話脈絡</td>
+            <td>需自寫 Regex 處理，誤判率與漏報率極高</td>
+            <td>符合 ISO 27001、GDPR 與個資法最高防護等級</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">供應鏈檢測<br>(Skill Scan)</td>
+            <td>深度掃描 Agent 外掛權限，自動偵測未宣告檔案讀寫</td>
+            <td>完全無此能力，僅能做基礎封包轉發</td>
+            <td>無此能力，仰賴人工審核代碼</td>
+            <td>防止受污染之第三方程式庫滲透至內部系統</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">日誌稽核<br>(Traceability)</td>
+            <td>端到端全域 Trace ID 審計，完整 Session 互動時間軸</td>
+            <td>僅記錄 HTTP 狀態碼與標頭，無法記錄 LLM 完整對話</td>
+            <td>僅記錄標準伺服器日誌，日誌易被篡改或遺漏</td>
+            <td>滿足金融高監管稽核要求與法律級取證需求</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 3 -->
+<section class="content-section" id="ch3">
+  <div class="container">
+    <span class="section-tag">Chapter 03 ｜ 端點防禦重構</span>
+    <h2 class="section-title">第參章 自主式時代端點防禦重構 (Cortex AES & AIDR)</h2>
+    <p class="section-lead">
+      當前研發團隊已普遍使用 Claude Code 3.7、Cursor、Windsurf 等本機自主式代理。這類工具能夠自主在開發者電腦上建立檔案、執行 Shell 指令、讀取目錄並調用本機網路，使研發工作站由「文字編輯器」躍升為具備高特權的「微型伺服器」。
+    </p>
+
+    <p class="content-p">
+      傳統 EDR（端點偵測與回應）將自主代理的所有動作視為「開發者本人的合法授權操作」，因而產生巨大的防禦真空。針對自主代理行為與開源軟體供應鏈投毒，Palo Alto Networks 發表了以 <span class="bold-prefix">KOI 為第一階進入點核心的 Cortex AES（Agentic Endpoint Security）五階治理防禦架構</span>：
+    </p>
+
+    <!-- Schematic 2 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_2_cortex_aes_5stages.png" alt="示意圖 2：Palo Alto Networks Cortex AES 5 階自主防禦架構">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 2</span> <span>Palo Alto Networks Cortex AES 5 階自主防禦架構</span>
+        </div>
+        <div class="caption-desc">以 KOI 安全閘道為進入點核心，重構端點安全：1. KOI 內嵌安全閘道 ➔ 2. 執行階段防護 ➔ 3. 憑證與管道防護 ➔ 4. 版本更新冷卻緩衝 ➔ 5. 持續補救措施。</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title"><span>一、Palo Alto Cortex AES 5 階防線詳細運作機制</span></h3>
+    <p class="content-p">
+      <span class="bold-prefix">第 1 階 KOI 內嵌安全閘道 (Kernel-level / Inline Ingress Gate)：</span>部署於開發環境第一線進入點。在開發者或 Agent 下載外部套件（npm, pip, cargo）時，於下載封包觸及本機裝置前實施行為特徵與相依性圖譜分析，阻斷帶有惡意攻擊載體的相依模組。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">第 2 階 執行階段防護 (Runtime Agentic Defense - AIDR)：</span>AIDR 核心引擎全時監控自主代理（如 Claude Code 3.7）。精確追蹤其執行的每一條 Shell 命令、檔案寫入與外部 API 調用，即時阻止惡意代碼注入與未授權開發工具外掛擴充。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">第 3 階 憑證與管道防護 (Credential & Pipeline Shield)：</span>嚴格隔離本機 SSH Keys、雲端存取金鑰（AWS/GCP/Azure Credentials）與 CI/CD 機密環境變數，防止自主代理遭惡意 Prompt 誘導而擅自存取或外洩核心金鑰。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">第 4 階 版本更新冷卻緩衝 (Release Quenching Buffer)：</span>針對開源套件的新版本發布建立安全冷卻與觀察期。若新版本套件短時間內出現非預期之建置後腳本（post-install hook），CI/CD 管道將自動執行封鎖，防範零日投毒攻擊。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">第 5 階 持續補救措施 (Continuous Remediation)：</span>一旦端點發生異常，系統自動隔離遭入侵裝置，全面撤銷外洩憑證，並由 XSIAM/XDR 引擎自動逆向回溯完整攻擊鏈，產出自動化修補報告。
+    </p>
+
+    <!-- Table 3 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 3</span> <span>Cortex AES vs. 傳統 EDR/XDR 端點防護能力評比表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 18%;">防禦構面</th>
+            <th style="width: 25%;">傳統 EDR / XDR</th>
+            <th style="width: 28%;">Cortex AES (具備 AIDR & KOI)</th>
+            <th style="width: 29%;">實務防禦差距與效益</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">本機自主代理<br>(Claude Code / Cursor)</td>
+            <td>視為開發者之合法行為，僅在落地惡意二進位檔時告警</td>
+            <td>細粒度解析 Agent 指令、檔案異動與 Token 互動脈絡</td>
+            <td>及早識別代理遭誘導越獄或執行越權操作之風險</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">開發進入點攔截<br>(KOI Gateway)</td>
+            <td>套件下載至本機硬碟後才由靜態特徵碼進行掃描</td>
+            <td>在套件觸及本機磁碟前，於網路與連線層即時阻斷</td>
+            <td>杜絕零日投毒套件落地執行，將攻擊阻絕於邊界之外</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">開源套件建置腳本<br>(Post-install Hook)</td>
+            <td>預設允許執行，容易被惡意提權腳本繞過</td>
+            <td>深度分析 Shell 行為，封鎖異常反向連線與權限提升</td>
+            <td>完美防堵 Shai-Hulud 等暗藏背景衍生進程之攻擊手法</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">開發憑證防護<br>(Credential Shield)</td>
+            <td>依賴作業系統層級權限，難防代理在合法權限下外洩</td>
+            <td>微隔離憑證目錄 (~/.ssh, .env)，非真人宣告存取一律攔截</td>
+            <td>防止雲端 API 金鑰與伺服器登入私鑰遭竊取</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subsection-title"><span>二、阻斷開源供應鏈投毒：以 Shai-Hulud 攻擊為例</span></h3>
+    <p class="content-p">
+      近期引發全球資安界高度震動的惡意套件 <span class="bold-prefix">Shai-Hulud</span>，成功污染了超過 800 個 NPM 套件及 725 個 GitHub 倉庫。開發者只要在本地端執行一次看似正常的 <code style="font-family:'JetBrains Mono'; background:var(--code-bg); padding:2px 6px; border-radius:4px;">npm install</code>，惡意腳本即在背景靜默竊取開發憑證並自動提交惡意代碼擴散。以下為 Cortex AES 5 階防禦的精確反制矩陣：
+    </p>
+
+    <!-- Table 4 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 4</span> <span>Shai-Hulud 供應鏈投毒攻擊鏈與 Cortex AES 5 階防禦應對動作</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">攻擊階段</th>
+            <th style="width: 25%;">Shai-Hulud 惡意行為</th>
+            <th style="width: 22%;">傳統防護應對表現</th>
+            <th style="width: 39%;">Cortex AES 5 階防禦應對動作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">進入點滲透</td>
+            <td>開發者執行 npm install 下載受污染之相依套件</td>
+            <td>放行通過；靜態特徵庫尚未收錄雜湊碼</td>
+            <td><strong>【第 1 階 KOI 安全閘道】</strong> 下載未觸及硬碟前即識別惡意行為，直接於網路傳輸層攔截封鎖</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">腳本觸發</td>
+            <td>執行 postinstall 腳本，於背景靜默派生惡意行程</td>
+            <td>視為 node.js 正常子行程，不予攔截</td>
+            <td><strong>【第 2 階 執行階段防護】</strong> AIDR 偵測到未經授權之行程建立與動態呼叫，即時中斷腳本執行</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">憑證搜刮</td>
+            <td>搜刮本機 ~/.ssh/id_rsa、.env 金鑰與 AWS Tokens</td>
+            <td>開發者環境中常態讀寫，無告警機制</td>
+            <td><strong>【第 3 階 憑證管道防護】</strong> 封鎖非宣告存取；嚴密隔離環境變數目錄，阻斷竊取行為</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">橫向擴散</td>
+            <td>透過 CI/CD 管道自動提交惡意 PR 進行跨倉庫傳播</td>
+            <td>常態代碼提交，Git 系統直接接受</td>
+            <td><strong>【第 4 階 版本冷卻緩衝】</strong> CI/CD 管道檢測到異常版本更動，強制阻斷自動提交 PR 行為</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">主機遭控</td>
+            <td>建立反向 Shell 回連 C2 伺服器並抹除日誌痕跡</td>
+            <td>待連線建立後才可能被流量分析偵測，已造成損害</td>
+            <td><strong>【第 5 階 持續補救措施】</strong> 端點即刻自動隔離，撤回連線 Token 並全自動回溯完整攻擊圖譜</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 4 -->
+<section class="content-section" id="ch4">
+  <div class="container">
+    <span class="section-tag">Chapter 04 ｜ 人機雙軌與安全瀏覽器</span>
+    <h2 class="section-title">第肆章 人機雙軌工作力量與安全企業瀏覽器 (Prisma Browser)</h2>
+    <p class="section-lead">
+      研討會中提出了一個極具深度的企業組織轉型模型：企業正全面邁入「One Company, Two Types of Employees」時代——在同一個企業組織內部，同時存在由人類員工組成的傳統團隊，以及由 AI Agent 構成的數位員工團隊。
+    </p>
+
+    <p class="content-p">
+      這兩種員工雖然使用相同的內部 Web 應用系統（如 ERP、CRM、工單系統），但其風險特徵截然不同。人類員工容易遭受社交工程與釣魚攻擊；而 AI 數位員工則容易陷入無限迴圈、受惡意 Prompt 操縱，或以每秒數百次的極速汲取公司大量核心機密。
+    </p>
+
+    <!-- Schematic 3 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_3_dual_workforce_browser.png" alt="示意圖 3：人機雙軌工作力量與安全企業瀏覽器治理架構">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 3</span> <span>人機雙軌工作力量 (One Company, Two Types of Employees) 與安全企業瀏覽器治理架構</span>
+        </div>
+        <div class="caption-desc">Prisma Access Browser 政策引擎動態區隔人類工作者與 AI Agent，實施 DOM 級資料遮罩、背景未授權下載攔截、Step-up MFA 中斷審批與全量 Prompt 稽核。</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title"><span>一、Prisma Access Browser 核心治理機制</span></h3>
+    <p class="content-p">
+      <span class="bold-prefix">1. 動態身分區隔政策：</span>針對同一套 Web 應用，瀏覽器政策引擎能自動辨識存取發起者為真人或 AI 代理，並動態指派完全不同的安全規則。例如：人類可正常閱讀 QBR 財務報告，但 AI 代理若欲讀取該頁面，敏感營收數字將被自動遮罩，僅提供統計摘要。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. Step-up MFA 中斷審批：</span>當 AI 數位員工在瀏覽器內嘗試執行高風險操作（例如：批次匯出客戶名冊、修改核心系統參數、將敏感報表轉發至外部信箱），Prisma Access Browser 會強制暫停該連線階段，即時向主管或真人負責人發送行動裝置 Push MFA 授權請求，唯有真人確認放行後方可繼續執行。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">3. 全量提示詞審計 (Full Prompt Auditing)：</span>完整記錄全公司員工與所有內嵌 Agent 的互動對話內容與 Prompt 軌跡，集中辨識合規態勢，防範影子 AI 蔓延。
+    </p>
+
+    <!-- Table 5 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 5</span> <span>人機雙軌工作力量 (Human vs AI Agent) 存取權限與安全策略矩陣表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 18%;">治理構面</th>
+            <th style="width: 25%;">人類員工 (Human Track)</th>
+            <th style="width: 27%;">AI 數位員工 (Agent Track)</th>
+            <th style="width: 30%;">Prisma Browser 政策控制手段</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">典型工作型態</td>
+            <td>主觀判斷、互動瀏覽、文書撰寫</td>
+            <td>自主決策、批次資料處理、跨系統同步</td>
+            <td>依據 Session 屬性自動標註流量型態</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">潛在安全威脅</td>
+            <td>社交工程、惡意釣魚、密碼外洩</td>
+            <td>失控迴圈、Prompt 操縱、超速汲取資料</td>
+            <td>區隔威脅模型，實施雙重安全評估</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">內部報表存取</td>
+            <td>允許完整閱讀；禁止未授權複製</td>
+            <td>僅允許存取經摘要過後之非敏感資料</td>
+            <td>動態內容遮罩與 DOM 級 DLP 防護</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">檔案下載/匯出</td>
+            <td>允許依職責下載，自動打上動態浮水印</td>
+            <td>預設全面封鎖；需真人審批授權</td>
+            <td>阻斷背景未授權下載；浮水印追蹤</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">高風險外發動作</td>
+            <td>一般二次確認或主管審核</td>
+            <td>強制觸發 Step-up MFA，要求真人即時放行</td>
+            <td>暫停 Agent 連線階段，杜絕自動化外洩</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 5 -->
+<section class="content-section" id="ch5">
+  <div class="container">
+    <span class="section-tag">Chapter 05 ｜ 產線身分治理</span>
+    <h2 class="section-title">第伍章 製造業產線防線與機器特權身分治理 (Idira™ Identity Governance)</h2>
+    <p class="section-lead">
+      由 Idira 資深資安顧問黃旭鍵（Kerr Huang）帶來的專題演講，直擊台灣高科技製造業與精密供應鏈的核心痛點。他提出了震驚全場的警訊：「每個產線 AI 與設備都是特權帳號，身分治理是製造業最大的防禦死穴！」
+    </p>
+
+    <p class="content-p">
+      調研顯示，現代高科技製造業內部的機器身分數量，已高達人類員工的 <span class="bold-prefix">109 倍</span>！工廠內的自走車（AGV/AMR）、AOI 晶圓光學檢測機、MES 派工服務、PLC 控制器乃至各類自動化腳本，都常態擁有長期有效且權限極高的靜態 API Keys、資料庫連線字串或 MQTT 通訊憑證。一旦其中一個機台遭入侵，攻擊者便可橫向穿透整個智慧工廠。
+    </p>
+
+    <!-- Schematic 4 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_4_machine_identity_idira.png" alt="示意圖 4：製造業產線機器特權身分治理架構">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 4</span> <span>製造業產線機器特權身分治理架構</span>
+        </div>
+        <div class="caption-desc">Idira™ 建立零常駐特權 (ZSP)、JIT 即時短期授權與 On-Behalf-Of (OBO) 委任鏈審計，消除產線靜態金鑰常駐風險。</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title"><span>一、Idira™ 身分治理三部曲</span></h3>
+    <p class="content-p">
+      <span class="bold-prefix">1. 盤點 (Inventory)：</span>全面梳理全廠區正在運行的所有 AI 代理與自動化軟硬體，強制指定真人負責人（Owner），嚴格杜絕無人管轄的影子代理與幽靈帳號。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. 零常駐特權 (Zero Standing Privilege, ZSP)：</span>平時所有機器與代理均無常規權限；當需執行派工任務時，由 Agent Identity Broker 動態簽發具備精確範圍（Scope）與極短效期（TTL，通常為 15~30 分鐘）的短期權杖（JIT, Just-in-Time），任務結束後權杖自動作廢。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">3. 委任代理 (On-Behalf-Of, OBO)：</span>採用 On-Behalf-Of 協定，完整記錄 AI 代理在何時「代表哪一位使用者或系統」調用了何種工具與資料庫，提供不可篡改的法律級合規證據鏈。
+    </p>
+
+    <!-- Table 6 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 6</span> <span>製造業產線典型機器身分 (Machine Identity) 風險與 ZSP 控管規範表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 16%;">機器身分類型</th>
+            <th style="width: 22%;">產線應用場景</th>
+            <th style="width: 24%;">傳統存在之致命風險</th>
+            <th style="width: 24%;">Idira ZSP 落地控制措施</th>
+            <th style="width: 14%;">授權有效時限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">自走搬運車<br>(AGV / AMR)</td>
+            <td>晶圓盒 (FOUP) 跨站點自動化搬運與路徑排程</td>
+            <td>MQTT 通訊金鑰寫死於本機；一旦遭竊全廠搬運陷入癱瘓</td>
+            <td>引入 mTLS 動態憑證交換，每次調度重新簽發短效憑證</td>
+            <td>單趟搬運任務<br>(30 分鐘內)</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">光學檢測機台<br>(AOI 視覺 AI)</td>
+            <td>高階晶圓/載板表面瑕疵檢測、即時影像判定與缺陷分類</td>
+            <td>本機具備完整資料庫寫入權限；若被污染恐掩飾產線瑕疵品</td>
+            <td>模型與資料庫存取徹底隔離；寫入需由 Proxy 驗證簽章與時間戳記</td>
+            <td>每批次晶圓檢測<br>(15 分鐘內)</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">MES 派工服務<br>(Job Dispatcher)</td>
+            <td>自動化配工、工單進度更新、機台運轉參數即時下發</td>
+            <td>Service Principal 權限無限大；無人審核異常工單派發指令</td>
+            <td>實施 OBO 委任鏈審查；異常排程自動降級觸發工站組長手機確認</td>
+            <td>單一工單時程<br>(即時輪替)</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">OT 機台 PLC<br>(控制器)</td>
+            <td>產線自動化生產機台、機器人手臂運轉控制</td>
+            <td>多數使用明文或無驗證協定；缺乏身分認證與審計機制</td>
+            <td>部署微隔離身分中繼閘道，將 OT 指令轉換為短效加密工作階段</td>
+            <td>連線階段有效<br>(最長 60 分鐘)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subsection-title"><span>二、企業數位身分成熟度 1 至 5 級階梯</span></h3>
+    <!-- Table 7 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 7</span> <span>企業數位身分成熟度 Level 1 至 Level 5 階梯評估與實作指南表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">成熟度等級</th>
+            <th style="width: 18%;">等級定義</th>
+            <th style="width: 25%;">核心身分架構特徵</th>
+            <th style="width: 22%;">主要使用協定 / 機制</th>
+            <th style="width: 21%;">企業安全與合規效益</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">Level 1</td>
+            <td>無序狀態<br>(Unmanaged)</td>
+            <td>API Keys、密碼直接硬編碼在設定檔或代碼倉庫中</td>
+            <td>靜態 API Keys、明文帳號密碼</td>
+            <td>極高外洩風險；無任何存取審計與追蹤能力</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">Level 2</td>
+            <td>集中金鑰管理<br>(Vault-Centric)</td>
+            <td>使用 HashiCorp Vault、AWS Secrets Manager 集中儲存金鑰</td>
+            <td>定期手動金鑰輪替、密碼保險庫</td>
+            <td>金鑰集中化，降低源碼洩漏，但仍屬長效靜態金鑰</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">Level 3</td>
+            <td>動態短效授權<br>(JIT & ZSP)</td>
+            <td>全面消除常設特權；任務觸發時動態簽發短效存取權杖</td>
+            <td>OAuth 2.0 / OIDC、JIT 憑證配發</td>
+            <td>大幅縮小攻擊暴露窗口；達成零常設特權合規</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">Level 4</td>
+            <td>工作負載身分<br>(SPIFFE/SPIRE)</td>
+            <td>以加密密碼學驗證工作負載與容器，自動核發 X.509 SVID</td>
+            <td>SPIFFE / SPIRE、mTLS 雙向加密認證</td>
+            <td>消除所有靜態金鑰；微服務與跨雲端工作負載原生互信</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">Level 5</td>
+            <td>自主自我調適<br>(Universal Identity)</td>
+            <td>AI 驅動全域身分態勢感知；動態評估風險並自動調整權限</td>
+            <td>OBO 委任鏈、全域身分網格 (Identity Mesh)</td>
+            <td>達到零信任終極形態；人機身分統一納管，自適應降權防禦</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 6 -->
+<section class="content-section" id="ch6">
+  <div class="container">
+    <span class="section-tag">Chapter 06 ｜ 後量子密碼敏捷</span>
+    <h2 class="section-title">第陸章 後量子密碼學敏捷性與密碼技術清冊 (Crypto Agility & CBOM)</h2>
+    <p class="section-lead">
+      研討會壓軸之重量級議題聚焦於後量子時代（Post-Quantum Cryptography, PQC）的密碼學危機。企業當前面臨兩大無法迴避的緊迫推力：
+    </p>
+
+    <p class="content-p">
+      <span class="bold-prefix">推力一：SSL/TLS 憑證有效期限縮短至 47 天：</span>Google 等瀏覽器巨擘提議將 SSL/TLS 憑證有效期限大幅縮減至 47 天；國內外憑證機構（如 TWCA）亦曾發生序號亂數不符規範需緊急全面撤銷替換之事件。未來每年企業憑證更新頻率暴增數倍，傳統人工申請、替換與部署流程將徹底癱瘓。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">推力二：「先擷取、後解密」(Harvest Now, Decrypt Later) 迫在眉睫：</span>敵意勢力或犯罪組織正大規模截獲並儲存高科技企業的加密傳輸數據（包含晶圓製程參數、半導體專利及財務機密）。他們等待實用量子電腦（Q-Day）問世後，即可一舉破解 RSA-2048 或 ECC 加密，使企業未來 10 年的核心商業機密全數曝光！
+    </p>
+
+    <!-- Schematic 5 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_5_crypto_agility_cbom.png" alt="示意圖 5：後量子密碼學敏捷性與舊有機台 PQC 轉換中繼閘道免停機防禦架構">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 5</span> <span>後量子密碼學敏捷性 (Crypto Agility) 與舊有機台 PQC 轉換中繼閘道免停機防禦架構</span>
+        </div>
+        <div class="caption-desc">流量自動探勘建立 CBOM 密碼清冊，並透過 PQC 密碼轉換中繼閘道（ML-KEM / ML-DSA）保護機齡 10~15 年之 OT 舊機台，實現 100% 零停機抗量子升級。</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title"><span>一、密碼技術清冊 (CBOM, Cryptographic Bill of Materials)</span></h3>
+    <p class="content-p">
+      要實現密碼敏捷性，第一步必須看清企業內部到底使用了哪些密碼演算法與憑證。Palo Alto 展示了利用 NGFW 與流量分析技術，自動探勘全企業高達 29.9k+ 密碼學資產：
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">1. 流量自動探勘：</span>無需在機台上安裝 Agent，透過解析網路流量即可全面盤點內部運行的 TLS 版本、對稱與非對稱演算法、憑證有效期與金鑰長度。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">2. 風險優先級排序：</span>結合資產關鍵度與演算法脆弱性評分，自動標註使用老舊弱密碼（如 RSA-1024、SHA-1、3DES）的高危險資產。
+    </p>
+    <p class="content-p">
+      <span class="bold-prefix">3. 自動化補救工作流：</span>串接憑證管理系統與 ACME 協定，提供一鍵輪替、到期預警與憑證生命週期全自動化管理，徹底化解 47 天縮短危機。
+    </p>
+
+    <!-- Table 8 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 8</span> <span>後量子密碼學 (PQC) 演算法過渡與 CBOM 欄位規範表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">密碼學資產類別</th>
+            <th style="width: 20%;">現行主要演算法</th>
+            <th style="width: 28%;">後量子面臨之威脅</th>
+            <th style="width: 18%;">NIST PQC 推薦標準</th>
+            <th style="width: 14%;">過渡風險權重</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">金鑰交換協定<br>(Key Exchange)</td>
+            <td>ECDH / RSA-2048<br>(廣泛用於 TLS 連線)</td>
+            <td>Shor 演算法可在多項式時間內完全破解，遭攔截流量被解密</td>
+            <td><strong>ML-KEM</strong><br>(Kyber)</td>
+            <td style="color: var(--accent-red); font-weight:800;">極高 (Critical)<br>需立即過渡</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">數位簽章<br>(Digital Signature)</td>
+            <td>RSA-3072 / ECDSA<br>(代碼簽署、身分憑證)</td>
+            <td>量子電腦可偽造身分簽章，偽造合規韌體更新或公文</td>
+            <td><strong>ML-DSA</strong> (Dilithium)<br><strong>SLH-DSA</strong> (SPHINCS+)</td>
+            <td style="color: var(--primary); font-weight:800;">高 (High)<br>2-3年內過渡</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">對稱式加密<br>(Symmetric Cipher)</td>
+            <td>AES-128 / AES-256<br>(資料庫儲存、磁碟加密)</td>
+            <td>Grover 演算法可將有效金鑰長度減半 (AES-128 降為 64-bit 脆弱)</td>
+            <td><strong>AES-256</strong><br>(提供 128-bit 量子安全)</td>
+            <td style="color: var(--accent-blue); font-weight:700;">中 (Medium)<br>全面改用 256-bit</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">雜湊函數<br>(Hash Function)</td>
+            <td>SHA-256 / SHA-3<br>(完整性校驗與指紋)</td>
+            <td>碰撞攻擊難度略有降低，但目前抗量子餘裕仍足夠</td>
+            <td><strong>SHA-384</strong> / <strong>SHA-512</strong></td>
+            <td style="color: var(--text-muted);">低 (Low)<br>維持標準即可</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subsection-title"><span>二、OT/IoT 與舊有機台免停機 PQC 轉換閘道</span></h3>
+    <p class="content-p">
+      在製造業環境中，許多 PLC、機台控制器或舊式 ERP 系統機齡長達 10 至 15 年，根本無法重新編譯或升級支援後量子演算法。Palo Alto 展示了極具實戰價值的落地架構：<span class="bold-prefix">部署 PQC 密碼轉換中繼閘道（Crypto Transition Gateway）</span>。
+    </p>
+
+    <!-- Table 9 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 9</span> <span>傳統 OT 機台免停機 PQC 轉換閘道配置規格與效益分析表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 18%;">架構構面</th>
+            <th style="width: 26%;">傳統舊機台直接升級困境</th>
+            <th style="width: 28%;">PQC 密碼轉換中繼閘道解法</th>
+            <th style="width: 28%;">帶給企業之實務價值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">機台端相容性</td>
+            <td>機台韌體老舊，硬體算力不足，廠商已停止維護，無法支援 PQC</td>
+            <td>機台端維持原有舊通訊協議，完全無需修改韌體或代碼</td>
+            <td>保護既有數億元之機台設備投資，杜絕因資安被迫報廢機台</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">產線停機風險</td>
+            <td>更換控制模組需全廠停線測試，停機一小時損失數百萬營收</td>
+            <td>中繼閘道以旁路或穿透模式佈署，實現 100% 零停機上線</td>
+            <td>達成營運零中斷 (Zero Outage)，確保高良率連續生產不間斷</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">跨網傳輸安全</td>
+            <td>內部 OT 流量若跨廠區傳輸，極易在公共線路上遭竊聽側錄</td>
+            <td>中繼閘道自動封裝 ML-KEM 抗量子加密隧道，對外全面後量子化</td>
+            <td>徹底抵禦「先擷取後解密」威脅，保障晶圓專利與製程參數安全</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">維運集中管理</td>
+            <td>數百台控制器分散各廠，憑證更新需人工逐台手動插線</td>
+            <td>所有 PQC 憑證與金鑰集中於閘道端透過 API 全自動輪替</td>
+            <td>大幅降低維運工時與人為失誤，輕鬆因應 47 天憑證週期</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 7 -->
+<section class="content-section" id="ch7">
+  <div class="container">
+    <span class="section-tag">Chapter 07 ｜ 行動藍圖與架構演進</span>
+    <h2 class="section-title">第柒章 企業落地行動藍圖與架構演進指引</h2>
+    <p class="section-lead">
+      綜合本次台中技術研討會之精華，企業在推動 Security by Design 架構升級時，切忌採取一次性全面翻新的激進做法，而應依循「盤點止血 ➔ 控管自動化 ➔ 敏捷韌性」三階段漸進路徑穩健推進。
+    </p>
+
+    <!-- Schematic 6 -->
+    <div class="figure-wrap">
+      <div class="figure-img-box">
+        <img src="assets/schematic_6_strategic_roadmap.png" alt="示意圖 6：企業 Security by Design 實務落地三階段演進藍圖">
+      </div>
+      <div class="figure-caption">
+        <div class="caption-title">
+          <span>📐 示意圖 6</span> <span>企業 Security by Design 實務落地三階段演進藍圖</span>
+        </div>
+        <div class="caption-desc">三階段架構演進路徑：第一階段（盤點與止血，1~3月）、第二階段（控管與自動化，3~6月）、第三階段（敏捷與韌性，6~12月），確保資安投資與商業價值完全對齊。</div>
+      </div>
+    </div>
+
+    <!-- Table 10 -->
+    <div class="table-responsive">
+      <div class="table-title-bar">
+        <span>📊 示意表 10</span> <span>Security by Design 企業落地三階段甘特時程、關鍵交付物與 KPI 檢核表</span>
+      </div>
+      <table class="milan-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">落地階段</th>
+            <th style="width: 14%;">期程規劃</th>
+            <th style="width: 38%;">關鍵任務工作項目</th>
+            <th style="width: 18%;">負責單位與利害關係人</th>
+            <th style="width: 16%;">驗收檢核 KPI 指標</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-highlight">第一階段<br>盤點與止血</td>
+            <td>第 1 ~ 3 個月</td>
+            <td>1. 啟用 NGFW 探勘全域 AI 流量，產出影子 AI 清冊<br>2. 盤點產線所有機器帳號，強制綁定真人負責人<br>3. 導入 KOI 閘道，攔截研發端點受污染套件</td>
+            <td>CISO 辦公室、ITS 基礎架構、研發主管</td>
+            <td>影子 AI 盤點率達 100%<br>零未授權套件落地</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">第二階段<br>控管與自動化</td>
+            <td>第 3 ~ 6 個月</td>
+            <td>1. 部署 Prisma AIRS AI Gateway，集中管控 LLM 流量<br>2. 落地 ZSP 零常駐特權，為機台與 Agent 配置短效 JIT<br>3. 推廣 Prisma Access Browser，隔絕人機存取風險</td>
+            <td>IS 系統架構、資安團隊、各廠區主管</td>
+            <td>AI 流量合規覆蓋率 90%+<br>常駐機器特權完全清零</td>
+          </tr>
+          <tr>
+            <td class="col-highlight">第三階段<br>敏捷與韌性</td>
+            <td>第 6 ~ 12 個月</td>
+            <td>1. 關鍵機台佈署 PQC 密碼轉換中繼閘道，抵禦竊密<br>2. 邁向 Level 4 (SPIFFE/SPIRE) 機器通用身分架構<br>3. 建立 CBOM 密碼清冊，落實 ACME 憑證全自動輪替</td>
+            <td>企業架構委員會、OT 工程處、C-Level 高管</td>
+            <td>OT 機台 PQC 防禦 100%<br>憑證過期零風險</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Final Executive Recommendation Callout -->
+    <div class="callout-box">
+      <div class="callout-title">
+        <span>🏆</span> <span>Forward-Deployed AI Architect 總結決策建言</span>
+      </div>
+      <ul class="callout-list">
+        <li><strong>資安不再是企業數位轉型的煞車皮：</strong>而是企業引進高產能自主 AI 與保護產線智慧財產的「戰略加速器」！</li>
+        <li><strong>端到端防線的本質：</strong>透過 Prisma AIRS 掌握 AI 運行脈絡、以 Cortex AES (KOI 核心 5 階防線) 築起終端安全、藉由 Prisma Browser 實現人機雙軌治理、引進 Idira 馴服產線機器特權，並以前瞻 PQC 中繼閘道抵禦後量子危機。</li>
+        <li><strong>最高指導原則：</strong>唯有將 Security by Design 深植於企業的每一行代碼、每一次調用與每一台機台中，企業方能在充滿未知威脅的智慧時代，立於不敗之地！</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 頁尾 -->
+<footer class="hub-footer">
+  <div class="container">
+    <p>Howard Liao Ph.D. (廖倫豪 博士) ｜ 前沿技術論壇與研討會專案矩陣 (Seminar Hub)</p>
+    <p style="margin-top: 6px; font-size: 0.8rem; color: var(--text-muted);">
+      本專案內容為高階企業架構與資安戰略評估白皮書 ｜ 僅供線上研習瀏覽，全站不提供實體檔案下載。
+    </p>
+    <div class="footer-links">
+      <a href="../">← 返回研討會總目錄 (Seminar Hub)</a>
+      <a href="#overview">↑ 回到頁面頂端</a>
+    </div>
+  </div>
+</footer>
+
+<!-- 互動邏輯腳本 -->
+<script>
+  // 主題切換器
+  const themeSwitcher = document.getElementById('themeSwitcher');
+  const htmlEl = document.documentElement;
+
+  const savedTheme = localStorage.getItem('seminar_theme_011') || 'milan';
+  htmlEl.setAttribute('data-theme', savedTheme);
+  themeSwitcher.value = savedTheme;
+
+  themeSwitcher.addEventListener('change', (e) => {
+    const val = e.target.value;
+    htmlEl.setAttribute('data-theme', val);
+    localStorage.setItem('seminar_theme_011', val);
+  });
+
+  // TOC 下拉選單開關
+  const tocDropdown = document.getElementById('tocDropdown');
+  const tocDropdownBtn = document.getElementById('tocDropdownBtn');
+  if (tocDropdown && tocDropdownBtn) {
+    tocDropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tocDropdown.classList.toggle('active');
+      const expanded = tocDropdown.classList.contains('active');
+      tocDropdownBtn.setAttribute('aria-expanded', expanded);
+    });
+    document.addEventListener('click', (e) => {
+      if (!tocDropdown.contains(e.target)) {
+        tocDropdown.classList.remove('active');
+        tocDropdownBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.querySelectorAll('.toc-menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        tocDropdown.classList.remove('active');
+        tocDropdownBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // 捲動高亮 Scrollspy
+  const sections = ['overview', 'metrics', 'executive-summary', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const tocPills = document.querySelectorAll('.toc-pill');
+  const tocMenuItems = document.querySelectorAll('.toc-menu-item');
+
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const scrollPos = window.scrollY + 140;
+    sections.forEach(sec => {
+      if (sec.offsetTop <= scrollPos) {
+        currentId = sec.id;
+      }
+    });
+
+    tocLinks.forEach(link => {
+      const href = link.getAttribute('href').replace('#', '');
+      link.classList.toggle('active', href === currentId);
+    });
+
+    tocPills.forEach(pill => {
+      const href = pill.getAttribute('href').replace('#', '');
+      pill.classList.toggle('active', href === currentId);
+    });
+
+    tocMenuItems.forEach(item => {
+      const href = item.getAttribute('href').replace('#', '');
+      item.classList.toggle('active', href === currentId);
+    });
+  });
+</script>
+
+</body>
+</html>
