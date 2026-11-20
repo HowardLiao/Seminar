@@ -1269,22 +1269,143 @@
           border-radius: 18px;
           padding: 20px;
           margin-bottom: 26px;
+          position: relative;
+          overflow: hidden;
         }
         .arch-suite-tabs {
-          display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
+          display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center;
         }
         .arch-tab-btn {
           padding: 9px 16px; border-radius: 10px; cursor: pointer;
           border: 1px solid var(--border); background: rgba(15, 23, 42, 0.45);
           color: var(--text-muted); font-weight: 700; font-size: 0.86rem;
-          transition: all 0.2s ease;
+          transition: all 0.22s ease;
         }
-        .arch-tab-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+        .arch-tab-btn:hover { border-color: var(--accent); color: var(--text-primary); transform: translateY(-1px); }
         .arch-tab-btn.active {
           background: var(--accent); border-color: var(--accent); color: #020617;
+          box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
         }
-        .arch-pane { margin-bottom: 14px; }
+
+        /* Live Traffic Simulator & Layer Spotlight Bar */
+        .arch-sim-bar {
+          display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+          gap: 10px; padding: 12px 14px; margin-bottom: 14px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.9));
+          border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+        .arch-sim-group { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+        .arch-sim-label {
+          font-size: 0.78rem; font-weight: 800; color: #38BDF8; letter-spacing: 0.04em;
+          display: inline-flex; align-items: center; gap: 6px; margin-right: 4px;
+        }
+        .live-dot {
+          width: 8px; height: 8px; border-radius: 50%; background: #34D399;
+          box-shadow: 0 0 10px #34D399; animation: livePulse 1.6s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.45); opacity: 0.45; }
+        }
+        .sim-btn {
+          padding: 6px 12px; border-radius: 999px; cursor: pointer;
+          border: 1px solid rgba(148, 163, 184, 0.28);
+          background: rgba(30, 41, 59, 0.55); color: #CBD5E1;
+          font-size: 0.78rem; font-weight: 700; transition: all 0.2s ease;
+        }
+        .sim-btn:hover { border-color: #38BDF8; color: #F8FAFC; }
+        .sim-btn.active { background: rgba(56, 189, 248, 0.2); border-color: #38BDF8; color: #38BDF8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
+        .sim-btn.active[data-sim="local"] { background: rgba(52, 211, 153, 0.2); border-color: #34D399; color: #34D399; }
+        .sim-btn.active[data-sim="threat"] { background: rgba(244, 63, 94, 0.22); border-color: #FB7185; color: #FB7185; }
+        .sim-btn.active[data-sim="cloud"] { background: rgba(251, 191, 36, 0.2); border-color: #FBBF24; color: #FBBF24; }
+        .sim-pause-btn {
+          padding: 6px 11px; border-radius: 8px; cursor: pointer;
+          border: 1px solid rgba(148, 163, 184, 0.3); background: rgba(15, 23, 42, 0.7);
+          color: #94A3B8; font-size: 0.76rem; font-weight: 700; transition: all 0.2s ease;
+        }
+        .sim-pause-btn:hover { color: #F8FAFC; border-color: #38BDF8; }
+
+        .arch-telemetry-bar {
+          display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+          padding: 9px 14px; margin-bottom: 14px; border-radius: 10px;
+          background: rgba(15, 23, 42, 0.55); border-left: 3px solid #38BDF8;
+          font-size: 0.82rem; color: #E2E8F0; transition: border-color 0.25s ease, background 0.25s ease;
+        }
+        .arch-telemetry-bar[data-state="local"] { border-left-color: #34D399; }
+        .arch-telemetry-bar[data-state="threat"] { border-left-color: #FB7185; background: rgba(244, 63, 94, 0.12); }
+        .arch-telemetry-bar[data-state="cloud"] { border-left-color: #FBBF24; }
+        .arch-telemetry-metrics { display: flex; flex-wrap: wrap; gap: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.76rem; color: #94A3B8; }
+        .arch-telemetry-metrics strong { color: #38BDF8; }
+
+        .arch-layer-pills {
+          display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 14px;
+        }
+        .layer-pill-btn {
+          padding: 4px 10px; border-radius: 999px; cursor: pointer;
+          border: 1px solid rgba(148, 163, 184, 0.25); background: rgba(15, 23, 42, 0.5);
+          color: #94A3B8; font-size: 0.75rem; font-weight: 800; transition: all 0.18s ease;
+        }
+        .layer-pill-btn:hover, .layer-pill-btn.active {
+          background: rgba(56, 189, 248, 0.18); border-color: #38BDF8; color: #F8FAFC;
+          transform: translateY(-1px);
+        }
+
+        /* SVG Live Flow Animations */
+        .arch-flow-svg .flow-line {
+          stroke-dasharray: 8 6;
+          animation: archDashFlow 1.4s linear infinite;
+        }
+        @keyframes archDashFlow {
+          from { stroke-dashoffset: 28; }
+          to { stroke-dashoffset: 0; }
+        }
+        .arch-flow-svg .layer-spot {
+          opacity: 0; transition: opacity 0.25s ease;
+        }
+        .arch-flow-svg .layer-spot.is-lit {
+          opacity: 1; animation: spotBreath 1.8s ease-in-out infinite;
+        }
+        @keyframes spotBreath {
+          0%, 100% { fill-opacity: 0.08; stroke-opacity: 0.95; }
+          50% { fill-opacity: 0.18; stroke-opacity: 0.55; }
+        }
+        .arch-flow-svg .threat-beacon { display: none; }
+        .arch-flow-svg .flow-pkt.route-threat { display: none; }
+
+        /* Scenario States */
+        #arch-three-views[data-sim="local"] .flow-pkt.route-cloud,
+        #arch-three-views[data-sim="local"] .flow-pkt.route-saas { opacity: 0.12; }
+        #arch-three-views[data-sim="local"] .flow-pkt.route-local { opacity: 1; }
+
+        #arch-three-views[data-sim="cloud"] .flow-pkt.route-local { opacity: 0.18; }
+        #arch-three-views[data-sim="cloud"] .flow-pkt.route-cloud { opacity: 1; }
+
+        #arch-three-views[data-sim="threat"] .flow-pkt.route-local,
+        #arch-three-views[data-sim="threat"] .flow-pkt.route-cloud,
+        #arch-three-views[data-sim="threat"] .flow-pkt.route-saas { opacity: 0.14; }
+        #arch-three-views[data-sim="threat"] .flow-pkt.route-threat { display: inline; }
+        #arch-three-views[data-sim="threat"] .threat-beacon { display: inline; }
+
+        /* Paused state */
+        #arch-three-views.is-paused .flow-line,
+        #arch-three-views.is-paused .live-dot,
+        #arch-three-views.is-paused .layer-spot.is-lit { animation-play-state: paused !important; }
+        #arch-three-views.is-paused .flow-pkt,
+        #arch-three-views.is-paused .threat-beacon { opacity: 0.25 !important; }
+
+        .arch-pane { margin-bottom: 14px; animation: paneFadeIn 0.32s ease; }
+        @keyframes paneFadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .arch-pane.hidden { display: none; }
+        .arch-pane svg {
+          width: 100%; height: auto; border-radius: 14px;
+          box-shadow: 0 14px 36px rgba(2, 6, 23, 0.55);
+          transition: box-shadow 0.3s ease;
+        }
+        .arch-pane svg:hover { box-shadow: 0 18px 44px rgba(56, 189, 248, 0.16); }
         .arch-pane-cap {
           margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);
           display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
@@ -1296,6 +1417,13 @@
         .arch-suite-box th, .arch-suite-box td {
           padding: 10px 12px; text-align: left;
           border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+        .arch-suite-box tbody tr {
+          cursor: pointer; transition: background 0.18s ease, transform 0.18s ease;
+        }
+        .arch-suite-box tbody tr:hover,
+        .arch-suite-box tbody tr.is-active-row {
+          background: rgba(56, 189, 248, 0.11);
         }
         .arch-suite-box th {
           background: rgba(56, 189, 248, 0.1); color: var(--accent);
@@ -1311,7 +1439,13 @@
         .arch-suite-box .l4 { background: #34D399; }
         .arch-suite-box .l5 { background: #A78BFA; }
         .arch-suite-box .l6 { background: #94A3B8; }
-      </style>
+        @media (prefers-reduced-motion: reduce) {
+          .arch-flow-svg .flow-line, .live-dot, .layer-spot.is-lit { animation: none !important; }
+        }
+        @media print {
+          .arch-sim-bar, .arch-layer-pills, .arch-telemetry-bar, .flow-pkt, .threat-beacon { display: none !important; }
+        }
+</style>
 
       <div class="arch-suite-box" id="arch-three-views">
         <div class="arch-suite-tabs" role="tablist">
@@ -1321,8 +1455,40 @@
           <button type="button" class="arch-tab-btn" data-arch-view="all">⊞ 三圖完整總覽</button>
         </div>
 
+        <div class="arch-sim-bar" aria-label="即時流量情境模擬">
+          <div class="arch-sim-group">
+            <span class="arch-sim-label"><span class="live-dot"></span>即時流量模擬</span>
+            <button type="button" class="sim-btn active" data-sim="normal">🟢 70/30 常態雙軌</button>
+            <button type="button" class="sim-btn" data-sim="local">🔒 機密研發 100% 地端</button>
+            <button type="button" class="sim-btn" data-sim="threat">🚨 注入攻擊即時阻斷</button>
+            <button type="button" class="sim-btn" data-sim="cloud">☁️ 脫敏跨雲 30% 推理</button>
+          </div>
+          <button type="button" class="sim-pause-btn" id="archPauseBtn">⏸ 暫停流動</button>
+        </div>
+
+        <div class="arch-telemetry-bar" id="archTelemetryBar" data-state="normal">
+          <span id="archTelemetryMsg">⚡ <strong>常態雙軌運作中：</strong>Howard Route 依機敏度即時分流 — 70% 高頻內部任務直達地端 AIDC GPU，30% 複雜推理由 Presidio DLP 動態脫敏後經 PrivateLink 呼叫跨雲旗艦模型。</span>
+          <span class="arch-telemetry-metrics">
+            <span>On-Prem: <strong id="mOnPrem">70%</strong></span>
+            <span>Cloud: <strong id="mCloud">30%</strong></span>
+            <span>AIRS 延遲: <strong id="mLat">2.4ms</strong></span>
+          </span>
+        </div>
+
+        <div class="arch-layer-pills" aria-label="跨視角層級聚焦">
+          <span style="font-size:0.76rem;color:#94A3B8;font-weight:700;margin-right:4px;">🎯 層級聚焦：</span>
+          <button type="button" class="layer-pill-btn active" data-focus-layer="ALL">全部總覽</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L1">[L1] 全通路入口</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L2">[L2] Agent 應用層</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L3">[L3] HAG 治理中樞</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L4">[L4] 70/30 模型底座</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L5">[L5] 企業知識與稽核</button>
+          <button type="button" class="layer-pill-btn" data-focus-layer="L6">[L6] 混合算力與資安</button>
+        </div>
+
+
         <div class="arch-pane" data-arch-pane="user">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 800" width="100%" style="display:block;border-radius:14px;background:#020617;">
+          <svg class="arch-flow-svg arch-flow-svg-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 800" width="100%" style="display:block;border-radius:14px;background:#020617;">
 <defs>
 <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.6"/></pattern>
 <marker id="arr-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8"/></marker>
@@ -1331,27 +1497,31 @@
 <marker id="arr-rose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#FB7185"/></marker>
 <marker id="arr-violet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#A78BFA"/></marker>
 <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#94A3B8"/></marker>
-</defs>
+<filter id="pkt-glow-1" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
 <rect width="1360" height="800" fill="#020617"/>
 <rect width="1360" height="800" fill="url(#archGrid)"/>
 <rect x="24" y="18" width="1312" height="62" rx="10" fill="#0F172A"/><rect x="24" y="18" width="1312" height="62" rx="10" fill="rgba(15,23,42,0.92)" stroke="#38BDF8" stroke-width="1.5"/>
 <text x="44" y="46" text-anchor="start" fill="#F8FAFC" font-size="17" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">圖 1｜L.L.H Enterprise AI 使用者架構圖（User Architecture · 主權混合 AI 70/30）</text>
 <text x="44" y="68" text-anchor="start" fill="#94A3B8" font-size="12" font-weight="500" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">高管視角全景圖：整合全通路入口、L.L.H AI Agent / BYOA、HAG 治理路由中樞（70/30 主權混合）、跨雲地端模型與受控 SaaS AI</text>
 <rect x="1205" y="36" width="110" height="26" rx="6" fill="#38BDF8"/><text x="1260.0" y="51" text-anchor="middle" fill="#020617" font-size="11" font-weight="800" font-family="Inter, PingFang TC, sans-serif">VIEW 1 / 3</text>
-<line x1="310" y1="178" x2="310" y2="206" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)"/>
-<line x1="760" y1="178" x2="760" y2="206" stroke="#FBBF24" stroke-width="2.4" marker-end="url(#arr-amber)"/>
-<line x1="310" y1="296" x2="310" y2="326" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)"/>
-<line x1="760" y1="296" x2="760" y2="326" stroke="#FBBF24" stroke-width="2.4" marker-end="url(#arr-amber)"/>
-<line x1="255" y1="444" x2="255" y2="474" stroke="#34D399" stroke-width="2.6" marker-end="url(#arr-emerald)"/>
+<line x1="310" y1="178" x2="310" y2="206" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="760" y1="178" x2="760" y2="206" stroke="#FBBF24" stroke-width="2.4" marker-end="url(#arr-amber)" class="flow-line"/>
+<line x1="310" y1="296" x2="310" y2="326" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="760" y1="296" x2="760" y2="326" stroke="#FBBF24" stroke-width="2.4" marker-end="url(#arr-amber)" class="flow-line"/>
+<line x1="255" y1="444" x2="255" y2="474" stroke="#34D399" stroke-width="2.6" marker-end="url(#arr-emerald)" class="flow-line"/>
 <rect x="210.0" y="448" width="90" height="20" rx="5" fill="#020617" stroke="#34D399" stroke-width="1"/>
 <text x="255" y="462" text-anchor="middle" fill="#34D399" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">70% 地端直通</text>
-<line x1="700" y1="444" x2="700" y2="474" stroke="#FBBF24" stroke-width="2.6" stroke-dasharray="6,4" marker-end="url(#arr-amber)"/>
+<line x1="700" y1="444" x2="700" y2="474" stroke="#FBBF24" stroke-width="2.6" stroke-dasharray="6,4" marker-end="url(#arr-amber)" class="flow-line"/>
 <rect x="646.0" y="448" width="108" height="20" rx="5" fill="#020617" stroke="#FBBF24" stroke-width="1"/>
 <text x="700" y="462" text-anchor="middle" fill="#FBBF24" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">30% DLP 脫敏</text>
-<line x1="255" y1="578" x2="255" y2="608" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)"/>
-<line x1="700" y1="578" x2="700" y2="608" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)"/>
-<line x1="480" y1="678" x2="480" y2="704" stroke="#94A3B8" stroke-width="2.2" marker-end="url(#arr-slate)"/>
-<line x1="934" y1="384" x2="976" y2="384" stroke="#FB7185" stroke-width="2.4" stroke-dasharray="6,4" marker-end="url(#arr-rose)"/>
+<line x1="255" y1="578" x2="255" y2="608" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)" class="flow-line"/>
+<line x1="700" y1="578" x2="700" y2="608" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)" class="flow-line"/>
+<line x1="480" y1="678" x2="480" y2="704" stroke="#94A3B8" stroke-width="2.2" marker-end="url(#arr-slate)" class="flow-line"/>
+<line x1="934" y1="384" x2="976" y2="384" stroke="#FB7185" stroke-width="2.4" stroke-dasharray="6,4" marker-end="url(#arr-rose)" class="flow-line"/>
 <rect x="24" y="98" width="910" height="80" rx="12" fill="#0F172A"/><rect x="24" y="98" width="910" height="80" rx="12" fill="rgba(37,99,235,0.22)" stroke="#3B82F6" stroke-width="2"/>
 <rect x="42" y="112" width="42" height="22" rx="6" fill="#3B82F6"/><text x="63.0" y="127" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="800" font-family="Inter, PingFang TC, sans-serif">L1</text>
 <text x="96" y="128" text-anchor="start" fill="#F8FAFC" font-size="16" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">User Portal 全通路使用者入口層</text>
@@ -1427,6 +1597,22 @@
 <text x="996" y="716" text-anchor="start" fill="#F8FAFC" font-size="12" font-weight="600" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">• ISO 42001 / 27001 就緒（WORM 不可竄改存證）</text>
 <text x="996" y="742" text-anchor="start" fill="#F8FAFC" font-size="12" font-weight="600" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">• 產線斷網高韌性（雲端異常 100% 自動降級地端）</text>
 <text x="996" y="764" text-anchor="start" fill="#94A3B8" font-size="10.5" font-weight="500" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">Architecture by Howard Liao Ph.D. · L.L.H HAG</text>
+<g class="arch-live-overlay">
+  <rect class="layer-spot" data-spot-layer="L1" x="28" y="96" width="906" height="84" rx="14" fill="#3B82F6" fill-opacity="0.09" stroke="#3B82F6" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L2" x="28" y="206" width="1304" height="92" rx="14" fill="#22D3EE" fill-opacity="0.09" stroke="#22D3EE" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L3" x="28" y="326" width="906" height="120" rx="14" fill="#FB7185" fill-opacity="0.09" stroke="#FB7185" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L4" x="28" y="474" width="906" height="106" rx="14" fill="#34D399" fill-opacity="0.09" stroke="#34D399" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L5" x="28" y="608" width="906" height="72" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L6" x="28" y="704" width="1304" height="72" rx="14" fill="#94A3B8" fill-opacity="0.09" stroke="#94A3B8" stroke-width="3" pointer-events="none"/>
+  <g class="threat-beacon" pointer-events="none"><circle cx="555" cy="384" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="555" cy="384" r="6" fill="#F43F5E" filter="url(#pkt-glow-1)"/></g>
+  <circle class="flow-pkt route-local" r="5.2" fill="#34D399" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+  <circle class="flow-pkt route-local" r="4.4" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+  <circle class="flow-pkt route-cloud" r="5.0" fill="#FBBF24" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="0.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+  <circle class="flow-pkt route-cloud" r="4.0" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="2.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+  <circle class="flow-pkt route-saas" r="4.6" fill="#FB7185" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.6s" begin="0.8s" repeatCount="indefinite" path="M 310 140 L 310 384 L 976 384"/></circle>
+  <circle class="flow-pkt route-threat" r="6.0" fill="#F43F5E" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 384 L 540 384"/></circle>
+  <circle class="flow-pkt route-local" r="4.0" fill="#A78BFA" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.4s" begin="0.3s" repeatCount="indefinite" path="M 480 650 L 480 735"/></circle>
+  </g>
 </svg>
           <div class="arch-pane-cap">
             <span><strong>圖 1｜使用者架構圖（主權混合 AI 70/30 雙軌架構）：</strong>以 [L1]–[L6] 呈現全通路入口、L.L.H AI Agent / BYOA、HAG 治理中樞（70/30 主權路由 + DLP）、雙軌模型底座與受控外部 SaaS AI。</span>
@@ -1435,7 +1621,7 @@
         </div>
 
         <div class="arch-pane hidden" data-arch-pane="system">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 860" width="100%" style="display:block;border-radius:14px;background:#020617;">
+          <svg class="arch-flow-svg arch-flow-svg-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 860" width="100%" style="display:block;border-radius:14px;background:#020617;">
 <defs>
 <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.6"/></pattern>
 <marker id="arr-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8"/></marker>
@@ -1444,41 +1630,45 @@
 <marker id="arr-rose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#FB7185"/></marker>
 <marker id="arr-violet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#A78BFA"/></marker>
 <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#94A3B8"/></marker>
-</defs>
+<filter id="pkt-glow-2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
 <rect width="1360" height="860" fill="#020617"/>
 <rect width="1360" height="860" fill="url(#archGrid)"/>
 <rect x="24" y="18" width="1312" height="62" rx="10" fill="#0F172A"/><rect x="24" y="18" width="1312" height="62" rx="10" fill="rgba(15,23,42,0.92)" stroke="#22D3EE" stroke-width="1.5"/>
 <text x="44" y="46" text-anchor="start" fill="#F8FAFC" font-size="17" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">圖 2｜L.L.H HAG 企業級 AI 系統架構圖（System Architecture · 逐層對映 [L1]–[L6]）</text>
 <text x="44" y="68" text-anchor="start" fill="#94A3B8" font-size="12" font-weight="500" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">完整拆解 Control Plane（HAG 治理與主權路由中樞）與 Data Plane（70/30 混合推論與向量知識庫）之系統模組與資料流向</text>
 <rect x="1205" y="36" width="110" height="26" rx="6" fill="#22D3EE"/><text x="1260.0" y="51" text-anchor="middle" fill="#020617" font-size="11" font-weight="800" font-family="Inter, PingFang TC, sans-serif">VIEW 2 / 3</text>
-<line x1="195" y1="178" x2="195" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)"/>
-<line x1="515" y1="178" x2="515" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)"/>
-<line x1="835" y1="178" x2="835" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)"/>
-<line x1="1170" y1="178" x2="1170" y2="206" stroke="#FBBF24" stroke-width="2" marker-end="url(#arr-amber)"/>
-<line x1="195" y1="298" x2="195" y2="336" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#arr-cyan)"/>
-<line x1="450" y1="298" x2="450" y2="336" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#arr-cyan)"/>
-<line x1="950" y1="298" x2="950" y2="336" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)"/>
-<line x1="1190" y1="298" x2="1190" y2="336" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)"/>
-<line x1="276" y1="412" x2="298" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)"/>
-<line x1="526" y1="412" x2="548" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)"/>
-<line x1="776" y1="412" x2="798" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)"/>
-<line x1="1056" y1="412" x2="1078" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)"/>
-<path d="M 885 462 L 885 486 L 360 486 L 360 512" fill="none" stroke="#34D399" stroke-width="2.6" marker-end="url(#arr-emerald)"/>
+<line x1="195" y1="178" x2="195" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="515" y1="178" x2="515" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="835" y1="178" x2="835" y2="206" stroke="#38BDF8" stroke-width="2" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="1170" y1="178" x2="1170" y2="206" stroke="#FBBF24" stroke-width="2" marker-end="url(#arr-amber)" class="flow-line"/>
+<line x1="195" y1="298" x2="195" y2="336" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="450" y1="298" x2="450" y2="336" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#arr-cyan)" class="flow-line"/>
+<line x1="950" y1="298" x2="950" y2="336" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)" class="flow-line"/>
+<line x1="1190" y1="298" x2="1190" y2="336" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)" class="flow-line"/>
+<line x1="276" y1="412" x2="298" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)" class="flow-line"/>
+<line x1="526" y1="412" x2="548" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)" class="flow-line"/>
+<line x1="776" y1="412" x2="798" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)" class="flow-line"/>
+<line x1="1056" y1="412" x2="1078" y2="412" stroke="#FB7185" stroke-width="2" marker-end="url(#arr-rose)" class="flow-line"/>
+<path d="M 885 462 L 885 486 L 360 486 L 360 512" fill="none" stroke="#34D399" stroke-width="2.6" marker-end="url(#arr-emerald)" class="flow-line"/>
 <rect x="458.75" y="475" width="162.5" height="20" rx="5" fill="#020617" stroke="#34D399" stroke-width="1"/>
 <text x="540" y="489" text-anchor="middle" fill="#34D399" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">70% 地端主權直通（0% 出廠）</text>
-<path d="M 965 462 L 965 486 L 1015 486 L 1015 512" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-dasharray="6,4" marker-end="url(#arr-amber)"/>
+<path d="M 965 462 L 965 486 L 1015 486 L 1015 512" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-dasharray="6,4" marker-end="url(#arr-amber)" class="flow-line"/>
 <rect x="1005.75" y="475" width="128.5" height="20" rx="5" fill="#020617" stroke="#FBBF24" stroke-width="1"/>
 <text x="1070" y="489" text-anchor="middle" fill="#FBBF24" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">30% DLP 脫敏後專線</text>
-<line x1="200" y1="610" x2="200" y2="646" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)"/>
+<line x1="200" y1="610" x2="200" y2="646" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr-violet)" class="flow-line"/>
 <rect x="160.0" y="617" width="80" height="20" rx="5" fill="#020617" stroke="#A78BFA" stroke-width="1"/>
 <text x="200" y="631" text-anchor="middle" fill="#A78BFA" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">RAG 檢索</text>
-<line x1="515" y1="610" x2="515" y2="646" stroke="#A78BFA" stroke-width="2.0" stroke-dasharray="6,4" marker-end="url(#arr-violet)"/>
+<line x1="515" y1="610" x2="515" y2="646" stroke="#A78BFA" stroke-width="2.0" stroke-dasharray="6,4" marker-end="url(#arr-violet)" class="flow-line"/>
 <rect x="475.0" y="617" width="80" height="20" rx="5" fill="#020617" stroke="#A78BFA" stroke-width="1"/>
 <text x="515" y="631" text-anchor="middle" fill="#A78BFA" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">語意快取</text>
-<line x1="1190" y1="462" x2="1190" y2="646" stroke="#A78BFA" stroke-width="2.0" stroke-dasharray="6,4" marker-end="url(#arr-violet)"/>
+<line x1="1190" y1="462" x2="1190" y2="646" stroke="#A78BFA" stroke-width="2.0" stroke-dasharray="6,4" marker-end="url(#arr-violet)" class="flow-line"/>
 <rect x="1207.5" y="549" width="81" height="20" rx="5" fill="#020617" stroke="#A78BFA" stroke-width="1"/>
 <text x="1248" y="563" text-anchor="middle" fill="#A78BFA" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">WORM 寫入</text>
-<line x1="680" y1="728" x2="680" y2="756" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arr-slate)"/>
+<line x1="680" y1="728" x2="680" y2="756" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arr-slate)" class="flow-line"/>
 <rect x="24" y="96" width="1312" height="86" rx="10" fill="#0F172A"/><rect x="24" y="96" width="1312" height="86" rx="10" fill="rgba(37,99,235,0.12)" stroke="#3B82F6" stroke-width="1.6" stroke-dasharray="6,4"/>
 <rect x="38" y="106" width="38" height="20" rx="6" fill="#3B82F6"/><text x="57.0" y="121" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="800" font-family="Inter, PingFang TC, sans-serif">L1</text>
 <text x="86" y="121" text-anchor="start" fill="#93C5FD" font-size="13.5" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">全通路接入層（Channels &amp; Clients）</text>
@@ -1566,6 +1756,21 @@
 <text x="488" y="813" text-anchor="start" fill="#F8FAFC" font-size="11.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">5 階供應鏈防禦：KOI 攔截 → Runtime → 憑證 → 72h 冷卻 → 隔離</text>
 <rect x="906" y="790" width="412" height="38" rx="8" fill="#0F172A"/><rect x="906" y="790" width="412" height="38" rx="8" fill="rgba(15,23,42,0.92)" stroke="#94A3B8" stroke-width="1.2"/>
 <text x="920" y="813" text-anchor="start" fill="#F8FAFC" font-size="11.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">算力與密碼：K8s Volcano/MIG · H100/H200 · Dynamic CBOM/PQC</text>
+<g class="arch-live-overlay">
+  <rect class="layer-spot" data-spot-layer="L1" x="28" y="96" width="1304" height="84" rx="14" fill="#3B82F6" fill-opacity="0.09" stroke="#3B82F6" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L2" x="28" y="206" width="1304" height="94" rx="14" fill="#22D3EE" fill-opacity="0.09" stroke="#22D3EE" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L3" x="28" y="336" width="1304" height="128" rx="14" fill="#FB7185" fill-opacity="0.09" stroke="#FB7185" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L4" x="28" y="512" width="1304" height="100" rx="14" fill="#34D399" fill-opacity="0.09" stroke="#34D399" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L5" x="28" y="646" width="1304" height="84" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L6" x="28" y="756" width="1304" height="78" rx="14" fill="#94A3B8" fill-opacity="0.09" stroke="#94A3B8" stroke-width="3" pointer-events="none"/>
+  <g class="threat-beacon" pointer-events="none"><circle cx="412" cy="412" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="412" cy="412" r="6" fill="#F43F5E" filter="url(#pkt-glow-2)"/></g>
+  <circle class="flow-pkt route-local" r="5.2" fill="#34D399" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.6s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 340 L 195 412 L 885 412 L 885 486 L 360 486 L 360 560 L 200 660"/></circle>
+  <circle class="flow-pkt route-local" r="4.4" fill="#38BDF8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.8s" begin="2.2s" repeatCount="indefinite" path="M 515 150 L 515 340 L 515 412 L 885 412 L 885 486 L 360 486 L 360 560 L 515 660"/></circle>
+  <circle class="flow-pkt route-cloud" r="5.0" fill="#FBBF24" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.2s" begin="0.7s" repeatCount="indefinite" path="M 835 150 L 835 340 L 660 412 L 965 412 L 965 486 L 1015 486 L 1015 570"/></circle>
+  <circle class="flow-pkt route-saas" r="4.4" fill="#A78BFA" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="3.2s" begin="1.1s" repeatCount="indefinite" path="M 1190 298 L 1190 462 L 1190 660"/></circle>
+  <circle class="flow-pkt route-threat" r="6.0" fill="#F43F5E" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 412 L 412 412"/></circle>
+  <circle class="flow-pkt route-local" r="4.0" fill="#94A3B8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.5s" begin="0.4s" repeatCount="indefinite" path="M 680 715 L 680 780"/></circle>
+  </g>
 </svg>
           <div class="arch-pane-cap">
             <span><strong>圖 2｜系統架構圖（System Architecture）：</strong>逐層拆解 Control Plane（Zero-Trust Ingress / Howard AIRS / Presidio DLP / Howard Route / FinOps）與 Data Plane（70% vLLM vs 30% Multi-Cloud）資料流。</span>
@@ -1574,7 +1779,7 @@
         </div>
 
         <div class="arch-pane hidden" data-arch-pane="deploy">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 880" width="100%" style="display:block;border-radius:14px;background:#020617;">
+          <svg class="arch-flow-svg arch-flow-svg-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 880" width="100%" style="display:block;border-radius:14px;background:#020617;">
 <defs>
 <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.6"/></pattern>
 <marker id="arr-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8"/></marker>
@@ -1583,27 +1788,31 @@
 <marker id="arr-rose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#FB7185"/></marker>
 <marker id="arr-violet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#A78BFA"/></marker>
 <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="#94A3B8"/></marker>
-</defs>
+<filter id="pkt-glow-3" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
 <rect width="1360" height="880" fill="#020617"/>
 <rect width="1360" height="880" fill="url(#archGrid)"/>
 <rect x="24" y="18" width="1312" height="62" rx="10" fill="#0F172A"/><rect x="24" y="18" width="1312" height="62" rx="10" fill="rgba(15,23,42,0.92)" stroke="#34D399" stroke-width="1.5"/>
 <text x="44" y="46" text-anchor="start" fill="#F8FAFC" font-size="17" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">圖 3｜L.L.H HAG 混合雲與地端 AIDC 部署架構圖（UML 2 Deployment Diagram）</text>
 <text x="44" y="68" text-anchor="start" fill="#94A3B8" font-size="12" font-weight="500" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">對映 [L1]–[L6] 五大實體網路安全分區（Intranet/OT → DMZ → On-Prem K8s → AIDC GPU 70% / Multi-Cloud VPC 30%）與零信任加密通道</text>
 <rect x="1205" y="36" width="110" height="26" rx="6" fill="#34D399"/><text x="1260.0" y="51" text-anchor="middle" fill="#020617" font-size="11" font-weight="800" font-family="Inter, PingFang TC, sans-serif">VIEW 3 / 3</text>
-<line x1="310" y1="232" x2="360" y2="232" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)"/>
+<line x1="310" y1="232" x2="360" y2="232" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)" class="flow-line"/>
 <rect x="294.5" y="203" width="81" height="20" rx="5" fill="#020617" stroke="#38BDF8" stroke-width="1"/>
 <text x="335" y="217" text-anchor="middle" fill="#38BDF8" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">TLS 1.3</text>
-<line x1="310" y1="345" x2="360" y2="345" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)"/>
+<line x1="310" y1="345" x2="360" y2="345" stroke="#38BDF8" stroke-width="2.4" marker-end="url(#arr-cyan)" class="flow-line"/>
 <rect x="295.0" y="316" width="80" height="20" rx="5" fill="#020617" stroke="#38BDF8" stroke-width="1"/>
 <text x="335" y="330" text-anchor="middle" fill="#38BDF8" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">mTLS</text>
-<line x1="656" y1="250" x2="706" y2="250" stroke="#FB7185" stroke-width="2.4" marker-end="url(#arr-rose)"/>
+<line x1="656" y1="250" x2="706" y2="250" stroke="#FB7185" stroke-width="2.4" marker-end="url(#arr-rose)" class="flow-line"/>
 <rect x="641.0" y="221" width="80" height="20" rx="5" fill="#020617" stroke="#FB7185" stroke-width="1"/>
 <text x="681" y="235" text-anchor="middle" fill="#FB7185" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">JWT</text>
-<line x1="656" y1="360" x2="706" y2="360" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)"/>
-<path d="M 860 462 L 860 500 L 340 500 L 340 532" fill="none" stroke="#34D399" stroke-width="2.8" marker-end="url(#arr-emerald)"/>
+<line x1="656" y1="360" x2="706" y2="360" stroke="#FB7185" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arr-rose)" class="flow-line"/>
+<path d="M 860 462 L 860 500 L 340 500 L 340 532" fill="none" stroke="#34D399" stroke-width="2.8" marker-end="url(#arr-emerald)" class="flow-line"/>
 <rect x="426.0" y="489" width="188.0" height="20" rx="5" fill="#020617" stroke="#34D399" stroke-width="1"/>
 <text x="520" y="503" text-anchor="middle" fill="#34D399" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">70% 內網高速直通（100% 不出廠）</text>
-<path d="M 1030 462 L 1030 532" fill="none" stroke="#FBBF24" stroke-width="2.8" stroke-dasharray="6,4" marker-end="url(#arr-amber)"/>
+<path d="M 1030 462 L 1030 532" fill="none" stroke="#FBBF24" stroke-width="2.8" stroke-dasharray="6,4" marker-end="url(#arr-amber)" class="flow-line"/>
 <rect x="1062.25" y="489" width="145.5" height="20" rx="5" fill="#020617" stroke="#FBBF24" stroke-width="1"/>
 <text x="1135" y="503" text-anchor="middle" fill="#FBBF24" font-size="10.5" font-weight="700" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">30% DLP 脫敏後專線加密</text>
 <rect x="24" y="98" width="290" height="372" rx="12" fill="#0F172A"/><rect x="24" y="98" width="290" height="372" rx="12" fill="rgba(37,99,235,0.12)" stroke="#3B82F6" stroke-width="2" stroke-dasharray="8,4"/>
@@ -1713,6 +1922,20 @@
 <text x="726" y="791" text-anchor="start" fill="#FDE68A" font-size="12" font-weight="800" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">&lt;&lt;resilience policy&gt;&gt; 跨雲高可用容錯與斷網熔斷降級策略</text>
 <text x="726" y="813" text-anchor="start" fill="#CBD5E1" font-size="11.2" font-weight="500" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">• 單一雲端供應商超時或限流：自動毫秒切換至備援雲（零廠商鎖定）</text>
 <text x="726" y="831" text-anchor="start" fill="#6EE7B7" font-size="11.2" font-weight="600" font-family="PingFang TC, Inter, Helvetica Neue, sans-serif">• 跨國海纜或對外網路中斷：Howard Route 熔斷器 100% 自動切換至 Zone 4 地端 AIDC</text>
+<g class="arch-live-overlay">
+  <rect class="layer-spot" data-spot-layer="L1" x="28" y="108" width="286" height="356" rx="14" fill="#3B82F6" fill-opacity="0.09" stroke="#3B82F6" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L2" x="358" y="108" width="300" height="356" rx="14" fill="#22D3EE" fill-opacity="0.09" stroke="#22D3EE" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L3" x="704" y="108" width="628" height="356" rx="14" fill="#FB7185" fill-opacity="0.09" stroke="#FB7185" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L4" x="28" y="530" width="628" height="310" rx="14" fill="#34D399" fill-opacity="0.09" stroke="#34D399" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L5" x="704" y="290" width="628" height="174" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
+  <rect class="layer-spot" data-spot-layer="L6" x="698" y="530" width="634" height="310" rx="14" fill="#FBBF24" fill-opacity="0.09" stroke="#FBBF24" stroke-width="3" pointer-events="none"/>
+  <g class="threat-beacon" pointer-events="none"><circle cx="508" cy="250" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="508" cy="250" r="6" fill="#F43F5E" filter="url(#pkt-glow-3)"/></g>
+  <circle class="flow-pkt route-local" r="5.4" fill="#34D399" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.8s" begin="0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 860 250 L 860 500 L 340 500 L 340 620"/></circle>
+  <circle class="flow-pkt route-local" r="4.5" fill="#38BDF8" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="5.0s" begin="2.4s" repeatCount="indefinite" path="M 170 345 L 360 345 L 656 360 L 860 360 L 860 500 L 340 500 L 340 620"/></circle>
+  <circle class="flow-pkt route-cloud" r="5.2" fill="#FBBF24" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.4s" begin="1.0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 1030 250 L 1030 620"/></circle>
+  <circle class="flow-pkt route-threat" r="6.2" fill="#F43F5E" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="1.9s" begin="0s" repeatCount="indefinite" path="M 170 232 L 508 232 L 508 250"/></circle>
+  <circle class="flow-pkt route-saas" r="4.4" fill="#FB7185" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M 170 345 L 508 345 L 706 360"/></circle>
+  </g>
 </svg>
           <div class="arch-pane-cap">
             <span><strong>圖 3｜UML 2 部署架構圖（Deployment Diagram）：</strong>精準切分 5 大實體網路資安分區（Intranet/OT → DMZ → On-Prem K8s → AIDC GPU 機房 70% → PrivateLink 多雲 VPC 30%），落實機密不出廠與斷網自治。</span>
@@ -1781,19 +2004,120 @@
       </div>
 
       <script>
-        (function() {
-          const box = document.getElementById('arch-three-views');
-          if (!box) return;
-          const btns = box.querySelectorAll('.arch-tab-btn');
-          const panes = box.querySelectorAll('.arch-pane');
-          btns.forEach(btn => {
-            btn.addEventListener('click', () => {
-              btns.forEach(b => b.classList.remove('active'));
+        (function(){
+          var root = document.getElementById('arch-three-views');
+          if (!root) return;
+          var btns = root.querySelectorAll('.arch-tab-btn');
+          var panes = root.querySelectorAll('.arch-pane');
+          btns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+              btns.forEach(function(b){ b.classList.remove('active'); });
               btn.classList.add('active');
-              const v = btn.getAttribute('data-arch-view');
-              panes.forEach(p => {
-                if (v === 'all' || p.getAttribute('data-arch-pane') === v) p.classList.remove('hidden');
-                else p.classList.add('hidden');
+              var v = btn.getAttribute('data-arch-view');
+              panes.forEach(function(p){
+                if (v === 'all' || p.getAttribute('data-arch-pane') === v) {
+                  p.classList.remove('hidden');
+                } else {
+                  p.classList.add('hidden');
+                }
+              });
+            });
+          });
+
+          // Live traffic simulator
+          var simMeta = {
+            normal: {
+              msg: '⚡ <strong>常態雙軌運作中：</strong>Howard Route 依機敏度即時分流 — 70% 高頻內部任務直達地端 AIDC GPU，30% 複雜推理由 Presidio DLP 動態脫敏後經 PrivateLink 呼叫跨雲旗艦模型。',
+              onprem: '70%', cloud: '30%', lat: '2.4ms'
+            },
+            local: {
+              msg: '🔒 <strong>機密研發模式（100% 主權地端）：</strong>Presidio DLP 偵測到專利配方／製程原始碼，自動鎖定地端 vLLM 叢集與內網 Milvus 知識庫，<strong>0 Byte 離開企業內網</strong>。',
+              onprem: '100%', cloud: '0%', lat: '1.9ms'
+            },
+            threat: {
+              msg: '🚨 <strong>OWASP LLM01 攻擊阻斷：</strong>Howard AIRS 於 DMZ / 治理中樞即時攔截 Prompt Injection 與越權提權企圖（2.1ms 熔斷），並同步寫入 WORM 不可竄改稽核庫。',
+              onprem: 'BLOCKED', cloud: '0%', lat: '2.1ms'
+            },
+            cloud: {
+              msg: '☁️ <strong>跨雲旗艦推理（PII 動態脫敏）：</strong>系統自動將姓名、統編與財報數值替換為安全權杖（Tokenize），經由加密 PrivateLink 呼叫多雲旗艦模型，回傳後於地端自動還原。',
+              onprem: 'DLP Mask', cloud: '100% Priv', lat: '3.2ms'
+            }
+          };
+          var simBtns = root.querySelectorAll('.sim-btn');
+          var telBar = root.querySelector('#archTelemetryBar');
+          var telMsg = root.querySelector('#archTelemetryMsg');
+          var mOnPrem = root.querySelector('#mOnPrem');
+          var mCloud = root.querySelector('#mCloud');
+          var mLat = root.querySelector('#mLat');
+
+          simBtns.forEach(function(sb){
+            sb.addEventListener('click', function(){
+              var mode = sb.getAttribute('data-sim');
+              simBtns.forEach(function(b){ b.classList.remove('active'); });
+              sb.classList.add('active');
+              root.setAttribute('data-sim', mode);
+              var info = simMeta[mode] || simMeta.normal;
+              if (telBar) telBar.setAttribute('data-state', mode);
+              if (telMsg) telMsg.innerHTML = info.msg;
+              if (mOnPrem) mOnPrem.textContent = info.onprem;
+              if (mCloud) mCloud.textContent = info.cloud;
+              if (mLat) mLat.textContent = info.lat;
+            });
+          });
+
+          // Pause / Resume SVG animations
+          var pauseBtn = root.querySelector('#archPauseBtn');
+          if (pauseBtn) {
+            pauseBtn.addEventListener('click', function(){
+              var paused = root.classList.toggle('is-paused');
+              pauseBtn.textContent = paused ? '▶ 恢復流動' : '⏸ 暫停流動';
+              root.querySelectorAll('svg').forEach(function(svg){
+                if (typeof svg.pauseAnimations === 'function') {
+                  if (paused) svg.pauseAnimations(); else svg.unpauseAnimations();
+                }
+              });
+            });
+          }
+
+          // Cross-view [L1]-[L6] spotlight (pills + traceability matrix rows)
+          var pillBtns = root.querySelectorAll('.layer-pill-btn');
+          var matrixRows = root.querySelectorAll('.matrix-wrap tbody tr');
+          var spots = root.querySelectorAll('.layer-spot');
+
+          function setLayerFocus(layer) {
+            pillBtns.forEach(function(b){
+              b.classList.toggle('active', b.getAttribute('data-focus-layer') === layer);
+            });
+            spots.forEach(function(sp){
+              sp.classList.toggle('is-lit', layer !== 'ALL' && sp.getAttribute('data-spot-layer') === layer);
+            });
+            matrixRows.forEach(function(tr, i){
+              var rowLayer = 'L' + (i + 1);
+              tr.classList.toggle('is-active-row', layer === rowLayer);
+            });
+          }
+
+          pillBtns.forEach(function(b){
+            b.addEventListener('click', function(){
+              setLayerFocus(b.getAttribute('data-focus-layer'));
+            });
+          });
+          matrixRows.forEach(function(tr, i){
+            var rowLayer = 'L' + (i + 1);
+            tr.addEventListener('click', function(){
+              var isAlready = tr.classList.contains('is-active-row');
+              setLayerFocus(isAlready ? 'ALL' : rowLayer);
+            });
+            tr.addEventListener('mouseenter', function(){
+              spots.forEach(function(sp){
+                sp.classList.toggle('is-lit', sp.getAttribute('data-spot-layer') === rowLayer);
+              });
+            });
+            tr.addEventListener('mouseleave', function(){
+              var activeBtn = root.querySelector('.layer-pill-btn.active');
+              var cur = activeBtn ? activeBtn.getAttribute('data-focus-layer') : 'ALL';
+              spots.forEach(function(sp){
+                sp.classList.toggle('is-lit', cur !== 'ALL' && sp.getAttribute('data-spot-layer') === cur);
               });
             });
           });
@@ -2440,5 +2764,76 @@
     })();
 
   </script>
+
+<!-- HAG_FLUID_MOTION_START -->
+<style>
+  #hag-read-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, #38BDF8, #34D399, #A78BFA);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+    z-index: 9999; pointer-events: none; transition: width 0.08s linear;
+  }
+  .hero { position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: -40% -20% auto -20%; height: 420px;
+    background: radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.16), transparent 55%),
+                radial-gradient(circle at 75% 30%, rgba(52, 211, 153, 0.12), transparent 50%);
+    filter: blur(24px); pointer-events: none; z-index: 0;
+    animation: heroAurora 11s ease-in-out infinite alternate;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  @keyframes heroAurora {
+    0% { transform: translate3d(-2%, -2%, 0) scale(1); }
+    100% { transform: translate3d(3%, 4%, 0) scale(1.06); }
+  }
+  .hag-reveal {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hag-reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .kpi-card, .console-card {
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+  }
+  .kpi-card:hover, .console-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(2, 6, 23, 0.45);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before { animation: none !important; }
+    .hag-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+  @media print {
+    #hag-read-progress, .hero::before { display: none !important; }
+    .hag-reveal { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+<div id="hag-read-progress" aria-hidden="true"></div>
+<script>
+  (function(){
+    var bar = document.getElementById('hag-read-progress');
+    if (bar) {
+      window.addEventListener('scroll', function(){
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
+        bar.style.width = pct.toFixed(1) + '%';
+      }, { passive: true });
+    }
+    if ('IntersectionObserver' in window) {
+      var els = document.querySelectorAll('.kpi-card, .sec-head, .console-card, .arch-layer-btn');
+      els.forEach(function(el){ el.classList.add('hag-reveal'); });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) {
+            en.target.classList.add('is-visible');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      els.forEach(function(el){ io.observe(el); });
+    }
+  })();
+</script>
+<!-- HAG_FLUID_MOTION_END -->
+
 </body>
 </html>
