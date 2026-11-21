@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Seminar 013 ｜ 老闆不能只動嘴！簡立峰談企業 AI 落地與 Agent 革命 ｜ Howard Liao Ph.D.</title>
+  <meta name="description" content="天下文化《AI未來已來》專訪前 Google 台灣董事總經理簡立峰博士深度圖文戰略報告：中美晶片政治角力、CSP 資金鏈與感恩節試金石、5 月 Agent 分水嶺，以及美中台領導者 Hands-on 落差與台灣企業行動藍圖 — Howard Liao Ph.D." />
+  <meta property="og:title" content="Seminar 013 ｜ 老闆不能只動嘴！簡立峰談企業 AI 落地與 Agent 革命" />
+  <meta property="og:description" content="從中美晶片角力、AI 產業淘汰賽到今年 5 月 Agent 分水嶺——25 分鐘專訪完整時間軸與 6 幅戰略圖表解析。" />
+  <meta property="og:type" content="article" />
+  <style>
+    :root {
+      --font-sans: "PingFang TC", "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+      --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 1. Deep Obsidian (Default Web Theme) */
+    [data-theme="obsidian"] {
+      --bg: #020617;
+      --bg-elevated: #0B1224;
+      --card: #0F172A;
+      --card-hover: #16223C;
+      --border: rgba(226, 232, 240, 0.12);
+      --border-strong: rgba(56, 189, 248, 0.40);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #38BDF8;
+      --accent-2: #F59E0B;
+      --accent-3: #10B981;
+      --accent-4: #A78BFA;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-2-soft: rgba(245, 158, 11, 0.14);
+      --accent-3-soft: rgba(16, 185, 129, 0.14);
+      --accent-text: #020617;
+      --hero-glow: radial-gradient(circle at 18% 0%, rgba(56, 189, 248, 0.18), transparent 52%), radial-gradient(circle at 86% 18%, rgba(245, 158, 11, 0.13), transparent 48%);
+      --header-bg: rgba(2, 6, 23, 0.90);
+      --table-head: #1E293B;
+      --table-head-text: #F8FAFC;
+      --table-zebra: rgba(255, 255, 255, 0.028);
+      --svg-bg: #091022;
+      --svg-node: #111C33;
+      --svg-line: rgba(148, 163, 184, 0.45);
+    }
+
+    /* 2. Milan Warm Amber */
+    [data-theme="milan"] {
+      --bg: #FDFBF7;
+      --bg-elevated: #F8F5EE;
+      --card: #FFFFFF;
+      --card-hover: #FFFBEB;
+      --border: #E7E0D8;
+      --border-strong: #DE5814;
+      --text: #2D3748;
+      --text-muted: #64748B;
+      --accent: #A83212;
+      --accent-2: #DE5814;
+      --accent-3: #0D9488;
+      --accent-4: #B45309;
+      --accent-soft: #FFF7ED;
+      --accent-2-soft: #FEF3C7;
+      --accent-3-soft: #CCFBF1;
+      --accent-text: #FFFFFF;
+      --hero-glow: radial-gradient(circle at 20% 0%, rgba(222, 88, 20, 0.10), transparent 55%), radial-gradient(circle at 85% 15%, rgba(217, 119, 6, 0.08), transparent 50%);
+      --header-bg: rgba(253, 251, 247, 0.94);
+      --table-head: #A83212;
+      --table-head-text: #FFFFFF;
+      --table-zebra: #FAF6F0;
+      --svg-bg: #FAF6F0;
+      --svg-node: #FFFFFF;
+      --svg-line: #CBD5E1;
+    }
+
+    /* 3. Egyptian Pharaoh */
+    [data-theme="pharaoh"] {
+      --bg: #FFFFFF;
+      --bg-elevated: #FFFBF5;
+      --card: #FBE8D7;
+      --card-hover: #FFFBEB;
+      --border: #D98B19;
+      --border-strong: #B6532D;
+      --text: #222222;
+      --text-muted: #57534E;
+      --accent: #B6532D;
+      --accent-2: #E87524;
+      --accent-3: #0F766E;
+      --accent-4: #92400E;
+      --accent-soft: #FFFBEB;
+      --accent-2-soft: #FFEDD5;
+      --accent-3-soft: #CCFBF1;
+      --accent-text: #FFFFFF;
+      --hero-glow: radial-gradient(circle at 18% 0%, rgba(232, 117, 36, 0.14), transparent 55%), radial-gradient(circle at 82% 20%, rgba(217, 139, 25, 0.14), transparent 50%);
+      --header-bg: rgba(255, 255, 255, 0.95);
+      --table-head: #B6532D;
+      --table-head-text: #FFFFFF;
+      --table-zebra: #FFF7ED;
+      --svg-bg: #FFFBF5;
+      --svg-node: #FFFFFF;
+      --svg-line: #D98B19;
+    }
+
+    /* 4. Gustav Klimt */
+    [data-theme="klimt"] {
+      --bg: #120F26;
+      --bg-elevated: #1A1638;
+      --card: #1E1B4B;
+      --card-hover: #27235C;
+      --border: rgba(245, 158, 11, 0.28);
+      --border-strong: #F59E0B;
+      --text: #FEF9E7;
+      --text-muted: #CBD5E1;
+      --accent: #F59E0B;
+      --accent-2: #FCD34D;
+      --accent-3: #34D399;
+      --accent-4: #C084FC;
+      --accent-soft: rgba(245, 158, 11, 0.16);
+      --accent-2-soft: rgba(252, 211, 77, 0.14);
+      --accent-3-soft: rgba(52, 211, 153, 0.14);
+      --accent-text: #120F26;
+      --hero-glow: radial-gradient(circle at 20% 0%, rgba(245, 158, 11, 0.22), transparent 55%), radial-gradient(circle at 80% 25%, rgba(217, 119, 6, 0.16), transparent 50%);
+      --header-bg: rgba(18, 15, 38, 0.92);
+      --table-head: #312E81;
+      --table-head-text: #FEF9E7;
+      --table-zebra: rgba(245, 158, 11, 0.06);
+      --svg-bg: #161233;
+      --svg-node: #231F52;
+      --svg-line: rgba(245, 158, 11, 0.45);
+    }
+
+    /* 5. Mika Ninagawa */
+    [data-theme="ninagawa"] {
+      --bg: #120416;
+      --bg-elevated: #1E0924;
+      --card: #240C2E;
+      --card-hover: #321240;
+      --border: rgba(225, 29, 72, 0.32);
+      --border-strong: #06B6D4;
+      --text: #FFF1F2;
+      --text-muted: #E9D5FF;
+      --accent: #FB7185;
+      --accent-2: #06B6D4;
+      --accent-3: #F472B6;
+      --accent-4: #FACC15;
+      --accent-soft: rgba(225, 29, 72, 0.22);
+      --accent-2-soft: rgba(6, 182, 212, 0.18);
+      --accent-3-soft: rgba(217, 70, 239, 0.18);
+      --accent-text: #120416;
+      --hero-glow: radial-gradient(circle at 18% 0%, rgba(225, 29, 72, 0.26), transparent 55%), radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.20), transparent 50%);
+      --header-bg: rgba(18, 4, 22, 0.92);
+      --table-head: #881337;
+      --table-head-text: #FFF1F2;
+      --table-zebra: rgba(217, 70, 239, 0.08);
+      --svg-bg: #190720;
+      --svg-node: #2B0F38;
+      --svg-line: rgba(6, 182, 212, 0.50);
+    }
+
+    /* 6. Joan Miró */
+    [data-theme="miro"] {
+      --bg: #FAF5FF;
+      --bg-elevated: #FFFFFF;
+      --card: #FFFFFF;
+      --card-hover: #FEFCE8;
+      --border: #18181B;
+      --border-strong: #DC2626;
+      --text: #111827;
+      --text-muted: #4B5563;
+      --accent: #DC2626;
+      --accent-2: #2563EB;
+      --accent-3: #D97706;
+      --accent-4: #059669;
+      --accent-soft: #FEF2F2;
+      --accent-2-soft: #EFF6FF;
+      --accent-3-soft: #FEF3C7;
+      --accent-text: #FFFFFF;
+      --hero-glow: radial-gradient(circle at 15% 5%, rgba(220, 38, 38, 0.10), transparent 45%), radial-gradient(circle at 85% 15%, rgba(37, 99, 235, 0.10), transparent 45%);
+      --header-bg: rgba(250, 245, 255, 0.95);
+      --table-head: #111827;
+      --table-head-text: #FFFFFF;
+      --table-zebra: #F3F4F6;
+      --svg-bg: #FFFFFF;
+      --svg-node: #FEFCE8;
+      --svg-line: #18181B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      background-image: var(--hero-glow);
+      background-attachment: fixed;
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Top Reading Progress Bar */
+    .read-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      z-index: 2000;
+      transition: width 0.1s linear;
+    }
+
+    /* Sticky Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+    }
+    .topbar-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .back-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      transition: var(--transition);
+    }
+    .back-hub:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+    .badge-num {
+      background: var(--accent);
+      color: var(--accent-text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 6px;
+      letter-spacing: 0.6px;
+    }
+    .brand-name {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    /* Theme Switcher */
+    .theme-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 4px 6px;
+      border-radius: 999px;
+    }
+    .theme-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .theme-btn:hover { transform: scale(1.14); }
+    .theme-btn.active {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .theme-btn[data-set-theme="obsidian"] { background: linear-gradient(135deg, #020617 50%, #38BDF8 50%); }
+    .theme-btn[data-set-theme="milan"] { background: linear-gradient(135deg, #FDFBF7 50%, #A83212 50%); }
+    .theme-btn[data-set-theme="pharaoh"] { background: linear-gradient(135deg, #FBE8D7 50%, #E87524 50%); }
+    .theme-btn[data-set-theme="klimt"] { background: linear-gradient(135deg, #1E1B4B 50%, #F59E0B 50%); }
+    .theme-btn[data-set-theme="ninagawa"] { background: linear-gradient(135deg, #240C2E 50%, #E11D48 50%); }
+    .theme-btn[data-set-theme="miro"] { background: linear-gradient(135deg, #FAF5FF 50%, #DC2626 50%); }
+
+    /* Container */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 88px;
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 36px 38px;
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 32px;
+      align-items: center;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 13px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 3.2vw, 38px);
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 15.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12.5px;
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Video Reference Card */
+    .video-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .video-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .video-thumb-wrap {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #0B1224;
+      overflow: hidden;
+    }
+    .video-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(2, 6, 23, 0.88);
+      color: #F8FAFC;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .video-play-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(220, 38, 38, 0.92);
+      color: #FFF;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .video-card-body {
+      padding: 16px 18px;
+    }
+    .video-card-body h3 {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .video-card-body p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .btn-watch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: var(--accent-text);
+      font-size: 13px;
+      font-weight: 800;
+      transition: var(--transition);
+    }
+    .btn-watch:hover {
+      opacity: 0.92;
+      text-decoration: none;
+    }
+
+    /* Bento KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .kpi-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .kpi-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Section Styling */
+    .section {
+      margin-bottom: 44px;
+      scroll-margin-top: 84px;
+    }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-2);
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: clamp(21px, 2.4vw, 27px);
+      font-weight: 900;
+      line-height: 1.3;
+    }
+    .ts-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border-strong);
+      transition: var(--transition);
+    }
+    .ts-link:hover {
+      background: var(--accent);
+      color: var(--accent-text);
+      text-decoration: none;
+    }
+
+    /* Visual Diagram Frame */
+    .diagram-frame {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .diagram-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .diagram-caption h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .diagram-badge {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .svg-wrap {
+      width: 100%;
+      overflow-x: auto;
+      background: var(--svg-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      min-width: 680px;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      transition: var(--transition);
+    }
+    .card:hover {
+      border-color: var(--border-strong);
+    }
+    .card-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .card h4 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .card p, .card li {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .card ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .card li {
+      padding-left: 16px;
+      position: relative;
+    }
+    .card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent-2);
+      font-weight: 900;
+    }
+
+    /* Callout Quote */
+    .quote-callout {
+      background: linear-gradient(135deg, var(--accent-soft), var(--accent-2-soft));
+      border-left: 4px solid var(--accent-2);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 22px 26px;
+      margin: 20px 0;
+    }
+    .quote-callout .q-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-2);
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+    .quote-callout blockquote {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .quote-callout p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    /* Interactive Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: var(--accent-text);
+      border-color: var(--accent);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Executive Comparison Table */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--card);
+      margin-top: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+      font-size: 13.5px;
+    }
+    thead th {
+      background: var(--table-head);
+      color: var(--table-head-text);
+      text-align: left;
+      padding: 13px 16px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    tbody td {
+      padding: 13px 16px;
+      border-top: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) {
+      background: var(--table-zebra);
+    }
+    .pill-good {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      background: var(--accent-3-soft);
+      color: var(--accent-3);
+    }
+    .pill-warn {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      background: var(--accent-2-soft);
+      color: var(--accent-2);
+    }
+
+    /* Interactive Checklist */
+    .dd-box {
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .dd-progress {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .dd-track {
+      flex: 1;
+      min-width: 180px;
+      height: 11px;
+      background: var(--card);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .dd-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+      transition: width 0.3s ease;
+    }
+    .dd-score {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .dd-verdict {
+      font-size: 13px;
+      color: var(--text-muted);
+      width: 100%;
+    }
+    .dd-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .dd-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .dd-item:hover { border-color: var(--accent); }
+    .dd-item input {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .dd-item strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .dd-item span {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* Timeline interactive cards */
+    .timeline-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .tl-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      transition: var(--transition);
+      display: block;
+    }
+    .tl-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .tl-time {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-2);
+      margin-bottom: 4px;
+    }
+    .tl-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .tl-summary {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px 52px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    footer strong { color: var(--text); }
+
+    /* Mobile Bottom Dock */
+    .mobile-dock {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1500;
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid var(--border);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+    .mobile-dock a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 4px 2px;
+      border-radius: 8px;
+    }
+    .mobile-dock a:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding: 26px 22px; }
+      .kpi-grid, .timeline-pills { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .grid-2, .dd-list { grid-template-columns: 1fr; }
+      .kpi-grid, .timeline-pills { grid-template-columns: 1fr; }
+      .mobile-dock { display: grid; }
+      .container { padding-bottom: 104px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="read-progress" id="readProgress"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-group">
+        <a class="back-hub" href="../index.html">← Seminar Hub</a>
+        <span class="badge-num">SEMINAR 013</span>
+        <span class="brand-name">企業 AI 落地與 Agent 革命</span>
+      </div>
+
+      <nav class="nav-links" aria-label="章節導覽">
+        <a href="#timeline">時間軸全景</a>
+        <a href="#ch1">01 晶片與政治</a>
+        <a href="#ch2">02 資金鏈淘汰賽</a>
+        <a href="#ch3">03 AI 學派演進</a>
+        <a href="#ch4">04 Agent 革命</a>
+        <a href="#ch5">05 行動與自評</a>
+      </nav>
+
+      <div class="theme-bar" role="group" aria-label="切換 6 大高管視覺主題">
+        <button class="theme-btn active" data-set-theme="obsidian" title="Deep Obsidian（深邃黑曜石）"></button>
+        <button class="theme-btn" data-set-theme="milan" title="Milan Warm Amber（米蘭暖琥珀）"></button>
+        <button class="theme-btn" data-set-theme="pharaoh" title="Egyptian Pharaoh（法老暖金）"></button>
+        <button class="theme-btn" data-set-theme="klimt" title="Gustav Klimt（克林姆金箔）"></button>
+        <button class="theme-btn" data-set-theme="ninagawa" title="Mika Ninagawa（蜷川霓虹）"></button>
+        <button class="theme-btn" data-set-theme="miro" title="Joan Miró（米羅現代主義）"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow">★ 天下文化《AI未來已來》專訪深度戰略報告 ｜ 僅供線上瀏覽</div>
+        <h1>老闆不能只動嘴！<br /><span>簡立峰談企業 AI 落地與 Agent 革命</span></h1>
+        <p class="hero-sub">
+          前 Google 台灣董事總經理簡立峰博士接受天下文化專訪，從近期 NVIDIA／黃仁勳面臨的美國政治角力切入，一路拆解 AI 資金鏈淘汰賽與「感恩節消費試金石」，最終直指台灣企業當下最關鍵的升級節點：<strong>今年 5 月之後 Agent 建置門檻已徹底反轉，領導者唯有親自 Hands-on 調教，才能完成真正的自我與組織賦能。</strong>
+        </p>
+        <div class="hero-meta">
+          <span class="meta-pill">🎙️ 受訪者：簡立峰 博士</span>
+          <span class="meta-pill">🎬 主持人：路怡珍（天下文化）</span>
+          <span class="meta-pill">✍️ 戰略編撰：Howard Liao Ph.D.</span>
+          <span class="meta-pill">⏱️ 全片深度解構：25:01</span>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb-wrap">
+          <img src="https://i.ytimg.com/vi/v0Utww2mros/hqdefault.jpg" alt="天下文化專訪簡立峰博士影片縮圖" loading="lazy" />
+          <span class="video-play-badge">YouTube 原片對應</span>
+          <span class="video-duration">25:01</span>
+        </div>
+        <div class="video-card-body">
+          <h3>老闆不能只動嘴！簡立峰談企業 AI 落地與 Agent 革命《AI未來已來》</h3>
+          <p>本報告所有論點、數據與金句皆逐段對應原片完整逐字稿與時間戳記，點擊各章節徽章可直接跳轉至原片該段落。</p>
+          <a class="btn-watch" href="https://www.youtube.com/watch?v=v0Utww2mros" target="_blank" rel="noopener noreferrer">
+            ▶ 前往 YouTube 觀看完整專訪
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENTO KPI -->
+    <section class="kpi-grid" aria-label="核心量化指標">
+      <div class="kpi-card">
+        <div class="kpi-label">Agent 門檻反轉（5 月分水嶺）</div>
+        <div class="kpi-value">95% ⇄ 95%</div>
+        <div class="kpi-desc">5 月前 MIT 報告指 95% 計畫未達標；5 月後門檻驟降，反轉為 95% 團隊都能做出 Agent。</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">科幻願景實現進度</div>
+        <div class="kpi-value">~70%</div>
+        <div class="kpi-desc">呼應李開復新書《AI未來已來》：過去數十年對 AI 的科幻想像如今已實現約七成。</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">景氣與資本支出試金石</div>
+        <div class="kpi-value">感恩節</div>
+        <div class="kpi-desc">美國年底購物季消費力直接檢驗 Amazon、Meta、Google 本業獲利能否支撐 GPU 投資。</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">三大市場領導者對照</div>
+        <div class="kpi-value">美・中・台</div>
+        <div class="kpi-desc">美國 VP/Director 親自建置、中國老闆下場動手；台灣仍處「老闆與資訊長分離」升級關口。</div>
+      </div>
+    </section>
+
+    <!-- TIMELINE OVERVIEW -->
+    <section class="section" id="timeline">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">OVERVIEW ｜ 25:01 INTERVIEW ARCHITECTURE</div>
+          <h2 class="section-title">全場 25 分鐘專訪結構時間軸圖譜</h2>
+        </div>
+        <a class="ts-link" href="https://www.youtube.com/watch?v=v0Utww2mros&t=0s" target="_blank" rel="noopener noreferrer">⏱ 00:00 開始觀看</a>
+      </div>
+
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 1｜四階段敘事邏輯：從宏觀政治雜訊收斂至企業微觀落地</h3>
+          <span class="diagram-badge">Vector Infographic</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="25分鐘專訪時間軸圖譜">
+            <defs>
+              <linearGradient id="tlGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38BDF8" />
+                <stop offset="45%" stop-color="#F59E0B" />
+                <stop offset="75%" stop-color="#A78BFA" />
+                <stop offset="100%" stop-color="#10B981" />
+              </linearGradient>
+            </defs>
+            <!-- Base track -->
+            <rect x="40" y="96" width="920" height="10" rx="5" fill="var(--svg-line)" opacity="0.35" />
+            <rect x="40" y="96" width="920" height="10" rx="5" fill="url(#tlGrad)" />
+
+            <!-- Segment 1: 00:00-12:10 (48.6%) -->
+            <circle cx="40" cy="101" r="10" fill="#38BDF8" />
+            <rect x="48" y="20" width="415" height="62" rx="10" fill="var(--svg-node)" stroke="#38BDF8" stroke-width="1.5" />
+            <text x="64" y="45" fill="#38BDF8" font-size="13" font-weight="800">CH 01 ｜ 00:00 – 12:10（佔比 49%）</text>
+            <text x="64" y="67" fill="var(--text)" font-size="14" font-weight="700">黃仁勳爭議、美國大選政治操作與中美晶片角力</text>
+
+            <!-- Segment 2: 12:10-19:30 (29.3%) -->
+            <circle cx="487" cy="101" r="10" fill="#F59E0B" />
+            <rect x="470" y="124" width="285" height="72" rx="10" fill="var(--svg-node)" stroke="#F59E0B" stroke-width="1.5" />
+            <text x="486" y="149" fill="#F59E0B" font-size="13" font-weight="800">CH 02 ｜ 12:10 – 19:30（29%）</text>
+            <text x="486" y="170" fill="var(--text)" font-size="13.5" font-weight="700">CSP 資金鏈、感恩節消費試金石</text>
+            <text x="486" y="187" fill="var(--text-muted)" font-size="12">AI 淘汰賽開打與軟體股反轉契機</text>
+
+            <!-- Segment 3: 19:30-21:16 (7.1%) -->
+            <circle cx="757" cy="101" r="10" fill="#A78BFA" />
+            <rect x="590" y="20" width="215" height="62" rx="10" fill="var(--svg-node)" stroke="#A78BFA" stroke-width="1.5" />
+            <text x="604" y="45" fill="#A78BFA" font-size="12.5" font-weight="800">CH 03 ｜ 19:30 – 21:16</text>
+            <text x="604" y="67" fill="var(--text)" font-size="13.5" font-weight="700">《AI未來已來》與雙學派傳承</text>
+
+            <!-- Segment 4: 21:16-25:01 (15.0%) -->
+            <circle cx="822" cy="101" r="10" fill="#10B981" />
+            <circle cx="960" cy="101" r="8" fill="#10B981" />
+            <rect x="772" y="124" width="192" height="72" rx="10" fill="var(--svg-node)" stroke="#10B981" stroke-width="1.8" />
+            <text x="786" y="149" fill="#10B981" font-size="12.5" font-weight="800">CH 04 ｜ 21:16 – 25:01</text>
+            <text x="786" y="170" fill="var(--text)" font-size="13.5" font-weight="800">Agent 分水嶺與核心警語</text>
+            <text x="786" y="187" fill="var(--text-muted)" font-size="12">老闆不能只動嘴（養寵物法則）</text>
+          </svg>
+        </div>
+
+        <div class="timeline-pills">
+          <a class="tl-card" href="#ch1">
+            <div class="tl-time">00:00 – 12:10</div>
+            <div class="tl-name">01 晶片與政治角力</div>
+            <div class="tl-summary">選舉操作、境外算力租用現實、11/18 國會聽證會對照。</div>
+          </a>
+          <a class="tl-card" href="#ch2">
+            <div class="tl-time">12:10 – 19:30</div>
+            <div class="tl-name">02 資金鏈與淘汰賽</div>
+            <div class="tl-summary">CSP 現金流本質、感恩節消費檢驗、硬體轉軟體週期。</div>
+          </a>
+          <a class="tl-card" href="#ch3">
+            <div class="tl-time">19:30 – 21:16</div>
+            <div class="tl-name">03 《AI未來已來》</div>
+            <div class="tl-summary">科幻實現 70%，統計模型派與 Hinton 神經網路派交會。</div>
+          </a>
+          <a class="tl-card" href="#ch4">
+            <div class="tl-time">21:16 – 25:01</div>
+            <div class="tl-name">04 Agent 革命落地</div>
+            <div class="tl-summary">5 月門檻反轉、美中台高管落差、親自 Hands-on 調教。</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 1 -->
+    <section class="section" id="ch1">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">CHAPTER 01 ｜ GEOPOLITICS &amp; COMPUTE REALITY</div>
+          <h2 class="section-title">黃仁勳爭議與中美晶片政治角力：看透表象下的權力現實</h2>
+        </div>
+        <a class="ts-link" href="https://www.youtube.com/watch?v=v0Utww2mros&t=0s" target="_blank" rel="noopener noreferrer">⏱ 00:00 – 12:10 原片跳轉</a>
+      </div>
+
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 2｜中美 AI 晶片博弈與美國內政角力結構圖</h3>
+          <span class="diagram-badge">Geopolitical Flow</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="中美晶片角力與美國內政結構圖">
+            <!-- Left box: US Domestic Politics -->
+            <rect x="20" y="24" width="290" height="260" rx="14" fill="var(--svg-node)" stroke="#38BDF8" stroke-width="1.6" />
+            <text x="40" y="54" fill="#38BDF8" font-size="14" font-weight="800">美國國內選舉攻防（期中 → 總統大選）</text>
+            <rect x="38" y="74" width="254" height="72" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <text x="52" y="98" fill="var(--text)" font-size="13" font-weight="800">執政方（川普陣營）</text>
+            <text x="52" y="118" fill="var(--text-muted)" font-size="12">• 將 AI 投資與算力領先列為核心政績</text>
+            <text x="52" y="135" fill="var(--text-muted)" font-size="12">• 美國 GDP 成長高度仰賴 AI 資本支出</text>
+
+            <rect x="38" y="160" width="254" height="106" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <text x="52" y="184" fill="#F59E0B" font-size="13" font-weight="800">反對陣營（民主黨反制）</text>
+            <text x="52" y="204" fill="var(--text-muted)" font-size="12">• 訴求資料中心推升民生水電費</text>
+            <text x="52" y="222" fill="var(--text-muted)" font-size="12">• 透過輿論放話削弱企業領袖可信度</text>
+            <text x="52" y="240" fill="var(--text-muted)" font-size="12">• 11/18 國會聽證會檢驗 NVIDIA 影響力</text>
+
+            <!-- Center box: NVIDIA / Jensen -->
+            <rect x="355" y="64" width="275" height="180" rx="14" fill="var(--svg-node)" stroke="#F59E0B" stroke-width="2" />
+            <text x="492" y="96" text-anchor="middle" fill="#F59E0B" font-size="15" font-weight="900">NVIDIA ／ 黃仁勳</text>
+            <text x="492" y="118" text-anchor="middle" fill="var(--text-muted)" font-size="12">國會聽證會 vs. 歷史鏡鑑</text>
+            <line x1="380" y1="132" x2="605" y2="132" stroke="var(--svg-line)" stroke-dasharray="4 4" />
+            <text x="375" y="156" fill="var(--text)" font-size="12.5" font-weight="700">• 歷史對照：Yahoo 楊致遠（Jerry Yang）</text>
+            <text x="385" y="174" fill="var(--text-muted)" font-size="11.5">遭貼「科技巨人、民主侏儒」標籤後淡出</text>
+            <text x="375" y="198" fill="#10B981" font-size="12.5" font-weight="700">• 今日差異：算力即國力與 GDP 引擎</text>
+            <text x="385" y="216" fill="var(--text-muted)" font-size="11.5">兩黨最終仍看現實實力：「誰拳頭比較大」</text>
+
+            <!-- Right box: Compute Bypass -->
+            <rect x="675" y="24" width="305" height="260" rx="14" fill="var(--svg-node)" stroke="#10B981" stroke-width="1.6" />
+            <text x="695" y="54" fill="#10B981" font-size="14" font-weight="800">晶片管制的現實落差（訓練端無國界）</text>
+            <rect x="695" y="74" width="265" height="54" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <text x="710" y="97" fill="var(--text)" font-size="12.5" font-weight="800">1. 直接出口受限（政治紅線）</text>
+            <text x="710" y="116" fill="var(--text-muted)" font-size="11.5">黃仁勳在意的是無法公開合法直售中國市場</text>
+
+            <rect x="695" y="142" width="265" height="60" rx="8" fill="var(--bg-elevated)" stroke="#10B981" />
+            <text x="710" y="165" fill="#10B981" font-size="12.5" font-weight="800">2. 境外合規租用（東南亞／中東）</text>
+            <text x="710" y="185" fill="var(--text-muted)" font-size="11.5">中企合法租用海外資料中心 GPU 完成訓練</text>
+
+            <rect x="695" y="216" width="265" height="50" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <text x="710" y="238" fill="var(--text)" font-size="12.5" font-weight="800">3. 模型權重回流（本質是政治角力）</text>
+            <text x="710" y="255" fill="var(--text-muted)" font-size="11.5">訓練成果帶回國內，單靠硬體禁令難以徹底封鎖</text>
+
+            <!-- Arrows -->
+            <line x1="310" y1="154" x2="352" y2="154" stroke="#38BDF8" stroke-width="2.5" />
+            <polygon points="355,154 345,148 345,160" fill="#38BDF8" />
+            <line x1="630" y1="154" x2="672" y2="154" stroke="#10B981" stroke-width="2.5" />
+            <polygon points="675,154 665,148 665,160" fill="#10B981" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <h4>定調為選舉與政治操作</h4>
+          <p>相關爭議與媒體放話始於期中選舉前，實質瞄準兩年後的總統大選。AI 已成為美國兩黨攻防主戰場，企業領袖聲譽成為政治博弈的籌碼。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h4>東西方對領袖標準的落差</h4>
+          <p>台灣輿論偏重「愛家形象與私德」敘事；但美國資本市場與社會更關注公司股價、技術領先度與產業競爭力，看待事件的角度截然不同。</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h4>另一敏感焦點：Elon Musk</h4>
+          <p>簡立峰點出，橫跨美中市場且同時掌握航太（SpaceX）與電動車（Tesla）的 Elon Musk，在美國地緣政治光譜中其實長期處於更敏感的單點位置。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section class="section" id="ch2">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">CHAPTER 02 ｜ AI CAPITAL FLOW &amp; MARKET SHAKEOUT</div>
+          <h2 class="section-title">AI 產業淘汰賽與投資風向球：看懂 CSP 現金流與感恩節試金石</h2>
+        </div>
+        <a class="ts-link" href="https://www.youtube.com/watch?v=v0Utww2mros&t=730s" target="_blank" rel="noopener noreferrer">⏱ 12:10 – 19:30 原片跳轉</a>
+      </div>
+
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 3｜AI 生態真實資金鏈與「硬體 → 軟體」週期轉移圖</h3>
+          <span class="diagram-badge">Capital &amp; Cycle Map</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI 生態資金鏈與產業週期轉移圖">
+            <!-- Top Row: Real Capital Loop -->
+            <text x="24" y="28" fill="#F59E0B" font-size="13.5" font-weight="800">一、AI 投資真實金流鏈（真正的出資者是 CSP 現有獲利本業）</text>
+
+            <rect x="24" y="44" width="210" height="96" rx="12" fill="var(--svg-node)" stroke="#10B981" stroke-width="1.8" />
+            <text x="129" y="72" text-anchor="middle" fill="#10B981" font-size="14" font-weight="800">美國終端消費力</text>
+            <text x="129" y="94" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">感恩節購物季（試金石）</text>
+            <text x="129" y="116" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">檢驗廣告與電商需求韌性</text>
+
+            <rect x="272" y="44" width="220" height="96" rx="12" fill="var(--svg-node)" stroke="#38BDF8" stroke-width="1.8" />
+            <text x="382" y="72" text-anchor="middle" fill="#38BDF8" font-size="14" font-weight="800">CSP 雲端巨頭本業</text>
+            <text x="382" y="94" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Amazon / Meta / Google</text>
+            <text x="382" y="116" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">拿電商與廣告現金流支撐 CapEx</text>
+
+            <rect x="530" y="44" width="205" height="96" rx="12" fill="var(--svg-node)" stroke="#F59E0B" stroke-width="1.8" />
+            <text x="632" y="72" text-anchor="middle" fill="#F59E0B" font-size="14" font-weight="800">算力硬體採購</text>
+            <text x="632" y="94" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">GPU 與資料中心建置</text>
+            <text x="632" y="116" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">由 CSP 承擔主要重資產投資</text>
+
+            <rect x="772" y="44" width="205" height="96" rx="12" fill="var(--svg-node)" stroke="#A78BFA" stroke-width="1.8" />
+            <text x="874" y="72" text-anchor="middle" fill="#A78BFA" font-size="14" font-weight="800">模型實驗室租用</text>
+            <text x="874" y="94" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">OpenAI / Anthropic</text>
+            <text x="874" y="116" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">採租用模式分攤現金流壓力</text>
+
+            <!-- Connectors -->
+            <line x1="234" y1="92" x2="269" y2="92" stroke="#10B981" stroke-width="2.5" />
+            <polygon points="272,92 262,86 262,98" fill="#10B981" />
+            <line x1="492" y1="92" x2="527" y2="92" stroke="#38BDF8" stroke-width="2.5" />
+            <polygon points="530,92 520,86 520,98" fill="#38BDF8" />
+            <line x1="735" y1="92" x2="769" y2="92" stroke="#F59E0B" stroke-width="2.5" />
+            <polygon points="772,92 762,86 762,98" fill="#F59E0B" />
+
+            <!-- Bottom Row: Industry Cycle Shift -->
+            <text x="24" y="178" fill="#38BDF8" font-size="13.5" font-weight="800">二、長線產業動能切換（硬體工廠不可能永遠單獨拉動需求）</text>
+
+            <rect x="24" y="194" width="440" height="82" rx="12" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <text x="44" y="220" fill="#F59E0B" font-size="14" font-weight="800">階段 A｜硬體與基建驅動期（高槓桿淘汰賽開打）</text>
+            <text x="44" y="243" fill="var(--text-muted)" font-size="12.5">• 籌資轉趨審慎，私募基金與銀行重新調配資金部位</text>
+            <text x="44" y="262" fill="var(--text-muted)" font-size="12.5">• 華爾街短期炒作「即時 ROI」，高槓桿企業與投資人波動加劇</text>
+
+            <rect x="520" y="194" width="457" height="82" rx="12" fill="var(--bg-elevated)" stroke="#10B981" stroke-width="1.8" />
+            <text x="540" y="220" fill="#10B981" font-size="14" font-weight="800">階段 B｜服務與軟體驅動期（價值重估契機）</text>
+            <text x="540" y="243" fill="var(--text)" font-size="12.5">• 基礎設施完備後，終端需求必須由企業軟體與 AI 服務帶動</text>
+            <text x="540" y="262" fill="var(--text)" font-size="12.5">• 長期受壓抑與低估的軟體股，具備中長線基本面反轉潛力</text>
+
+            <line x1="466" y1="235" x2="516" y2="235" stroke="#10B981" stroke-width="3" />
+            <polygon points="520,235 508,228 508,242" fill="#10B981" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Interactive Tabs -->
+      <div class="card">
+        <div class="tab-bar" role="tablist">
+          <button class="tab-btn active" data-tab="t-noise">短期雜訊（建議過濾）</button>
+          <button class="tab-btn" data-tab="t-signal">核心基本面指標（建議緊盯）</button>
+          <button class="tab-btn" data-tab="t-risk">淘汰賽下的風險控管</button>
+        </div>
+        <div class="tab-panel active" id="t-noise">
+          <h4>一兩週內先別緊盯政治與八卦新聞</h4>
+          <ul>
+            <li>政治口水與人物爭議無法預測明日股價，反而容易誘發情緒化追高殺低。</li>
+            <li>要求龐大的基礎建設投資「立刻交出短期 ROI」，本身屬於華爾街題材炒作邏輯，並非基礎設施建置的真實節奏。</li>
+          </ul>
+        </div>
+        <div class="tab-panel" id="t-signal">
+          <h4>真正決定 AI 續航力的兩大指標</h4>
+          <ul>
+            <li><strong>CSP 本業獲利能力</strong>：只要 Amazon（電商）、Meta 與 Google（數位廣告）本業持續賺錢，GPU 資本支出就具備穩健的內部造血支撐。</li>
+            <li><strong>感恩節購物季表現</strong>：美國消費力是否撐得住，是檢驗總體經濟與雲端巨頭廣告／電商營收的最直接試金石。</li>
+          </ul>
+        </div>
+        <div class="tab-panel" id="t-risk">
+          <h4>資金重配置與高槓桿部位檢視</h4>
+          <ul>
+            <li>市場已進入<strong>產業淘汰賽</strong>：一級市場籌資門檻升高，私募基金與銀行正在重新調整資金流向。</li>
+            <li>無論企業或個人投資人，此時應審慎評估槓桿水位，並提早佈局從「硬體驅動」過渡到「軟體與服務變現」的下一波受惠者。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section class="section" id="ch3">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">CHAPTER 03 ｜ AI HISTORY &amp; PARADIGM SHIFT</div>
+          <h2 class="section-title">《AI未來已來》與兩大 AI 學派的歷史交會</h2>
+        </div>
+        <a class="ts-link" href="https://www.youtube.com/watch?v=v0Utww2mros&t=1170s" target="_blank" rel="noopener noreferrer">⏱ 19:30 – 21:16 原片跳轉</a>
+      </div>
+
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 4｜從 CMU 博士申請信到今日 AI 浪潮：統計模型派 vs. 神經網路派</h3>
+          <span class="diagram-badge">Academic Lineage</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI 兩大學派歷史交會圖">
+            <rect x="24" y="28" width="285" height="148" rx="12" fill="var(--svg-node)" stroke="#38BDF8" stroke-width="1.6" />
+            <text x="44" y="58" fill="#38BDF8" font-size="14" font-weight="800">統計模型派（當年主流）</text>
+            <text x="44" y="84" fill="var(--text)" font-size="13" font-weight="700">代表：李開復、簡立峰</text>
+            <text x="44" y="108" fill="var(--text-muted)" font-size="12">• 以機率與統計模型突破語音辨識</text>
+            <text x="44" y="128" fill="var(--text-muted)" font-size="12">• 奠定早期商用 AI 與搜尋引擎基礎</text>
+            <text x="44" y="148" fill="var(--text-muted)" font-size="12">• CMU 博士申請信即預言 AI 未來</text>
+
+            <rect x="358" y="28" width="285" height="148" rx="12" fill="var(--svg-node)" stroke="#A78BFA" stroke-width="1.6" />
+            <text x="378" y="58" fill="#A78BFA" font-size="14" font-weight="800">神經網路派（當年非主流）</text>
+            <text x="378" y="84" fill="var(--text)" font-size="13" font-weight="700">代表：Geoffrey Hinton</text>
+            <text x="378" y="108" fill="var(--text-muted)" font-size="12">• 李開復當年的博士共同指導教授</text>
+            <text x="378" y="128" fill="var(--text-muted)" font-size="12">• 堅持類神經網路與深度學習路徑</text>
+            <text x="378" y="148" fill="var(--text-muted)" font-size="12">• 最終結合算力引爆當代生成式 AI</text>
+
+            <rect x="692" y="28" width="284" height="148" rx="12" fill="var(--svg-node)" stroke="#10B981" stroke-width="2" />
+            <text x="712" y="58" fill="#10B981" font-size="14" font-weight="800">《AI未來已來》里程碑</text>
+            <text x="712" y="92" fill="var(--text)" font-size="24" font-weight="900" font-family="monospace">~70% 實現</text>
+            <text x="712" y="120" fill="var(--text-muted)" font-size="12">過去數十年的科幻想像多數已成真，</text>
+            <text x="712" y="140" fill="var(--text-muted)" font-size="12">競爭焦點正式從「技術可行」轉向</text>
+            <text x="712" y="160" fill="#10B981" font-size="12.5" font-weight="800">「企業如何落地與轉化為生產力」。</text>
+
+            <line x1="309" y1="102" x2="354" y2="102" stroke="var(--svg-line)" stroke-width="2" stroke-dasharray="5 4" />
+            <line x1="643" y1="102" x2="688" y2="102" stroke="#10B981" stroke-width="2.5" />
+            <polygon points="692,102 682,96 682,108" fill="#10B981" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section class="section" id="ch4">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">CHAPTER 04 ｜ CORE PUNCHLINE: ENTERPRISE AI &amp; AGENT REVOLUTION</div>
+          <h2 class="section-title">核心焦點：今年 5 月 Agent 分水嶺——「老闆不能只動嘴」</h2>
+        </div>
+        <a class="ts-link" href="https://www.youtube.com/watch?v=v0Utww2mros&t=1276s" target="_blank" rel="noopener noreferrer">⏱ 21:16 – 25:01 原片跳轉</a>
+      </div>
+
+      <!-- Visual 5: May Inflection Point -->
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 5｜今年 5 月 Agent 建置門檻反轉圖（95% 失敗 → 95% 可建置）</h3>
+          <span class="diagram-badge">May Inflection Chart</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 245" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="今年5月前後Agent建置門檻反轉對比圖">
+            <!-- Left: Before May -->
+            <rect x="24" y="22" width="430" height="200" rx="14" fill="var(--svg-node)" stroke="#F59E0B" stroke-width="1.6" />
+            <text x="46" y="52" fill="#F59E0B" font-size="15" font-weight="900">今年 5 月前｜高門檻工程時代</text>
+            <text x="46" y="76" fill="var(--text-muted)" font-size="12.5">需仰賴頂尖工程師從底層開發與串接</text>
+
+            <!-- Bar Before -->
+            <rect x="46" y="96" width="380" height="32" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <rect x="46" y="96" width="361" height="32" rx="8" fill="#F59E0B" opacity="0.88" />
+            <text x="60" y="117" fill="#020617" font-size="13" font-weight="900">MIT 報告：95% 企業 AI 計畫未達預期</text>
+
+            <text x="46" y="156" fill="var(--text)" font-size="13" font-weight="700">• 建置瓶頸在「技術能力」與高昂研發成本</text>
+            <text x="46" y="180" fill="var(--text-muted)" font-size="12.5">• 業務主管與老闆只能發包給 IT 或外部廠商</text>
+            <text x="46" y="202" fill="var(--text-muted)" font-size="12.5">• 多數組織仍停留在觀望與 PoC 階段</text>
+
+            <!-- Center Divider -->
+            <circle cx="500" cy="122" r="28" fill="var(--accent)" />
+            <text x="500" y="118" text-anchor="middle" fill="var(--accent-text)" font-size="12" font-weight="900">5 月</text>
+            <text x="500" y="134" text-anchor="middle" fill="var(--accent-text)" font-size="11" font-weight="800">分水嶺</text>
+
+            <!-- Right: After May -->
+            <rect x="546" y="22" width="430" height="200" rx="14" fill="var(--svg-node)" stroke="#10B981" stroke-width="2" />
+            <text x="568" y="52" fill="#10B981" font-size="15" font-weight="900">今年 5 月後｜全民建置 Agent 時代</text>
+            <text x="568" y="76" fill="var(--text-muted)" font-size="12.5">工具與框架大幅簡化，領域專家可直接上手</text>
+
+            <!-- Bar After -->
+            <rect x="568" y="96" width="380" height="32" rx="8" fill="var(--bg-elevated)" stroke="var(--border)" />
+            <rect x="568" y="96" width="361" height="32" rx="8" fill="#10B981" opacity="0.90" />
+            <text x="582" y="117" fill="#020617" font-size="13" font-weight="900">反轉：95% 團隊皆能做出可用 Agent</text>
+
+            <text x="568" y="156" fill="var(--text)" font-size="13" font-weight="700">• 建置不再是瓶頸，決勝點轉向「知識灌注與 ROI」</text>
+            <text x="568" y="180" fill="var(--text-muted)" font-size="12.5">• 美國大企業 Director / VP 開始親手 Build Agent</text>
+            <text x="568" y="202" fill="#10B981" font-size="12.5" font-weight="700">• 領先者已將個人默會知識直接封裝為企業資產</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Visual 6: US / CN / TW Executive Hands-on Comparison -->
+      <div class="diagram-frame">
+        <div class="diagram-caption">
+          <h3>圖 6｜美・中・台企業領導者 AI Hands-on 實戰落差對照</h3>
+          <span class="diagram-badge">3-Region Benchmark</span>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="美中台企業領導者AI實戰對照圖">
+            <!-- US -->
+            <rect x="20" y="18" width="305" height="184" rx="12" fill="var(--svg-node)" stroke="#38BDF8" stroke-width="1.8" />
+            <text x="40" y="48" fill="#38BDF8" font-size="15" font-weight="900">🇺🇸 美國企業：DIY 文化與高管合體</text>
+            <rect x="40" y="64" width="265" height="12" rx="6" fill="var(--bg-elevated)" />
+            <rect x="40" y="64" width="242" height="12" rx="6" fill="#38BDF8" />
+            <text x="40" y="96" fill="var(--text)" font-size="12.5" font-weight="700">領導者動手度：極高（老闆 ≈ 資訊長）</text>
+            <text x="40" y="120" fill="var(--text-muted)" font-size="12">• 5 月起跨國企業 Director / VP 親自</text>
+            <text x="40" y="138" fill="var(--text-muted)" font-size="12">  動手 Build Agent</text>
+            <text x="40" y="160" fill="var(--text-muted)" font-size="12">• 直接把自身領域知識轉化為個人代理，</text>
+            <text x="40" y="178" fill="var(--text-muted)" font-size="12">  減少層層傳話造成的語意失真</text>
+
+            <!-- CN -->
+            <rect x="347" y="18" width="305" height="184" rx="12" fill="var(--svg-node)" stroke="#F59E0B" stroke-width="1.8" />
+            <text x="367" y="48" fill="#F59E0B" font-size="15" font-weight="900">🇨🇳 中國企業：年輕化與強勢下場</text>
+            <rect x="367" y="64" width="265" height="12" rx="6" fill="var(--bg-elevated)" />
+            <rect x="367" y="64" width="205" height="12" rx="6" fill="#F59E0B" />
+            <text x="367" y="96" fill="var(--text)" font-size="12.5" font-weight="700">領導者動手度：高（平均 40–50 歲）</text>
+            <text x="367" y="120" fill="var(--text-muted)" font-size="12">• 大企業創辦人與決策層相對年輕</text>
+            <text x="367" y="142" fill="var(--text-muted)" font-size="12">• 雖然也會下指令，但見效慢時會直接</text>
+            <text x="367" y="160" fill="var(--text-muted)" font-size="12">  「把員工推開、自己跳下來做」</text>
+            <text x="367" y="182" fill="var(--text-muted)" font-size="12">• 迭代節奏快、對新工具吸收極積極</text>
+
+            <!-- TW -->
+            <rect x="674" y="18" width="305" height="184" rx="12" fill="var(--svg-node)" stroke="#10B981" stroke-width="2" />
+            <text x="694" y="48" fill="#10B981" font-size="15" font-weight="900">🇹🇼 台灣企業：關鍵升級節點</text>
+            <rect x="694" y="64" width="265" height="12" rx="6" fill="var(--bg-elevated)" />
+            <rect x="694" y="64" width="95" height="12" rx="6" fill="#10B981" />
+            <text x="694" y="96" fill="var(--text)" font-size="12.5" font-weight="700">現況特徵：老闆與資訊長仍是「兩個人」</text>
+            <text x="694" y="120" fill="var(--text-muted)" font-size="12">• 承襲製造業階層管理思維，習慣只動嘴</text>
+            <text x="694" y="138" fill="var(--text-muted)" font-size="12">  交辦團隊執行（「已踢不開員工」）</text>
+            <text x="694" y="160" fill="#10B981" font-size="12" font-weight="700">• 升級解方：高管親自建立第一個專屬</text>
+            <text x="694" y="178" fill="#10B981" font-size="12" font-weight="700">  Agent，打破認知與授權斷層</text>
+          </svg>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>比較維度</th>
+                <th>傳統製造業階層時代</th>
+                <th>AI Agent 自我賦能時代</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>領導者核心職能</strong></td>
+                <td>管理「百萬大軍」的組織分工與指揮鏈，無須親自操作第一線工具。</td>
+                <td><span class="pill-good">親自上陣</span> 將個人高階判斷與默會知識灌入 Agent 系統，實現自我賦能。</td>
+              </tr>
+              <tr>
+                <td><strong>知識傳遞路徑</strong></td>
+                <td>老闆口述 → 主管轉譯 → IT 開發 → 成品與原意產生落差。</td>
+                <td>老闆／業務主管直接透過自然語言與工作流建置與調教專屬 Agent。</td>
+              </tr>
+              <tr>
+                <td><strong>工具採購迷思</strong></td>
+                <td>花預算買現成系統或交由資訊部門維護即可完成數位化。</td>
+                <td><span class="pill-warn">關鍵提醒</span> 就算買了現成的「老闆 AI」，本人不親手教，依然無法發揮威力。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pet Metaphor Quote Callout -->
+      <div class="quote-callout">
+        <div class="q-eyebrow">★ 簡立峰博士核心金句 ｜ AI 時代的「養寵物法則」</div>
+        <blockquote>
+          「AI 就像養寵物一樣——寵物聰不聰明，取決於主人會不會教。就算別人把『老闆 AI』做好給你，你自己不親手建置與調教，它終究無法賦能你自己。」
+        </blockquote>
+        <p>
+          這句話點破了企業 AI 轉型最常見的盲點：Agent 不是傳統套裝軟體（買來即用），而是高度個人化與情境化的數位分身。唯有決策者親自投入時間餵養決策邏輯、反饋修正並納入日常工作流，AI 才會長出真正貼合企業競爭力的判斷力。
+        </p>
+      </div>
+    </section>
+
+    <!-- CHAPTER 5: ACTION PLAN & INTERACTIVE READINESS -->
+    <section class="section" id="ch5">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">CHAPTER 05 ｜ EXECUTIVE ACTION BLUEPRINT</div>
+          <h2 class="section-title">台灣企業主與 CIO 90 天落地路線圖 &amp; 準備度自評</h2>
+        </div>
+        <span class="ts-link">Interactive Assessment</span>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 22px;">
+        <div class="card">
+          <div class="card-icon">01</div>
+          <h4>Day 1–30｜高管破冰期</h4>
+          <ul>
+            <li>老闆與一級主管每週保留 2 小時 Hands-on 時段，不假手他人。</li>
+            <li>親手建置第一個「個人決策／簡報／晨報 Agent」，體驗 5 月後的低門檻工具。</li>
+            <li>建立「先用過、再決策」的高管共同語言，縮短老闆與 CIO 的認知落差。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">02</div>
+          <h4>Day 31–60｜知識封裝期</h4>
+          <ul>
+            <li>由業務、財務、營運 Director/VP 盤點高頻且高價值的默會知識。</li>
+            <li>將部門 SOP、歷史案例與審核標準封裝為可重複調用的部門級 Agent。</li>
+            <li>同步導入資訊安全與資料分級治理（避免機密外洩與影子 AI 失控）。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">03</div>
+          <h4>Day 61–90｜成果變現期</h4>
+          <ul>
+            <li>從「做出 Agent（95% 都能做到）」進階到「流程重設與可量化 ROI」。</li>
+            <li>追蹤縮短的決策週期、錯誤率下降與人效提升，淘汰僅具展示效果的試點。</li>
+            <li>布局中長線軟體與服務驅動能力，迎接產業淘汰賽後的穩健營運韌性。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Executive Readiness Checklist -->
+      <div class="dd-box">
+        <h3 style="font-size: 17px; font-weight: 900; margin-bottom: 6px;">🧭 高管 AI Agent Hands-on 準備度即時自評（6 項關鍵檢核）</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">勾選您或您的經營團隊目前已經落實的項目，系統將即時評估組織所處階段與下一步建議。</p>
+
+        <div class="dd-progress">
+          <span style="font-size: 13px; font-weight: 800;">準備度指數</span>
+          <div class="dd-track"><div class="dd-fill" id="ddFill"></div></div>
+          <span class="dd-score" id="ddScore">0 / 6 (0%)</span>
+          <div class="dd-verdict" id="ddVerdict">請勾選下方項目以產生即時診斷建議。</div>
+        </div>
+
+        <div class="dd-list">
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>1. 決策層親自操作過至少一款 Agent 工具</strong>
+              <span>而非僅聽取簡報或由幕僚代為展示成果。</span>
+            </div>
+          </label>
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>2. 老闆與 CIO／技術長建立每週共學機制</strong>
+              <span>打破「老闆與資訊長是兩個人」的溝通斷層。</span>
+            </div>
+          </label>
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>3. 部門主管（VP/Director）已開始封裝領域知識</strong>
+              <span>能將自身判斷邏輯與案例轉化為部門專用 Agent。</span>
+            </div>
+          </label>
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>4. 以「流程成效與 ROI」而非「工具數量」衡量進度</strong>
+              <span>理解 5 月後做出 Agent 不難，難在與真實營運指標掛鉤。</span>
+            </div>
+          </label>
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>5. 投資與採購決策已過濾短期新聞雜訊</strong>
+              <span>聚焦 CSP 基本面、長期軟體服務價值與穩健現金流。</span>
+            </div>
+          </label>
+          <label class="dd-item">
+            <input type="checkbox" class="dd-check" />
+            <div>
+              <strong>6. 具備企業級資料保護與 Agent 治理底線</strong>
+              <span>確保高管與員工在安全合規環境中調教 AI 寵物。</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Howard Liao Ph.D. (廖倫豪 博士)</strong> ｜ Seminar 013：老闆不能只動嘴！簡立峰談企業 AI 落地與 Agent 革命</p>
+    <p style="margin-top: 6px;">資料來源：天下文化《AI未來已來》專訪前 Google 台灣董事總經理簡立峰博士（YouTube 全長 25:01）｜本專題僅供線上瀏覽</p>
+    <p style="margin-top: 6px;"><a href="../index.html">返回 Seminar Hub 專案矩陣目錄</a></p>
+  </footer>
+
+  <!-- Mobile Bottom Dock -->
+  <nav class="mobile-dock" aria-label="行動版章節導覽">
+    <a href="#timeline"><span>⏱</span><span>時間軸</span></a>
+    <a href="#ch1"><span>🏛</span><span>晶片政治</span></a>
+    <a href="#ch2"><span>💰</span><span>資金鏈</span></a>
+    <a href="#ch4"><span>🤖</span><span>Agent</span></a>
+    <a href="#ch5"><span>🧭</span><span>自評</span></a>
+  </nav>
+
+  <script>
+    (function () {
+      // 1. 6-Theme Switcher with persistence
+      const html = document.documentElement;
+      const themeBtns = document.querySelectorAll('[data-set-theme]');
+      const savedTheme = localStorage.getItem('seminar013_theme') || 'obsidian';
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        themeBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-set-theme') === theme);
+        });
+        try { localStorage.setItem('seminar013_theme', theme); } catch (e) {}
+      }
+      applyTheme(savedTheme);
+      themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => applyTheme(btn.getAttribute('data-set-theme')));
+      });
+
+      // 2. Reading Progress Bar & Active Nav Highlight
+      const progressEl = document.getElementById('readProgress');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+      function onScroll() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+        if (progressEl) progressEl.style.width = pct + '%';
+
+        let currentId = '';
+        sections.forEach(sec => {
+          if (scrollTop >= sec.offsetTop - 130) currentId = sec.id;
+        });
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // 3. Interactive Tabs
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-tab');
+          tabBtns.forEach(b => b.classList.toggle('active', b === btn));
+          document.querySelectorAll('.tab-panel').forEach(p => {
+            p.classList.toggle('active', p.id === targetId);
+          });
+        });
+      });
+
+      // 4. Interactive Executive Readiness Checklist
+      const checks = document.querySelectorAll('.dd-check');
+      const ddFill = document.getElementById('ddFill');
+      const ddScore = document.getElementById('ddScore');
+      const ddVerdict = document.getElementById('ddVerdict');
+
+      function updateChecklist() {
+        const total = checks.length;
+        const checked = Array.from(checks).filter(c => c.checked).length;
+        const pct = Math.round((checked / total) * 100);
+        ddFill.style.width = pct + '%';
+        ddScore.textContent = checked + ' / ' + total + ' (' + pct + '%)';
+
+        if (checked === 0) {
+          ddVerdict.textContent = '請勾選下方項目以產生即時診斷建議。';
+        } else if (checked <= 2) {
+          ddVerdict.textContent = '階段一｜認知啟動期：建議優先推動「Day 1–30 高管破冰」，由老闆親手建置第一個個人 Agent。';
+        } else if (checked <= 4) {
+          ddVerdict.textContent = '階段二｜實戰轉折期：團隊已跨過技術門檻，關鍵升級節點在於將部門主管默會知識封裝並對齊業務 ROI。';
+        } else {
+          ddVerdict.textContent = '階段三｜領先賦能期：具備高度 Hands-on 組織韌性，建議持續深化 Agent 治理與軟體服務變現模式。';
+        }
+      }
+      checks.forEach(c => c.addEventListener('change', updateChecklist));
+    })();
+  </script>
+</body>
+</html>
