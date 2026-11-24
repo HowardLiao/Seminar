@@ -1353,6 +1353,22 @@
         }
 
         /* SVG Live Flow Animations */
+        
+        .arch-flow-svg .flow-pkt {
+          filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor);
+          opacity: 0.95;
+          mix-blend-mode: screen;
+        }
+        .arch-flow-svg .flow-pkt.route-local {
+          filter: drop-shadow(0 0 12px #38BDF8) drop-shadow(0 0 24px #38BDF8);
+        }
+        .arch-flow-svg .flow-pkt.route-cloud {
+          filter: drop-shadow(0 0 12px #10B981) drop-shadow(0 0 24px #10B981);
+        }
+        .arch-flow-svg .flow-pkt.route-threat {
+          filter: drop-shadow(0 0 14px #EF4444) drop-shadow(0 0 28px #EF4444);
+        }
+
         .arch-flow-svg .flow-line {
           stroke-dasharray: 8 6;
           animation: archDashFlow 1.4s linear infinite;
@@ -1682,13 +1698,27 @@
   <rect class="layer-spot" data-spot-layer="L5" x="28" y="608" width="906" height="72" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
   <rect class="layer-spot" data-spot-layer="L6" x="28" y="704" width="1304" height="72" rx="14" fill="#94A3B8" fill-opacity="0.09" stroke="#94A3B8" stroke-width="3" pointer-events="none"/>
   <g class="threat-beacon" pointer-events="none"><circle cx="555" cy="384" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="555" cy="384" r="6" fill="#F43F5E" filter="url(#pkt-glow-1)"/></g>
-  <circle class="flow-pkt route-local" r="5.2" fill="#34D399" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
-  <circle class="flow-pkt route-local" r="4.4" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
-  <circle class="flow-pkt route-cloud" r="5.0" fill="#FBBF24" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="0.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
-  <circle class="flow-pkt route-cloud" r="4.0" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="2.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
-  <circle class="flow-pkt route-saas" r="4.6" fill="#FB7185" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.6s" begin="0.8s" repeatCount="indefinite" path="M 310 140 L 310 384 L 976 384"/></circle>
-  <circle class="flow-pkt route-threat" r="6.0" fill="#F43F5E" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 384 L 540 384"/></circle>
-  <circle class="flow-pkt route-local" r="4.0" fill="#A78BFA" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.4s" begin="0.3s" repeatCount="indefinite" path="M 480 650 L 480 735"/></circle>
+  <circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+<circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="1.19s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+<circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="2.38s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+  <circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+<circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="2.89s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+<circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.4s" begin="0.68s" repeatCount="indefinite" path="M 310 140 L 310 210 L 310 330 L 255 444 L 255 580 L 255 645"/></circle>
+  <circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="0.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+<circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="1.90s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+<circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="3.30s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+  <circle class="flow-pkt route-cloud" r="8.5" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="2.5s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+<circle class="flow-pkt route-cloud" r="8.5" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="3.90s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+<circle class="flow-pkt route-cloud" r="8.5" fill="#38BDF8" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="4.0s" begin="1.30s" repeatCount="indefinite" path="M 760 140 L 760 210 L 760 330 L 700 444 L 700 580 L 700 645"/></circle>
+  <circle class="flow-pkt route-saas" r="9.2" fill="#FB7185" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.6s" begin="0.8s" repeatCount="indefinite" path="M 310 140 L 310 384 L 976 384"/></circle>
+<circle class="flow-pkt route-saas" r="9.2" fill="#FB7185" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.6s" begin="2.06s" repeatCount="indefinite" path="M 310 140 L 310 384 L 976 384"/></circle>
+<circle class="flow-pkt route-saas" r="9.2" fill="#FB7185" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="3.6s" begin="3.32s" repeatCount="indefinite" path="M 310 140 L 310 384 L 976 384"/></circle>
+  <circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 310 140 L 310 384 L 540 384"/></circle>
+<circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.0s" begin="0.70s" repeatCount="indefinite" path="M 310 140 L 310 384 L 540 384"/></circle>
+<circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.0s" begin="1.40s" repeatCount="indefinite" path="M 310 140 L 310 384 L 540 384"/></circle>
+  <circle class="flow-pkt route-local" r="8.5" fill="#A78BFA" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.4s" begin="0.3s" repeatCount="indefinite" path="M 480 650 L 480 735"/></circle>
+<circle class="flow-pkt route-local" r="8.5" fill="#A78BFA" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.4s" begin="1.14s" repeatCount="indefinite" path="M 480 650 L 480 735"/></circle>
+<circle class="flow-pkt route-local" r="8.5" fill="#A78BFA" filter="url(#pkt-glow-1)" pointer-events="none"><animateMotion dur="2.4s" begin="1.98s" repeatCount="indefinite" path="M 480 650 L 480 735"/></circle>
   </g>
 </svg>
           <div class="arch-pane-cap">
@@ -1841,12 +1871,24 @@
   <rect class="layer-spot" data-spot-layer="L5" x="28" y="646" width="1304" height="84" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
   <rect class="layer-spot" data-spot-layer="L6" x="28" y="756" width="1304" height="78" rx="14" fill="#94A3B8" fill-opacity="0.09" stroke="#94A3B8" stroke-width="3" pointer-events="none"/>
   <g class="threat-beacon" pointer-events="none"><circle cx="412" cy="412" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="412" cy="412" r="6" fill="#F43F5E" filter="url(#pkt-glow-2)"/></g>
-  <circle class="flow-pkt route-local" r="5.2" fill="#34D399" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.6s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 340 L 195 412 L 885 412 L 885 486 L 360 486 L 360 560 L 200 660"/></circle>
-  <circle class="flow-pkt route-local" r="4.4" fill="#38BDF8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.8s" begin="2.2s" repeatCount="indefinite" path="M 515 150 L 515 340 L 515 412 L 885 412 L 885 486 L 360 486 L 360 560 L 515 660"/></circle>
-  <circle class="flow-pkt route-cloud" r="5.0" fill="#FBBF24" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.2s" begin="0.7s" repeatCount="indefinite" path="M 835 150 L 835 340 L 660 412 L 965 412 L 965 486 L 1015 486 L 1015 570"/></circle>
-  <circle class="flow-pkt route-saas" r="4.4" fill="#A78BFA" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="3.2s" begin="1.1s" repeatCount="indefinite" path="M 1190 298 L 1190 462 L 1190 660"/></circle>
-  <circle class="flow-pkt route-threat" r="6.0" fill="#F43F5E" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 412 L 412 412"/></circle>
-  <circle class="flow-pkt route-local" r="4.0" fill="#94A3B8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.5s" begin="0.4s" repeatCount="indefinite" path="M 680 715 L 680 780"/></circle>
+  <circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.6s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 340 L 195 412 L 885 412 L 885 486 L 360 486 L 360 560 L 200 660"/></circle>
+<circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.6s" begin="1.61s" repeatCount="indefinite" path="M 195 150 L 195 340 L 195 412 L 885 412 L 885 486 L 360 486 L 360 560 L 200 660"/></circle>
+<circle class="flow-pkt route-local" r="10.4" fill="#34D399" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.6s" begin="3.22s" repeatCount="indefinite" path="M 195 150 L 195 340 L 195 412 L 885 412 L 885 486 L 360 486 L 360 560 L 200 660"/></circle>
+  <circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.8s" begin="2.2s" repeatCount="indefinite" path="M 515 150 L 515 340 L 515 412 L 885 412 L 885 486 L 360 486 L 360 560 L 515 660"/></circle>
+<circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.8s" begin="3.88s" repeatCount="indefinite" path="M 515 150 L 515 340 L 515 412 L 885 412 L 885 486 L 360 486 L 360 560 L 515 660"/></circle>
+<circle class="flow-pkt route-local" r="8.8" fill="#38BDF8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.8s" begin="0.76s" repeatCount="indefinite" path="M 515 150 L 515 340 L 515 412 L 885 412 L 885 486 L 360 486 L 360 560 L 515 660"/></circle>
+  <circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.2s" begin="0.7s" repeatCount="indefinite" path="M 835 150 L 835 340 L 660 412 L 965 412 L 965 486 L 1015 486 L 1015 570"/></circle>
+<circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.2s" begin="2.17s" repeatCount="indefinite" path="M 835 150 L 835 340 L 660 412 L 965 412 L 965 486 L 1015 486 L 1015 570"/></circle>
+<circle class="flow-pkt route-cloud" r="10.0" fill="#FBBF24" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="4.2s" begin="3.64s" repeatCount="indefinite" path="M 835 150 L 835 340 L 660 412 L 965 412 L 965 486 L 1015 486 L 1015 570"/></circle>
+  <circle class="flow-pkt route-saas" r="8.8" fill="#A78BFA" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="3.2s" begin="1.1s" repeatCount="indefinite" path="M 1190 298 L 1190 462 L 1190 660"/></circle>
+<circle class="flow-pkt route-saas" r="8.8" fill="#A78BFA" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="3.2s" begin="2.22s" repeatCount="indefinite" path="M 1190 298 L 1190 462 L 1190 660"/></circle>
+<circle class="flow-pkt route-saas" r="8.8" fill="#A78BFA" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="3.2s" begin="0.14s" repeatCount="indefinite" path="M 1190 298 L 1190 462 L 1190 660"/></circle>
+  <circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.0s" begin="0s" repeatCount="indefinite" path="M 195 150 L 195 412 L 412 412"/></circle>
+<circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.0s" begin="0.70s" repeatCount="indefinite" path="M 195 150 L 195 412 L 412 412"/></circle>
+<circle class="flow-pkt route-threat" r="12.0" fill="#F43F5E" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.0s" begin="1.40s" repeatCount="indefinite" path="M 195 150 L 195 412 L 412 412"/></circle>
+  <circle class="flow-pkt route-local" r="8.5" fill="#94A3B8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.5s" begin="0.4s" repeatCount="indefinite" path="M 680 715 L 680 780"/></circle>
+<circle class="flow-pkt route-local" r="8.5" fill="#94A3B8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.5s" begin="1.27s" repeatCount="indefinite" path="M 680 715 L 680 780"/></circle>
+<circle class="flow-pkt route-local" r="8.5" fill="#94A3B8" filter="url(#pkt-glow-2)" pointer-events="none"><animateMotion dur="2.5s" begin="2.15s" repeatCount="indefinite" path="M 680 715 L 680 780"/></circle>
   </g>
 </svg>
           <div class="arch-pane-cap">
@@ -2007,11 +2049,21 @@
   <rect class="layer-spot" data-spot-layer="L5" x="704" y="290" width="628" height="174" rx="14" fill="#A78BFA" fill-opacity="0.09" stroke="#A78BFA" stroke-width="3" pointer-events="none"/>
   <rect class="layer-spot" data-spot-layer="L6" x="698" y="530" width="634" height="310" rx="14" fill="#FBBF24" fill-opacity="0.09" stroke="#FBBF24" stroke-width="3" pointer-events="none"/>
   <g class="threat-beacon" pointer-events="none"><circle cx="508" cy="250" r="14" fill="none" stroke="#F43F5E" stroke-width="2.5" opacity="0.9"><animate attributeName="r" values="10;32;10" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.05;0.95" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="508" cy="250" r="6" fill="#F43F5E" filter="url(#pkt-glow-3)"/></g>
-  <circle class="flow-pkt route-local" r="5.4" fill="#34D399" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.8s" begin="0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 860 250 L 860 500 L 340 500 L 340 620"/></circle>
-  <circle class="flow-pkt route-local" r="4.5" fill="#38BDF8" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="5.0s" begin="2.4s" repeatCount="indefinite" path="M 170 345 L 360 345 L 656 360 L 860 360 L 860 500 L 340 500 L 340 620"/></circle>
-  <circle class="flow-pkt route-cloud" r="5.2" fill="#FBBF24" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.4s" begin="1.0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 1030 250 L 1030 620"/></circle>
-  <circle class="flow-pkt route-threat" r="6.2" fill="#F43F5E" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="1.9s" begin="0s" repeatCount="indefinite" path="M 170 232 L 508 232 L 508 250"/></circle>
-  <circle class="flow-pkt route-saas" r="4.4" fill="#FB7185" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M 170 345 L 508 345 L 706 360"/></circle>
+  <circle class="flow-pkt route-local" r="10.8" fill="#34D399" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.8s" begin="0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 860 250 L 860 500 L 340 500 L 340 620"/></circle>
+<circle class="flow-pkt route-local" r="10.8" fill="#34D399" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.8s" begin="1.68s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 860 250 L 860 500 L 340 500 L 340 620"/></circle>
+<circle class="flow-pkt route-local" r="10.8" fill="#34D399" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.8s" begin="3.36s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 860 250 L 860 500 L 340 500 L 340 620"/></circle>
+  <circle class="flow-pkt route-local" r="9.0" fill="#38BDF8" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="5.0s" begin="2.4s" repeatCount="indefinite" path="M 170 345 L 360 345 L 656 360 L 860 360 L 860 500 L 340 500 L 340 620"/></circle>
+<circle class="flow-pkt route-local" r="9.0" fill="#38BDF8" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="5.0s" begin="4.15s" repeatCount="indefinite" path="M 170 345 L 360 345 L 656 360 L 860 360 L 860 500 L 340 500 L 340 620"/></circle>
+<circle class="flow-pkt route-local" r="9.0" fill="#38BDF8" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="5.0s" begin="0.90s" repeatCount="indefinite" path="M 170 345 L 360 345 L 656 360 L 860 360 L 860 500 L 340 500 L 340 620"/></circle>
+  <circle class="flow-pkt route-cloud" r="10.4" fill="#FBBF24" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.4s" begin="1.0s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 1030 250 L 1030 620"/></circle>
+<circle class="flow-pkt route-cloud" r="10.4" fill="#FBBF24" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.4s" begin="2.54s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 1030 250 L 1030 620"/></circle>
+<circle class="flow-pkt route-cloud" r="10.4" fill="#FBBF24" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="4.4s" begin="4.08s" repeatCount="indefinite" path="M 170 232 L 360 232 L 656 250 L 1030 250 L 1030 620"/></circle>
+  <circle class="flow-pkt route-threat" r="12.4" fill="#F43F5E" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="1.9s" begin="0s" repeatCount="indefinite" path="M 170 232 L 508 232 L 508 250"/></circle>
+<circle class="flow-pkt route-threat" r="12.4" fill="#F43F5E" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="1.9s" begin="0.66s" repeatCount="indefinite" path="M 170 232 L 508 232 L 508 250"/></circle>
+<circle class="flow-pkt route-threat" r="12.4" fill="#F43F5E" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="1.9s" begin="1.33s" repeatCount="indefinite" path="M 170 232 L 508 232 L 508 250"/></circle>
+  <circle class="flow-pkt route-saas" r="8.8" fill="#FB7185" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="3.4s" begin="0.6s" repeatCount="indefinite" path="M 170 345 L 508 345 L 706 360"/></circle>
+<circle class="flow-pkt route-saas" r="8.8" fill="#FB7185" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="3.4s" begin="1.79s" repeatCount="indefinite" path="M 170 345 L 508 345 L 706 360"/></circle>
+<circle class="flow-pkt route-saas" r="8.8" fill="#FB7185" filter="url(#pkt-glow-3)" pointer-events="none"><animateMotion dur="3.4s" begin="2.98s" repeatCount="indefinite" path="M 170 345 L 508 345 L 706 360"/></circle>
   </g>
 </svg>
           <div class="arch-pane-cap">
@@ -2098,6 +2150,20 @@
                   p.classList.add('hidden');
                 }
               });
+              // Ensure all visible SVGs have active animations
+              setTimeout(function(){
+                root.querySelectorAll('svg').forEach(function(svg){
+                  try {
+                    if (typeof svg.unpauseAnimations === 'function') svg.unpauseAnimations();
+                    if (typeof svg.setCurrentTime === 'function') svg.setCurrentTime(0);
+                  } catch(e){}
+                });
+              }, 20);
+              // Burst dots right from the clicked button!
+              if (window.__hagSpawnFluidBurst) {
+                var bRect = btn.getBoundingClientRect();
+                window.__hagSpawnFluidBurst(bRect.left + bRect.width / 2, bRect.top + bRect.height / 2, 50);
+              }
             });
           });
 
@@ -3608,16 +3674,42 @@
     mouseState.y = e.clientY;
   }, { passive: true });
 
+
+  /* Dedicated High-Energy Fluid Burst Dots Pool */
+  var burstDots = [];
+  function spawnFluidBurstDots(x, y, count, customColor) {
+    var pal = getPalette();
+    var cCount = count || 40;
+    for (var i = 0; i < cCount; i++) {
+      var angle = Math.random() * Math.PI * 2;
+      var speed = 2.5 + Math.random() * 10.0;
+      var cArr = customColor || (Math.random() < 0.4 ? pal.accent : (Math.random() < 0.7 ? pal.accent2 : pal.accent3));
+      burstDots.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed + (mouseState.vx * 0.25),
+        vy: Math.sin(angle) * speed + (mouseState.vy * 0.25),
+        size: 3.5 + Math.random() * 5.0,
+        alpha: 1.0,
+        decay: 0.012 + Math.random() * 0.018,
+        color: cArr
+      });
+    }
+  }
+  window.__hagSpawnFluidBurst = spawnFluidBurstDots;
+
   window.addEventListener('pointerdown', function(e) {
     mouseState.isDown = true;
     fluidConfig.shockwaves.push({
       x: e.clientX,
       y: e.clientY,
       r: 10,
-      maxR: 240,
+      maxR: 260,
       strength: 1.0,
-      speed: 6.5
+      speed: 7.5
     });
+    // Immediately spawn dense fluid dots at click location!
+    spawnFluidBurstDots(e.clientX, e.clientY, 48);
   }, { passive: true });
 
   window.addEventListener('pointerup', function() {
@@ -3682,6 +3774,34 @@
     var visc = fluidConfig.viscosity;
     var flowMode = fluidConfig.flowMode;
     var tOffset = time * 0.0006;
+
+        // Render and update burst dots
+    for (var bIdx = burstDots.length - 1; bIdx >= 0; bIdx--) {
+      var bd = burstDots[bIdx];
+      bd.x += bd.vx;
+      bd.y += bd.vy;
+      bd.vx *= 0.94;
+      bd.vy *= 0.94;
+      bd.alpha -= bd.decay;
+
+      if (bd.alpha <= 0) {
+        burstDots.splice(bIdx, 1);
+        continue;
+      }
+
+      bgCtx.beginPath();
+      bgCtx.arc(bd.x, bd.y, bd.size * bd.alpha, 0, Math.PI * 2);
+      bgCtx.fillStyle = 'rgba(' + bd.color.join(',') + ',' + bd.alpha.toFixed(3) + ')';
+      bgCtx.shadowColor = 'rgba(' + bd.color.join(',') + ', 0.9)';
+      bgCtx.shadowBlur = 12;
+      bgCtx.fill();
+    }
+    bgCtx.shadowBlur = 0;
+
+    // Continuous dot fountain on mouse drag
+    if (mouseState.isDown && Math.random() < 0.85 && mouseState.x > 0) {
+      spawnFluidBurstDots(mouseState.x, mouseState.y, 3);
+    }
 
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
@@ -4220,26 +4340,52 @@
   /* ------------------------------------------------------------------
    * 5. LIQUID CLICK RIPPLE ENGINE
    * ------------------------------------------------------------------ */
-  document.addEventListener('click', function(e) {
-    var target = e.target.closest('button, .kpi-card, .console-card, .arch-tab-btn, .sim-btn, .layer-pill-btn, .fluid-btn');
-    if (!target) return;
+  /* Universal Omni-Click Fluid Dots & Ripple Engine */
+  function handleAnyUserClick(clientX, clientY, targetEl) {
+    // 1. Always spawn burst of glowing fluid dots!
+    spawnFluidBurstDots(clientX, clientY, 45);
 
-    var rect = target.getBoundingClientRect();
-    var rip = document.createElement('span');
-    rip.className = 'fluid-ripple-wave';
-    var size = Math.max(rect.width, rect.height) * 2;
-    rip.style.width = size + 'px';
-    rip.style.height = size + 'px';
-    rip.style.left = (e.clientX - rect.left) + 'px';
-    rip.style.top = (e.clientY - rect.top) + 'px';
+    // 2. Add shockwave to background fluid field
+    fluidConfig.shockwaves.push({
+      x: clientX,
+      y: clientY,
+      r: 8,
+      maxR: 280,
+      strength: 1.0,
+      speed: 7.5
+    });
 
-    target.classList.add('fluid-ripple-host');
-    target.appendChild(rip);
+    // 3. If target is a button or card, add ripple
+    var host = targetEl ? targetEl.closest('button, .kpi-card, .console-card, .arch-tab-btn, .sim-btn, .layer-pill-btn, .fluid-btn, .arch-layer-btn') : null;
+    if (host) {
+      var rect = host.getBoundingClientRect();
+      var rip = document.createElement('span');
+      rip.className = 'fluid-ripple-wave';
+      var size = Math.max(rect.width, rect.height) * 2.2;
+      rip.style.width = size + 'px';
+      rip.style.height = size + 'px';
+      rip.style.left = (clientX - rect.left) + 'px';
+      rip.style.top = (clientY - rect.top) + 'px';
 
-    setTimeout(function() {
-      if (rip && rip.parentNode) rip.parentNode.removeChild(rip);
-    }, 800);
-  });
+      host.classList.add('fluid-ripple-host');
+      host.appendChild(rip);
+
+      setTimeout(function() {
+        if (rip && rip.parentNode) rip.parentNode.removeChild(rip);
+      }, 800);
+    }
+  }
+
+  window.addEventListener('click', function(e) {
+    handleAnyUserClick(e.clientX, e.clientY, e.target);
+  }, { capture: true, passive: true });
+
+  window.addEventListener('touchstart', function(e) {
+    if (e.touches && e.touches[0]) {
+      var t = e.touches[0];
+      handleAnyUserClick(t.clientX, t.clientY, e.target);
+    }
+  }, { capture: true, passive: true });
 
   /* ------------------------------------------------------------------
    * 6. FLOATING FLUID DYNAMICS HUD CONTROLLER
@@ -4361,6 +4507,17 @@
   }
 
 })();
+
+    // Hook 4-layer architecture buttons for fluid dot bursts
+    document.querySelectorAll('.arch-layer-btn, .layer-pill-btn').forEach(function(lBtn){
+      lBtn.addEventListener('click', function(){
+        if (window.__hagSpawnFluidBurst) {
+          var r = lBtn.getBoundingClientRect();
+          window.__hagSpawnFluidBurst(r.left + r.width / 2, r.top + r.height / 2, 40);
+        }
+      });
+    });
+
 </script>
 <!-- HAG_FLUID_MOTION_END -->
 
