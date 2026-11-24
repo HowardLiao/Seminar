@@ -842,9 +842,654 @@
   .footer-links a:hover {
     text-decoration: underline;
   }
+
+
+  /* --------------------------------------------------------------------------
+     流體動力與進階互動性系統規範 (Fluid Dynamics & Interactive Architecture)
+     -------------------------------------------------------------------------- */
+  /* 流體閱讀進度條 */
+  #fluidReadProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--tertiary));
+    box-shadow: 0 0 14px var(--primary);
+    z-index: 99999;
+    pointer-events: none;
+    transition: width 0.08s linear;
+  }
+
+  /* 全域背景向量流體畫布 */
+  #fluidBackgroundCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.85;
+    transition: opacity 0.5s ease;
+  }
+  .masthead, .toc-bar, .hero-section, .fluid-lab-section, .content-section, .hub-footer, .lightbox-overlay, .fluid-hud {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 3D 景深傾斜與流體聚光燈效 */
+  .card-3d-tilt {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+    will-change: transform;
+    overflow: hidden;
+  }
+  .card-3d-tilt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(180, 83, 9, 0.10), transparent 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+  .card-3d-tilt:hover::after {
+    opacity: 1;
+  }
+  html[data-theme="obsidian"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(240, 122, 74, 0.14), transparent 80%);
+  }
+  html[data-theme="pharaoh"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(217, 107, 39, 0.12), transparent 80%);
+  }
+  html[data-theme="ninagawa"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(233, 30, 99, 0.16), transparent 80%);
+  }
+  html[data-theme="klimt"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(198, 146, 20, 0.15), transparent 80%);
+  }
+  html[data-theme="miro"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(229, 57, 53, 0.12), transparent 80%);
+  }
+
+  /* 液態點擊波紋 */
+  .fluid-ripple-host {
+    position: relative;
+    overflow: hidden;
+  }
+  .fluid-ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: radial-gradient(circle, var(--primary-light) 0%, rgba(180, 83, 9, 0.15) 60%, transparent 80%);
+    pointer-events: none;
+    animation: fluidRippleAnim 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    z-index: 10;
+  }
+  @keyframes fluidRippleAnim {
+    to {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* =========================================================
+     流體動力端到端安全防禦實驗室 (Fluid Security Dynamics Lab)
+     ========================================================= */
+  .fluid-lab-section {
+    padding: 24px 0 48px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 110px;
+    background: linear-gradient(180deg, var(--bg-page) 0%, var(--bg-card-alt) 100%);
+  }
+  .fluid-lab-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: var(--shadow-lg), 0 0 24px rgba(180, 83, 9, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .fluid-lab-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--tertiary));
+    opacity: 0.95;
+  }
+  .fluid-lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .fluid-lab-title-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+    min-width: 280px;
+  }
+  .fluid-pulse-icon {
+    font-size: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--tertiary-soft);
+    border-radius: 10px;
+    border: 1px solid var(--border-accent);
+    animation: fluidIconPulse 3s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes fluidIconPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(180, 83, 9, 0); }
+    50% { transform: scale(1.06); box-shadow: 0 0 16px rgba(180, 83, 9, 0.35); }
+  }
+  .fluid-lab-title {
+    margin: 0 0 4px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+  }
+  .fluid-lab-desc {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .fluid-lab-status-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .fluid-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .fluid-badge.live {
+    background: rgba(22, 163, 74, 0.12);
+    border-color: rgba(22, 163, 74, 0.4);
+    color: var(--accent-green);
+  }
+  .fluid-badge.mode {
+    background: var(--tertiary-soft);
+    border-color: var(--border-accent);
+    color: var(--primary);
+  }
+  .fluid-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #16A34A;
+    box-shadow: 0 0 8px #16A34A;
+    animation: radarPulse 1.8s infinite;
+    display: inline-block;
+  }
+  @keyframes radarPulse {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.9; }
+  }
+
+  /* 流體安全畫布容器 */
+  .fluid-canvas-container {
+    position: relative;
+    width: 100%;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.06);
+  }
+  #fluidDefensePipeCanvas {
+    display: block;
+    width: 100%;
+    height: 280px;
+  }
+  .fluid-canvas-overlay-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 14px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .fluid-lbl {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.72rem;
+    background: rgba(31, 41, 55, 0.88);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #F8FAFC;
+    height: fit-content;
+  }
+  .fluid-lbl-tag {
+    font-weight: 700;
+    color: #FBBF24;
+  }
+  .fluid-lbl-val {
+    font-size: 0.68rem;
+    color: #94A3B8;
+  }
+
+  /* 即時遙測矩陣與控制列 */
+  .fluid-telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .telemetry-card {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .telemetry-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+  }
+  .telemetry-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .telemetry-val {
+    font-size: 1.18rem;
+    font-weight: 800;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--primary);
+  }
+  .telemetry-val.green { color: var(--accent-green); }
+  .telemetry-val.blue { color: var(--accent-blue); }
+
+  /* 控制列 */
+  .fluid-control-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .fluid-slider-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fluid-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .fluid-slider-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .fluid-ratio-highlight {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--primary);
+    font-weight: 800;
+  }
+  .fluid-slider-track-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slider-end-label {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    font-family: "JetBrains Mono", monospace;
+    white-space: nowrap;
+  }
+  .fluid-range-input {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border);
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .fluid-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(180, 83, 9, 0.5);
+    border: 2px solid #FFFFFF;
+    transition: transform 0.1s ease;
+  }
+  .fluid-range-input::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .fluid-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .fluid-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-main);
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    font-family: inherit;
+  }
+  .fluid-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .fluid-btn.btn-shai {
+    border-color: rgba(220, 38, 38, 0.4);
+    background: rgba(220, 38, 38, 0.08);
+    color: var(--accent-red);
+  }
+  .fluid-btn.btn-shai:hover {
+    background: var(--accent-red);
+    color: #FFFFFF;
+  }
+  .fluid-btn.btn-jailbreak {
+    border-color: rgba(217, 119, 6, 0.4);
+    background: rgba(217, 119, 6, 0.08);
+    color: var(--primary-light);
+  }
+  .fluid-btn.btn-jailbreak:hover {
+    background: var(--primary);
+    color: #FFFFFF;
+  }
+  .fluid-btn.btn-machine {
+    border-color: rgba(37, 99, 235, 0.4);
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--accent-blue);
+  }
+  .fluid-btn.btn-machine:hover {
+    background: var(--accent-blue);
+    color: #FFFFFF;
+  }
+  .fluid-btn.btn-quantum {
+    border-color: rgba(22, 163, 74, 0.4);
+    background: rgba(22, 163, 74, 0.08);
+    color: var(--accent-green);
+  }
+  .fluid-btn.btn-quantum:hover {
+    background: var(--accent-green);
+    color: #FFFFFF;
+  }
+  .fluid-btn.btn-burst {
+    border-color: var(--border-accent);
+    background: var(--primary);
+    color: #FFFFFF;
+  }
+  .fluid-btn.btn-burst:hover {
+    background: var(--primary-dark);
+  }
+  .fluid-btn.btn-reset {
+    color: var(--text-muted);
+  }
+  .fluid-btn.btn-reset:hover {
+    border-color: var(--text-main);
+    color: var(--text-main);
+  }
+
+  /* 示意圖互動標籤與燈箱 Lightbox */
+  .figure-img-box {
+    position: relative;
+    cursor: zoom-in;
+  }
+  .figure-img-box::after {
+    content: "🔍 點擊展開高解析架構互動檢視";
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    color: #FFFFFF;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .figure-wrap:hover .figure-img-box::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(12px);
+    z-index: 100000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 14px;
+    max-width: 96vw;
+    max-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: lbZoomIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes lbZoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .lightbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card-alt);
+  }
+  .lightbox-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lightbox-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lightbox-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lightbox-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .lightbox-btn.close {
+    background: rgba(220, 38, 38, 0.1);
+    color: var(--accent-red);
+    border-color: rgba(220, 38, 38, 0.3);
+  }
+  .lightbox-btn.close:hover {
+    background: var(--accent-red);
+    color: #FFFFFF;
+  }
+  .lightbox-img-viewport {
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--code-bg);
+    min-height: 280px;
+  }
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 72vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+    transform-origin: center center;
+  }
+  .lightbox-footer {
+    padding: 10px 18px;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    background: var(--bg-card-alt);
+    line-height: 1.5;
+  }
+
+  /* 浮動戰情 HUD (Floating Quick Bar) */
+  .fluid-hud {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .fluid-hud-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .fluid-hud-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(180, 83, 9, 0.4);
+  }
+  .fluid-hud-menu {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    width: 220px;
+    flex-direction: column;
+    gap: 8px;
+    animation: hudMenuIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .fluid-hud.active .fluid-hud-menu {
+    display: flex;
+  }
+  @keyframes hudMenuIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .fluid-hud-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .fluid-hud-item:hover {
+    background: var(--tertiary-soft);
+    color: var(--primary);
+    border-color: var(--border-accent);
+  }
+
 </style>
 </head>
 <body>
+
+<!-- 流體動態進度條與全域向量流體背景畫布 -->
+<div id="fluidReadProgress" aria-hidden="true"></div>
+<canvas id="fluidBackgroundCanvas" aria-hidden="true"></canvas>
+
+
 
 <!-- 頂部導航列 -->
 <header class="masthead">
@@ -882,6 +1527,7 @@
       <a href="#overview" class="toc-link">宏觀全景</a>
       <a href="#metrics" class="toc-link">C-Level 指標</a>
       <a href="#executive-summary" class="toc-link">戰略摘要</a>
+      <a href="#fluid-lab" class="toc-link"><span class="fluid-pulse-dot"></span>流體實驗室</a>
     </div>
 
     <div class="toc-nav-center">
@@ -894,6 +1540,7 @@
         <div class="toc-dropdown-menu">
           <div class="toc-col-card">
             <div class="toc-col-title">AI 治理與終端重構</div>
+            <a href="#fluid-lab" class="toc-menu-item" style="color:var(--primary); font-weight:700;"><span class="toc-num-tag">LAB</span> 端到端流體防禦實驗室</a>
             <a href="#ch1" class="toc-menu-item"><span class="toc-num-tag">01</span> 研討會全景與宏觀趨勢</a>
             <a href="#ch2" class="toc-menu-item"><span class="toc-num-tag">02</span> Prisma AIRS & AI Gateway</a>
             <a href="#ch3" class="toc-menu-item"><span class="toc-num-tag">03</span> Cortex AES 5階自主防禦</a>
@@ -1001,6 +1648,124 @@
         <li><strong>產線身分危機：</strong>機器身分與人類身分比率已達驚人的 109 : 1！所有製造機台、AOI 視覺 AI 與 MES 派工皆為特權帳號，Idira™ 推動零常駐特權 (ZSP)、JIT 動態簽發與 OBO 委任鏈審計。</li>
         <li><strong>後量子密碼學迫近：</strong>憑證壽命極限壓縮至 47 天，加上「先擷取、後解密」(Harvest Now, Decrypt Later) 威脅，企業必須加速建置 CBOM 密碼技術清冊，並引進免停機的 PQC 中繼閘道架構。</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     流體動力端到端安全防禦實驗室 (Interactive Fluid Security Defense Lab)
+     ========================================================= -->
+<section class="fluid-lab-section" id="fluid-lab">
+  <div class="container">
+    <div class="fluid-lab-box card-3d-tilt">
+      <div class="fluid-lab-header">
+        <div class="fluid-lab-title-group">
+          <span class="fluid-pulse-icon">🌊</span>
+          <div>
+            <h3 class="fluid-lab-title">Palo Alto 2026 Security by Design 流體動力端到端防禦實驗室</h3>
+            <p class="fluid-lab-desc">
+              即時物理流體力學動態模擬：企業全通路 Prompt / API / 機台特權指令湧入，經 Prisma AIRS 語意渦流過濾、Cortex AES 5階動態沙箱、Prisma Browser 人機分流閥、Idira™ 機器身分池與 PQC 抗量子中繼閘道之動態防禦全景。
+            </p>
+          </div>
+        </div>
+        <div class="fluid-lab-status-tags">
+          <span class="fluid-badge live"><span class="fluid-pulse-dot"></span>流體引擎運作中 (60 FPS)</span>
+          <span class="fluid-badge mode" id="pipeCurrentModeBadge">常態端到端動態防禦</span>
+          <span class="fluid-badge" id="pipeThreatBadge">累計攔截：<strong id="threatBlockCount" style="color:var(--accent-red); margin-left:3px;">0</strong> 件威脅</span>
+        </div>
+      </div>
+
+      <!-- 即時物理畫布容器 -->
+      <div class="fluid-canvas-container">
+        <canvas id="fluidDefensePipeCanvas" width="1200" height="280" aria-label="Palo Alto 2026 端到端流體動力安全管線動態模擬"></canvas>
+        <div class="fluid-canvas-overlay-labels">
+          <div class="fluid-lbl">
+            <span class="fluid-lbl-tag">1. 全通路入口水流</span>
+            <span class="fluid-lbl-val">100% Ingress Flow</span>
+          </div>
+          <div class="fluid-lbl">
+            <span class="fluid-lbl-tag">2. Prisma AIRS 語意渦流</span>
+            <span class="fluid-lbl-val" id="airsStatusText">OWASP 護欄守護中</span>
+          </div>
+          <div class="fluid-lbl">
+            <span class="fluid-lbl-tag">3. Cortex AES 5階沙箱</span>
+            <span class="fluid-lbl-val" id="aesStatusText">KOI 軟體供應鏈阻斷</span>
+          </div>
+          <div class="fluid-lbl">
+            <span class="fluid-lbl-tag">4. Prisma Browser 人機雙軌</span>
+            <span class="fluid-lbl-val" id="browserStatusText">人 80% / Agent 20% 分流</span>
+          </div>
+          <div class="fluid-lbl">
+            <span class="fluid-lbl-tag">5. Idira™ & PQC 中繼通道</span>
+            <span class="fluid-lbl-val" id="pqcStatusText">ML-KEM 768 抗量子封裝</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 即時遙測統計卡片 -->
+      <div class="fluid-telemetry-grid">
+        <div class="telemetry-card">
+          <span class="telemetry-label">端到端流體通量</span>
+          <span class="telemetry-val" id="telemetryFlux">4,500 Req/s</span>
+        </div>
+        <div class="telemetry-card">
+          <span class="telemetry-label">威脅阻斷成功率</span>
+          <span class="telemetry-val green" id="telemetryBlockRate">99.99%</span>
+        </div>
+        <div class="telemetry-card">
+          <span class="telemetry-label">封包深度檢測延遲</span>
+          <span class="telemetry-val blue" id="telemetryLatency">1.12 ms</span>
+        </div>
+        <div class="telemetry-card">
+          <span class="telemetry-label">產線機器特權覆蓋 (ZSP)</span>
+          <span class="telemetry-val" id="telemetryZsp">109 : 1 (100%)</span>
+        </div>
+        <div class="telemetry-card">
+          <span class="telemetry-label">抗量子加密通道狀態</span>
+          <span class="telemetry-val green" id="telemetryPqc">ML-KEM Active</span>
+        </div>
+      </div>
+
+      <!-- 控制面板 -->
+      <div class="fluid-control-deck">
+        <div class="fluid-slider-cluster">
+          <div class="fluid-slider-header">
+            <label for="fluidFluxRange" class="fluid-slider-label">
+              <span>⚡</span>
+              <strong>企業流體通量與併發負載調節 (Fluid Ingress Throughput)：</strong>
+              <span class="fluid-ratio-highlight" id="fluidFluxText">4,500 Req/s</span>
+            </label>
+            <span class="slider-end-label">動態流速自適應 · 60 FPS 物理渲染</span>
+          </div>
+          <div class="fluid-slider-track-wrap">
+            <span class="slider-end-label">1,000 Req/s (低負載)</span>
+            <input type="range" id="fluidFluxRange" min="1000" max="15000" value="4500" step="500" class="fluid-range-input" aria-label="調節流體通量">
+            <span class="slider-end-label">15,000 Req/s (極限壓測)</span>
+          </div>
+        </div>
+
+        <div class="fluid-action-buttons">
+          <button type="button" class="fluid-btn btn-shai fluid-ripple-host" id="btnInjectShai">
+            <span>🚨</span> 注入「Shai-Hulud 供應鏈投毒」
+          </button>
+          <button type="button" class="fluid-btn btn-jailbreak fluid-ripple-host" id="btnInjectJailbreak">
+            <span>⚡</span> 注入「Prompt Jailbreak 越獄穿透」
+          </button>
+          <button type="button" class="fluid-btn btn-machine fluid-ripple-host" id="btnInjectMachine">
+            <span>🤖</span> 注入「109:1 產線機器特權突波」
+          </button>
+          <button type="button" class="fluid-btn btn-quantum fluid-ripple-host" id="btnInjectQuantum">
+            <span>⚛️</span> 注入「Harvest-Now 量子竊聽威脅」
+          </button>
+          <button type="button" class="fluid-btn btn-burst fluid-ripple-host" id="btnFluidBurst">
+            <span>💥</span> 激發流體超導高壓脈衝
+          </button>
+          <button type="button" class="fluid-btn btn-reset fluid-ripple-host" id="btnResetPipe">
+            <span>🔄</span> 重置標準流場
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1791,6 +2556,56 @@
   </div>
 </footer>
 
+
+<!-- 全景高解析架構圖流體互動燈箱 (Interactive Diagram Lightbox) -->
+<div class="lightbox-overlay" id="diagramLightbox" role="dialog" aria-modal="true" aria-label="高解析架構圖檢視器">
+  <div class="lightbox-content">
+    <div class="lightbox-header">
+      <div class="lightbox-title">
+        <span>📐</span> <span id="lightboxTitle">架構示意圖檢視</span>
+      </div>
+      <div class="lightbox-actions">
+        <button type="button" class="lightbox-btn" id="lbZoomOut" title="縮小 (Zoom Out)">－</button>
+        <button type="button" class="lightbox-btn" id="lbZoomReset" title="重設縮放 (100%)">100%</button>
+        <button type="button" class="lightbox-btn" id="lbZoomIn" title="放大 (Zoom In)">＋</button>
+        <button type="button" class="lightbox-btn close" id="lbClose" title="關閉檢視器 (Esc)">✕ 關閉</button>
+      </div>
+    </div>
+    <div class="lightbox-img-viewport" id="lbViewport">
+      <img src="" alt="" class="lightbox-img" id="lightboxImg">
+    </div>
+    <div class="lightbox-footer" id="lightboxCaption">
+      架構圖深度說明解析
+    </div>
+  </div>
+</div>
+
+<!-- 浮動戰情工具列 HUD (Floating Fluid HUD) -->
+<div class="fluid-hud" id="fluidQuickHud">
+  <div class="fluid-hud-menu" id="fluidHudMenu">
+    <div class="fluid-hud-item" id="hudToggleCanvas">
+      <span>🌊 背景流體動效</span>
+      <strong id="hudCanvasStatus" style="color:var(--accent-green);">開啟中</strong>
+    </div>
+    <div class="fluid-hud-item" id="hudCycleSpeed">
+      <span>⚡ 流體流速倍率</span>
+      <strong id="hudSpeedVal">1.0x</strong>
+    </div>
+    <div class="fluid-hud-item" id="hudJumpLab">
+      <span>🚀 直達流體實驗室</span>
+      <span>▸</span>
+    </div>
+    <div class="fluid-hud-item" id="hudBackTop">
+      <span>⬆️ 回到頁面頂端</span>
+      <span>Top</span>
+    </div>
+  </div>
+  <button type="button" class="fluid-hud-toggle" id="fluidHudToggleBtn" aria-label="切換流體戰情工具選單" title="流體動力工具選單">
+    🌊
+  </button>
+</div>
+
+
 <!-- 互動邏輯腳本 -->
 <script>
   // 主題切換器
@@ -1832,7 +2647,7 @@
   }
 
   // 捲動高亮 Scrollspy
-  const sections = ['overview', 'metrics', 'executive-summary', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7']
+  const sections = ['overview', 'metrics', 'executive-summary', 'fluid-lab', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7']
     .map(id => document.getElementById(id)).filter(Boolean);
   const tocLinks = document.querySelectorAll('.toc-link');
   const tocPills = document.querySelectorAll('.toc-pill');
@@ -1862,6 +2677,923 @@
       item.classList.toggle('active', href === currentId);
     });
   });
+
+
+  // ==========================================================================
+  // 流體動力學與全情境互動防禦系統 (Fluid Dynamics & Security Lab Engine)
+  // ==========================================================================
+  const themePalettes = {
+    milan: {
+      accent: [180, 83, 9],       // Amber gold
+      accent2: [217, 119, 6],
+      accent3: [120, 53, 15],
+      glow: 'rgba(180, 83, 9, 0.4)'
+    },
+    pharaoh: {
+      accent: [217, 107, 39],     // Terracotta
+      accent2: [43, 95, 107],     // Turquoise
+      accent3: [229, 169, 60],    // Gold
+      glow: 'rgba(217, 107, 39, 0.4)'
+    },
+    obsidian: {
+      accent: [240, 122, 74],     // Bright orange
+      accent2: [13, 148, 136],    // Teal
+      accent3: [245, 158, 11],    // Gold
+      glow: 'rgba(240, 122, 74, 0.45)'
+    },
+    klimt: {
+      accent: [198, 146, 20],     // Gold leaf
+      accent2: [30, 63, 32],      // Forest green
+      accent3: [139, 38, 62],     // Ruby
+      glow: 'rgba(198, 146, 20, 0.4)'
+    },
+    ninagawa: {
+      accent: [233, 30, 99],      // Neon magenta
+      accent2: [0, 229, 255],     // Cyan
+      accent3: [156, 39, 176],    // Purple
+      glow: 'rgba(233, 30, 99, 0.45)'
+    },
+    miro: {
+      accent: [229, 57, 53],      // Primary red
+      accent2: [30, 136, 229],    // Primary blue
+      accent3: [253, 216, 53],    // Primary yellow
+      glow: 'rgba(229, 57, 53, 0.4)'
+    }
+  };
+
+  function getCurrentThemeKey() {
+    return document.documentElement.getAttribute('data-theme') || 'milan';
+  }
+
+  function getPalette() {
+    return themePalettes[getCurrentThemeKey()] || themePalettes.milan;
+  }
+
+  /* ------------------------------------------------------------------
+   * 1. 流體閱讀進度條 (Fluid Reading Progress)
+   * ------------------------------------------------------------------ */
+  const readProgressBar = document.getElementById('fluidReadProgress');
+  function updateReadProgress() {
+    if (!readProgressBar) return;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) {
+      readProgressBar.style.width = '0%';
+      return;
+    }
+    const scrolled = (window.scrollY / docHeight) * 100;
+    readProgressBar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+  }
+  window.addEventListener('scroll', updateReadProgress, { passive: true });
+  updateReadProgress();
+
+  /* ------------------------------------------------------------------
+   * 2. 全域背景向量流體力學畫布 (Dynamic Vector Flow Field)
+   * ------------------------------------------------------------------ */
+  const bgCanvas = document.getElementById('fluidBackgroundCanvas');
+  const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+
+  const bgFluidConfig = {
+    enabled: true,
+    speedMultiplier: 1.0,
+    viscosity: 0.95,
+    particleCount: 110,
+    mouseRadius: 170,
+    shockwaves: []
+  };
+
+  const mouseState = {
+    x: -9999,
+    y: -9999,
+    prevX: -9999,
+    prevY: -9999,
+    vx: 0,
+    vy: 0,
+    isDown: false,
+    lastMoveTime: 0
+  };
+
+  let bgParticles = [];
+
+  function initBgParticles(width, height) {
+    bgParticles = [];
+    for (let i = 0; i < bgFluidConfig.particleCount; i++) {
+      bgParticles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        baseSpeed: 0.4 + Math.random() * 0.8,
+        size: 1.3 + Math.random() * 2.2,
+        alpha: 0.2 + Math.random() * 0.6,
+        colorIndex: Math.floor(Math.random() * 3)
+      });
+    }
+  }
+
+  function resizeBgCanvas() {
+    if (!bgCanvas) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    bgCanvas.width = Math.floor(w * dpr);
+    bgCanvas.height = Math.floor(h * dpr);
+    if (bgCtx) {
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    if (bgParticles.length === 0) {
+      initBgParticles(w, h);
+    }
+  }
+  window.addEventListener('resize', resizeBgCanvas, { passive: true });
+  resizeBgCanvas();
+
+  window.addEventListener('pointermove', (e) => {
+    const now = performance.now();
+    const dt = (now - mouseState.lastMoveTime) || 16;
+    mouseState.lastMoveTime = now;
+    if (mouseState.prevX !== -9999) {
+      mouseState.vx = ((e.clientX - mouseState.prevX) / dt) * 16;
+      mouseState.vy = ((e.clientY - mouseState.prevY) / dt) * 16;
+    }
+    mouseState.prevX = mouseState.x;
+    mouseState.prevY = mouseState.y;
+    mouseState.x = e.clientX;
+    mouseState.y = e.clientY;
+  }, { passive: true });
+
+  const burstDotsPool = [];
+  function spawnFluidBurstDots(x, y, count, customColor) {
+    const pal = getPalette();
+    const cCount = count || 36;
+    for (let i = 0; i < cCount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2.0 + Math.random() * 8.5;
+      const cArr = customColor || (Math.random() < 0.45 ? pal.accent : (Math.random() < 0.75 ? pal.accent2 : pal.accent3));
+      burstDotsPool.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed + (mouseState.vx * 0.2),
+        vy: Math.sin(angle) * speed + (mouseState.vy * 0.2),
+        size: 3.0 + Math.random() * 4.5,
+        alpha: 1.0,
+        decay: 0.014 + Math.random() * 0.018,
+        color: cArr
+      });
+    }
+  }
+  window.__spawnFluidBurst = spawnFluidBurstDots;
+
+  window.addEventListener('pointerdown', (e) => {
+    mouseState.isDown = true;
+    bgFluidConfig.shockwaves.push({
+      x: e.clientX,
+      y: e.clientY,
+      r: 8,
+      maxR: 240,
+      strength: 1.0,
+      speed: 7.0
+    });
+    spawnFluidBurstDots(e.clientX, e.clientY, 18);
+  });
+  window.addEventListener('pointerup', () => { mouseState.isDown = false; });
+
+  function renderBgFluid(time) {
+    if (!bgCtx || !bgCanvas || !bgFluidConfig.enabled) {
+      requestAnimationFrame(renderBgFluid);
+      return;
+    }
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    bgCtx.clearRect(0, 0, w, h);
+    const pal = getPalette();
+
+    // Shockwaves
+    for (let i = bgFluidConfig.shockwaves.length - 1; i >= 0; i--) {
+      const sw = bgFluidConfig.shockwaves[i];
+      sw.r += sw.speed;
+      sw.strength *= 0.94;
+      if (sw.r >= sw.maxR || sw.strength < 0.02) {
+        bgFluidConfig.shockwaves.splice(i, 1);
+        continue;
+      }
+      bgCtx.beginPath();
+      bgCtx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+      bgCtx.strokeStyle = `rgba(${pal.accent.join(',')}, ${(sw.strength * 0.35).toFixed(3)})`;
+      bgCtx.lineWidth = 2 * sw.strength;
+      bgCtx.stroke();
+    }
+
+    // Cursor halo
+    if (mouseState.x > 0 && mouseState.y > 0) {
+      const grad = bgCtx.createRadialGradient(mouseState.x, mouseState.y, 4, mouseState.x, mouseState.y, 140);
+      grad.addColorStop(0, `rgba(${pal.accent.join(',')}, 0.14)`);
+      grad.addColorStop(0.6, `rgba(${pal.accent2.join(',')}, 0.05)`);
+      grad.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = grad;
+      bgCtx.beginPath();
+      bgCtx.arc(mouseState.x, mouseState.y, 140, 0, Math.PI * 2);
+      bgCtx.fill();
+    }
+
+    // Burst Dots
+    for (let i = burstDotsPool.length - 1; i >= 0; i--) {
+      const bd = burstDotsPool[i];
+      bd.x += bd.vx;
+      bd.y += bd.vy;
+      bd.vx *= 0.94;
+      bd.vy *= 0.94;
+      bd.alpha -= bd.decay;
+      if (bd.alpha <= 0) {
+        burstDotsPool.splice(i, 1);
+        continue;
+      }
+      bgCtx.beginPath();
+      bgCtx.arc(bd.x, bd.y, bd.size * bd.alpha, 0, Math.PI * 2);
+      bgCtx.fillStyle = `rgba(${bd.color.join(',')}, ${bd.alpha.toFixed(3)})`;
+      bgCtx.fill();
+    }
+
+    const tOffset = time * 0.0006;
+    const speedMult = bgFluidConfig.speedMultiplier;
+    const visc = bgFluidConfig.viscosity;
+
+    // Vector Flow Field Particles
+    for (let i = 0; i < bgParticles.length; i++) {
+      const p = bgParticles[i];
+      const fx = Math.cos(p.y * 0.005 + tOffset) * 0.8 + 0.3;
+      const fy = Math.sin(p.x * 0.005 + tOffset) * 0.4;
+
+      p.vx = (p.vx + fx * 0.15) * visc;
+      p.vy = (p.vy + fy * 0.15) * visc;
+
+      // Mouse push & shear
+      const dx = p.x - mouseState.x;
+      const dy = p.y - mouseState.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < bgFluidConfig.mouseRadius && dist > 1) {
+        const force = (1 - dist / bgFluidConfig.mouseRadius);
+        p.vx += (dx / dist) * force * 1.6 + mouseState.vx * force * 0.2;
+        p.vy += (dy / dist) * force * 1.6 + mouseState.vy * force * 0.2;
+      }
+
+      // Shockwave reaction
+      for (let k = 0; k < bgFluidConfig.shockwaves.length; k++) {
+        const sw = bgFluidConfig.shockwaves[k];
+        const swDx = p.x - sw.x;
+        const swDy = p.y - sw.y;
+        const swDist = Math.sqrt(swDx * swDx + swDy * swDy);
+        if (Math.abs(swDist - sw.r) < 32) {
+          p.vx += (swDx / (swDist || 1)) * 3.2 * sw.strength;
+          p.vy += (swDy / (swDist || 1)) * 3.2 * sw.strength;
+        }
+      }
+
+      p.x += p.vx * speedMult * p.baseSpeed;
+      p.y += p.vy * speedMult * p.baseSpeed;
+
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      const cArr = (p.colorIndex === 0) ? pal.accent : (p.colorIndex === 1 ? pal.accent2 : pal.accent3);
+      bgCtx.beginPath();
+      bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      bgCtx.fillStyle = `rgba(${cArr.join(',')}, ${p.alpha.toFixed(3)})`;
+      bgCtx.fill();
+
+      // Velocity trail
+      if (Math.abs(p.vx) + Math.abs(p.vy) > 0.35) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(p.x, p.y);
+        bgCtx.lineTo(p.x - p.vx * 3.5, p.y - p.vy * 3.5);
+        bgCtx.strokeStyle = `rgba(${cArr.join(',')}, ${(p.alpha * 0.35).toFixed(3)})`;
+        bgCtx.lineWidth = p.size * 0.7;
+        bgCtx.stroke();
+      }
+    }
+    requestAnimationFrame(renderBgFluid);
+  }
+  requestAnimationFrame(renderBgFluid);
+
+  /* ------------------------------------------------------------------
+   * 3. 流體動力端到端安全防禦實驗室 (Fluid Security Defense Lab)
+   * ------------------------------------------------------------------ */
+  const pipeCanvas = document.getElementById('fluidDefensePipeCanvas');
+  const pipeCtx = pipeCanvas ? pipeCanvas.getContext('2d') : null;
+
+  const pipeSim = {
+    flux: 4500,
+    targetFlux: 4500,
+    particles: [],
+    attackDroplets: [],
+    threatCount: 0,
+    airsAngle: 0,
+    koiFlash: 0,
+    quantumAngle: 0,
+    diverterAngle: 0,
+    isBursting: false,
+    burstTimer: 0
+  };
+
+  function initPipeCanvas() {
+    if (!pipeCanvas) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = pipeCanvas.getBoundingClientRect();
+    pipeCanvas.width = Math.floor(rect.width * dpr);
+    pipeCanvas.height = Math.floor(rect.height * dpr);
+    if (pipeCtx) {
+      pipeCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+  window.addEventListener('resize', initPipeCanvas, { passive: true });
+  initPipeCanvas();
+
+  function spawnNormalPacket(customSpeed) {
+    if (!pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const h = rect.height;
+    const isAgent = Math.random() < 0.22; // 22% Agent vs 78% Human
+    pipeSim.particles.push({
+      x: 8,
+      y: h * 0.5 + (Math.random() - 0.5) * 46,
+      vx: (customSpeed || (3.2 + Math.random() * 2.2)) * (pipeSim.flux / 4500),
+      vy: (Math.random() - 0.5) * 0.6,
+      size: 2.5 + Math.random() * 2.2,
+      isAgent: isAgent,
+      colorType: isAgent ? 'agent' : 'human',
+      alpha: 0.9,
+      stage: 1
+    });
+  }
+
+  function incrementThreat(count) {
+    pipeSim.threatCount += (count || 1);
+    const countEl = document.getElementById('threatBlockCount');
+    if (countEl) countEl.textContent = pipeSim.threatCount;
+  }
+
+  function setPipelineAlert(elementId, text, isDanger, resetDelay) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const originalText = el.getAttribute('data-original') || el.textContent;
+    if (!el.getAttribute('data-original')) el.setAttribute('data-original', originalText);
+    el.textContent = text;
+    el.style.color = isDanger ? '#EF4444' : '#10B981';
+    if (resetDelay) {
+      setTimeout(() => {
+        if (el) {
+          el.textContent = el.getAttribute('data-original') || originalText;
+          el.style.color = '#94A3B8';
+        }
+      }, resetDelay);
+    }
+  }
+
+  // Attack 1: Shai-Hulud Package Poisoning
+  function injectShaiHuludThreat() {
+    if (!pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const h = rect.height;
+    for (let i = 0; i < 6; i++) {
+      pipeSim.attackDroplets.push({
+        type: 'shai-hulud',
+        x: 10 + i * 14,
+        y: h * 0.5 + (Math.random() - 0.5) * 28,
+        vx: 4.5 + Math.random() * 1.5,
+        vy: (Math.random() - 0.5) * 0.8,
+        size: 7.5 + Math.random() * 3.0,
+        blocked: false,
+        flashTimer: 0,
+        targetStage: 3
+      });
+    }
+    pipeSim.koiFlash = 60;
+    setPipelineAlert('aesStatusText', '🚨 攔截 Shai-Hulud 惡意套件！(0.82ms)', true, 3800);
+    incrementThreat(1);
+  }
+
+  // Attack 2: Prompt Jailbreak
+  function injectJailbreakThreat() {
+    if (!pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const h = rect.height;
+    for (let i = 0; i < 8; i++) {
+      pipeSim.attackDroplets.push({
+        type: 'jailbreak',
+        x: 10 + i * 12,
+        y: h * 0.5 + (Math.random() - 0.5) * 36,
+        vx: 5.2 + Math.random() * 1.8,
+        vy: (Math.random() - 0.5) * 1.2,
+        size: 5.5 + Math.random() * 2.5,
+        blocked: false,
+        flashTimer: 0,
+        targetStage: 2
+      });
+    }
+    setPipelineAlert('airsStatusText', '🛡️ 捕獲 Prompt 越獄攻擊！動態脫敏中', true, 3800);
+    incrementThreat(1);
+  }
+
+  // Attack 3: 109:1 Machine Identity Surge
+  function injectMachineSurge() {
+    if (!pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const h = rect.height;
+    for (let i = 0; i < 28; i++) {
+      pipeSim.particles.push({
+        x: 5 + Math.random() * 40,
+        y: h * 0.5 + (Math.random() - 0.5) * 50,
+        vx: 6.0 + Math.random() * 3.0,
+        vy: (Math.random() - 0.5) * 1.0,
+        size: 3.2 + Math.random() * 2.0,
+        isAgent: true,
+        colorType: 'machine-surge',
+        alpha: 1.0,
+        stage: 1
+      });
+    }
+    setPipelineAlert('browserStatusText', '🤖 109:1 機器特權高併發 · JIT 簽發中', false, 3500);
+  }
+
+  // Attack 4: Harvest-Now Quantum Sniffer
+  function injectQuantumThreat() {
+    if (!pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const h = rect.height;
+    for (let i = 0; i < 5; i++) {
+      pipeSim.attackDroplets.push({
+        type: 'quantum-probe',
+        x: rect.width * 0.72 + i * 12,
+        y: h * 0.5 + (Math.random() - 0.5) * 40,
+        vx: 1.0,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: 6.5,
+        blocked: true,
+        flashTimer: 80,
+        targetStage: 5
+      });
+    }
+    setPipelineAlert('pqcStatusText', '⚛️ ML-KEM-768 抗量子封裝 · 阻斷竊聽', false, 3800);
+    incrementThreat(1);
+  }
+
+  // Overdrive burst
+  function triggerPipelineBurst() {
+    pipeSim.isBursting = true;
+    pipeSim.burstTimer = 80;
+    for (let i = 0; i < 40; i++) {
+      spawnNormalPacket(7.5 + Math.random() * 4.0);
+    }
+  }
+
+  // Reset pipeline
+  function resetPipeline() {
+    pipeSim.flux = 4500;
+    pipeSim.targetFlux = 4500;
+    pipeSim.particles = [];
+    pipeSim.attackDroplets = [];
+    pipeSim.koiFlash = 0;
+    const range = document.getElementById('fluidFluxRange');
+    if (range) range.value = 4500;
+    const fluxText = document.getElementById('fluidFluxText');
+    if (fluxText) fluxText.textContent = '4,500 Req/s';
+    const telFlux = document.getElementById('telemetryFlux');
+    if (telFlux) telFlux.textContent = '4,500 Req/s';
+  }
+
+  // Pipe render loop
+  function renderPipeSim(time) {
+    requestAnimationFrame(renderPipeSim);
+    if (!pipeCtx || !pipeCanvas) return;
+    const rect = pipeCanvas.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (w <= 0 || h <= 0) return;
+    const pal = getPalette();
+
+    pipeCtx.clearRect(0, 0, w, h);
+
+    // Smooth flux transition
+    pipeSim.flux += (pipeSim.targetFlux - pipeSim.flux) * 0.1;
+
+    // Continuous particle spawn
+    const spawnRate = Math.max(1, Math.floor(pipeSim.flux / 1800));
+    for (let i = 0; i < spawnRate; i++) {
+      if (Math.random() < 0.65) {
+        spawnNormalPacket();
+      }
+    }
+
+    // Geometry anchors
+    const s1X = w * 0.20; // Ingress to AIRS
+    const s2X = w * 0.38; // AIRS to AES
+    const s3X = w * 0.58; // AES to Browser
+    const s4X = w * 0.78; // Browser to PQC
+    const s5X = w;        // PQC to Core
+    const centerY = h * 0.5;
+
+    // Draw Pipeline Conduit Background
+    pipeCtx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    pipeCtx.lineWidth = 1;
+    [s1X, s2X, s3X, s4X].forEach(x => {
+      pipeCtx.beginPath();
+      pipeCtx.moveTo(x, 0);
+      pipeCtx.lineTo(x, h);
+      pipeCtx.stroke();
+    });
+
+    // Ingress Flow Pipe Guides
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(0, centerY - 32);
+    pipeCtx.lineTo(s1X, centerY - 32);
+    pipeCtx.lineTo(s2X, centerY - 28);
+    pipeCtx.lineTo(s3X, centerY - 28);
+    // Fork in stage 4
+    pipeCtx.lineTo(s4X, centerY - 44);
+    pipeCtx.lineTo(s5X, centerY - 44);
+    pipeCtx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+    pipeCtx.lineWidth = 2;
+    pipeCtx.stroke();
+
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(0, centerY + 32);
+    pipeCtx.lineTo(s1X, centerY + 32);
+    pipeCtx.lineTo(s2X, centerY + 28);
+    pipeCtx.lineTo(s3X, centerY + 28);
+    // Fork lower lane
+    pipeCtx.lineTo(s4X, centerY + 44);
+    pipeCtx.lineTo(s5X, centerY + 44);
+    pipeCtx.stroke();
+
+    // Stage 2: Prisma AIRS Rotating Semantic Vortex Chamber
+    pipeSim.airsAngle += 0.04;
+    const airsX = (s1X + s2X) * 0.5;
+    pipeCtx.save();
+    pipeCtx.translate(airsX, centerY);
+    pipeCtx.rotate(pipeSim.airsAngle);
+    for (let a = 0; a < 4; a++) {
+      pipeCtx.beginPath();
+      pipeCtx.arc(0, 0, 24 + a * 4, a * (Math.PI / 2), a * (Math.PI / 2) + Math.PI * 0.35);
+      pipeCtx.strokeStyle = `rgba(${pal.accent.join(',')}, ${0.5 - a * 0.1})`;
+      pipeCtx.lineWidth = 2.5;
+      pipeCtx.stroke();
+    }
+    pipeCtx.restore();
+
+    // Stage 3: Cortex AES 5-Stage Sandbox Gate
+    const aesX = (s2X + s3X) * 0.5;
+    const isKoiActive = pipeSim.koiFlash > 0;
+    if (isKoiActive) pipeSim.koiFlash--;
+    pipeCtx.beginPath();
+    pipeCtx.rect(aesX - 16, centerY - 48, 32, 96);
+    pipeCtx.fillStyle = isKoiActive ? 'rgba(239, 68, 68, 0.22)' : 'rgba(22, 163, 74, 0.12)';
+    pipeCtx.fill();
+    pipeCtx.strokeStyle = isKoiActive ? '#EF4444' : `rgba(${pal.accent2.join(',')}, 0.6)`;
+    pipeCtx.lineWidth = isKoiActive ? 3 : 1.5;
+    pipeCtx.stroke();
+
+    // Stage 4: Dual Workforce Diverter Indicator
+    const divX = (s3X + s4X) * 0.5;
+    pipeSim.diverterAngle = Math.sin(time * 0.003) * 0.25;
+    pipeCtx.save();
+    pipeCtx.translate(divX - 14, centerY);
+    pipeCtx.rotate(pipeSim.diverterAngle);
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(0, 0);
+    pipeCtx.lineTo(24, 0);
+    pipeCtx.strokeStyle = `rgba(${pal.accent.join(',')}, 0.8)`;
+    pipeCtx.lineWidth = 3;
+    pipeCtx.stroke();
+    pipeCtx.restore();
+
+    // Stage 5: PQC Quantum Shield Tunnel
+    const pqcX = (s4X + s5X) * 0.5;
+    pipeSim.quantumAngle += 0.02;
+    pipeCtx.save();
+    pipeCtx.translate(pqcX, centerY);
+    for (let q = 0; q < 3; q++) {
+      pipeCtx.beginPath();
+      const qRadius = 26 + q * 10;
+      for (let s = 0; s < 6; s++) {
+        const rad = pipeSim.quantumAngle + (s * Math.PI) / 3;
+        const hx = Math.cos(rad) * qRadius;
+        const hy = Math.sin(rad) * qRadius;
+        if (s === 0) pipeCtx.moveTo(hx, hy);
+        else pipeCtx.lineTo(hx, hy);
+      }
+      pipeCtx.closePath();
+      pipeCtx.strokeStyle = `rgba(22, 163, 74, ${0.45 - q * 0.12})`;
+      pipeCtx.lineWidth = 1.5;
+      pipeCtx.stroke();
+    }
+    pipeCtx.restore();
+
+    // Render & Update Normal Packets
+    for (let i = pipeSim.particles.length - 1; i >= 0; i--) {
+      const p = pipeSim.particles[i];
+
+      // Stage progression & lane steering
+      if (p.x < s3X) {
+        // Stream straight in central conduit
+        p.vy += (centerY - p.y) * 0.03;
+      } else if (p.x >= s3X && p.x < s4X) {
+        // Divert based on isAgent
+        const targetLaneY = p.isAgent ? (centerY + 40) : (centerY - 40);
+        p.vy += (targetLaneY - p.y) * 0.06;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy *= 0.92;
+
+      // Draw packet
+      let col = pal.accent;
+      if (p.colorType === 'agent') col = pal.accent2;
+      else if (p.colorType === 'machine-surge') col = [0, 229, 255];
+
+      pipeCtx.beginPath();
+      pipeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      pipeCtx.fillStyle = `rgba(${col.join(',')}, ${p.alpha})`;
+      pipeCtx.fill();
+
+      // Despawn at end
+      if (p.x > w) {
+        pipeSim.particles.splice(i, 1);
+      }
+    }
+
+    // Render & Update Threat Droplets
+    for (let i = pipeSim.attackDroplets.length - 1; i >= 0; i--) {
+      const td = pipeSim.attackDroplets[i];
+      td.x += td.vx;
+      td.y += td.vy;
+
+      // Shai-Hulud intercepted at Cortex AES (s2X to s3X)
+      if (td.type === 'shai-hulud') {
+        if (td.x >= aesX - 10 && !td.blocked) {
+          td.blocked = true;
+          td.vx = 0.2;
+          spawnFluidBurstDots(td.x, td.y, 14, [220, 38, 38]);
+        }
+        if (td.blocked) {
+          td.size *= 0.92;
+          td.y += (Math.random() - 0.5) * 3;
+          if (td.size < 0.6) {
+            pipeSim.attackDroplets.splice(i, 1);
+            continue;
+          }
+        }
+        pipeCtx.beginPath();
+        pipeCtx.arc(td.x, td.y, td.size, 0, Math.PI * 2);
+        pipeCtx.fillStyle = '#DC2626';
+        pipeCtx.shadowColor = '#DC2626';
+        pipeCtx.shadowBlur = 10;
+        pipeCtx.fill();
+        pipeCtx.shadowBlur = 0;
+      }
+      // Jailbreak intercepted at Prisma AIRS (s1X to s2X)
+      else if (td.type === 'jailbreak') {
+        if (td.x >= airsX - 12 && !td.blocked) {
+          td.blocked = true;
+          td.vx = 0.3;
+          spawnFluidBurstDots(td.x, td.y, 12, [217, 119, 6]);
+        }
+        if (td.blocked) {
+          td.size *= 0.90;
+          if (td.size < 0.6) {
+            pipeSim.attackDroplets.splice(i, 1);
+            continue;
+          }
+        }
+        pipeCtx.beginPath();
+        pipeCtx.arc(td.x, td.y, td.size, 0, Math.PI * 2);
+        pipeCtx.fillStyle = '#D97706';
+        pipeCtx.shadowColor = '#D97706';
+        pipeCtx.shadowBlur = 8;
+        pipeCtx.fill();
+        pipeCtx.shadowBlur = 0;
+      }
+      // Quantum Probe neutralized at PQC Gateway
+      else if (td.type === 'quantum-probe') {
+        td.flashTimer--;
+        if (td.flashTimer <= 0) {
+          pipeSim.attackDroplets.splice(i, 1);
+          continue;
+        }
+        pipeCtx.beginPath();
+        pipeCtx.arc(td.x, td.y, td.size, 0, Math.PI * 2);
+        pipeCtx.fillStyle = '#16A34A';
+        pipeCtx.fill();
+      }
+    }
+  }
+  requestAnimationFrame(renderPipeSim);
+
+  // Lab Controls Listeners
+  const fluxRange = document.getElementById('fluidFluxRange');
+  if (fluxRange) {
+    fluxRange.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      pipeSim.targetFlux = val;
+      const ft = document.getElementById('fluidFluxText');
+      if (ft) ft.textContent = val.toLocaleString() + ' Req/s';
+      const tf = document.getElementById('telemetryFlux');
+      if (tf) tf.textContent = val.toLocaleString() + ' Req/s';
+    });
+  }
+
+  const btnShai = document.getElementById('btnInjectShai');
+  if (btnShai) btnShai.addEventListener('click', injectShaiHuludThreat);
+
+  const btnJb = document.getElementById('btnInjectJailbreak');
+  if (btnJb) btnJb.addEventListener('click', injectJailbreakThreat);
+
+  const btnMach = document.getElementById('btnInjectMachine');
+  if (btnMach) btnMach.addEventListener('click', injectMachineSurge);
+
+  const btnQ = document.getElementById('btnInjectQuantum');
+  if (btnQ) btnQ.addEventListener('click', injectQuantumThreat);
+
+  const btnBurst = document.getElementById('btnFluidBurst');
+  if (btnBurst) btnBurst.addEventListener('click', triggerPipelineBurst);
+
+  const btnReset = document.getElementById('btnResetPipe');
+  if (btnReset) btnReset.addEventListener('click', resetPipeline);
+
+  /* ------------------------------------------------------------------
+   * 4. 3D 景深傾斜與流體聚光燈 (Card 3D Tilt & Cursor Spotlight)
+   * ------------------------------------------------------------------ */
+  const tiltCards = document.querySelectorAll('.card-3d-tilt, .metric-card, .callout-box, .figure-wrap, .telemetry-card, .toc-col-card');
+  tiltCards.forEach(card => {
+    card.classList.add('card-3d-tilt');
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const midX = rect.width / 2;
+      const midY = rect.height / 2;
+      const rotX = ((y - midY) / midY) * -5.0;
+      const rotY = ((x - midX) / midX) * 5.0;
+
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`;
+    });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  /* ------------------------------------------------------------------
+   * 5. 液態點擊波紋 (Liquid Wave Ripple)
+   * ------------------------------------------------------------------ */
+  document.addEventListener('click', (e) => {
+    const host = e.target.closest('.fluid-ripple-host, .nav-btn, .fluid-btn, .toc-link, .toc-pill, .figure-wrap');
+    if (!host) return;
+    const rect = host.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'fluid-ripple-wave';
+    ripple.style.left = `${e.clientX - rect.left}px`;
+    ripple.style.top = `${e.clientY - rect.top}px`;
+    const size = Math.max(rect.width, rect.height) * 2;
+    ripple.style.width = `${size}px`;
+    ripple.style.height = `${size}px`;
+    host.appendChild(ripple);
+    setTimeout(() => { ripple.remove(); }, 800);
+  });
+
+  /* ------------------------------------------------------------------
+   * 6. 全景高解析架構圖流體互動燈箱 (Interactive Diagram Lightbox)
+   * ------------------------------------------------------------------ */
+  const lbModal = document.getElementById('diagramLightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbTitle = document.getElementById('lightboxTitle');
+  const lbCaption = document.getElementById('lightboxCaption');
+  const lbClose = document.getElementById('lbClose');
+  const lbZoomIn = document.getElementById('lbZoomIn');
+  const lbZoomOut = document.getElementById('lbZoomOut');
+  const lbZoomReset = document.getElementById('lbZoomReset');
+
+  let currentZoom = 1.0;
+
+  function setLbZoom(scale) {
+    currentZoom = Math.min(2.5, Math.max(0.6, scale));
+    if (lbImg) {
+      lbImg.style.transform = `scale(${currentZoom})`;
+    }
+  }
+
+  function openLightbox(imgSrc, titleText, captionText) {
+    if (!lbModal) return;
+    if (lbImg) lbImg.src = imgSrc;
+    if (lbTitle) lbTitle.textContent = titleText || '架構圖檢視';
+    if (lbCaption) lbCaption.textContent = captionText || '';
+    setLbZoom(1.0);
+    lbModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (!lbModal) return;
+    lbModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.figure-wrap').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      const img = wrap.querySelector('img');
+      const titleEl = wrap.querySelector('.caption-title');
+      const descEl = wrap.querySelector('.caption-desc');
+      if (img) {
+        openLightbox(
+          img.src,
+          titleEl ? titleEl.textContent.trim() : img.alt,
+          descEl ? descEl.textContent.trim() : ''
+        );
+      }
+    });
+  });
+
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  if (lbModal) {
+    lbModal.addEventListener('click', (e) => {
+      if (e.target === lbModal) closeLightbox();
+    });
+  }
+  if (lbZoomIn) lbZoomIn.addEventListener('click', () => setLbZoom(currentZoom + 0.25));
+  if (lbZoomOut) lbZoomOut.addEventListener('click', () => setLbZoom(currentZoom - 0.25));
+  if (lbZoomReset) lbZoomReset.addEventListener('click', () => setLbZoom(1.0));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lbModal && lbModal.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+
+  /* ------------------------------------------------------------------
+   * 7. 浮動戰情 HUD (Floating Quick Bar)
+   * ------------------------------------------------------------------ */
+  const hudContainer = document.getElementById('fluidQuickHud');
+  const hudToggleBtn = document.getElementById('fluidHudToggleBtn');
+  const hudToggleCanvas = document.getElementById('hudToggleCanvas');
+  const hudCanvasStatus = document.getElementById('hudCanvasStatus');
+  const hudCycleSpeed = document.getElementById('hudCycleSpeed');
+  const hudSpeedVal = document.getElementById('hudSpeedVal');
+  const hudJumpLab = document.getElementById('hudJumpLab');
+  const hudBackTop = document.getElementById('hudBackTop');
+
+  if (hudToggleBtn && hudContainer) {
+    hudToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hudContainer.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+      if (!hudContainer.contains(e.target)) {
+        hudContainer.classList.remove('active');
+      }
+    });
+  }
+
+  if (hudToggleCanvas) {
+    hudToggleCanvas.addEventListener('click', () => {
+      bgFluidConfig.enabled = !bgFluidConfig.enabled;
+      if (bgCanvas) {
+        bgCanvas.style.opacity = bgFluidConfig.enabled ? '0.85' : '0';
+      }
+      if (hudCanvasStatus) {
+        hudCanvasStatus.textContent = bgFluidConfig.enabled ? '開啟中' : '已關閉';
+        hudCanvasStatus.style.color = bgFluidConfig.enabled ? 'var(--accent-green)' : 'var(--text-muted)';
+      }
+    });
+  }
+
+  const speedLevels = [1.0, 1.5, 2.0];
+  let speedIdx = 0;
+  if (hudCycleSpeed) {
+    hudCycleSpeed.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speedLevels.length;
+      bgFluidConfig.speedMultiplier = speedLevels[speedIdx];
+      if (hudSpeedVal) hudSpeedVal.textContent = speedLevels[speedIdx].toFixed(1) + 'x';
+    });
+  }
+
+  if (hudJumpLab) {
+    hudJumpLab.addEventListener('click', () => {
+      const labEl = document.getElementById('fluid-lab');
+      if (labEl) labEl.scrollIntoView({ behavior: 'smooth' });
+      if (hudContainer) hudContainer.classList.remove('active');
+    });
+  }
+
+  if (hudBackTop) {
+    hudBackTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (hudContainer) hudContainer.classList.remove('active');
+    });
+  }
+
 </script>
 
 </body>
