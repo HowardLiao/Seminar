@@ -1178,6 +1178,7 @@
   </style>
 </head>
 <body>
+  <canvas id="hag-fluid-canvas" aria-hidden="true"></canvas>
   <a href="#main-content" class="skip-link">跳至主要內容區</a>
   <div class="watermark-overlay" aria-hidden="true"></div>
 
@@ -1474,6 +1475,82 @@
             <span>AIRS 延遲: <strong id="mLat">2.4ms</strong></span>
           </span>
         </div>
+
+        
+        <!-- 流體動力雙軌路由實驗室 (Interactive Fluid Route Dynamics Lab) -->
+        <div class="fluid-lab-box" id="hagFluidLab">
+          <div class="fluid-lab-header">
+            <div class="fluid-lab-title-group">
+              <span class="fluid-pulse-icon">🌊</span>
+              <div>
+                <h4 class="fluid-lab-title">L.L.H 流體動力雙軌路由實驗室 (Fluid Route Dynamics Lab)</h4>
+                <p class="fluid-lab-desc">即時流體力學動態模擬：企業全通路 Prompt/Token 水流湧入，經 Howard AIRS 渦流過濾與動態分流閥分流至地端與跨雲</p>
+              </div>
+            </div>
+            <div class="fluid-lab-status-tags">
+              <span class="fluid-badge fluid-badge-live"><span class="fluid-radar-dot"></span>流體引擎運作中 (60 FPS)</span>
+              <span class="fluid-badge" id="fluidCurrentModeBadge">常態 70/30 雙軌</span>
+            </div>
+          </div>
+
+          <div class="fluid-canvas-container">
+            <canvas id="hagFluidPipeCanvas" width="1200" height="260" aria-label="70/30 流體管道動態模擬"></canvas>
+            <div class="fluid-canvas-overlay-labels">
+              <div class="fluid-lbl fluid-lbl-in">
+                <span class="fluid-lbl-tag">全通路入口水流</span>
+                <span class="fluid-lbl-val">100% Ingress Flow</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-mid">
+                <span class="fluid-lbl-tag">Howard AIRS 治理腔</span>
+                <span class="fluid-lbl-val" id="pipeFilterStatus">OWASP 護欄守護中</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-top-out">
+                <span class="fluid-lbl-tag">地端 AIDC GPU 機房 (70%)</span>
+                <span class="fluid-lbl-val" id="pipeLocalMetric">高密度高速噴流 · 100% 機密不出廠</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-bot-out">
+                <span class="fluid-lbl-tag">多雲 PrivateLink 推理 (30%)</span>
+                <span class="fluid-lbl-val" id="pipeCloudMetric">Presidio 脫敏量子流 · 零外洩</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 即時互動控制列 -->
+          <div class="fluid-control-deck">
+            <div class="fluid-slider-cluster">
+              <div class="fluid-slider-header">
+                <label for="fluidSplitRange" class="fluid-slider-label">
+                  <span class="fluid-icon">⚖️</span>
+                  <strong>地端/跨雲流體分流比閥門 (Fluid Split Diverter Valve)：</strong>
+                  <span class="fluid-ratio-highlight" id="fluidRatioText">70% 地端 / 30% 跨雲</span>
+                </label>
+                <div class="fluid-live-stats">
+                  <span class="fluid-stat-item">預估 TCO 降幅：<strong class="stat-green" id="fluidTcoText">-72.4%</strong></span>
+                  <span class="fluid-stat-item">端到端延遲：<strong class="stat-cyan" id="fluidLatText">2.4 ms</strong></span>
+                  <span class="fluid-stat-item">流體通量：<strong class="stat-amber" id="fluidFluxText">4,280 Token/s</strong></span>
+                </div>
+              </div>
+              <div class="fluid-slider-track-wrap">
+                <span class="slider-end-label">100% 機密地端</span>
+                <input type="range" id="fluidSplitRange" min="10" max="100" value="70" step="5" class="fluid-range-input" />
+                <span class="slider-end-label">10% 地端 / 90% 多雲</span>
+              </div>
+            </div>
+
+            <div class="fluid-action-buttons">
+              <button type="button" class="fluid-btn fluid-btn-attack" id="fluidInjectAttackBtn">
+                <span class="btn-icon">🚨</span> 注入攻擊流體阻斷測試
+              </button>
+              <button type="button" class="fluid-btn fluid-btn-burst" id="fluidBurstBtn">
+                <span class="btn-icon">💥</span> 激發流體高壓脈衝
+              </button>
+              <button type="button" class="fluid-btn fluid-btn-reset" id="fluidResetPipeBtn">
+                <span class="btn-icon">🔄</span> 重置標準流場
+              </button>
+            </div>
+          </div>
+        </div>
+
 
         <div class="arch-layer-pills" aria-label="跨視角層級聚焦">
           <span style="font-size:0.76rem;color:#94A3B8;font-weight:700;margin-right:4px;">🎯 層級聚焦：</span>
@@ -2767,71 +2844,1523 @@
 
 <!-- HAG_FLUID_MOTION_START -->
 <style>
+  /* Reading progress bar */
   #hag-read-progress {
     position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-    background: linear-gradient(90deg, #38BDF8, #34D399, #A78BFA);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+    background: linear-gradient(90deg, #38BDF8, #34D399, #F59E0B);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.8);
     z-index: 9999; pointer-events: none; transition: width 0.08s linear;
   }
+
+  /* Global background fluid canvas */
+  #hag-fluid-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.88;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Ensure page content is above the fluid canvas */
+  .app-wrap, header, footer, .modal-backdrop, .hero, section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hero Aurora Enhancement */
   .hero { position: relative; overflow: hidden; }
   .hero::before {
-    content: ""; position: absolute; inset: -40% -20% auto -20%; height: 420px;
-    background: radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.16), transparent 55%),
-                radial-gradient(circle at 75% 30%, rgba(52, 211, 153, 0.12), transparent 50%);
-    filter: blur(24px); pointer-events: none; z-index: 0;
-    animation: heroAurora 11s ease-in-out infinite alternate;
+    content: ""; position: absolute; inset: -40% -20% auto -20%; height: 460px;
+    background: radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.20), transparent 55%),
+                radial-gradient(circle at 75% 30%, rgba(52, 211, 153, 0.16), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.12), transparent 45%);
+    filter: blur(28px); pointer-events: none; z-index: 0;
+    animation: heroAurora 12s ease-in-out infinite alternate;
   }
   .hero > * { position: relative; z-index: 1; }
   @keyframes heroAurora {
-    0% { transform: translate3d(-2%, -2%, 0) scale(1); }
-    100% { transform: translate3d(3%, 4%, 0) scale(1.06); }
+    0% { transform: translate3d(-2%, -2%, 0) scale(1) rotate(0deg); }
+    50% { transform: translate3d(2%, 3%, 0) scale(1.05) rotate(1deg); }
+    100% { transform: translate3d(-1%, 4%, 0) scale(1.08) rotate(-1deg); }
   }
+
+  /* Scroll Reveal Motion */
   .hag-reveal {
-    opacity: 0; transform: translateY(18px);
-    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .hag-reveal.is-visible { opacity: 1; transform: translateY(0); }
-  .kpi-card, .console-card {
-    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+
+  /* Interactive Fluid 3D Tilt & Spotlight */
+  .card-3d-tilt {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+    will-change: transform;
+    overflow: hidden;
   }
-  .kpi-card:hover, .console-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(2, 6, 23, 0.45);
+  .card-3d-tilt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.08), transparent 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .hero::before { animation: none !important; }
-    .hag-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .card-3d-tilt:hover::after {
+    opacity: 1;
+  }
+  [data-theme="milan"] .card-3d-tilt::after,
+  [data-theme="pharaoh"] .card-3d-tilt::after,
+  [data-theme="miro"] .card-3d-tilt::after {
+    background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(222, 88, 20, 0.08), transparent 80%);
+  }
+
+  /* Liquid Ripple Wave */
+  .fluid-ripple-host {
+    position: relative;
+    overflow: hidden;
+  }
+  .fluid-ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(56, 189, 248, 0.1) 60%, transparent 80%);
+    pointer-events: none;
+    animation: fluidRippleAnim 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    z-index: 10;
+  }
+  @keyframes fluidRippleAnim {
+    to {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* =========================================================
+     FLUID LAB BOX (70/30 Interactive Route Pipeline Dynamics)
+     ========================================================= */
+  .fluid-lab-box {
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    margin: 18px 0 24px;
+    box-shadow: 0 16px 36px rgba(2, 6, 23, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .fluid-lab-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+    opacity: 0.9;
+  }
+  .fluid-lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .fluid-lab-title-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .fluid-pulse-icon {
+    font-size: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--accent-soft);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-strong);
+    animation: fluidIconPulse 3s ease-in-out infinite;
+  }
+  @keyframes fluidIconPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(56, 189, 248, 0); }
+    50% { transform: scale(1.05); box-shadow: 0 0 18px rgba(56, 189, 248, 0.35); }
+  }
+  .fluid-lab-title {
+    margin: 0 0 4px;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .fluid-lab-desc {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .fluid-lab-status-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .fluid-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .fluid-badge-live {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #10B981;
+  }
+  .fluid-radar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+    animation: radarPulse 1.8s infinite;
+  }
+  @keyframes radarPulse {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.9; }
+  }
+
+  /* Fluid Canvas Container */
+  .fluid-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    background: #020617;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.6);
+  }
+  [data-theme="milan"] .fluid-canvas-container { background: #1C1917; }
+  [data-theme="pharaoh"] .fluid-canvas-container { background: #18120C; }
+  [data-theme="miro"] .fluid-canvas-container { background: #0F172A; }
+  #hagFluidPipeCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+  .fluid-canvas-overlay-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .fluid-lbl {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(2, 6, 23, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    transition: all 0.25s ease;
+  }
+  .fluid-lbl-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .fluid-lbl-val {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #F8FAFC;
+    font-family: var(--font-mono);
+  }
+  .fluid-lbl-in { top: 12px; left: 16px; border-left: 3px solid var(--accent); }
+  .fluid-lbl-mid { top: 12px; left: 50%; transform: translateX(-50%); border-top: 3px solid #F59E0B; }
+  .fluid-lbl-top-out { top: 12px; right: 16px; border-right: 3px solid #38BDF8; text-align: right; }
+  .fluid-lbl-bot-out { bottom: 12px; right: 16px; border-right: 3px solid #10B981; text-align: right; }
+
+  /* Fluid Control Deck */
+  .fluid-control-deck {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .fluid-slider-cluster {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 18px;
+  }
+  .fluid-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .fluid-slider-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+  .fluid-ratio-highlight {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border-strong);
+  }
+  .fluid-live-stats {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .fluid-stat-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .fluid-stat-item strong {
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+  .stat-green { color: #10B981; }
+  .stat-cyan { color: #38BDF8; }
+  .stat-amber { color: #F59E0B; }
+
+  .fluid-slider-track-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slider-end-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+  }
+  .fluid-range-input {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #38BDF8 0%, #38BDF8 70%, #10B981 70%, #10B981 100%);
+    outline: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .fluid-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+    cursor: grab;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .fluid-range-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.9);
+  }
+  .fluid-range-input::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.28);
+  }
+
+  .fluid-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .fluid-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text);
+  }
+  .fluid-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+  .fluid-btn-attack {
+    background: rgba(239, 68, 68, 0.14);
+    border-color: rgba(239, 68, 68, 0.45);
+    color: #F87171;
+  }
+  .fluid-btn-attack:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #EF4444;
+    color: #FFFFFF;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.4);
+  }
+  .fluid-btn-burst {
+    background: var(--accent-soft);
+    border-color: var(--border-strong);
+    color: var(--accent);
+  }
+  .fluid-btn-burst:hover {
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+  .fluid-btn-reset {
+    color: var(--text-muted);
+  }
+  .fluid-btn-reset:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+
+  /* =========================================================
+     FLUID DYNAMICS HUD DOCK (Floating Control Capsule)
+     ========================================================= */
+  #hag-fluid-hud {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-sans);
+  }
+  .hud-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: var(--bg-elevated);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .hud-trigger-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.35);
+  }
+  .hud-drop-icon {
+    display: inline-block;
+    animation: hudDropAnim 2s infinite ease-in-out;
+  }
+  @keyframes hudDropAnim {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  .hud-panel {
+    display: none;
+    width: 290px;
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: 0 18px 45px rgba(2, 6, 23, 0.65);
+    margin-bottom: 12px;
+    backdrop-filter: blur(16px);
+    animation: hudSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hud-panel.is-open { display: block; }
+  @keyframes hudSlideUp {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .hud-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hud-panel-title {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hud-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .hud-close-btn:hover { color: var(--text); background: var(--bg-elevated); }
+  .hud-row {
+    margin-bottom: 12px;
+  }
+  .hud-row-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .hud-mode-pills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .hud-mode-pill {
+    padding: 6px 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .hud-mode-pill.active {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  }
+  .hud-range-control {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--border);
+    outline: none;
+  }
+  .hud-range-control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  }
+  .hud-btn-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .hud-btn-sub {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .hud-btn-sub:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Responsive & Print */
+  @media (max-width: 768px) {
+    .fluid-canvas-container { height: 210px; }
+    .fluid-lbl-tag { font-size: 0.62rem; }
+    .fluid-lbl-val { font-size: 0.68rem; }
+    .fluid-live-stats { gap: 8px; }
+    .fluid-stat-item { font-size: 0.74rem; }
+    #hag-fluid-hud { right: 14px; bottom: 14px; }
   }
   @media print {
-    #hag-read-progress, .hero::before { display: none !important; }
+    #hag-read-progress, #hag-fluid-canvas, #hagFluidLab, #hag-fluid-hud, .hero::before { display: none !important; }
     .hag-reveal { opacity: 1 !important; transform: none !important; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    #hag-fluid-canvas { display: none !important; }
+    .hero::before { animation: none !important; }
+    .fluid-pulse-icon { animation: none !important; }
+    .card-3d-tilt { transform: none !important; }
+  }
 </style>
+
+<!-- Floating Fluid Dynamics HUD -->
+<div id="hag-fluid-hud" aria-label="流體動力互動控制器">
+  <div class="hud-panel" id="hagHudPanel">
+    <div class="hud-panel-head">
+      <span class="hud-panel-title">💧 流體動力物理控制器</span>
+      <button type="button" class="hud-close-btn" id="hagHudClose" aria-label="關閉控制器">×</button>
+    </div>
+    <div class="hud-row">
+      <div class="hud-row-label">
+        <span>洋流拓撲流場</span>
+        <span id="hudCurModeText">AI 數據洋流</span>
+      </div>
+      <div class="hud-mode-pills">
+        <button type="button" class="hud-mode-pill active" data-flow="ocean">🌊 洋流</button>
+        <button type="button" class="hud-mode-pill" data-flow="split">⚡ 雙軌</button>
+        <button type="button" class="hud-mode-pill" data-flow="vortex">🌌 渦流</button>
+      </div>
+    </div>
+    <div class="hud-row">
+      <div class="hud-row-label">
+        <span>粒子流速 (Speed)</span>
+        <span id="hudSpeedVal">1.0x</span>
+      </div>
+      <input type="range" min="0.3" max="2.5" step="0.1" value="1.0" class="hud-range-control" id="hudSpeedRange" />
+    </div>
+    <div class="hud-row">
+      <div class="hud-row-label">
+        <span>介質黏滯度 (Viscosity)</span>
+        <span id="hudViscVal">低阻力</span>
+      </div>
+      <input type="range" min="0.90" max="0.99" step="0.01" value="0.96" class="hud-range-control" id="hudViscRange" />
+    </div>
+    <div class="hud-btn-group">
+      <button type="button" class="hud-btn-sub" id="hudSplashBtn">✨ 激發全場水花</button>
+      <button type="button" class="hud-btn-sub" id="hudToggleFluidBtn">⏸ 暫停流體</button>
+    </div>
+  </div>
+  <button type="button" class="hud-trigger-btn" id="hagHudTrigger" aria-expanded="false">
+    <span class="hud-drop-icon">💧</span>
+    <span>流體動力 HUD</span>
+  </button>
+</div>
+
 <div id="hag-read-progress" aria-hidden="true"></div>
+
+<!-- Unified Fluid Dynamics & Interactivity Engine -->
 <script>
-  (function(){
-    var bar = document.getElementById('hag-read-progress');
-    if (bar) {
-      window.addEventListener('scroll', function(){
-        var h = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
-        bar.style.width = pct.toFixed(1) + '%';
-      }, { passive: true });
+(function() {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+   * 1. THEME COLOR ENGINE (Maps 6 Master Themes to RGB Vectors)
+   * ------------------------------------------------------------------ */
+  var themePalettes = {
+    obsidian: {
+      accent: [56, 189, 248],    // Cyan
+      accent2: [245, 158, 11],   // Amber
+      accent3: [16, 185, 129],   // Emerald
+      bg: [2, 6, 23]
+    },
+    milan: {
+      accent: [222, 88, 20],     // Terracotta
+      accent2: [217, 119, 6],    // Amber
+      accent3: [168, 50, 18],    // Dark Red
+      bg: [253, 251, 247]
+    },
+    pharaoh: {
+      accent: [232, 117, 36],    // Solar Orange
+      accent2: [217, 139, 25],   // Gold
+      accent3: [182, 83, 45],    // Sandstone
+      bg: [255, 255, 255]
+    },
+    klimt: {
+      accent: [245, 158, 11],    // Gold
+      accent2: [217, 119, 6],    // Bronze
+      accent3: [129, 140, 248],  // Star Indigo
+      bg: [18, 15, 38]
+    },
+    ninagawa: {
+      accent: [225, 29, 72],     // Neon Crimson
+      accent2: [6, 182, 212],    // Cyan
+      accent3: [217, 70, 239],   // Orchid
+      bg: [18, 4, 22]
+    },
+    miro: {
+      accent: [220, 38, 38],     // Primary Red
+      accent2: [37, 99, 235],    // Cobalt Blue
+      accent3: [234, 179, 8],    // Yellow
+      bg: [250, 245, 255]
     }
-    if ('IntersectionObserver' in window) {
-      var els = document.querySelectorAll('.kpi-card, .sec-head, .console-card, .arch-layer-btn');
-      els.forEach(function(el){ el.classList.add('hag-reveal'); });
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(en){
-          if (en.isIntersecting) {
-            en.target.classList.add('is-visible');
-            io.unobserve(en.target);
-          }
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-      els.forEach(function(el){ io.observe(el); });
+  };
+
+  function getCurrentThemeKey() {
+    return document.documentElement.getAttribute('data-theme') || 'obsidian';
+  }
+
+  function getPalette() {
+    return themePalettes[getCurrentThemeKey()] || themePalettes.obsidian;
+  }
+
+  /* ------------------------------------------------------------------
+   * 2. GLOBAL BACKGROUND FLUID CANVAS (Dynamic Vector Flow Field)
+   * ------------------------------------------------------------------ */
+  var bgCanvas = document.getElementById('hag-fluid-canvas');
+  var bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+
+  var fluidConfig = {
+    enabled: true,
+    flowMode: 'ocean', // 'ocean', 'split', 'vortex'
+    speedMultiplier: 1.0,
+    viscosity: 0.96,
+    particleCount: 110,
+    mouseRadius: 180,
+    shockwaves: []
+  };
+
+  var mouseState = {
+    x: -9999,
+    y: -9999,
+    prevX: -9999,
+    prevY: -9999,
+    vx: 0,
+    vy: 0,
+    isDown: false,
+    lastMoveTime: 0
+  };
+
+  var particles = [];
+
+  function initParticles(width, height) {
+    particles = [];
+    var count = fluidConfig.particleCount;
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        baseSpeed: 0.4 + Math.random() * 0.8,
+        size: 1.2 + Math.random() * 2.2,
+        alpha: 0.2 + Math.random() * 0.65,
+        colorIndex: Math.floor(Math.random() * 3),
+        trail: []
+      });
     }
-  })();
+  }
+
+  function resizeBgCanvas() {
+    if (!bgCanvas) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    bgCanvas.width = Math.floor(w * dpr);
+    bgCanvas.height = Math.floor(h * dpr);
+    if (bgCtx) {
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    if (particles.length === 0) {
+      initParticles(w, h);
+    }
+  }
+
+  window.addEventListener('resize', resizeBgCanvas, { passive: true });
+  resizeBgCanvas();
+
+  // Pointer tracking for fluid
+  window.addEventListener('pointermove', function(e) {
+    var now = performance.now();
+    var dt = (now - mouseState.lastMoveTime) || 16;
+    mouseState.lastMoveTime = now;
+    if (mouseState.prevX !== -9999) {
+      mouseState.vx = (e.clientX - mouseState.prevX) / dt * 16;
+      mouseState.vy = (e.clientY - mouseState.prevY) / dt * 16;
+    }
+    mouseState.prevX = mouseState.x;
+    mouseState.prevY = mouseState.y;
+    mouseState.x = e.clientX;
+    mouseState.y = e.clientY;
+  }, { passive: true });
+
+  window.addEventListener('pointerdown', function(e) {
+    mouseState.isDown = true;
+    fluidConfig.shockwaves.push({
+      x: e.clientX,
+      y: e.clientY,
+      r: 10,
+      maxR: 240,
+      strength: 1.0,
+      speed: 6.5
+    });
+  }, { passive: true });
+
+  window.addEventListener('pointerup', function() {
+    mouseState.isDown = false;
+  }, { passive: true });
+
+  // Touch support for fluid canvas
+  window.addEventListener('touchmove', function(e) {
+    if (e.touches && e.touches[0]) {
+      var t = e.touches[0];
+      mouseState.x = t.clientX;
+      mouseState.y = t.clientY;
+    }
+  }, { passive: true });
+
+  // Render loop for background fluid
+  var lastFrameTime = performance.now();
+  function renderFluid(time) {
+    requestAnimationFrame(renderFluid);
+    if (!fluidConfig.enabled || !bgCtx || !bgCanvas) return;
+
+    // Decay mouse velocity
+    mouseState.vx *= 0.92;
+    mouseState.vy *= 0.92;
+
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var pal = getPalette();
+
+    // Partial clear for subtle motion blur
+    bgCtx.clearRect(0, 0, w, h);
+
+    // Update & draw shockwaves
+    for (var swIdx = fluidConfig.shockwaves.length - 1; swIdx >= 0; swIdx--) {
+      var sw = fluidConfig.shockwaves[swIdx];
+      sw.r += sw.speed;
+      sw.strength = 1 - (sw.r / sw.maxR);
+      if (sw.strength <= 0) {
+        fluidConfig.shockwaves.splice(swIdx, 1);
+        continue;
+      }
+      bgCtx.beginPath();
+      bgCtx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+      bgCtx.strokeStyle = 'rgba(' + pal.accent.join(',') + ',' + (sw.strength * 0.35).toFixed(3) + ')';
+      bgCtx.lineWidth = 2 * sw.strength;
+      bgCtx.stroke();
+    }
+
+    // Render fluid cursor halo
+    if (mouseState.x > 0 && mouseState.y > 0) {
+      var grad = bgCtx.createRadialGradient(mouseState.x, mouseState.y, 4, mouseState.x, mouseState.y, 140);
+      grad.addColorStop(0, 'rgba(' + pal.accent.join(',') + ', 0.16)');
+      grad.addColorStop(0.5, 'rgba(' + pal.accent2.join(',') + ', 0.06)');
+      grad.addColorStop(1, 'transparent');
+      bgCtx.fillStyle = grad;
+      bgCtx.beginPath();
+      bgCtx.arc(mouseState.x, mouseState.y, 140, 0, Math.PI * 2);
+      bgCtx.fill();
+    }
+
+    var speedMult = fluidConfig.speedMultiplier;
+    var visc = fluidConfig.viscosity;
+    var flowMode = fluidConfig.flowMode;
+    var tOffset = time * 0.0006;
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+
+      // Base vector flow according to topology mode
+      var fx = 0, fy = 0;
+      if (flowMode === 'ocean') {
+        fx = Math.cos(p.y * 0.005 + tOffset) * 0.8 + 0.3;
+        fy = Math.sin(p.x * 0.005 + tOffset) * 0.4;
+      } else if (flowMode === 'split') {
+        // High speed bifurcated streams
+        if (p.y < h * 0.5) {
+          fx = 1.4 + Math.sin(p.x * 0.01) * 0.5;
+          fy = (h * 0.28 - p.y) * 0.01;
+        } else {
+          fx = 0.9 + Math.cos(p.x * 0.01) * 0.4;
+          fy = (h * 0.72 - p.y) * 0.01;
+        }
+      } else if (flowMode === 'vortex') {
+        // Quantum vortex around center
+        var cx = w * 0.5;
+        var cy = h * 0.5;
+        var dxC = p.x - cx;
+        var dyC = p.y - cy;
+        var distC = Math.sqrt(dxC * dxC + dyC * dyC) || 1;
+        fx = -dyC / distC * 1.5;
+        fy = dxC / distC * 1.5;
+      }
+
+      p.vx = (p.vx + fx * 0.15) * visc;
+      p.vy = (p.vy + fy * 0.15) * visc;
+
+      // Mouse fluid interaction (Push & Shear)
+      var dx = p.x - mouseState.x;
+      var dy = p.y - mouseState.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < fluidConfig.mouseRadius && dist > 1) {
+        var force = (1 - dist / fluidConfig.mouseRadius);
+        // Add push force
+        p.vx += (dx / dist) * force * 1.8;
+        p.vy += (dy / dist) * force * 1.8;
+        // Add mouse momentum
+        p.vx += mouseState.vx * force * 0.25;
+        p.vy += mouseState.vy * force * 0.25;
+      }
+
+      // Shockwave reaction
+      for (var k = 0; k < fluidConfig.shockwaves.length; k++) {
+        var swk = fluidConfig.shockwaves[k];
+        var swDx = p.x - swk.x;
+        var swDy = p.y - swk.y;
+        var swDist = Math.sqrt(swDx * swDx + swDy * swDy);
+        if (Math.abs(swDist - swk.r) < 30) {
+          p.vx += (swDx / (swDist || 1)) * 3.5 * swk.strength;
+          p.vy += (swDy / (swDist || 1)) * 3.5 * swk.strength;
+        }
+      }
+
+      // Step
+      p.x += p.vx * speedMult * p.baseSpeed;
+      p.y += p.vy * speedMult * p.baseSpeed;
+
+      // Wrap edges
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      // Particle Color
+      var cArr = (p.colorIndex === 0) ? pal.accent : (p.colorIndex === 1 ? pal.accent2 : pal.accent3);
+
+      // Draw particle & fluid trail
+      bgCtx.beginPath();
+      bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      bgCtx.fillStyle = 'rgba(' + cArr.join(',') + ',' + p.alpha.toFixed(3) + ')';
+      bgCtx.shadowColor = 'rgba(' + cArr.join(',') + ', 0.6)';
+      bgCtx.shadowBlur = 6;
+      bgCtx.fill();
+
+      // Velocity line
+      if (Math.abs(p.vx) + Math.abs(p.vy) > 0.4) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(p.x, p.y);
+        bgCtx.lineTo(p.x - p.vx * 4, p.y - p.vy * 4);
+        bgCtx.strokeStyle = 'rgba(' + cArr.join(',') + ',' + (p.alpha * 0.4).toFixed(3) + ')';
+        bgCtx.lineWidth = p.size * 0.7;
+        bgCtx.stroke();
+      }
+    }
+    bgCtx.shadowBlur = 0;
+  }
+  requestAnimationFrame(renderFluid);
+
+  /* ------------------------------------------------------------------
+   * 3. INTERACTIVE FLUID ROUTE PIPELINE LAB (70/30 Physics Simulation)
+   * ------------------------------------------------------------------ */
+  var pipeCanvas = document.getElementById('hagFluidPipeCanvas');
+  var pipeCtx = pipeCanvas ? pipeCanvas.getContext('2d') : null;
+
+  var pipeSim = {
+    ratio: 70, // 70% On-premise, 30% Multi-cloud
+    targetRatio: 70,
+    particles: [],
+    attackDroplets: [],
+    airsTurbineAngle: 0,
+    diverterAngle: 0,
+    burstCount: 0,
+    statusText: 'OWASP 護欄守護中',
+    isAttacking: false,
+    attackAlertTimer: 0
+  };
+
+  function initPipeCanvas() {
+    if (!pipeCanvas) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var rect = pipeCanvas.getBoundingClientRect();
+    pipeCanvas.width = Math.floor(rect.width * dpr);
+    pipeCanvas.height = Math.floor(rect.height * dpr);
+    if (pipeCtx) {
+      pipeCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+  window.addEventListener('resize', initPipeCanvas, { passive: true });
+  initPipeCanvas();
+
+  // Pipe Particle Spawn
+  function spawnPipeParticle(customType) {
+    if (!pipeCanvas) return;
+    var rect = pipeCanvas.getBoundingClientRect();
+    var w = rect.width;
+    var h = rect.height;
+    var isCloud = (Math.random() * 100) > pipeSim.ratio;
+
+    pipeSim.particles.push({
+      x: 10,
+      y: h * 0.5 + (Math.random() - 0.5) * 36,
+      vx: 3.5 + Math.random() * 2.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: 2.2 + Math.random() * 2.0,
+      stage: 'ingress', // 'ingress' -> 'airs' -> 'diverter' -> 'branch'
+      isCloud: isCloud,
+      type: customType || 'normal',
+      alpha: 0.85,
+      life: 0
+    });
+  }
+
+  // Inject attack
+  function triggerAttackInjection() {
+    if (!pipeCanvas) return;
+    var rect = pipeCanvas.getBoundingClientRect();
+    pipeSim.attackDroplets.push({
+      x: 15,
+      y: rect.height * 0.5,
+      vx: 4.8,
+      size: 9.0,
+      blocked: false,
+      burstAlpha: 0,
+      alertText: 'OWASP LLM01 注入攔截 (2.1ms)'
+    });
+    pipeSim.isAttacking = true;
+    pipeSim.attackAlertTimer = 160;
+
+    var filterStatus = document.getElementById('pipeFilterStatus');
+    if (filterStatus) {
+      filterStatus.textContent = '🚨 攔截 OWASP 惡意注入！';
+      filterStatus.style.color = '#EF4444';
+      setTimeout(function() {
+        if (filterStatus) {
+          filterStatus.textContent = 'OWASP 護欄守護中';
+          filterStatus.style.color = '#F8FAFC';
+        }
+      }, 3500);
+    }
+  }
+
+  // Animate Pipe Canvas
+  function renderPipeSim(time) {
+    requestAnimationFrame(renderPipeSim);
+    if (!pipeCtx || !pipeCanvas) return;
+
+    var rect = pipeCanvas.getBoundingClientRect();
+    var w = rect.width;
+    var h = rect.height;
+    if (w <= 0 || h <= 0) return;
+
+    var pal = getPalette();
+    pipeCtx.clearRect(0, 0, w, h);
+
+    // Dynamic smoothing of ratio slider
+    pipeSim.ratio += (pipeSim.targetRatio - pipeSim.ratio) * 0.12;
+
+    // Layout Anchors
+    var ingressEndX = w * 0.28;
+    var airsCenterX = w * 0.44;
+    var airsCenterY = h * 0.5;
+    var airsRadius = 38;
+    var diverterX = w * 0.60;
+    var outLocalY = h * 0.28;
+    var outCloudY = h * 0.72;
+
+    // 1. Draw Pipe Geometry
+    pipeCtx.save();
+    pipeCtx.lineCap = 'round';
+    pipeCtx.lineJoin = 'round';
+
+    // Ingress Tube
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(0, h * 0.5 - 28);
+    pipeCtx.lineTo(ingressEndX, h * 0.5 - 28);
+    pipeCtx.lineTo(ingressEndX, h * 0.5 + 28);
+    pipeCtx.lineTo(0, h * 0.5 + 28);
+    pipeCtx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+    pipeCtx.fill();
+    pipeCtx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    pipeCtx.lineWidth = 1.5;
+    pipeCtx.stroke();
+
+    // AIRS Chamber Outer Ring
+    pipeCtx.beginPath();
+    pipeCtx.arc(airsCenterX, airsCenterY, airsRadius + 8, 0, Math.PI * 2);
+    pipeCtx.fillStyle = 'rgba(11, 18, 36, 0.88)';
+    pipeCtx.fill();
+    pipeCtx.strokeStyle = pipeSim.isAttacking ? 'rgba(239, 68, 68, 0.7)' : 'rgba(245, 158, 11, 0.45)';
+    pipeCtx.lineWidth = 2.5;
+    pipeCtx.stroke();
+
+    // AIRS Rotating Turbine Blades
+    pipeSim.airsTurbineAngle += 0.045;
+    pipeCtx.save();
+    pipeCtx.translate(airsCenterX, airsCenterY);
+    pipeCtx.rotate(pipeSim.airsTurbineAngle);
+    for (var b = 0; b < 6; b++) {
+      pipeCtx.rotate(Math.PI / 3);
+      pipeCtx.beginPath();
+      pipeCtx.moveTo(0, 0);
+      pipeCtx.lineTo(airsRadius - 4, 0);
+      pipeCtx.strokeStyle = pipeSim.isAttacking ? '#EF4444' : 'rgba(245, 158, 11, 0.6)';
+      pipeCtx.lineWidth = 2;
+      pipeCtx.stroke();
+    }
+    pipeCtx.restore();
+
+    // Diverter to Branches
+    var localPipeThick = 12 + (pipeSim.ratio / 100) * 26;
+    var cloudPipeThick = 12 + ((100 - pipeSim.ratio) / 100) * 26;
+
+    // Upper Branch (On-Premises Local 70%)
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(airsCenterX + airsRadius, airsCenterY - 10);
+    pipeCtx.bezierCurveTo(diverterX, airsCenterY - 10, diverterX, outLocalY, w, outLocalY);
+    pipeCtx.strokeStyle = 'rgba(56, 189, 248, 0.28)';
+    pipeCtx.lineWidth = localPipeThick;
+    pipeCtx.stroke();
+    // Core glow line
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(airsCenterX + airsRadius, airsCenterY - 10);
+    pipeCtx.bezierCurveTo(diverterX, airsCenterY - 10, diverterX, outLocalY, w, outLocalY);
+    pipeCtx.strokeStyle = '#38BDF8';
+    pipeCtx.lineWidth = 2.0;
+    pipeCtx.stroke();
+
+    // Lower Branch (PrivateLink Cloud 30%)
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(airsCenterX + airsRadius, airsCenterY + 10);
+    pipeCtx.bezierCurveTo(diverterX, airsCenterY + 10, diverterX, outCloudY, w, outCloudY);
+    pipeCtx.strokeStyle = 'rgba(16, 185, 129, 0.25)';
+    pipeCtx.lineWidth = cloudPipeThick;
+    pipeCtx.stroke();
+    // Core glow line
+    pipeCtx.beginPath();
+    pipeCtx.moveTo(airsCenterX + airsRadius, airsCenterY + 10);
+    pipeCtx.bezierCurveTo(diverterX, airsCenterY + 10, diverterX, outCloudY, w, outCloudY);
+    pipeCtx.strokeStyle = '#10B981';
+    pipeCtx.lineWidth = 2.0;
+    pipeCtx.stroke();
+
+    pipeCtx.restore();
+
+    // 2. Spawn continuous fluid particles
+    if (Math.random() < 0.65) {
+      spawnPipeParticle();
+    }
+    if (pipeSim.burstCount > 0) {
+      spawnPipeParticle('burst');
+      pipeSim.burstCount--;
+    }
+
+    // 3. Update and Draw Fluid Particles in Pipe
+    for (var i = pipeSim.particles.length - 1; i >= 0; i--) {
+      var p = pipeSim.particles[i];
+      p.life++;
+
+      // Stage progression
+      if (p.x < airsCenterX - airsRadius) {
+        p.stage = 'ingress';
+        p.x += p.vx;
+        // Keep in tube
+        var dy = (h * 0.5 - p.y);
+        p.y += dy * 0.05;
+      } else if (p.x < airsCenterX + airsRadius) {
+        p.stage = 'airs';
+        // Vortex pull inside AIRS chamber
+        var pDx = p.x - airsCenterX;
+        var pDy = p.y - airsCenterY;
+        var pDist = Math.sqrt(pDx * pDx + pDy * pDy) || 1;
+        p.x += p.vx * 0.7 - (pDy / pDist) * 1.8;
+        p.y += (pDx / pDist) * 1.8;
+      } else {
+        p.stage = 'branch';
+        p.x += p.vx * 1.15;
+        var targetY = p.isCloud ? outCloudY : outLocalY;
+        var progress = Math.min(1, (p.x - (airsCenterX + airsRadius)) / (w * 0.35));
+        p.y += (targetY - p.y) * 0.08 * progress + (Math.random() - 0.5) * 1.2;
+      }
+
+      // Render Particle
+      pipeCtx.beginPath();
+      if (p.stage === 'ingress') {
+        pipeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        pipeCtx.fillStyle = 'rgba(255, 255, 255, ' + p.alpha + ')';
+      } else if (p.stage === 'airs') {
+        pipeCtx.arc(p.x, p.y, p.size * 1.2, 0, Math.PI * 2);
+        pipeCtx.fillStyle = '#F59E0B';
+      } else {
+        if (p.isCloud) {
+          // Tokenized square water drop (PII masked)
+          pipeCtx.rect(p.x - p.size, p.y - p.size, p.size * 2, p.size * 2);
+          pipeCtx.fillStyle = '#10B981';
+        } else {
+          // Streamlined local GPU drop
+          pipeCtx.arc(p.x, p.y, p.size * 1.1, 0, Math.PI * 2);
+          pipeCtx.fillStyle = '#38BDF8';
+        }
+      }
+      pipeCtx.fill();
+
+      // Remove out-of-bounds
+      if (p.x > w + 20 || p.y < 0 || p.y > h) {
+        pipeSim.particles.splice(i, 1);
+      }
+    }
+
+    // 4. Update and Draw Malicious Droplets
+    for (var aIdx = pipeSim.attackDroplets.length - 1; aIdx >= 0; aIdx--) {
+      var ad = pipeSim.attackDroplets[aIdx];
+      if (!ad.blocked) {
+        ad.x += ad.vx;
+        // Reached AIRS Chamber
+        if (ad.x >= airsCenterX - 8) {
+          ad.blocked = true;
+          ad.burstAlpha = 1.0;
+        }
+      }
+
+      if (ad.blocked) {
+        // Disintegration burst
+        ad.burstAlpha -= 0.025;
+        pipeCtx.save();
+        pipeCtx.beginPath();
+        pipeCtx.arc(airsCenterX, airsCenterY, airsRadius * (2 - ad.burstAlpha), 0, Math.PI * 2);
+        pipeCtx.strokeStyle = 'rgba(239, 68, 68, ' + (ad.burstAlpha * 0.9) + ')';
+        pipeCtx.lineWidth = 3.5;
+        pipeCtx.stroke();
+
+        // Security Shield Badge
+        pipeCtx.font = 'bold 12px "SF Mono", monospace';
+        pipeCtx.fillStyle = '#EF4444';
+        pipeCtx.textAlign = 'center';
+        pipeCtx.fillText('🛡️ ' + ad.alertText, airsCenterX, airsCenterY - 48);
+        pipeCtx.restore();
+
+        if (ad.burstAlpha <= 0) {
+          pipeSim.attackDroplets.splice(aIdx, 1);
+        }
+      } else {
+        // Render Malicious Red Needle Particle
+        pipeCtx.save();
+        pipeCtx.beginPath();
+        pipeCtx.arc(ad.x, ad.y, ad.size, 0, Math.PI * 2);
+        pipeCtx.fillStyle = '#EF4444';
+        pipeCtx.shadowColor = '#EF4444';
+        pipeCtx.shadowBlur = 12;
+        pipeCtx.fill();
+
+        // Pulsing spikes
+        for (var sp = 0; sp < 4; sp++) {
+          pipeCtx.beginPath();
+          pipeCtx.moveTo(ad.x, ad.y);
+          pipeCtx.lineTo(ad.x + Math.cos(sp * Math.PI / 2 + time * 0.01) * 14, ad.y + Math.sin(sp * Math.PI / 2 + time * 0.01) * 14);
+          pipeCtx.strokeStyle = '#FCA5A5';
+          pipeCtx.lineWidth = 1.5;
+          pipeCtx.stroke();
+        }
+        pipeCtx.restore();
+      }
+    }
+
+    if (pipeSim.attackAlertTimer > 0) {
+      pipeSim.attackAlertTimer--;
+      if (pipeSim.attackAlertTimer === 0) {
+        pipeSim.isAttacking = false;
+      }
+    }
+  }
+  requestAnimationFrame(renderPipeSim);
+
+  // Hook up Pipe Simulator Controls
+  var splitRange = document.getElementById('fluidSplitRange');
+  var ratioText = document.getElementById('fluidRatioText');
+  var tcoText = document.getElementById('fluidTcoText');
+  var latText = document.getElementById('fluidLatText');
+  var fluxText = document.getElementById('fluidFluxText');
+  var curModeBadge = document.getElementById('fluidCurrentModeBadge');
+  var localMetric = document.getElementById('pipeLocalMetric');
+  var cloudMetric = document.getElementById('pipeCloudMetric');
+
+  function updateRatioUI(val) {
+    pipeSim.targetRatio = val;
+    var onPrem = val;
+    var cloud = 100 - val;
+    if (ratioText) ratioText.textContent = onPrem + '% 地端 / ' + cloud + '% 跨雲';
+    if (splitRange) {
+      splitRange.value = val;
+      splitRange.style.background = 'linear-gradient(90deg, #38BDF8 0%, #38BDF8 ' + val + '%, #10B981 ' + val + '%, #10B981 100%)';
+    }
+
+    // Dynamic Telemetry Formulations
+    var tco = -(val * 0.94 + cloud * 0.18).toFixed(1);
+    var lat = (1.8 + cloud * 0.02).toFixed(1);
+    var flux = Math.round(3000 + val * 24);
+
+    if (tcoText) tcoText.textContent = tco + '%';
+    if (latText) latText.textContent = lat + ' ms';
+    if (fluxText) fluxText.textContent = flux.toLocaleString() + ' Token/s';
+
+    // Synchronize Top Telemetry Bar if present
+    var mOnPrem = document.getElementById('mOnPrem');
+    var mCloud = document.getElementById('mCloud');
+    var mLat = document.getElementById('mLat');
+    if (mOnPrem) mOnPrem.textContent = onPrem + '%';
+    if (mCloud) mCloud.textContent = cloud + '%';
+    if (mLat) mLat.textContent = lat + 'ms';
+
+    if (curModeBadge) {
+      if (val === 100) curModeBadge.textContent = '🔒 100% 主權地端';
+      else if (val === 70) curModeBadge.textContent = '🟢 常態 70/30 雙軌';
+      else curModeBadge.textContent = '⚖️ 客製 ' + onPrem + '/' + cloud + ' 雙軌';
+    }
+
+    if (localMetric) {
+      localMetric.textContent = val + '% GPU 高速噴流 · ' + (val >= 70 ? '100% 機密不出廠' : '混合算力推論');
+    }
+    if (cloudMetric) {
+      cloudMetric.textContent = cloud + '% PrivateLink 跨雲 · Presidio 脫敏量子流';
+    }
+  }
+
+  if (splitRange) {
+    splitRange.addEventListener('input', function(e) {
+      updateRatioUI(parseInt(e.target.value, 10));
+    });
+  }
+
+  // Attack Injection Button
+  var attackBtn = document.getElementById('fluidInjectAttackBtn');
+  if (attackBtn) {
+    attackBtn.addEventListener('click', function() {
+      triggerAttackInjection();
+    });
+  }
+
+  // Burst Pulse Button
+  var burstBtn = document.getElementById('fluidBurstBtn');
+  if (burstBtn) {
+    burstBtn.addEventListener('click', function() {
+      pipeSim.burstCount += 65;
+    });
+  }
+
+  // Reset Pipe Button
+  var resetPipeBtn = document.getElementById('fluidResetPipeBtn');
+  if (resetPipeBtn) {
+    resetPipeBtn.addEventListener('click', function() {
+      updateRatioUI(70);
+    });
+  }
+
+  // Sync with Existing Simulation Buttons (🟢 70/30, 🔒 100% 地端, 🚨 攻擊阻斷, ☁️ 跨雲 30%)
+  var simBtns = document.querySelectorAll('.sim-btn');
+  simBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var mode = btn.getAttribute('data-sim');
+      if (mode === 'normal') {
+        updateRatioUI(70);
+      } else if (mode === 'local') {
+        updateRatioUI(100);
+      } else if (mode === 'cloud') {
+        updateRatioUI(20);
+      } else if (mode === 'threat') {
+        triggerAttackInjection();
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+   * 4. INTERACTIVE 3D CARD TILT & FLUID SPOTLIGHT
+   * ------------------------------------------------------------------ */
+  function setupCardTilt() {
+    var cards = document.querySelectorAll('.kpi-card, .console-card, .service-card, .gap-card, .arch-pane');
+    cards.forEach(function(card) {
+      card.classList.add('card-3d-tilt');
+
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', x + 'px');
+        card.style.setProperty('--mouse-y', y + 'px');
+
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var rotateX = ((y - centerY) / centerY) * -5.0;
+        var rotateY = ((x - centerX) / centerX) * 5.0;
+
+        card.style.transform = 'perspective(900px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.015, 1.015, 1.015)';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+  }
+  setupCardTilt();
+
+  /* ------------------------------------------------------------------
+   * 5. LIQUID CLICK RIPPLE ENGINE
+   * ------------------------------------------------------------------ */
+  document.addEventListener('click', function(e) {
+    var target = e.target.closest('button, .kpi-card, .console-card, .arch-tab-btn, .sim-btn, .layer-pill-btn, .fluid-btn');
+    if (!target) return;
+
+    var rect = target.getBoundingClientRect();
+    var rip = document.createElement('span');
+    rip.className = 'fluid-ripple-wave';
+    var size = Math.max(rect.width, rect.height) * 2;
+    rip.style.width = size + 'px';
+    rip.style.height = size + 'px';
+    rip.style.left = (e.clientX - rect.left) + 'px';
+    rip.style.top = (e.clientY - rect.top) + 'px';
+
+    target.classList.add('fluid-ripple-host');
+    target.appendChild(rip);
+
+    setTimeout(function() {
+      if (rip && rip.parentNode) rip.parentNode.removeChild(rip);
+    }, 800);
+  });
+
+  /* ------------------------------------------------------------------
+   * 6. FLOATING FLUID DYNAMICS HUD CONTROLLER
+   * ------------------------------------------------------------------ */
+  var hudTrigger = document.getElementById('hagHudTrigger');
+  var hudPanel = document.getElementById('hagHudPanel');
+  var hudClose = document.getElementById('hagHudClose');
+  var hudCurModeText = document.getElementById('hudCurModeText');
+  var hudSpeedRange = document.getElementById('hudSpeedRange');
+  var hudSpeedVal = document.getElementById('hudSpeedVal');
+  var hudViscRange = document.getElementById('hudViscRange');
+  var hudViscVal = document.getElementById('hudViscVal');
+  var hudSplashBtn = document.getElementById('hudSplashBtn');
+  var hudToggleFluidBtn = document.getElementById('hudToggleFluidBtn');
+
+  if (hudTrigger && hudPanel) {
+    hudTrigger.addEventListener('click', function() {
+      var isOpen = hudPanel.classList.toggle('is-open');
+      hudTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+  if (hudClose && hudPanel) {
+    hudClose.addEventListener('click', function() {
+      hudPanel.classList.remove('is-open');
+      if (hudTrigger) hudTrigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Mode switching
+  var modePills = document.querySelectorAll('.hud-mode-pill');
+  modePills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      modePills.forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      var flow = pill.getAttribute('data-flow');
+      fluidConfig.flowMode = flow;
+      if (hudCurModeText) {
+        if (flow === 'ocean') hudCurModeText.textContent = 'AI 數據洋流';
+        else if (flow === 'split') hudCurModeText.textContent = '70/30 雙軌噴流';
+        else if (flow === 'vortex') hudCurModeText.textContent = '量子渦流';
+      }
+    });
+  });
+
+  // Speed slider
+  if (hudSpeedRange) {
+    hudSpeedRange.addEventListener('input', function(e) {
+      var val = parseFloat(e.target.value);
+      fluidConfig.speedMultiplier = val;
+      if (hudSpeedVal) hudSpeedVal.textContent = val.toFixed(1) + 'x';
+    });
+  }
+
+  // Viscosity slider
+  if (hudViscRange) {
+    hudViscRange.addEventListener('input', function(e) {
+      var val = parseFloat(e.target.value);
+      fluidConfig.viscosity = val;
+      if (hudViscVal) {
+        if (val >= 0.98) hudViscVal.textContent = '極低阻力';
+        else if (val >= 0.95) hudViscVal.textContent = '低阻力';
+        else hudViscVal.textContent = '高黏滯';
+      }
+    });
+  }
+
+  // Full Screen Fluid Splash Burst
+  if (hudSplashBtn) {
+    hudSplashBtn.addEventListener('click', function() {
+      for (var s = 0; s < 5; s++) {
+        setTimeout(function() {
+          fluidConfig.shockwaves.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            r: 10,
+            maxR: 320,
+            strength: 1.0,
+            speed: 8.0
+          });
+        }, s * 120);
+      }
+      pipeSim.burstCount += 50;
+    });
+  }
+
+  // Toggle Fluid ON/OFF
+  if (hudToggleFluidBtn) {
+    hudToggleFluidBtn.addEventListener('click', function() {
+      fluidConfig.enabled = !fluidConfig.enabled;
+      hudToggleFluidBtn.textContent = fluidConfig.enabled ? '⏸ 暫停流體' : '▶ 啟動流體';
+      if (bgCanvas) bgCanvas.style.opacity = fluidConfig.enabled ? '0.88' : '0';
+    });
+  }
+
+  /* ------------------------------------------------------------------
+   * 7. SCROLL PROGRESS & INTERSECTION OBSERVER REVEAL
+   * ------------------------------------------------------------------ */
+  var bar = document.getElementById('hag-read-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
+      bar.style.width = pct.toFixed(1) + '%';
+    }, { passive: true });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var els = document.querySelectorAll('.kpi-card, .sec-head, .console-card, .arch-layer-btn, .service-card, .gap-card, .fluid-lab-box');
+    els.forEach(function(el) { el.classList.add('hag-reveal'); });
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(function(el) { io.observe(el); });
+  }
+
+})();
 </script>
 <!-- HAG_FLUID_MOTION_END -->
 
