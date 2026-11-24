@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="obsidian">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>下班聯繫約定：誰會先交出「範本」給大家學？｜Howard Liao Ph.D. Seminar 014</title>
+<meta name="description" content="Howard Liao Ph.D.｜勞動部《工作規則參考手冊》115年11月版新增第22條之1「工作時間以外與員工聯繫之約定」權威解讀、法律效力三層分析、企業五步落地路徑與獨家條款草案。">
+<meta name="theme-color" content="#2F4538">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="下班聯繫約定：誰會先交出「範本」給大家學？｜Howard Liao Ph.D. Seminar 014">
+<meta property="og:description" content="勞動部新增第22條之1逐字拆解、離線權與加班費實務判斷、最可能搶先推出範本的4大組織，以及企業直接可用的6大條款草案。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://howardliao.github.io/Seminar/014/">
+<meta property="og:image" content="slides/01.jpg">
+
+<link rel="icon" href="assets/howard-liao-portrait-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+
+<style>
+  :root {
+    --forest: #2F4538;
+    --forest-dark: #1F3026;
+    --forest-light: #446150;
+    --gold: #C8A96A;
+    --gold-light: #DFCA9B;
+    --sand: #FAF7F2;
+    --sand-card: #F2EEE8;
+    --rust: #9C5B4A;
+    --coral: #F07A4A;
+    --ink: #0F172A;
+    --ink2: #1E293B;
+    --muted: #94A3B8;
+    --border: rgba(200, 169, 106, 0.25);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: #0B1220;
+    color: #F8FAFC;
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* 頂部導航 */
+  header {
+    height: 64px;
+    background: rgba(15, 23, 42, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header img.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    object-fit: cover;
+  }
+  header .title-box {
+    min-width: 0;
+    flex: 1;
+  }
+  header .title-box b {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #FFFFFF;
+  }
+  header .title-box span {
+    font-size: 12px;
+    color: var(--gold-light);
+  }
+  .preview-badge {
+    background: rgba(200, 169, 106, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(200, 169, 106, 0.4);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px;
+    border-radius: 8px;
+  }
+  .nav-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .nav-tabs button.active {
+    background: var(--forest-light);
+    color: #fff;
+    border: 1px solid var(--gold);
+  }
+  header a.home-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+  header a.home-link:hover {
+    color: var(--gold);
+  }
+
+  /* 模式一：簡報播放區 */
+  #presentation-mode {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 64px);
+    overflow: hidden;
+    position: relative;
+  }
+  .stage {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 64px;
+    min-height: 0;
+  }
+  .frame {
+    position: relative;
+    width: min(100%, calc((100dvh - 150px) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px rgba(200, 169, 106, 0.3);
+  }
+  .frame .slide {
+    position: absolute;
+    inset: 0;
+    background: center / contain no-repeat;
+    opacity: 0;
+    transition: opacity .22s ease-in-out;
+  }
+  .frame .slide.on {
+    opacity: 1;
+  }
+
+  /* 水印防護罩 */
+  .watermark-shield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background-image: repeating-linear-gradient(-30deg, rgba(200, 169, 106, 0.03) 0, rgba(200, 169, 106, 0.03) 120px, transparent 120px, transparent 240px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+  .watermark-shield span {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 1px;
+  }
+
+  /* 左右切換按鈕 */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 169, 106, 0.4);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+  }
+  .nav-btn:hover {
+    background: var(--forest);
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .nav-btn.prev { left: 14px; }
+  .nav-btn.next { right: 14px; }
+
+  /* 底部控制列 */
+  footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 24px 14px;
+    background: rgba(15, 23, 42, 0.92);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--forest-light), var(--gold));
+    transition: width 0.22s ease;
+  }
+  .count-box {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-light);
+    min-width: 60px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+  .action-btn {
+    border: 1px solid rgba(200, 169, 106, 0.35);
+    background: rgba(31, 48, 38, 0.6);
+    color: #fff;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .action-btn:hover {
+    border-color: var(--gold);
+    background: var(--forest);
+    color: var(--gold);
+  }
+
+  /* 縮圖網格 Modal */
+  .grid-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(11, 18, 32, 0.96);
+    display: none;
+    overflow-y: auto;
+    padding: 32px 24px;
+    backdrop-filter: blur(10px);
+  }
+  .grid-modal.open {
+    display: block;
+  }
+  .grid-modal .modal-header {
+    max-width: 1100px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .grid-modal h3 {
+    color: var(--gold);
+    font-size: 18px;
+  }
+  .grid-modal .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .grid-modal .th-card {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    background: #000 center / cover no-repeat;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    overflow: hidden;
+    transition: transform 0.2s, outline-color 0.2s;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .grid-modal .th-card:hover {
+    transform: translateY(-4px);
+    outline-color: var(--gold);
+  }
+  .grid-modal .th-card.cur {
+    outline-color: var(--gold);
+    box-shadow: 0 0 15px rgba(200, 169, 106, 0.4);
+  }
+  .grid-modal .th-card span {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: rgba(15, 23, 42, 0.88);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: var(--gold-light);
+    border: 1px solid rgba(200, 169, 106, 0.3);
+  }
+
+  /* 模式二：圖文導讀區 */
+  #doc-mode {
+    display: none;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    color: #E2E8F0;
+    line-height: 1.8;
+  }
+  .hero-card {
+    background: linear-gradient(135deg, rgba(47, 69, 56, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .badge {
+    display: inline-block;
+    background: var(--forest-light);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .hero-card h1 {
+    font-size: 32px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .hero-card .subtitle {
+    font-size: 16px;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+  }
+  .hero-card .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+  }
+
+  /* 導讀投影片條目 */
+  .slide-item {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  @media (max-width: 900px) {
+    .slide-item { grid-template-columns: 1fr; }
+  }
+  .slide-item .img-wrap {
+    position: relative;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .slide-item .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .slide-item .slide-info {
+    padding: 24px 24px 24px 0;
+  }
+  @media (max-width: 900px) {
+    .slide-item .slide-info { padding: 0 24px 24px; }
+  }
+  .slide-item h3 {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .slide-item p {
+    font-size: 14px;
+    color: #CBD5E1;
+    margin-bottom: 12px;
+  }
+  .slide-item ul {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #94A3B8;
+  }
+  .slide-item ul li { margin-bottom: 6px; }
+
+  /* 提示 Toast */
+  #toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--gold);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 999;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
+
+<header>
+  <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." class="avatar">
+  <div class="title-box">
+    <b>下班聯繫約定：誰會先交出「範本」給大家學？</b>
+    <span>Howard Liao Ph.D. ｜ 勞動部《工作規則參考手冊》新增第22條之1權威解讀</span>
+  </div>
+  <div class="preview-badge">
+    <span>🔒</span> 僅限在線預覽
+  </div>
+  <div class="nav-tabs">
+    <button id="tab-pres" class="active" onclick="switchView('pres')">簡報放映</button>
+    <button id="tab-doc" onclick="switchView('doc')">深度導讀</button>
+  </div>
+  <a href="../" class="home-link">
+    <span>◂ 回 Seminar 總目錄</span>
+  </a>
+</header>
+
+<!-- 模式一：簡報播放器 -->
+<div id="presentation-mode">
+  <div class="stage">
+    <button class="nav-btn prev" aria-label="上一頁">‹</button>
+    <div class="frame" id="frame">
+      <div class="watermark-shield">
+        <span>HOWARD LIAO PH.D. · SEMINAR 014</span>
+        <span>ONLINE PREVIEW ONLY · NOT FOR DISTRIBUTION</span>
+      </div>
+    </div>
+    <button class="nav-btn next" aria-label="下一頁">›</button>
+  </div>
+  <footer>
+    <button class="action-btn" id="gridBtn">☷ 投影片總覽</button>
+    <div class="progress-bar"><i id="bar"></i></div>
+    <div class="count-box" id="count">1 / 11</div>
+    <button class="action-btn" id="fsBtn">⛶ 全螢幕播放</button>
+  </footer>
+</div>
+
+<!-- 縮圖 Modal -->
+<div class="grid-modal" id="grid">
+  <div class="modal-header">
+    <h3>投影片九宮格總覽（共 11 頁）</h3>
+    <button class="action-btn" id="gridClose">✕ 關閉總覽</button>
+  </div>
+  <div class="wrap" id="gridWrap"></div>
+</div>
+
+<!-- 模式二：圖文深度導讀 -->
+<div id="doc-mode">
+  <div class="hero-card">
+    <div class="badge">LABOR POLICY BRIEF · 2026.11</div>
+    <h1>下班聯繫約定：誰會先交出「範本」給大家學？</h1>
+    <div class="subtitle">勞動部《工作規則參考手冊》115年11月版新增第22條之1 解讀與企業落地指南</div>
+    <div class="meta">
+      <span>主講／研析：Howard Liao Ph.D. (廖倫豪 博士)</span>
+      <span>發布日期：2026 年 11 月 24 日</span>
+      <span>授權模式：線上高階研討專閱 · 禁止未授權下載複製</span>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/01.jpg" alt="Slide 01"></div>
+    <div class="slide-info">
+      <h3>01 / 封面 ｜ 下班聯繫約定：誰會先交出範本？</h3>
+      <p><strong>研析背景：</strong>勞動部於 115 年 11 月最新修訂《工作規則參考手冊》，正式增訂第 22 條之 1「工作時間以外與員工聯繫之約定」，引發全國企業人資、法務與各級主管的高度關注與熱烈探討。</p>
+      <ul>
+        <li>首度將「工作時間外公務聯繫之管道與時段」納入工作規則協商機制。</li>
+        <li>過去勞資爭議多在事後爭執「算不算加班」；新規範旨在將規則移至事前。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/02.jpg" alt="Slide 02"></div>
+    <div class="slide-info">
+      <h3>02 / 摘要 ｜ 三句話看懂第 22 條之 1</h3>
+      <p><strong>高管速覽核心：</strong></p>
+      <ul>
+        <li><strong>01 不是禁令，是協商機制：</strong>下班後仍可聯繫，但限「緊急公務」，聯繫方式與時間要事先跟員工談好，不能主管單方面說了算。</li>
+        <li><strong>02 範本無罰則，寫進工作規則才算數：</strong>參考手冊沒有強制力；企業把它納入工作規則、經報備並公開揭示後，才對勞資雙方產生拘束力。</li>
+        <li><strong>03 工時照算，誰先寫好誰得分：</strong>要求員工下班後實際處理工作，就屬工作時間、應給加班費。率先訂出清楚版本的公司，會成為業界標竿。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/03.jpg" alt="Slide 03"></div>
+    <div class="slide-info">
+      <h3>03 / 條文 ｜ 條文逐字拆解：五個關鍵詞</h3>
+      <p><strong>法條原文：</strong>「本公司於員工工作時間以外，如有緊急之公務需要，與員工聯繫，有關聯繫方式、聯繫時間等事宜，應事先與員工協商約定。」</p>
+      <ul>
+        <li><strong>工作時間以外：</strong>涵蓋平日下班後、休息日、例假、特別休假期間。</li>
+        <li><strong>緊急：</strong>門檻關鍵，排除「明天早上開會的簡報改一下」或一般例行交代。</li>
+        <li><strong>公務需要：</strong>嚴格限於職務直接相關事項，非公務或私人請託不在範圍。</li>
+        <li><strong>聯繫方式、時間：</strong>LINE、電話、Teams、E-mail 均涵蓋，需明確規定管道與截稿/通聯時段。</li>
+        <li><strong>事先協商約定：</strong>最核心原則，事前協商取得共識，不可事後補簽或單方指定。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/04.jpg" alt="Slide 04"></div>
+    <div class="slide-info">
+      <h3>04 / 背景 ｜ 為什麼勞動部現在出手？</h3>
+      <p><strong>現實數據與政策脈絡：</strong></p>
+      <ul>
+        <li><strong>1/4 的勞工困境：</strong>勞動部《勞工生活及就業狀況調查》顯示，每 4 位勞工就有 1 人下班後仍被迫「數位待命」或持續被 LINE 交代工作。</li>
+        <li><strong>爭議多在事後：</strong>過去勞資調解多在事後吵工時與資遣；新條文要求前置化。</li>
+        <li><strong>官方策略「先範本、後入法」：</strong>勞動部官員評估直接修《勞基法》立離線權太倉促，先以工作規則參考手冊鼓勵企業主動協商。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/05.jpg" alt="Slide 05"></div>
+    <div class="slide-info">
+      <h3>05 / 效力 ｜ 有沒有約束力？三層看清楚</h3>
+      <p><strong>法律責任層次對照：</strong></p>
+      <ul>
+        <li><strong>勞動部範本：</strong>屬行政指導，無強制力、無新增罰則；企業不採用不會被罰。</li>
+        <li><strong>企業工作規則：</strong>依法（30人以上）送核備揭示後，對雙方產生拘束力，員工可據以拒絕不符約定的下班騷擾。</li>
+        <li><strong>工時與加班費：</strong>依勞基法第 24、32 條及場所外指導原則，實際提供勞務即屬工時；未給付加班費可罰 2 萬至 100 萬元。</li>
+        <li><strong>拒絕權：</strong>勞基法第 42 條保障，因健康或其他正當理由得拒絕加班。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/06.jpg" alt="Slide 06"></div>
+    <div class="slide-info">
+      <h3>06 / 情境 ｜ 下班收到訊息，算不算工時？</h3>
+      <p><strong>三種常見通訊情境判定：</strong></p>
+      <ul>
+        <li><strong>情境 1 單純通知：</strong>「明天記得帶報告」等不需即時回覆者，原則不算工時，但仍應遵循聯繫時限規範。</li>
+        <li><strong>情境 2 要求回覆或立即處理：</strong>要求修改文件、查詢系統、線上會議等，明確屬延長工時，應記錄起訖並給付加班費。</li>
+        <li><strong>情境 3 要求隨時待命：</strong>手機不能離身、限期回應者，爭議最大，需視人身自由受拘束程度個案判斷。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/07.jpg" alt="Slide 07"></div>
+    <div class="slide-info">
+      <h3>07 / 預測 ｜ 誰會先交出範本？目前 0 家！</h3>
+      <p><strong>Howard 深度觀察（最可能搶先推出範本的四類組織）：</strong></p>
+      <ul>
+        <li><strong>A 人力銀行／HR 科技業：</strong>如 104 人力銀行（已推「353 數位溝通原則」），有現成論述與企管產品需求。</li>
+        <li><strong>B 歐系外商在台分公司：</strong>法商、德商或澳商母國早有法源，直接在地化集團的 Right to Disconnect 規章最快。</li>
+        <li><strong>C 上市櫃金融與科技大廠：</strong>具備永續報告書（ESG）人權評比與幸福企業評鑑之揭露誘因。</li>
+        <li><strong>D 公部門與公營事業：</strong>具政策示範角色，最可能率先在內部差勤規範中落實。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/08.jpg" alt="Slide 08"></div>
+    <div class="slide-info">
+      <h3>08 / 草案 ｜ 不用等別人：一份可以直接討論的條款草案</h3>
+      <p><strong>Howard 建議之企業落地 6 大條款設計：</strong></p>
+      <ul>
+        <li><strong>緊急定義：</strong>限系統癱瘓、重大客訴、天災職災等立即處置事項；隔日公務嚴禁下班交辦。</li>
+        <li><strong>聯繫管道：</strong>緊急一律以電話聯繫；通訊軟體群組僅作通知，不要求即時回覆。</li>
+        <li><strong>聯繫時段：</strong>每日 22:00–07:00 原則不聯繫；例假與特休除值班者外全面靜音。</li>
+        <li><strong>待命輪值：</strong>需全天候 On-call 單位，另訂輪值表並約定待命津貼。</li>
+        <li><strong>工時紀錄：</strong>實際處理時間由員工登錄起訖，主管核實後依法發給加班費或補休。</li>
+        <li><strong>不利對待禁止：</strong>員工於約定範圍外未即時回覆，不得列入考績扣分或懲處。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/09.jpg" alt="Slide 09"></div>
+    <div class="slide-info">
+      <h3>09 / 藍圖 ｜ 企業導入五步驟 (Roadmap)</h3>
+      <p><strong>標準落地流程：</strong></p>
+      <ul>
+        <li><strong>1. 盤點：</strong>統計各部門下班後的訊息量與真實緊急事件比例。</li>
+        <li><strong>2. 協商：</strong>召開勞資會議，與工會或勞方代表取得客觀共識。</li>
+        <li><strong>3. 修訂：</strong>將約定具體化為工作規則條文與管理規章。</li>
+        <li><strong>4. 報備揭示：</strong>報送地方主管機關（勞工局）核備並正式公告。</li>
+        <li><strong>5. 訓練追蹤：</strong>主管溝通模式再教育，每季檢視訊息頻率與加班補登紀錄。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/10.jpg" alt="Slide 10"></div>
+    <div class="slide-info">
+      <h3>10 / 準則 ｜ 主管與員工各自該做的事 (Playbook)</h3>
+      <p><strong>日常行動準則：</strong></p>
+      <ul>
+        <li><strong>主管應有的修養：</strong>發訊前先問「這件事能不能等到明天？」、善用排程發送、要員工做事就要核發工時、不以秒回評定績效。</li>
+        <li><strong>員工自保的原則：</strong>確認公司工作規則有無約定、下班處理公務落實起訖計時、保留對話截圖與通話紀錄、非約定之不當聯繫依法婉拒。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-item">
+    <div class="img-wrap"><img src="slides/11.jpg" alt="Slide 11"></div>
+    <div class="slide-info">
+      <h3>11 / 結語 ｜ 與其等別人出範本，不如自己先寫出第一版</h3>
+      <p><strong>總結展望：</strong>企業治理與數位人權的界線正在重構。能率先兼顧「營運應變韌性」與「員工休息離線權」的企業，才是具備真正成熟管理能力的現代化組織。</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast">🔒 本簡報受智慧財產權保護，僅供線上預覽，不提供下載或列印。</div>
+
+<script>
+(() => {
+  const N = 11, pad = (n) => String(n).padStart(2, "0");
+  const frame = document.getElementById("frame"), bar = document.getElementById("bar"), count = document.getElementById("count");
+  const slides = [];
+
+  for (let i = 1; i <= N; i++) {
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.dataset.src = "slides/" + pad(i) + ".jpg";
+    frame.appendChild(d);
+    slides.push(d);
+  }
+
+  const load = (i) => {
+    const d = slides[i];
+    if (d && !d.style.backgroundImage) d.style.backgroundImage = "url(" + d.dataset.src + ")";
+  };
+
+  let cur = 0;
+  function go(i) {
+    cur = Math.min(Math.max(i, 0), N - 1);
+    slides.forEach((d, k) => d.classList.toggle("on", k === cur));
+    [cur, cur + 1, cur - 1, cur + 2].forEach(k => { if (k >= 0 && k < N) load(k); });
+    bar.style.width = ((cur + 1) / N * 100) + "%";
+    count.textContent = (cur + 1) + " / " + N;
+    history.replaceState(null, "", "#" + (cur + 1));
+    document.querySelectorAll(".grid-modal .th-card").forEach((t, k) => t.classList.toggle("cur", k === cur));
+  }
+
+  document.querySelector(".prev").onclick = () => go(cur - 1);
+  document.querySelector(".next").onclick = () => go(cur + 1);
+  frame.addEventListener("click", (e) => {
+    const r = frame.getBoundingClientRect();
+    go(e.clientX - r.left < r.width / 3 ? cur - 1 : cur + 1);
+  });
+
+  // 快捷鍵
+  document.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (["arrowright", "pagedown", " ", "enter"].includes(k)) { e.preventDefault(); go(cur + 1); }
+    else if (["arrowleft", "pageup", "backspace"].includes(k)) { e.preventDefault(); go(cur - 1); }
+    else if (k === "home") go(0);
+    else if (k === "end") go(N - 1);
+    else if (k === "f") toggleFs();
+    else if (k === "escape") document.getElementById("grid").classList.remove("open");
+    
+    // 防存檔、防列印快捷鍵攔截
+    if ((e.ctrlKey || e.metaKey) && ["s", "p", "u"].includes(k)) {
+      e.preventDefault();
+      showToast();
+    }
+  });
+
+  // 滑動手勢
+  let sx = null;
+  frame.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  frame.addEventListener("touchend", (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+    sx = null;
+  });
+
+  function toggleFs() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+  document.getElementById("fsBtn").onclick = toggleFs;
+
+  // 縮圖 Modal
+  const grid = document.getElementById("grid"), wrap = document.getElementById("gridWrap");
+  for (let i = 1; i <= N; i++) {
+    const t = document.createElement("div");
+    t.className = "th-card";
+    t.style.backgroundImage = "url(slides/t" + pad(i) + ".jpg)";
+    t.innerHTML = "<span>" + i + " / " + N + "</span>";
+    t.onclick = () => { grid.classList.remove("open"); go(i - 1); };
+    wrap.appendChild(t);
+  }
+  document.getElementById("gridBtn").onclick = () => grid.classList.add("open");
+  document.getElementById("gridClose").onclick = () => grid.classList.remove("open");
+
+  // 初次載入
+  const m = location.hash.match(/^#(\d+)$/);
+  const startIdx = m ? Math.min(Math.max(+m[1], 1), N) - 1 : 0;
+  go(startIdx);
+})();
+
+function switchView(mode) {
+  const pres = document.getElementById("presentation-mode");
+  const doc = document.getElementById("doc-mode");
+  const tabPres = document.getElementById("tab-pres");
+  const tabDoc = document.getElementById("tab-doc");
+
+  if (mode === "pres") {
+    pres.style.display = "flex";
+    doc.style.display = "none";
+    tabPres.classList.add("active");
+    tabDoc.classList.remove("active");
+  } else {
+    pres.style.display = "none";
+    doc.style.display = "block";
+    tabDoc.classList.add("active");
+    tabPres.classList.remove("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function showToast() {
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2800);
+}
+</script>
+</body>
+</html>

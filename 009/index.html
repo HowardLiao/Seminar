@@ -605,6 +605,261 @@
     .card, .table-box, .diagram-box, .hero-banner { border: 1px solid #ccc !important; background: #fff !important; color: #000 !important; box-shadow: none !important; }
     .section-title, .hero-title, .quote-body { color: #000 !important; -webkit-text-fill-color: #000 !important; }
   }
+
+  /* 頂部視圖切換標籤 */
+  .nav-center {
+    display: flex;
+    align-items: center;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--ink-border);
+  }
+  .nav-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-tabs button:hover {
+    color: #fff;
+  }
+  .nav-tabs button.active {
+    background: var(--coral);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(240, 122, 74, 0.4);
+  }
+  .header-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--coral);
+    object-fit: cover;
+  }
+  .header-title-box {
+    display: flex;
+    flex-direction: column;
+  }
+  .header-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* 模式一：80 頁簡報播放器 */
+  #presentation-mode {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 64px);
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+    background: #080c14;
+  }
+  .stage {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 72px;
+    min-height: 0;
+  }
+  .frame {
+    position: relative;
+    width: min(100%, calc((100dvh - 144px) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .frame .slide {
+    position: absolute;
+    inset: 0;
+    background: center / contain no-repeat;
+    opacity: 0;
+    transition: opacity 0.22s ease-in-out;
+  }
+  .frame .slide.on {
+    opacity: 1;
+  }
+  .frame .shield {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(20, 27, 45, 0.85);
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nav-btn:hover {
+    background: var(--coral);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .nav-btn.prev { left: 16px; }
+  .nav-btn.next { right: 16px; }
+  .pres-footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 24px 16px;
+    background: rgba(14, 19, 32, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--coral), var(--amber));
+    transition: width 0.2s ease;
+  }
+  .count-box {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    min-width: 64px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .action-btn {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--ink-elevated);
+    color: #fff;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .action-btn:hover {
+    border-color: var(--coral);
+    color: var(--coral);
+  }
+
+  /* 縮圖總覽 Modal */
+  .grid-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(11, 15, 25, 0.97);
+    backdrop-filter: blur(12px);
+    display: none;
+    overflow-y: auto;
+    padding: 32px 24px;
+  }
+  .grid-modal.open {
+    display: block;
+  }
+  .grid-modal .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding-top: 24px;
+  }
+  .grid-modal .th-card {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    background: #000 center / cover no-repeat;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    overflow: hidden;
+    transition: transform 0.2s, outline-color 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .grid-modal .th-card:hover {
+    transform: translateY(-4px);
+    outline-color: var(--coral);
+  }
+  .grid-modal .th-card.cur {
+    outline-color: var(--coral);
+    box-shadow: 0 0 16px rgba(240, 122, 74, 0.5);
+  }
+  .grid-modal .th-card span {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: rgba(11, 15, 25, 0.88);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .grid-modal .close-btn {
+    position: sticky;
+    top: 10px;
+    float: right;
+    z-index: 10;
+  }
+
+  /* 模式二：深度全文容器 */
+  #doc-mode {
+    display: none;
+  }
+
+  /* 投影片導覽行可點擊懸浮效果 */
+  .slide-row-clickable {
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .slide-row-clickable:hover {
+    background: rgba(240, 122, 74, 0.08) !important;
+  }
+
+  @media (max-width: 768px) {
+    .stage { padding: 0 8px; }
+    .nav-btn { width: 38px; height: 38px; font-size: 20px; }
+    .nav-btn.prev { left: 4px; }
+    .nav-btn.next { right: 4px; }
+    .nav-title { font-size: 13px; }
+    .header-sub { display: none; }
+    .nav-chip { display: none; }
+    .nav-tabs button { padding: 5px 10px; font-size: 12px; }
+    header { padding: 0 14px; }
+  }
 </style>
 </head>
 <body>
@@ -613,13 +868,48 @@
 <header>
   <div class="nav-left">
     <a href="../" class="nav-back">← 研討專案目錄</a>
-    <span class="nav-title">Seminar 009 ｜ AI 變聰明了，企業運作方式變了嗎？</span>
+    <img src="assets/howard-liao-portrait-circle.png" alt="Howard Liao Ph.D." class="header-avatar" draggable="false">
+    <div class="header-title-box">
+      <span class="nav-title">Seminar 009 ｜ AI 變聰明了，企業運作方式變了嗎？</span>
+      <span class="header-sub">Howard Liao Ph.D. ｜ 80 頁深度版解讀</span>
+    </div>
+  </div>
+  <div class="nav-center">
+    <div class="nav-tabs">
+      <button id="tab-pres" class="active" onclick="switchView('pres')">🖥️ 簡報放映 (80 頁)</button>
+      <button id="tab-doc" onclick="switchView('doc')">📑 深度全文與索引</button>
+    </div>
   </div>
   <div class="nav-right">
-    <span class="nav-chip">80 頁深度解讀</span>
+    <span class="nav-chip">80 SLIDES</span>
   </div>
 </header>
 
+
+<!-- 模式一：80 頁投影片視覺播放器 -->
+<div id="presentation-mode">
+  <div class="stage">
+    <button class="nav-btn prev" aria-label="上一頁">‹</button>
+    <div class="frame" id="frame"><div class="shield"></div></div>
+    <button class="nav-btn next" aria-label="下一頁">›</button>
+  </div>
+  <footer class="pres-footer">
+    <button class="action-btn" id="gridBtn">縮圖總覽</button>
+    <div class="progress-bar"><i id="bar"></i></div>
+    <div class="count-box" id="count">1 / 80</div>
+    <button class="action-btn" id="fsBtn">全螢幕</button>
+    <button class="action-btn" onclick="switchView('doc')" style="background: rgba(240, 122, 74, 0.15); border-color: rgba(240, 122, 74, 0.4); color: var(--coral);">📑 深度全文</button>
+  </footer>
+</div>
+
+<!-- 縮圖總覽 Modal -->
+<div class="grid-modal" id="grid">
+  <button class="action-btn close-btn" id="gridClose">✕ 關閉</button>
+  <div class="wrap" id="gridWrap"></div>
+</div>
+
+<!-- 模式二：深度全文與 80 頁索引 -->
+<div id="doc-mode">
 <main>
 
   <!-- Hero 英雄旗艦卡 -->
@@ -662,7 +952,10 @@
 
     <!-- 導覽操作按鈕 -->
     <div class="hero-cta-box">
-      <a href="#toc-full-slides" class="btn-cta-primary">
+      <button onclick="switchView('pres')" class="btn-cta-primary" style="cursor: pointer; border: 0;">
+        <span>🖥️</span> 立即線上放映 80 頁投影片 (Slide Player)
+      </button>
+      <a href="#toc-full-slides" class="btn-cta-secondary">
         <span>📑</span> 查閱 80 頁投影片全索引與模組檢索
       </a>
     </div>
@@ -1243,9 +1536,149 @@
     文獻來源：Hang Tan,〈Your AI is smarter. Is your business still working the same way?〉, CIO.com, 2026-11-16 ｜ 策略解讀與架構擴展：Howard Liao Ph.D.
   </p>
 </footer>
+</div><!-- /#doc-mode -->
 
 <script>
   const slidesData = [{"slide": 1, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "CIO.COM 文章精讀｜深度版", "sub": "AI 變聰明了，", "summary": "企業的運作方式變了嗎？ ｜ 從「任務加速」走向「流程重設」與「成果責任制」 ｜ CIO／技術主管的管理啟示與落地建議 ｜ Howard Liao", "all_text": "CIO.COM 文章精讀｜深度版 AI 變聰明了， 企業的運作方式變了嗎？ 從「任務加速」走向「流程重設」與「成果責任制」 CIO／技術主管的管理啟示與落地建議 Howard Liao 2026.11.19"}, {"slide": 2, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "議程", "sub": "今天的六個段落", "summary": "01 ｜ 生產力在哪裡流失 ｜ 重新設計工作流程 ｜ 03", "all_text": "議程 今天的六個段落 01 生產力在哪裡流失 02 重新設計工作流程 03 員工與主管的分工 04 CIO 的企業 AI 基礎 05 衡量什麼改變了 06 落地建議（非原文） 2"}, {"slide": 3, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "一句話結論", "sub": "下一階段的 AI，不是把舊工作做更快", "summary": "企業 AI 的下一階段，是重新設計工作如何跨部門流動， ｜ 並用營運成果證明價值。 ｜ 若以下四件事都沒改變，單一任務省下的時間，很可能不會轉化為整體績效： ｜ 簽核", "all_text": "一句話結論 下一階段的 AI，不是把舊工作做更快 企業 AI 的下一階段，是重新設計工作如何跨部門流動， 並用營運成果證明價值。 若以下四件事都沒改變，單一任務省下的時間，很可能不會轉化為整體績效： 簽核 交接 重複輸入 等待 3"}, {"slide": 4, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "文章背景", "sub": "一篇高階主管的轉型實務觀點", "summary": "Your AI is smarter. ｜ Is your business still working ｜ the same way? ｜ CIO.com｜Opinion｜約 6 分鐘", "all_text": "文章背景 一篇高階主管的轉型實務觀點 Your AI is smarter. Is your business still working the same way? CIO.com｜Opinion｜約 6 分鐘 作者 Hang Tan｜CDW 策略暨轉型長、執行副總裁 刊登日期 2026 年 11 月 16 日 觀察視角 CDW 數千個客戶環境 ＋ 自家內部 AI 計畫 副標 AI 價值取決於重設工作、讓人準備好改變、提供可擴展的企業基礎 4"}, {"slide": 5, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "導入規模", "sub": "CDW 自家的 AI 導入規模", "summary": "14,000+ ｜ 名同仁可使用 AI 助理 ｜ 12,000+ ｜ 個已建立的 AI Agent", "all_text": "導入規模 CDW 自家的 AI 導入規模 14,000+ 名同仁可使用 AI 助理 12,000+ 個已建立的 AI Agent 核心流程 已開始重新設計 規模數字 ≠ 成效數字：文中未揭露對應的成本、獲利或流程週期改善 資料來源：Hang Tan, CIO.com, 2026-11-16 5"}, {"slide": 6, "chap_id": "00", "chap_name": "導讀與背景", "badge": "管理戰略解讀", "badge_cls": "badge-insight", "title": "閱讀定位", "sub": "把它當管理主張，而不是 ROI 研究", "summary": "解讀｜非原文直述 ｜ 文章提供了 ｜ CDW 的導入規模數字 ｜ 生產力流失的診斷", "all_text": "閱讀定位 把它當管理主張，而不是 ROI 研究 解讀｜非原文直述 文章提供了 CDW 的導入規模數字 生產力流失的診斷 重設流程的方法與順序 CIO 的基礎建設主張 文章沒有提供 對應的成本數據 獲利改善數據 流程週期縮短數據 具體個案研究 6"}, {"slide": 7, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "為什麼現在談", "sub": "AI 能力快速提升，運作方式卻沒跟上", "summary": "AI 這一端：快速進步 ｜ 員工起草、分析、搜尋、自動化都比一年前快 ｜ 研究顯示企業持續擴大跨職能、跨用例的採用 ｜ 模型與工具每季都在變強", "all_text": "為什麼現在談 AI 能力快速提升，運作方式卻沒跟上 AI 這一端：快速進步 員工起草、分析、搜尋、自動化都比一年前快 研究顯示企業持續擴大跨職能、跨用例的採用 模型與工具每季都在變強 企業這一端：原地踏步 同樣的工作走同樣的系統 在同樣的佇列等待 停在同樣的簽核關卡 資料來源：Hang Tan, CIO.com, 2026-11-16 7"}, {"slide": 8, "chap_id": "00", "chap_name": "導讀與背景", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "閱讀指引", "sub": "本簡報的四種內容標示", "summary": "無標籤 ｜ 原文整理 ｜ 依文章內容整理、改寫，不加入新事實 ｜ 解讀｜非原文直述", "all_text": "閱讀指引 本簡報的四種內容標示 無標籤 原文整理 依文章內容整理、改寫，不加入新事實 解讀｜非原文直述 解讀 對原文定位或論點的評論 示意圖｜Howard 繪製 示意圖 為說明概念而繪，數值與結構為示意 非原文內容｜Howard 延伸建議 延伸建議 講者的實務補充，非作者觀點、非實測案例 所有延伸內容的成效皆依組織情況而定，不代表保證 8"}, {"slide": 9, "chap_id": "00", "chap_name": "導讀與背景", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "論證架構", "sub": "全文的論證邏輯：從診斷到檢驗", "summary": "01  診斷 ｜ 效益被舊流程吸收 ｜ 02  重設 ｜ 從成果倒推、刪步驟", "all_text": "論證架構 全文的論證邏輯：從診斷到檢驗 01  診斷 效益被舊流程吸收 02  重設 從成果倒推、刪步驟 03  分工 員工準備度＋主管權限 04  基礎 CIO 建共享 AI 平台 05  檢驗 企業有沒有變好 貫穿全文的主軸：AI 的價值單位是「工作流程」，檢驗標準是「業務成果」 9"}, {"slide": 10, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "01", "sub": "生產力在哪裡流失", "summary": "員工說省了時間，業務表現卻幾乎不動", "all_text": "01 生產力在哪裡流失 員工說省了時間，業務表現卻幾乎不動"}, {"slide": 11, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "典型情境", "sub": "任務變快了，工作卻卡在同樣的地方", "summary": "AI 摘要、分析、起草 ｜ 個人確實省時 ｜ 進入同一個佇列 ｜ 排隊等候處理", "all_text": "典型情境 任務變快了，工作卻卡在同樣的地方 AI 摘要、分析、起草 個人確實省時 進入同一個佇列 排隊等候處理 等同一位主管簽核 決策節奏未變 另一部門重新輸入 系統之間不相通 業務表現幾乎不動 效益被流程吸收 作者的形容：限制條件只是「換了位置」 資料來源：Hang Tan, CIO.com, 2026-11-16 11"}, {"slide": 12, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "瓶頸原理", "sub": "上游再快，也快不過最窄的那一段", "summary": "示意圖｜Howard 繪製 ｜ AI 加速的任務 ｜ 摘要、分析、起草 ｜ 速度大幅提升", "all_text": "瓶頸原理 上游再快，也快不過最窄的那一段 示意圖｜Howard 繪製 AI 加速的任務 摘要、分析、起草 速度大幅提升 簽核／交接 產出：維持原速 上游變快 只會讓佇列更長 瓶頸不動 整體產出不變 該做的事 拓寬或刪除瓶頸本身 12"}, {"slide": 13, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "指標陷阱", "sub": "使用率上升，不等於業務變好", "summary": "過程指標 ｜ 回答：「有沒有人在用？」 ｜ 授權數、活躍使用者 ｜ 提示次數、Agent 數量", "all_text": "指標陷阱 使用率上升，不等於業務變好 過程指標 回答：「有沒有人在用？」 授權數、活躍使用者 提示次數、Agent 數量 自評節省工時 成果指標 回答：「公司有沒有變好？」 端到端完成週期 服務水準與品質 營收、成本、風險的實際變化 資料來源：Hang Tan, CIO.com, 2026-11-16 13"}, {"slide": 14, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "問題的轉換", "sub": "從「每人省多少時間」到「整條流程改善多少」", "summary": "舊問題 ｜ 每個人 ｜ 省下多少時間？ ｜ 新問題", "all_text": "問題的轉換 從「每人省多少時間」到「整條流程改善多少」 舊問題 每個人 省下多少時間？ 新問題 從需求進入到業務結果完成， 整條流程改善了多少？ 這是本文最值得帶進經營會議的觀點 14"}, {"slide": 15, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "衡量單位", "sub": "工作流程，才是業務績效的真正單位", "summary": "以「任務」為單位 ｜ 關注單一步驟變快多少 ｜ 以省下的時數、使用率為指標 ｜ 局部最佳化，交接與等待原封不動", "all_text": "衡量單位 工作流程，才是業務績效的真正單位 以「任務」為單位 關注單一步驟變快多少 以省下的時數、使用率為指標 局部最佳化，交接與等待原封不動 以「工作流程」為單位 看端到端：交接、等待、決策 以業務成果為指標 整體重新設計，必要時刪除步驟 資料來源：Hang Tan, CIO.com, 2026-11-16 15"}, {"slide": 16, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "隱形成本", "sub": "流程裡最常被忽略的四種成本", "summary": "非原文內容｜Howard 延伸建議 ｜ 等待 ｜ 工作停在佇列或某人的收件匣，沒有人在處理，卻占掉大部分週期 ｜ 交接", "all_text": "隱形成本 流程裡最常被忽略的四種成本 非原文內容｜Howard 延伸建議 等待 工作停在佇列或某人的收件匣，沒有人在處理，卻占掉大部分週期 交接 每一次轉手都要重新理解脈絡，也多一次遺漏與誤解的機會 重複輸入 同一筆資料在不同系統各輸入一次，耗時又容易不一致 返工 上游資訊不完整，下游只能退回重做，形成來回循環 16"}, {"slide": 17, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "價值流觀點", "sub": "處理時間往往只占週期的一小部分", "summary": "示意圖｜示意數值，非實測 ｜ 讀圖重點 ｜ AI 主要縮短綠色的處理時間 ｜ 米色的等待時間才是大宗", "all_text": "價值流觀點 處理時間往往只占週期的一小部分 示意圖｜示意數值，非實測 讀圖重點 AI 主要縮短綠色的處理時間 米色的等待時間才是大宗 最長的等待常出現在簽核與交接 消除等待要靠流程重設 17"}, {"slide": 18, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "轉換失靈", "sub": "為什麼個人省下的時間，不會自動變成績效", "summary": "非原文內容｜Howard 延伸建議 ｜ 時間被吸收 ｜ 省下的時間被其他雜務、會議或更多的修改吸收，沒有反映在產出上 ｜ 下游沒變", "all_text": "轉換失靈 為什麼個人省下的時間，不會自動變成績效 非原文內容｜Howard 延伸建議 時間被吸收 省下的時間被其他雜務、會議或更多的修改吸收，沒有反映在產出上 下游沒變 上游再快，產出仍卡在同一個簽核或交接點，整體週期不變 產能沒被重新配置 沒有人決定釋放的產能要用在哪裡，效益停留在個人層次 18"}, {"slide": 19, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "自我診斷", "sub": "你的組織有這些徵兆嗎？", "summary": "非原文內容｜Howard 延伸建議 ｜ AI 授權數持續成長，但沒人說得出業務哪裡變好 ｜ AI 成效報告主要是使用率與自評節省工時 ｜ 同一份資料仍需在兩個以上系統重複輸入", "all_text": "自我診斷 你的組織有這些徵兆嗎？ 非原文內容｜Howard 延伸建議 AI 授權數持續成長，但沒人說得出業務哪裡變好 AI 成效報告主要是使用率與自評節省工時 同一份資料仍需在兩個以上系統重複輸入 多數流程的最長等待點是主管簽核 各部門自行採購 AI 工具，IT 不清楚全貌 沒有任何流程有明確的業務負責人與成果 KPI AI 專案的成本只算授權費，不算整合與覆核 員工會用 AI，但無權改變上下游交接 19"}, {"slide": 20, "chap_id": "01", "chap_name": "01 生產力在哪裡流失", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "01 小結", "sub": "小結：生產力在哪裡流失", "summary": "01 ｜ 個人任務變快，產出仍卡在佇列、簽核與重複輸入 ｜ 02 ｜ 瓶頸沒有消失，只是換了位置", "all_text": "01 小結 小結：生產力在哪裡流失 01 個人任務變快，產出仍卡在佇列、簽核與重複輸入 02 瓶頸沒有消失，只是換了位置 03 使用率是過程指標，不能代表業務改善 04 衡量單位要從任務改成工作流程 一句話記住 問題不在 AI 不夠聰明，而在流程沒有改變。 20"}, {"slide": 21, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "02", "sub": "重新設計工作流程", "summary": "不要自動化你現有的流程，設計一個更好的", "all_text": "02 重新設計工作流程 不要自動化你現有的流程，設計一個更好的"}, {"slide": 22, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "核心原則", "sub": "不要替既有流程的每一步都加上 AI", "summary": "“Don’t automate the workflow you have. Design a better one.” ｜ 不要自動化你現有的流程，設計一個更好的。 ｜ 舊技術限制 ｜ 很多步驟是為了遷就過去的系統而存在", "all_text": "核心原則 不要替既有流程的每一步都加上 AI “Don’t automate the workflow you have. Design a better one.” 不要自動化你現有的流程，設計一個更好的。 舊技術限制 很多步驟是為了遷就過去的系統而存在 組織邊界 部門切分造成的交接與重複確認 結果 只會得到一個「更快的爛流程」 22"}, {"slide": 23, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "方法", "sub": "從業務成果倒推的四個步驟", "summary": "01 ｜ 定義成果 ｜ 先講清楚要解決的業務挑戰與期望成果 ｜ 02", "all_text": "方法 從業務成果倒推的四個步驟 01 定義成果 先講清楚要解決的業務挑戰與期望成果 02 檢視價值 逐步判斷哪些步驟真正創造價值 03 刪除步驟 拿掉源自舊限制或組織邊界的步驟 04 指派執行者 剩下的工作交給自動化、Agent 或人 23"}, {"slide": 24, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "步驟篩選", "sub": "重點不是自動化覆蓋率，而是消除了多少工作", "summary": "流程中的全部步驟 ｜ 仍然創造價值的步驟 ｜ 重新設計後保留的步驟 ｜ 指派給最合適的執行者", "all_text": "步驟篩選 重點不是自動化覆蓋率，而是消除了多少工作 流程中的全部步驟 仍然創造價值的步驟 重新設計後保留的步驟 指派給最合適的執行者 衡量重點轉換 自動化覆蓋率 ↓ 被消除的不必要工作量 刪掉一個步驟，永遠比把它自動化更便宜 24"}, {"slide": 25, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "誰來做", "sub": "剩下的工作，交給最合適的執行者", "summary": "傳統自動化／規則 ｜ 規則明確、結果可預測；有時簡單規則更便宜、更有效 ｜ AI Agent ｜ 整理跨系統資訊、推進工作、移除步驟", "all_text": "誰來做 剩下的工作，交給最合適的執行者 傳統自動化／規則 規則明確、結果可預測；有時簡單規則更便宜、更有效 AI Agent 整理跨系統資訊、推進工作、移除步驟 人的判斷 需要判斷力、例外處理與責任承擔的環節 不是每個問題都需要 Agent 25"}, {"slide": 26, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "選擇邏輯", "sub": "選擇執行者的簡易判斷流程", "summary": "示意圖｜依原文原則繪製 ｜ 這一步能刪除嗎？ ｜ 是 ｜ 刪除", "all_text": "選擇邏輯 選擇執行者的簡易判斷流程 示意圖｜依原文原則繪製 這一步能刪除嗎？ 是 刪除 否 規則明確、結果可預測？ 是 規則／傳統自動化 否 需要判斷或承擔責任？ 是 人的判斷 AI Agent 26"}, {"slide": 27, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "觀點轉變", "sub": "對 Agent 的期待：從助理到推進者", "summary": "過去的看法 ｜ 更能幹的助理 ｜ 幫人把同一件事做得更快 ｜ 現在的看法", "all_text": "觀點轉變 對 Agent 的期待：從助理到推進者 過去的看法 更能幹的助理 幫人把同一件事做得更快 現在的看法 推進工作的工具 讓工作往前流動、消除步驟 資料來源：Hang Tan, CIO.com, 2026-11-16 27"}, {"slide": 28, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "步驟價值判斷", "sub": "判斷一個步驟是否有價值的三個問題", "summary": "非原文內容｜Howard 延伸建議 ｜ 客戶或下游在乎嗎？ ｜ 沒有人會因為這一步消失而受影響，就是刪除候選 ｜ 有改變產出嗎？", "all_text": "步驟價值判斷 判斷一個步驟是否有價值的三個問題 非原文內容｜Howard 延伸建議 客戶或下游在乎嗎？ 沒有人會因為這一步消失而受影響，就是刪除候選 有改變產出嗎？ 只是搬運、轉貼、重新排版，並沒有增加內容或品質 是在補救上游嗎？ 為了修正上游錯誤或資訊不全而存在，應回頭處理根因 三題都答不出價值 → 列為刪除候選，而不是自動化候選 28"}, {"slide": 29, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "刪除候選", "sub": "最常見的六種可刪除步驟", "summary": "非原文內容｜Howard 延伸建議 ｜ 重複確認 ｜ 同一件事被不同人各確認一次 ｜ 跨系統搬運", "all_text": "刪除候選 最常見的六種可刪除步驟 非原文內容｜Howard 延伸建議 重複確認 同一件事被不同人各確認一次 跨系統搬運 人工把資料從 A 系統複製到 B 多層簽核 低風險事項也要層層核准 手動報表彙整 每週人工整理同樣的報表 追蹤與催辦 靠人發訊息詢問進度 批次等待 固定時間才集中處理 29"}, {"slide": 30, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "簽核重設", "sub": "依風險分級簽核，而不是一律層層核准", "summary": "非原文內容｜Howard 延伸建議 ｜ 低風險 ｜ 規則自動通過＋事後抽查 ｜ 金額小、規則明確、可追溯", "all_text": "簽核重設 依風險分級簽核，而不是一律層層核准 非原文內容｜Howard 延伸建議 低風險 規則自動通過＋事後抽查 金額小、規則明確、可追溯 中風險 Agent 整理證據＋單層核准 需要判斷但資訊可結構化 高風險 人工多層審核 高金額、例外、法規或聲譽風險 風險越高，人的參與越多 30"}, {"slide": 31, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "技術選擇", "sub": "規則、工作流引擎、Agent、人工的比較", "summary": "非原文內容｜Howard 延伸建議 ｜ 執行方式 ｜ 最適合 ｜ 優點", "all_text": "技術選擇 規則、工作流引擎、Agent、人工的比較 非原文內容｜Howard 延伸建議 執行方式 最適合 優點 要注意 規則 條件明確、結果可預測 便宜、快速、可解釋 例外一多就難維護 工作流引擎 多步驟、多角色的固定流程 可追蹤、可稽核 流程變動需重新設定 AI Agent 跨系統整理、分類例外、提出建議 彈性高，能處理非結構資訊 需授權邊界、評測與監控 人工判斷 高風險、需承擔責任的決策 可承擔責任、處理模糊情境 成本高、速度受限 31"}, {"slide": 32, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "Agent 適用條件", "sub": "什麼情況下，Agent 才真正加分？", "summary": "非原文內容｜Howard 延伸建議 ｜ 適合交給 Agent ｜ 資訊分散在多個系統，需要彙整 ｜ 需要理解非結構化內容（對話、文件）", "all_text": "Agent 適用條件 什麼情況下，Agent 才真正加分？ 非原文內容｜Howard 延伸建議 適合交給 Agent 資訊分散在多個系統，需要彙整 需要理解非結構化內容（對話、文件） 例外多，但可分類並交由人把關 目標是推進工作、減少交接 不需要 Agent 一條簡單規則就能解決 錯誤代價高且無法即時人工覆核 步驟本身應該被刪除 沒有清楚的授權邊界與停止機制 32"}, {"slide": 33, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "重設前後", "sub": "同一個流程，重設前後的差別", "summary": "示意圖｜Howard 繪製 ｜ 重設前｜7 步、多次交接 ｜ 受理 ｜ 人工登錄", "all_text": "重設前後 同一個流程，重設前後的差別 示意圖｜Howard 繪製 重設前｜7 步、多次交接 受理 人工登錄 初審 重複確認 主管簽核 二級簽核 系統輸入 重設後｜4 步、刪除重複確認、人工搬運與多餘簽核 受理＋自動帶入 規則／Agent 分流 必要時人工判斷 完成 刪除線標示的步驟在重設後被移除 33"}, {"slide": 34, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "常見誤區", "sub": "重設流程時最常見的四個誤區", "summary": "非原文內容｜Howard 延伸建議 ｜ 把舊流程直接丟給 Agent ｜ 沒有先刪步驟，只得到更快的爛流程 ｜ 只有 IT 主導", "all_text": "常見誤區 重設流程時最常見的四個誤區 非原文內容｜Howard 延伸建議 把舊流程直接丟給 Agent 沒有先刪步驟，只得到更快的爛流程 只有 IT 主導 沒有業務負責人，跨部門交接改不動 一次重設太多流程 資源分散，沒有一條流程真正改完 只看上線、不看成果 上線即結案，沒有比對基準線 34"}, {"slide": 35, "chap_id": "02", "chap_name": "02 重新設計工作流程", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "02 小結", "sub": "小結：怎麼重新設計工作流程", "summary": "01 ｜ 先定義成果，再逆向檢視每個步驟 ｜ 02 ｜ 能刪的先刪，刪除比自動化更便宜", "all_text": "02 小結 小結：怎麼重新設計工作流程 01 先定義成果，再逆向檢視每個步驟 02 能刪的先刪，刪除比自動化更便宜 03 依風險分級，決定規則、Agent 或人 04 Agent 用來推進工作，不是預設答案 一句話記住 不要自動化你現有的流程，設計一個更好的。 35"}, {"slide": 36, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "03", "sub": "員工與主管的分工", "summary": "員工建立使用能力，業務主管提供變革權限", "all_text": "03 員工與主管的分工 員工建立使用能力，業務主管提供變革權限"}, {"slide": 37, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "兩股力量", "sub": "員工創造準備度，主管創造權限", "summary": "員工｜Readiness ｜ 實驗、了解 AI 能與不能 ｜ 發現機會、建立信任 ｜ 限制：無權改變上下游交接", "all_text": "兩股力量 員工創造準備度，主管創造權限 員工｜Readiness 實驗、了解 AI 能與不能 發現機會、建立信任 限制：無權改變上下游交接 業務主管｜Authority 選定真正重要的流程 協調跨部門、對結果負責 限制：員工不信任 AI 時，由上而下難落地 37"}, {"slide": 38, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "組合效果", "sub": "兩股力量缺一，轉型都推不動", "summary": "示意圖｜Howard 延伸詮釋 ｜ 由上而下、難落地 ｜ 流程設計好了，但員工不信任也不會用 ｜ 規模化轉型", "all_text": "組合效果 兩股力量缺一，轉型都推不動 示意圖｜Howard 延伸詮釋 由上而下、難落地 流程設計好了，但員工不信任也不會用 規模化轉型 廣泛熟練 ＋ 核心流程被重設 停滯 沒人用，也沒人改流程 零星試點 個人省時，但瓶頸原封不動 主管級 流程重設 ↑ 高 員工使用廣度 → 38"}, {"slide": 39, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "不可互相替代", "sub": "AI 培訓與流程轉型，是兩件不同的事", "summary": "AI 培訓 ｜ 建立能力 ｜ 讓員工熟悉工具、知道邊界、找到機會 ｜ 流程轉型", "all_text": "不可互相替代 AI 培訓與流程轉型，是兩件不同的事 AI 培訓 建立能力 讓員工熟悉工具、知道邊界、找到機會 流程轉型 改變營運方式 重設跨部門交接、刪除步驟、對成果負責 ＋ CDW 的雙軌做法 廣泛開放 AI 存取，讓員工建立熟練度  ＋  領導層聚焦少數幾條核心流程進行重設 39"}, {"slide": 40, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "員工準備度", "sub": "員工準備度的四個層次", "summary": "非原文內容｜Howard 延伸建議 ｜ 01 ｜ 知道 ｜ 了解 AI 能做與不能做什麼", "all_text": "員工準備度 員工準備度的四個層次 非原文內容｜Howard 延伸建議 01 知道 了解 AI 能做與不能做什麼 02 會用 在自己的任務中穩定使用 03 信任 知道邊界、何時該覆核 04 提出改善 主動指出可刪除的步驟 第 4 層才是流程重設最需要的能力 40"}, {"slide": 41, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "主管的責任", "sub": "業務主管在轉型中的四項責任", "summary": "選流程 ｜ 挑出真正影響經營成果的少數幾條流程 ｜ 定成果 ｜ 為流程設定明確的成果目標與衡量方式", "all_text": "主管的責任 業務主管在轉型中的四項責任 選流程 挑出真正影響經營成果的少數幾條流程 定成果 為流程設定明確的成果目標與衡量方式 拉部門 協調跨職能交接，處理部門邊界問題 承擔結果 對流程改善與業務成果負最終責任 資料來源：Hang Tan, CIO.com, 2026-11-16 41"}, {"slide": 42, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "建立信任", "sub": "沒有信任，由上而下的設計就推不動", "summary": "非原文內容｜Howard 延伸建議 ｜ 看得懂 ｜ 顯示 AI 的依據與來源，讓使用者能判斷對錯 ｜ 可撤回", "all_text": "建立信任 沒有信任，由上而下的設計就推不動 非原文內容｜Howard 延伸建議 看得懂 顯示 AI 的依據與來源，讓使用者能判斷對錯 可撤回 重要動作可以復原，降低嘗試的心理成本 可接管 任何時候都能交回給人處理，並保留紀錄 讓員工先在低風險工作中累積成功經驗，再擴展到核心流程 42"}, {"slide": 43, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "權責分工", "sub": "跨部門流程的權責分工（RACI 示例）", "summary": "非原文內容｜示例 ｜ 工作項目 ｜ 流程負責人 ｜ 部門主管", "all_text": "權責分工 跨部門流程的權責分工（RACI 示例） 非原文內容｜示例 工作項目 流程負責人 部門主管 IT／AI 平台 資安法遵 第一線員工 定義流程成果與 KPI A R C C I 盤點與刪除步驟 A R C I C 選擇規則／Agent／人工 A C R C I 權限與治理控制 C I R A I 上線與成效追蹤 A R R I C R＝執行　A＝最終負責　C＝諮詢　I＝告知 43"}, {"slide": 44, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "變革阻力", "sub": "常見的變革阻力與應對方式", "summary": "非原文內容｜Howard 延伸建議 ｜ 阻力來源 ｜ 員工或主管的想法 ｜ 應對方式", "all_text": "變革阻力 常見的變革阻力與應對方式 非原文內容｜Howard 延伸建議 阻力來源 員工或主管的想法 應對方式 擔心被取代 AI 會不會讓我的工作消失？ 說明釋放的產能用途，連結技能發展 擔心出錯被追究 AI 錯了算誰的？ 明確權責、保留人工覆核與接管 部門本位 這一步是我們部門的權限 由流程負責人以端到端成果協調 慣性 現在這樣也還好 用基準線數據呈現等待與返工成本 44"}, {"slide": 45, "chap_id": "03", "chap_name": "03 員工與主管的分工", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "03 小結", "sub": "小結：誰來推動轉型", "summary": "01 ｜ 員工透過實作建立準備度與信任 ｜ 02 ｜ 業務主管選流程、定成果、拉部門", "all_text": "03 小結 小結：誰來推動轉型 01 員工透過實作建立準備度與信任 02 業務主管選流程、定成果、拉部門 03 培訓建立能力，流程轉型改變營運 04 廣泛開放 ＋ 聚焦少數核心流程，雙軌並行 一句話記住 能力由下而上長出來，權限由上而下給出去。 45"}, {"slide": 46, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "04", "sub": "CIO 的企業 AI 基礎", "summary": "不必承包所有用例，而是建好讓大家願意使用的基礎", "all_text": "04 CIO 的企業 AI 基礎 不必承包所有用例，而是建好讓大家願意使用的基礎"}, {"slide": 47, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "角色轉變", "sub": "CIO 的任務：從開放存取到建立共享基礎", "summary": "過去 ｜ 開放存取 ｜ 讓員工能用上 AI 工具 ｜ 現在", "all_text": "角色轉變 CIO 的任務：從開放存取到建立共享基礎 過去 開放存取 讓員工能用上 AI 工具 現在 建立共享基礎 快速提供可重用的平台與控管 目標 讓業務在上面建 而不是繞過它自己建 CIO 不必擁有每一個用例 47"}, {"slide": 48, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "五大基礎", "sub": "企業 AI 基礎的五個組成", "summary": "可規模化、安全、具成本效益的企業 AI ｜ 核准的 ｜ AI 工具 ｜ 可信資料", "all_text": "五大基礎 企業 AI 基礎的五個組成 可規模化、安全、具成本效益的企業 AI 核准的 AI 工具 可信資料 與業務脈絡 企業應用 與流程整合 安全 與治理 效能、成本 價值可視性 作者指出：這些原則與 NIST AI 風險管理框架（AI RMF）一致 48"}, {"slide": 49, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "五大基礎逐一展開", "sub": "基礎 01｜核准的 AI 工具", "summary": "右側為 Howard 延伸建議 ｜ 原文定位 ｜ 提供經核准、好用的工具，讓大家不必自己找 ｜ 實務要點", "all_text": "五大基礎逐一展開 基礎 01｜核准的 AI 工具 右側為 Howard 延伸建議 原文定位 提供經核准、好用的工具，讓大家不必自己找 實務要點 01 建立工具白名單與申請流程，審核以天計 02 依資料分級決定可用的模型與工具 03 提供企業帳號與單一登入，避免個人帳號 04 定期檢視使用情況，淘汰重複工具 49"}, {"slide": 50, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "五大基礎逐一展開", "sub": "基礎 02｜可信資料與業務脈絡", "summary": "右側為 Howard 延伸建議 ｜ 原文定位 ｜ AI 要有可信的資料與業務脈絡，產出才有用 ｜ 實務要點", "all_text": "五大基礎逐一展開 基礎 02｜可信資料與業務脈絡 右側為 Howard 延伸建議 原文定位 AI 要有可信的資料與業務脈絡，產出才有用 實務要點 01 盤點關鍵資料來源，標示擁有者與品質 02 建立業務詞彙與語意層，統一定義 03 設定檢索範圍與存取權限 04 追蹤資料來源，讓產出可回溯 50"}, {"slide": 51, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "五大基礎逐一展開", "sub": "基礎 03｜企業應用與流程整合", "summary": "右側為 Howard 延伸建議 ｜ 原文定位 ｜ 連接企業應用與工作流程，AI 才能推進工作 ｜ 實務要點", "all_text": "五大基礎逐一展開 基礎 03｜企業應用與流程整合 右側為 Howard 延伸建議 原文定位 連接企業應用與工作流程，AI 才能推進工作 實務要點 01 以 API 與連接器串接核心系統 02 共用連接器，新 Agent 不必重寫整合 03 區分唯讀與可寫入的連接 04 整合工作流引擎，讓交接自動化 51"}, {"slide": 52, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "五大基礎逐一展開", "sub": "基礎 04｜安全與治理", "summary": "右側為 Howard 延伸建議 ｜ 原文定位 ｜ 缺少安全與治理，就會出現治理不一致與資安風險 ｜ 實務要點", "all_text": "五大基礎逐一展開 基礎 04｜安全與治理 右側為 Howard 延伸建議 原文定位 缺少安全與治理，就會出現治理不一致與資安風險 實務要點 01 最小權限與角色存取控制 02 完整操作紀錄與稽核軌跡 03 人工接管與停止機制 04 對齊 NIST AI RMF、ISO/IEC 42001 的控制項 52"}, {"slide": 53, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "五大基礎逐一展開", "sub": "基礎 05｜效能、成本與價值可視性", "summary": "右側為 Howard 延伸建議 ｜ 原文定位 ｜ 看得見效能、成本與價值，才能管理與擴展 ｜ 實務要點", "all_text": "五大基礎逐一展開 基礎 05｜效能、成本與價值可視性 右側為 Howard 延伸建議 原文定位 看得見效能、成本與價值，才能管理與擴展 實務要點 01 追蹤每個流程的模型呼叫、成功率與例外率 02 以 FinOps 方式歸屬成本到流程與部門 03 把成果 KPI 與成本放在同一個看板 04 定期檢視：擴展、調整或停止 53"}, {"slide": 54, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "速度與可用性", "sub": "IT 太慢或太難用，影子 AI 就會出現", "summary": "IT 太慢／太難用 ｜ 業務自行找工具與串接 ｜ 資料碎片化、重複支出 ｜ CIO 承接資安與治理風險", "all_text": "速度與可用性 IT 太慢或太難用，影子 AI 就會出現 IT 太慢／太難用 業務自行找工具與串接 資料碎片化、重複支出 CIO 承接資安與治理風險 資料來源：Hang Tan, CIO.com, 2026-11-16 54"}, {"slide": 55, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "高速公路，還是小路", "sub": "鋪好高速公路，或在小路上收拾風險", "summary": "建好高速公路 ｜ 好用的基礎成為預設選擇 ｜ 新 Agent 與流程重用資料、連接與控管 ｜ 擴展更安全、更具成本效益", "all_text": "高速公路，還是小路 鋪好高速公路，或在小路上收拾風險 建好高速公路 好用的基礎成為預設選擇 新 Agent 與流程重用資料、連接與控管 擴展更安全、更具成本效益 管理小路風險 團隊私下採用工具與連接 資料碎片化、重複支出 治理不一致、資安風險 IT 幾乎沒有可視性 資料來源：Hang Tan, CIO.com, 2026-11-16 55"}, {"slide": 56, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "治理與創新", "sub": "讓受治理的路徑，成為最容易的路徑", "summary": "非原文內容｜Howard 延伸建議 ｜ 不是治理與創新的二選一 —— 而是讓合規的路，成為最好走的路 ｜ 自助上手 ｜ 申請到可用以「天」計，而不是「月」", "all_text": "治理與創新 讓受治理的路徑，成為最容易的路徑 非原文內容｜Howard 延伸建議 不是治理與創新的二選一 —— 而是讓合規的路，成為最好走的路 自助上手 申請到可用以「天」計，而不是「月」 預設安全 權限、資料分級與紀錄內建，不靠使用者記得 可重用元件 連接器、提示範本、評測集共享，越用越快 56"}, {"slide": 57, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "參考架構", "sub": "企業 AI 平台的分層參考架構", "summary": "示意圖｜Howard 繪製 ｜ 使用者入口 ｜ 員工助理、業務應用內嵌、客服介面 ｜ Agent 與流程編排", "all_text": "參考架構 企業 AI 平台的分層參考架構 示意圖｜Howard 繪製 使用者入口 員工助理、業務應用內嵌、客服介面 Agent 與流程編排 工作流引擎、Agent、人工審核節點 模型閘道 核准模型、路由、用量與成本控制 資料與業務脈絡 資料目錄、語意層、檢索與權限 企業系統連接器 ERP、CRM、金流、工單等 API 治理與觀測 權限・稽核紀錄 評測・監控 成本・成果看板 57"}, {"slide": 58, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "影子 AI 風險", "sub": "影子 AI 的五種風險與平台對策", "summary": "右欄為 Howard 延伸建議 ｜ 原文指出的風險 ｜ 會發生什麼 ｜ 平台對策（延伸）", "all_text": "影子 AI 風險 影子 AI 的五種風險與平台對策 右欄為 Howard 延伸建議 原文指出的風險 會發生什麼 平台對策（延伸） 資料碎片化 資料散落各工具，版本不一致 統一資料目錄與檢索權限 重複支出 各部門重複採購相似工具 工具白名單與集中採購 治理不一致 各自定義規則，無法稽核 平台內建共通控制項 資安風險 敏感資料流向未核准服務 資料分級與外流防護 缺乏可視性 IT 不知道誰在用、用多少 用量、成本與成果看板 58"}, {"slide": 59, "chap_id": "04", "chap_name": "04 CIO 的企業 AI 基礎", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "04 小結", "sub": "小結：CIO 要建立什麼", "summary": "01 ｜ CIO 不必擁有每個用例，而是建好基礎 ｜ 02 ｜ 五大基礎：工具、資料、整合、治理、可視性", "all_text": "04 小結 小結：CIO 要建立什麼 01 CIO 不必擁有每個用例，而是建好基礎 02 五大基礎：工具、資料、整合、治理、可視性 03 太慢或太難用，就會逼出影子 AI 04 讓受治理的路徑成為最容易的路徑 一句話記住 鋪好高速公路，大家自然不走小路。 59"}, {"slide": 60, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "05", "sub": "衡量什麼改變了", "summary": "衡量企業是否變好，而不只是 AI 是否被使用", "all_text": "05 衡量什麼改變了 衡量企業是否變好，而不只是 AI 是否被使用"}, {"slide": 61, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "檢驗標準", "sub": "成功看業務成果，不看 AI 部署量", "summary": "不該單獨當作成功指標 ｜ AI 部署數量 ｜ 授權數 ｜ 使用量", "all_text": "檢驗標準 成功看業務成果，不看 AI 部署量 不該單獨當作成功指標 AI 部署數量 授權數 使用量 節省的工時 唯一的檢驗問題 公司現在 運作得更好了嗎？ Does the company now work better? 61"}, {"slide": 62, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "指標階梯", "sub": "採用率是起點，財務效益才是終點", "summary": "示意圖｜Howard 延伸詮釋 ｜ 使用量 ｜ 授權數、活躍使用者 ｜ 產能釋放", "all_text": "指標階梯 採用率是起點，財務效益才是終點 示意圖｜Howard 延伸詮釋 使用量 授權數、活躍使用者 產能釋放 節省工時、可用產能 流程改善 週期、交接、等待、返工 財務效益 成本下降、營收、風險 過程指標 成果指標 62"}, {"slide": 63, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "效益實現", "sub": "釋放產能，不等於實現財務效益", "summary": "非原文內容｜Howard 延伸建議 ｜ 釋放產能 ｜ 每人每天省下的時間 ｜ → 先記錄為「可用產能」", "all_text": "效益實現 釋放產能，不等於實現財務效益 非原文內容｜Howard 延伸建議 釋放產能 每人每天省下的時間 → 先記錄為「可用產能」 尚未成為財務數字 實現財務效益 需確認以下至少一項實際改變： 增加的處理量 減少的加班或外包支出 可驗證的成本下降 63"}, {"slide": 64, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "成果 KPI 範例", "sub": "不同部門的成果 KPI 範例", "summary": "非原文內容｜Howard 延伸建議 ｜ 部門 ｜ 端到端成果 KPI ｜ 流程 KPI", "all_text": "成果 KPI 範例 不同部門的成果 KPI 範例 非原文內容｜Howard 延伸建議 部門 端到端成果 KPI 流程 KPI 品質／風險 KPI 客服 報案到解決時間 轉手次數、等待時間 重開率、客訴升級率 財務 月結完成天數 人工調整筆數 錯誤更正率、稽核發現數 採購 請購到交貨週期 簽核層數、退件次數 合約合規率 IT 服務 工單平均解決時間 轉派次數 SLA 達成率、重複事件率 64"}, {"slide": 65, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "基準線", "sub": "沒有基準線，就無法證明改善", "summary": "非原文內容｜Howard 延伸建議 ｜ 選定指標 ｜ 每條流程 2–3 個成果 KPI ｜ 導入前量測", "all_text": "基準線 沒有基準線，就無法證明改善 非原文內容｜Howard 延伸建議 選定指標 每條流程 2–3 個成果 KPI 導入前量測 至少涵蓋一個完整業務週期 導入後量測 同樣定義、同樣方法 比較與歸因 排除季節、人力等其他因素 先量再做：導入後才想補基準線，通常已經來不及 65"}, {"slide": 66, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "架構延伸整理", "badge_cls": "badge-howard", "title": "總成本", "sub": "證明效益時，要扣除的四類成本", "summary": "延伸整理｜依原文邏輯 ｜ 平台成本 ｜ 授權、模型用量、基礎設施 ｜ 整合成本", "all_text": "總成本 證明效益時，要扣除的四類成本 延伸整理｜依原文邏輯 平台成本 授權、模型用量、基礎設施 整合成本 連接器開發、系統改接、資料整理 覆核成本 抽查、例外處理、核准所花的人力 營運成本 監控、評測、模型更新、維運支援 淨效益 ＝ 可驗證的成果改善 − 平台 − 整合 − 人工覆核 − 持續營運 66"}, {"slide": 67, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "架構圖解", "badge_cls": "badge-diagram", "title": "價值看板", "sub": "AI 價值看板：成果與成本放在同一張圖", "summary": "示意圖｜示意數值，非實測 ｜ 端到端週期 ｜ 5.2 → 3.4 天 ｜ 較基準 −35%", "all_text": "價值看板 AI 價值看板：成果與成本放在同一張圖 示意圖｜示意數值，非實測 端到端週期 5.2 → 3.4 天 較基準 −35% 交接次數 6 → 3 次 較基準 −50% 例外／人工接管率 12% 目標 ≤ 15% 每件完成成本 較基準 −18% 已含平台與覆核 67"}, {"slide": 68, "chap_id": "05", "chap_name": "05 衡量什麼改變了", "badge": "CIO.com 原文精讀", "badge_cls": "badge-original", "title": "05 小結", "sub": "小結：怎麼衡量改變", "summary": "01 ｜ 授權數、使用量、節省工時只是過程指標 ｜ 02 ｜ 釋放產能不等於實現財務效益", "all_text": "05 小結 小結：怎麼衡量改變 01 授權數、使用量、節省工時只是過程指標 02 釋放產能不等於實現財務效益 03 先建立基準線，再比較成果 04 淨效益要扣除平台、整合、覆核、營運成本 一句話記住 唯一的問題：公司現在運作得更好了嗎？ 68"}, {"slide": 69, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "06", "sub": "落地建議", "summary": "把 AI 專案改成「流程成果責任制」 ｜ 非原文內容｜Howard 延伸建議", "all_text": "06 落地建議 把 AI 專案改成「流程成果責任制」 非原文內容｜Howard 延伸建議"}, {"slide": 70, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "流程成果責任制", "sub": "五個管理面向：該問什麼、怎麼量", "summary": "非原文內容｜Howard 延伸建議 ｜ 管理面向 ｜ 建議追問 ｜ 建議衡量方式", "all_text": "流程成果責任制 五個管理面向：該問什麼、怎麼量 非原文內容｜Howard 延伸建議 管理面向 建議追問 建議衡量方式 業務成果 哪個經營問題值得優先解決？ 完成週期、SLA 達成率、損失或收入影響 流程重設 哪些步驟可以取消，而非加速？ 交接次數、等待時間、重複輸入次數 技術選擇 規則、工作流引擎、Agent 或人工？ 成功率、例外率、每件完成成本 治理控制 誰可讀資料、執行動作、核准例外？ 越權事件、人工接管率、稽核證據完整性 效益實現 省下的時間實際轉化為什麼？ 處理量增加、加班外包減少、成本下降 70"}, {"slide": 71, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "落地示例｜線上遊戲平台", "sub": "「玩家付款成功，但道具未到帳」", "summary": "非原文內容｜示意設計 ｜ 付款成功 ｜ 道具未到帳 ｜ 以玩家客訴為例，示範從「任務加速」到「流程重設」的完整設計", "all_text": "落地示例｜線上遊戲平台 「玩家付款成功，但道具未到帳」 非原文內容｜示意設計 付款成功 道具未到帳 以玩家客訴為例，示範從「任務加速」到「流程重設」的完整設計 成果衡量 報案到解決時間、重開率、錯誤補發率、每件總成本 人工責任 高金額、疑似詐欺、證據衝突 → 指定人員核准 Agent 輔助 授權範圍內整理跨系統證據、分類例外、建議下一步 規則處理 依交易狀態與唯一交易 ID，做確定性核對與重複檢查 流程重設 串接訂單、金流、道具發送紀錄，免客服跨團隊反覆查詢 個人任務加速 AI 摘要客服對話、草擬回覆 71"}, {"slide": 72, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "落地示例｜線上遊戲平台", "sub": "道具未到帳：重設前後的處理流程", "summary": "非原文內容｜示意設計 ｜ 重設前 ｜ 客服逐一詢問金流、營運、技術團隊 ｜ 人工比對訂單與發送紀錄", "all_text": "落地示例｜線上遊戲平台 道具未到帳：重設前後的處理流程 非原文內容｜示意設計 重設前 客服逐一詢問金流、營運、技術團隊 人工比對訂單與發送紀錄 所有補發都需主管簽核 玩家多次詢問進度，案件容易重開 重設後 自動串接訂單、金流與道具發送紀錄 規則依交易 ID 核對並防止重複補發 Agent 整理證據、分類例外 僅高金額、疑似詐欺案件交由人核准 72"}, {"slide": 73, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "落地示例｜線上遊戲平台", "sub": "依風險決定誰來處理道具補發", "summary": "非原文內容｜示意設計 ｜ 情境 ｜ 判斷依據 ｜ 處理方式", "all_text": "落地示例｜線上遊戲平台 依風險決定誰來處理道具補發 非原文內容｜示意設計 情境 判斷依據 處理方式 紀錄與控制 低金額、證據一致 交易成功＋未發送＋無重複 規則自動補發 操作紀錄、每日抽查 證據不完整 部分系統紀錄缺漏 Agent 整理證據 → 客服確認 保留證據包與決策理由 高金額 超過設定門檻 指定人員核准 雙人覆核 疑似詐欺／證據衝突 異常模式或紀錄矛盾 停止自動處理，轉風控 人工接管、案件凍結 73"}, {"slide": 74, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "治理設計", "sub": "把「讀取分析」和「交易動作」分開授權", "summary": "非原文內容｜Howard 延伸建議 ｜ 讀取與分析 ｜ Agent 可在授權範圍內查詢、整理證據、提出建議 ｜ 交易動作", "all_text": "治理設計 把「讀取分析」和「交易動作」分開授權 非原文內容｜Howard 延伸建議 讀取與分析 Agent 可在授權範圍內查詢、整理證據、提出建議 交易動作 補發、退款等動作需另行授權，高風險案件由人核准 最小權限 完整操作紀錄 人工接管 停止機制 納入 ISO/IEC 42001：將角色、風險、控制措施與成效驗證整理為可稽核紀錄（落地建議，完成這些不代表即符合標準） 74"}, {"slide": 75, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "行動路徑", "sub": "90 天落地路線圖", "summary": "非原文內容｜Howard 延伸建議 ｜ Day 1–30 ｜ 選定與盤點 ｜ 挑 2–3 條跨部門核心流程", "all_text": "行動路徑 90 天落地路線圖 非原文內容｜Howard 延伸建議 Day 1–30 選定與盤點 挑 2–3 條跨部門核心流程 端到端價值流盤點 指定業務負責人、量測基準線 Day 31–60 重設與建置 刪除步驟、指派執行者 鋪設工具、資料、連接器與控管 建立成本與成效看板 Day 61–90 試運行與決策 小範圍上線、人工接管機制 比對基準線：週期、交接、成本 決定擴展、調整或停止 75"}, {"slide": 76, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "架構延伸整理", "badge_cls": "badge-howard", "title": "主管會議", "sub": "AI 專案審查的三個問題", "summary": "延伸整理｜依原文邏輯 ｜ 01 ｜ 這個專案要改變哪一項端到端業務成果，而不只是加速哪個任務？ ｜ 02", "all_text": "主管會議 AI 專案審查的三個問題 延伸整理｜依原文邏輯 01 這個專案要改變哪一項端到端業務成果，而不只是加速哪個任務？ 02 哪些流程步驟會被刪除？哪位業務主管有權推動並承擔結果？ 03 如何證明成果改善，且已扣除平台、整合、人工覆核與持續營運成本？ 76"}, {"slide": 77, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "成熟度模型", "sub": "企業 AI 轉型的四個成熟度階段", "summary": "非原文內容｜Howard 延伸建議 ｜ Stage 1 ｜ 工具試用 ｜ 少數人試用，零星用例", "all_text": "成熟度模型 企業 AI 轉型的四個成熟度階段 非原文內容｜Howard 延伸建議 Stage 1 工具試用 少數人試用，零星用例 Stage 2 廣泛使用 大量授權、使用率上升 Stage 3 流程重設 核心流程被重新設計 Stage 4 成果責任制 平台、流程、成果連成一套機制 多數組織以為在 Stage 3，其實還在 Stage 2 77"}, {"slide": 78, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "Howard 延伸實戰", "badge_cls": "badge-howard", "title": "失敗模式", "sub": "AI 轉型最常見的六種失敗模式", "summary": "非原文內容｜Howard 延伸建議 ｜ 以使用率當成功 ｜ 報告漂亮，業務沒變 ｜ 自動化舊流程", "all_text": "失敗模式 AI 轉型最常見的六種失敗模式 非原文內容｜Howard 延伸建議 以使用率當成功 報告漂亮，業務沒變 自動化舊流程 得到更快的爛流程 沒有業務負責人 跨部門交接改不動 影子 AI 蔓延 碎片化、重複支出、資安風險 平台過度限制 大家繞道而行 只算授權費 低估整合、覆核與營運成本 78"}, {"slide": 79, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "管理戰略解讀", "badge_cls": "badge-insight", "title": "總結", "sub": "五個重點與一個檢驗標準", "summary": "01 ｜ 績效單位是工作流程，不是個別任務 ｜ 02 ｜ 先定義成果、刪除步驟，Agent 只用在加分處", "all_text": "總結 五個重點與一個檢驗標準 01 績效單位是工作流程，不是個別任務 02 先定義成果、刪除步驟，Agent 只用在加分處 03 員工建立能力，業務主管提供變革權限 04 CIO 建立好用、受治理的共享 AI 基礎 05 衡量企業是否變好，而不只 AI 是否被使用 Howard 的解讀 把平台治理、跨部門流程與經營成果，連成同一套責任機制。 部署規模只是起點；企業運作方式是否改變，才是檢驗標準。 79"}, {"slide": 80, "chap_id": "06", "chap_name": "06 落地建議與實戰", "badge": "管理戰略解讀", "badge_cls": "badge-insight", "title": "Thank you", "sub": "Howard Liao", "summary": "來源 ｜ Hang Tan,〈Your AI is smarter. Is your business still working the same way?〉, CIO.com, 2026-11-16", "all_text": "Thank you Howard Liao 來源 Hang Tan,〈Your AI is smarter. Is your business still working the same way?〉, CIO.com, 2026-11-16 https://www.cio.com/article/4248443/your-ai-is-smarter-is-your-business-still-working-the-same-way.html 本簡報為重點整理與個人解讀，內容權利歸原權利人所有。標示「非原文內容」「示意」「延伸」之頁面為講者補充，非作者觀點或實測案例，成效不代表保證。"}];
+
+  // === 80 頁投影片視覺播放器核心邏輯 ===
+  const N = 80, pad = (n) => String(n).padStart(2, "0");
+  const frame = document.getElementById("frame"), bar = document.getElementById("bar"), count = document.getElementById("count");
+  const slides = [];
+
+  for (let i = 1; i <= N; i++) {
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.dataset.src = "slides/" + pad(i) + ".webp";
+    frame.insertBefore(d, frame.lastElementChild);
+    slides.push(d);
+  }
+
+  const loadSlide = (i) => {
+    const d = slides[i];
+    if (d && !d.style.backgroundImage) d.style.backgroundImage = "url(" + d.dataset.src + ")";
+  };
+
+  let cur = 0;
+  function go(i) {
+    cur = Math.min(Math.max(i, 0), N - 1);
+    slides.forEach((d, k) => d.classList.toggle("on", k === cur));
+    [cur, cur + 1, cur - 1, cur + 2].forEach(k => { if (k >= 0 && k < N) loadSlide(k); });
+    bar.style.width = ((cur + 1) / N * 100) + "%";
+    count.textContent = (cur + 1) + " / " + N;
+    history.replaceState(null, "", "#" + (cur + 1));
+    document.querySelectorAll(".grid-modal .th-card").forEach((t, k) => t.classList.toggle("cur", k === cur));
+  }
+
+  document.querySelector(".nav-btn.prev").onclick = () => go(cur - 1);
+  document.querySelector(".nav-btn.next").onclick = () => go(cur + 1);
+  frame.addEventListener("click", (e) => {
+    const r = frame.getBoundingClientRect();
+    go(e.clientX - r.left < r.width / 3 ? cur - 1 : cur + 1);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ["s", "p", "u"].includes(k)) { e.preventDefault(); return; }
+    const presMode = document.getElementById("presentation-mode");
+    if (presMode.style.display !== "none") {
+      if (["arrowright", "pagedown", " ", "enter"].includes(k)) { e.preventDefault(); go(cur + 1); }
+      else if (["arrowleft", "pageup", "backspace"].includes(k)) { e.preventDefault(); go(cur - 1); }
+      else if (k === "home") { e.preventDefault(); go(0); }
+      else if (k === "end") { e.preventDefault(); go(N - 1); }
+      else if (k === "f") toggleFs();
+    }
+    if (k === "escape") document.getElementById("grid").classList.remove("open");
+  });
+
+  let sx = null;
+  frame.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  frame.addEventListener("touchend", (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+    sx = null;
+  });
+
+  function toggleFs() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+  document.getElementById("fsBtn").onclick = toggleFs;
+
+  // 縮圖總覽
+  const grid = document.getElementById("grid"), gridWrap = document.getElementById("gridWrap");
+  for (let i = 1; i <= N; i++) {
+    const t = document.createElement("div");
+    t.className = "th-card";
+    t.innerHTML = "<span>P" + pad(i) + "</span>";
+    t.onclick = () => { grid.classList.remove("open"); go(i - 1); };
+    gridWrap.appendChild(t);
+  }
+
+  document.getElementById("gridBtn").onclick = () => {
+    gridWrap.querySelectorAll(".th-card").forEach((t, k) => {
+      if (!t.style.backgroundImage) t.style.backgroundImage = "url(slides/t" + pad(k + 1) + ".webp)";
+    });
+    grid.classList.add("open");
+  };
+  document.getElementById("gridClose").onclick = () => grid.classList.remove("open");
+
+  // 模式切換邏輯
+  function switchView(mode) {
+    const pres = document.getElementById("presentation-mode");
+    const doc = document.getElementById("doc-mode");
+    const tabPres = document.getElementById("tab-pres");
+    const tabDoc = document.getElementById("tab-doc");
+
+    if (mode === "pres") {
+      pres.style.display = "flex";
+      doc.style.display = "none";
+      tabPres.classList.add("active");
+      tabDoc.classList.remove("active");
+      history.replaceState(null, "", "#" + (cur + 1));
+      loadSlide(cur);
+    } else {
+      pres.style.display = "none";
+      doc.style.display = "block";
+      tabDoc.classList.add("active");
+      tabPres.classList.remove("active");
+      history.replaceState(null, "", "#toc-full-slides");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function jumpToSlide(num) {
+    go(num - 1);
+    switchView("pres");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // 路由檢測
+  function handleInitialRoute() {
+    const hash = location.hash;
+    const matchNum = hash.match(/^#(\d+)$/);
+    if (matchNum) {
+      const page = parseInt(matchNum[1], 10);
+      go(page - 1);
+      switchView("pres");
+    } else if (hash.startsWith("#chap-") || hash === "#toc-full-slides") {
+      switchView("doc");
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      // 預設為簡報放映
+      go(0);
+      switchView("pres");
+    }
+  }
+  window.addEventListener("hashchange", handleInitialRoute);
+
 
   const tbody = document.getElementById('slides-tbody');
   const searchInput = document.getElementById('slide-search');
@@ -1270,8 +1703,10 @@
     }
 
     tbody.innerHTML = filtered.map(item => `
-      <tr>
-        <td style="font-family: var(--font-mono); font-weight: 700; color: var(--coral);">P${String(item.slide).padStart(2, '0')}</td>
+      <tr class="slide-row-clickable" onclick="jumpToSlide(${item.slide})" title="點擊立即播放第 ${item.slide} 頁投影片">
+        <td style="font-family: var(--font-mono); font-weight: 700; color: var(--coral); white-space: nowrap;">
+          <span style="display: inline-flex; align-items: center; gap: 4px;">▶ P${String(item.slide).padStart(2, '0')}</span>
+        </td>
         <td style="font-size: 12px; color: var(--text-secondary);">${item.chap_name}</td>
         <td><span class="card-badge ${item.badge_cls}" style="margin: 0;">${item.badge}</span></td>
         <td><strong style="color: var(--text-primary);">${item.title}</strong><br><span style="font-size: 11px; color: var(--text-muted);">${item.sub}</span></td>
@@ -1298,6 +1733,7 @@
 
   // 初次渲染
   renderSlides();
+  handleInitialRoute();
 </script>
 
 </body>
