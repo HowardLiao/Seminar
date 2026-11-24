@@ -1493,81 +1493,6 @@
         </div>
 
         
-        <!-- 流體動力雙軌路由實驗室 (Interactive Fluid Route Dynamics Lab) -->
-        <div class="fluid-lab-box" id="hagFluidLab">
-          <div class="fluid-lab-header">
-            <div class="fluid-lab-title-group">
-              <span class="fluid-pulse-icon">🌊</span>
-              <div>
-                <h4 class="fluid-lab-title">L.L.H 流體動力雙軌路由實驗室 (Fluid Route Dynamics Lab)</h4>
-                <p class="fluid-lab-desc">即時流體力學動態模擬：企業全通路 Prompt/Token 水流湧入，經 Howard AIRS 渦流過濾與動態分流閥分流至地端與跨雲</p>
-              </div>
-            </div>
-            <div class="fluid-lab-status-tags">
-              <span class="fluid-badge fluid-badge-live"><span class="fluid-radar-dot"></span>流體引擎運作中 (60 FPS)</span>
-              <span class="fluid-badge" id="fluidCurrentModeBadge">常態 70/30 雙軌</span>
-            </div>
-          </div>
-
-          <div class="fluid-canvas-container">
-            <canvas id="hagFluidPipeCanvas" width="1200" height="260" aria-label="70/30 流體管道動態模擬"></canvas>
-            <div class="fluid-canvas-overlay-labels">
-              <div class="fluid-lbl fluid-lbl-in">
-                <span class="fluid-lbl-tag">全通路入口水流</span>
-                <span class="fluid-lbl-val">100% Ingress Flow</span>
-              </div>
-              <div class="fluid-lbl fluid-lbl-mid">
-                <span class="fluid-lbl-tag">Howard AIRS 治理腔</span>
-                <span class="fluid-lbl-val" id="pipeFilterStatus">OWASP 護欄守護中</span>
-              </div>
-              <div class="fluid-lbl fluid-lbl-top-out">
-                <span class="fluid-lbl-tag">地端 AIDC GPU 機房 (70%)</span>
-                <span class="fluid-lbl-val" id="pipeLocalMetric">高密度高速噴流 · 100% 機密不出廠</span>
-              </div>
-              <div class="fluid-lbl fluid-lbl-bot-out">
-                <span class="fluid-lbl-tag">多雲 PrivateLink 推理 (30%)</span>
-                <span class="fluid-lbl-val" id="pipeCloudMetric">Presidio 脫敏量子流 · 零外洩</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 即時互動控制列 -->
-          <div class="fluid-control-deck">
-            <div class="fluid-slider-cluster">
-              <div class="fluid-slider-header">
-                <label for="fluidSplitRange" class="fluid-slider-label">
-                  <span class="fluid-icon">⚖️</span>
-                  <strong>地端/跨雲流體分流比閥門 (Fluid Split Diverter Valve)：</strong>
-                  <span class="fluid-ratio-highlight" id="fluidRatioText">70% 地端 / 30% 跨雲</span>
-                </label>
-                <div class="fluid-live-stats">
-                  <span class="fluid-stat-item">預估 TCO 降幅：<strong class="stat-green" id="fluidTcoText">-72.4%</strong></span>
-                  <span class="fluid-stat-item">端到端延遲：<strong class="stat-cyan" id="fluidLatText">2.4 ms</strong></span>
-                  <span class="fluid-stat-item">流體通量：<strong class="stat-amber" id="fluidFluxText">4,280 Token/s</strong></span>
-                </div>
-              </div>
-              <div class="fluid-slider-track-wrap">
-                <span class="slider-end-label">100% 機密地端</span>
-                <input type="range" id="fluidSplitRange" min="10" max="100" value="70" step="5" class="fluid-range-input" />
-                <span class="slider-end-label">10% 地端 / 90% 多雲</span>
-              </div>
-            </div>
-
-            <div class="fluid-action-buttons">
-              <button type="button" class="fluid-btn fluid-btn-attack" id="fluidInjectAttackBtn">
-                <span class="btn-icon">🚨</span> 注入攻擊流體阻斷測試
-              </button>
-              <button type="button" class="fluid-btn fluid-btn-burst" id="fluidBurstBtn">
-                <span class="btn-icon">💥</span> 激發流體高壓脈衝
-              </button>
-              <button type="button" class="fluid-btn fluid-btn-reset" id="fluidResetPipeBtn">
-                <span class="btn-icon">🔄</span> 重置標準流場
-              </button>
-            </div>
-          </div>
-        </div>
-
-
         <div class="arch-layer-pills" aria-label="跨視角層級聚焦">
           <span style="font-size:0.76rem;color:#94A3B8;font-weight:700;margin-right:4px;">🎯 層級聚焦：</span>
           <button type="button" class="layer-pill-btn active" data-focus-layer="ALL">全部總覽</button>
@@ -2069,6 +1994,80 @@
           <div class="arch-pane-cap">
             <span><strong>圖 3｜UML 2 部署架構圖（Deployment Diagram）：</strong>精準切分 5 大實體網路資安分區（Intranet/OT → DMZ → On-Prem K8s → AIDC GPU 機房 70% → PrivateLink 多雲 VPC 30%），落實機密不出廠與斷網自治。</span>
             <span>對映編號：Zone 1–5 ⇄ [L1]–[L6]</span>
+          </div>
+        </div>
+
+        <!-- 流體動力雙軌路由實驗室 (Interactive Fluid Route Dynamics Lab) -->
+        <div class="fluid-lab-box" id="hagFluidLab">
+          <div class="fluid-lab-header">
+            <div class="fluid-lab-title-group">
+              <span class="fluid-pulse-icon">🌊</span>
+              <div>
+                <h4 class="fluid-lab-title">L.L.H 流體動力雙軌路由實驗室 (Fluid Route Dynamics Lab)</h4>
+                <p class="fluid-lab-desc">即時流體力學動態模擬：企業全通路 Prompt/Token 水流湧入，經 Howard AIRS 渦流過濾與動態分流閥分流至地端與跨雲</p>
+              </div>
+            </div>
+            <div class="fluid-lab-status-tags">
+              <span class="fluid-badge fluid-badge-live"><span class="fluid-radar-dot"></span>流體引擎運作中 (60 FPS)</span>
+              <span class="fluid-badge" id="fluidCurrentModeBadge">常態 70/30 雙軌</span>
+            </div>
+          </div>
+
+          <div class="fluid-canvas-container">
+            <canvas id="hagFluidPipeCanvas" width="1200" height="260" aria-label="70/30 流體管道動態模擬"></canvas>
+            <div class="fluid-canvas-overlay-labels">
+              <div class="fluid-lbl fluid-lbl-in">
+                <span class="fluid-lbl-tag">全通路入口水流</span>
+                <span class="fluid-lbl-val">100% Ingress Flow</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-mid">
+                <span class="fluid-lbl-tag">Howard AIRS 治理腔</span>
+                <span class="fluid-lbl-val" id="pipeFilterStatus">OWASP 護欄守護中</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-top-out">
+                <span class="fluid-lbl-tag">地端 AIDC GPU 機房 (70%)</span>
+                <span class="fluid-lbl-val" id="pipeLocalMetric">高密度高速噴流 · 100% 機密不出廠</span>
+              </div>
+              <div class="fluid-lbl fluid-lbl-bot-out">
+                <span class="fluid-lbl-tag">多雲 PrivateLink 推理 (30%)</span>
+                <span class="fluid-lbl-val" id="pipeCloudMetric">Presidio 脫敏量子流 · 零外洩</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 即時互動控制列 -->
+          <div class="fluid-control-deck">
+            <div class="fluid-slider-cluster">
+              <div class="fluid-slider-header">
+                <label for="fluidSplitRange" class="fluid-slider-label">
+                  <span class="fluid-icon">⚖️</span>
+                  <strong>地端/跨雲流體分流比閥門 (Fluid Split Diverter Valve)：</strong>
+                  <span class="fluid-ratio-highlight" id="fluidRatioText">70% 地端 / 30% 跨雲</span>
+                </label>
+                <div class="fluid-live-stats">
+                  <span class="fluid-stat-item">預估 TCO 降幅：<strong class="stat-green" id="fluidTcoText">-72.4%</strong></span>
+                  <span class="fluid-stat-item">端到端延遲：<strong class="stat-cyan" id="fluidLatText">2.4 ms</strong></span>
+                  <span class="fluid-stat-item">流體通量：<strong class="stat-amber" id="fluidFluxText">4,280 Token/s</strong></span>
+                </div>
+              </div>
+              <div class="fluid-slider-track-wrap">
+                <span class="slider-end-label">100% 機密地端</span>
+                <input type="range" id="fluidSplitRange" min="10" max="100" value="70" step="5" class="fluid-range-input" />
+                <span class="slider-end-label">10% 地端 / 90% 多雲</span>
+              </div>
+            </div>
+
+            <div class="fluid-action-buttons">
+              <button type="button" class="fluid-btn fluid-btn-attack" id="fluidInjectAttackBtn">
+                <span class="btn-icon">🚨</span> 注入攻擊流體阻斷測試
+              </button>
+              <button type="button" class="fluid-btn fluid-btn-burst" id="fluidBurstBtn">
+                <span class="btn-icon">💥</span> 激發流體高壓脈衝
+              </button>
+              <button type="button" class="fluid-btn fluid-btn-reset" id="fluidResetPipeBtn">
+                <span class="btn-icon">🔄</span> 重置標準流場
+              </button>
+            </div>
           </div>
         </div>
 
